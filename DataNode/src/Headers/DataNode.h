@@ -1,19 +1,19 @@
 /*
- * Worker.h
+ * DataNode.h
  *
- *  Created on: 4/9/2017
+ *  Created on: 7/9/2017
  *      Author: utnso
  */
 
-#ifndef HEADERS_WORKER_H_
-#define HEADERS_WORKER_H_
+#ifndef HEADERS_DATANODE_H_
+#define HEADERS_DATANODE_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "configuracionW.h"
+#include "configuracionDN.h"
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf"
 
 
 
-#endif /* HEADERS_WORKER_H_ */
+#endif /* HEADERS_DATANODE_H_ */

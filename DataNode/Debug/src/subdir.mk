@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/DataNode.c 
+../src/DataNode.c \
+../src/configuracionDN.c 
 
 OBJS += \
-./src/DataNode.o 
+./src/DataNode.o \
+./src/configuracionDN.o 
 
 C_DEPS += \
-./src/DataNode.d 
+./src/DataNode.d \
+./src/configuracionDN.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

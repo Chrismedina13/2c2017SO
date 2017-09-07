@@ -1,12 +1,12 @@
 /*
  * configuracion.h
  *
- *  Created on: 4/9/2017
+ *  Created on: 7/9/2017
  *      Author: utnso
  */
 
-#ifndef HEADERS_CONFIGURACION_H_
-#define HEADERS_CONFIGURACION_H_
+#ifndef HEADERS_CONFIGURACIONW_H_
+#define HEADERS_CONFIGURACIONW_H_
 
 #include "commons/config.h"
 #include <stddef.h>
@@ -32,4 +32,4 @@ typedef struct Configuracion {
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);
 
-#endif /* HEADERS_CONFIGURACION_H_ */
+#endif /* HEADERS_CONFIGURACIONW_H_ */

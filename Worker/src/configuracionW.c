@@ -4,7 +4,7 @@
  *  Created on: 4/9/2017
  *      Author: utnso
  */
-#include "Headers/configuracion.h"
+#include "Headers/configuracionW.h"
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 

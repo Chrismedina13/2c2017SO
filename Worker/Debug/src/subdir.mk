@@ -5,17 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/Worker.c \
-../src/configuracion.c \
+../src/configuracionW.c \
 ../src/socketsWorker.c 
 
 OBJS += \
 ./src/Worker.o \
-./src/configuracion.o \
+./src/configuracionW.o \
 ./src/socketsWorker.o 
 
 C_DEPS += \
 ./src/Worker.d \
-./src/configuracion.d \
+./src/configuracionW.d \
 ./src/socketsWorker.d 
 
 

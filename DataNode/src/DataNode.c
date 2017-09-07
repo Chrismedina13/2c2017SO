@@ -10,8 +10,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Headers/DataNode.h"
 
 int main(void) {
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+
+	printf("Archivo de configuracion puerto DataNode : %i \n", config->puertoDataNode);
+	printf("Archivo de configuracion puerto worker : %i \n", config->puertoWorker);
+	printf("Archivo de configuracion puerto fileSystem : %i \n", config->puertoFileSystem);
+	printf("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
+	printf("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
+	printf("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
+
+
+
 	return EXIT_SUCCESS;
 }
