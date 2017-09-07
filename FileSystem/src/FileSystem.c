@@ -7,11 +7,15 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
+#include "Headers/FileSystem.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+int main(int argc, char *argv[]) {
 
-int main(void) {
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+
+	printf("Archivo de configuracion puerto FILESYSTEM : %i \n", config->puerto);
+
+
+
 	return EXIT_SUCCESS;
 }
