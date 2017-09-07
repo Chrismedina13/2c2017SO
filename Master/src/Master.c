@@ -7,11 +7,20 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
+#include "Headers/Master.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 
 int main(void) {
-	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
+
+	int FDsocketCliente;
+
+	FDsocketCliente = SocketCliente("127.0.0.1",5050); //127.0.0.1 es la ip local , 5050 puerto del worker
+
+	printf("SocketCliente = %d \n",FDsocketCliente);
+
+	char buffer[11];
+	recv(FDsocketCliente,buffer,11,0);
+	printf("Se recibio: %s",buffer);
+
 	return EXIT_SUCCESS;
 }
