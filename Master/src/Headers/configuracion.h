@@ -7,17 +7,21 @@
 
 #ifndef HEADERS_CONFIGURACION_H_
 #define HEADERS_CONFIGURACION_H_
+
 #include "commons/config.h"
 #include <stddef.h>
 #include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#define PUERTO "PUERTO"
 
-typedef struct Configuracion{
-	int puerto;
+//Keys para la configuracion
+#define YAMA_IP "YAMA_IP"
+#define YAMA_PUERTO "YAMA_PUERTO"
+
+typedef struct Configuracion {
+	char* ipYama;
+	int puertoYama;
+
 } Configuracion;
 
-Configuracion* leerArchivoDeConfiguracion(char* ruta);
+Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);
 
 #endif /* HEADERS_CONFIGURACION_H_ */
