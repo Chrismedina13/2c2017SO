@@ -10,7 +10,12 @@
 #include "Headers/Master.h"
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
+
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+
+	printf("Archivo de configuracion IP YAMA : %s \n", config->ipYama);
+	printf("Archivo de configuracion YAMA PUERTO : %i \n", config->puertoYama);
 
 	int FDsocketCliente;
 
@@ -22,5 +27,6 @@ int main(void) {
 	recv(FDsocketCliente,buffer,11,0);
 	printf("Se recibio: %s",buffer);
 
+	free(config);
 	return EXIT_SUCCESS;
 }
