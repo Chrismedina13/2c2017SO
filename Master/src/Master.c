@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
 	//Archivo de configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
-	printf("Archivo de configuracion IP YAMA : %s \n", config->ipYama);
-	printf("Archivo de configuracion YAMA PUERTO : %i \n", config->puertoYama);
+	logInfo("Archivo de configuracion IP YAMA : %s \n", config->ipYama);
+	logInfo("Archivo de configuracion YAMA PUERTO : %i \n", config->puertoYama);
 
 
 	//socketClienteParaWorker

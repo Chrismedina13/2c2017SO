@@ -18,3 +18,21 @@
 
 [INFO] 23:58:44:799 YAMA/(4628:4628): Archivo de configuracion YAMA PUERTO : 149164768 
 
+[INFO] 10:33:17:785 YAMA/(4999:4999): HOLAAA
+[ERROR] 10:33:17:785 YAMA/(4999:4999): Muestra Error
+[INFO] 10:33:17:785 YAMA/(4999:4999): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:33:17:785 YAMA/(4999:4999): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 10:41:08:588 YAMA/(5135:5135): HOLAAA
+[ERROR] 10:41:08:596 YAMA/(5135:5135): Muestra Error
+[INFO] 10:41:08:597 YAMA/(5135:5135): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:41:08:597 YAMA/(5135:5135): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 10:41:52:168 YAMA/(5156:5156): HOLAAA
+[ERROR] 10:41:52:170 YAMA/(5156:5156): Muestra Error
+[INFO] 10:41:52:170 YAMA/(5156:5156): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:41:52:170 YAMA/(5156:5156): Archivo de configuracion YAMA PUERTO : 5200 
+

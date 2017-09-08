@@ -14,27 +14,47 @@ void crearLog(char* archivo,char* nombreDelPrograma,bool mostrarPorConsola,t_log
 }
 
 
-void logInfo(const char* mensaje, ...){
-
-	log_info(logger,mensaje);
+void logInfo(const char* mensajeDeEntrada, ...){
+	va_list arguments;
+	va_start(arguments, mensajeDeEntrada);
+	char* message = string_from_vformat(mensajeDeEntrada, arguments);
+	log_info(logger,message);
+	free(message);
+	va_end(arguments);
 }
 
-void logDebug(const char* mensaje, ...){
-
-	log_debug(logger,mensaje);
+void logDebug(const char* mensajeDeEntrada, ...){
+	va_list arguments;
+	va_start(arguments, mensajeDeEntrada);
+	char* message = string_from_vformat(mensajeDeEntrada, arguments);
+	log_debug(logger,message);
+	free(message);
+	va_end(arguments);
 }
 
-void logWarnig(const char* mensaje, ...){
-
-	log_warning(logger,mensaje);
+void logWarning(const char* mensajeDeEntrada, ...){
+	va_list arguments;
+	va_start(arguments, mensajeDeEntrada);
+	char* message = string_from_vformat(mensajeDeEntrada, arguments);
+	log_warning(logger,message);
+	free(message);
+	va_end(arguments);
 }
 
-void logError(const char* mensaje, ...){
-
-	log_error(logger,mensaje);
+void logError(const char* mensajeDeEntrada, ...){
+	va_list arguments;
+	va_start(arguments, mensajeDeEntrada);
+	char* message = string_from_vformat(mensajeDeEntrada, arguments);
+	log_error(logger,message);
+	free(message);
+	va_end(arguments);
 }
 
-void logTrace(const char* mensaje, ...){
-
-	log_trace(logger,mensaje);
+void logTrace(const char* mensajeDeEntrada, ...){
+	va_list arguments;
+	va_start(arguments, mensajeDeEntrada);
+	char* message = string_from_vformat(mensajeDeEntrada, arguments);
+	log_trace(logger,message);
+	free(message);
+	va_end(arguments);
 }
