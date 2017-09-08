@@ -13,6 +13,8 @@
 #include "Headers/DataNode.h"
 
 int main(void) {
+
+	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	printf("Archivo de configuracion puerto DataNode : %i \n", config->puertoDataNode);
@@ -21,6 +23,19 @@ int main(void) {
 	printf("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
 	printf("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
 	printf("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
+
+	//socketClienteParaFileSystem
+
+	int FDsocketClienteFileSystem;
+	FDsocketClienteFileSystem = SocketCliente("127.0.0.1",5060); //127.0.0.1 es la ip local , 5060 puerto del DataNode
+
+	printf("SocketCliente = %d \n",FDsocketClienteFileSystem);
+
+	char buffer[11];
+	recv(FDsocketClienteFileSystem,buffer,11,0);
+	printf("Se recibio: %s",buffer);
+
+	free(config);
 
 
 

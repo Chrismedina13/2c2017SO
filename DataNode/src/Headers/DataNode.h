@@ -10,8 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "socketsDataNode.h"
 #include "configuracionDN.h"
+
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf"
 
 
