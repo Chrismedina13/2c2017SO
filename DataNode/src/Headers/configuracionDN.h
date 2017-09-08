@@ -11,6 +11,9 @@
 #include "commons/config.h"
 #include <stddef.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 //Keys para la configuracion
 #define IP_FILESYSTEM "IP_FILESYSTEM"
