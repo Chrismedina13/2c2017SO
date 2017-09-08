@@ -6,17 +6,20 @@
 C_SRCS += \
 ../src/YAMA.c \
 ../src/configuracion.c \
-../src/logYAMA.c 
+../src/logYAMA.c \
+../src/socketsYAMA.c 
 
 OBJS += \
 ./src/YAMA.o \
 ./src/configuracion.o \
-./src/logYAMA.o 
+./src/logYAMA.o \
+./src/socketsYAMA.o 
 
 C_DEPS += \
 ./src/YAMA.d \
 ./src/configuracion.d \
-./src/logYAMA.d 
+./src/logYAMA.d \
+./src/socketsYAMA.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

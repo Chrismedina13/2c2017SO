@@ -19,12 +19,15 @@
 #define FS_PUERTO "FS_PUERTO"
 #define RETARDO_PLANIFICACION "RETARDO_PLANIFICACION"
 #define ALGORITMO_BALANCEO "ALGORITMO_BALANCEO"
+#define YAMA_PUERTO "YAMA_PUERTO"
+
 
 typedef struct Configuracion {
 	char* ipFileSystem;
 	int puertoFileSystem;
 	int retardo;
 	char* algoritmo_bal;
+	int puertoYama;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);
