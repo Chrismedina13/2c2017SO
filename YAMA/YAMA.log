@@ -4,3 +4,27 @@
 
 [INFO] 12:43:11:497 YAMA/(3109:3109): Archivo de configuracion PUERTO FileSystem : 5300 
 
+[INFO] 16:41:12:457 YAMA/(2634:2634): Prueba de logInfo
+[ERROR] 16:41:12:457 YAMA/(2634:2634): Prueba de logError
+[INFO] 16:41:12:470 YAMA/(2634:2634): Archivo de configuracion IP FileSystem : 127.0.0.1 
+
+[INFO] 16:41:12:471 YAMA/(2634:2634): Archivo de configuracion PUERTO FileSystem : 5300 
+
+[INFO] 16:42:33:752 YAMA/(2653:2653): Prueba de logInfo
+[ERROR] 16:42:33:763 YAMA/(2653:2653): Prueba de logError
+[INFO] 16:42:33:763 YAMA/(2653:2653): Archivo de configuracion IP FileSystem : 127.0.0.1 
+
+[INFO] 16:42:33:763 YAMA/(2653:2653): Archivo de configuracion PUERTO FileSystem : 5300 
+
+[INFO] 16:43:25:251 YAMA/(2675:2675): Prueba de logInfo
+[ERROR] 16:43:25:251 YAMA/(2675:2675): Prueba de logError
+[INFO] 16:43:25:251 YAMA/(2675:2675): Archivo de configuracion IP FileSystem : 127.0.0.1 
+
+[INFO] 16:43:25:251 YAMA/(2675:2675): Archivo de configuracion PUERTO FileSystem : 5300 
+
+[INFO] 16:45:05:563 YAMA/(2745:2745): Prueba de logInfo
+[ERROR] 16:45:05:574 YAMA/(2745:2745): Prueba de logError
+[INFO] 16:45:05:574 YAMA/(2745:2745): Archivo de configuracion IP FileSystem : 127.0.0.1 
+
+[INFO] 16:45:05:574 YAMA/(2745:2745): Archivo de configuracion PUERTO FileSystem : 5300 
+
