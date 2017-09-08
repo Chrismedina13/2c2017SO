@@ -5,15 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/YAMA.c \
-../src/configuracion.c 
+../src/configuracion.c \
+../src/logYAMA.c 
 
 OBJS += \
 ./src/YAMA.o \
-./src/configuracion.o 
+./src/configuracion.o \
+./src/logYAMA.o 
 
 C_DEPS += \
 ./src/YAMA.d \
-./src/configuracion.d 
+./src/configuracion.d \
+./src/logYAMA.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

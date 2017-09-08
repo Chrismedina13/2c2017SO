@@ -1,0 +1,6 @@
+[INFO] 12:43:11:497 YAMA/(3109:3109): Prueba de logInfo
+[ERROR] 12:43:11:497 YAMA/(3109:3109): Prueba de logError
+[INFO] 12:43:11:497 YAMA/(3109:3109): Archivo de configuracion IP FileSystem : 127.0.0.1 
+
+[INFO] 12:43:11:497 YAMA/(3109:3109): Archivo de configuracion PUERTO FileSystem : 5300 
+

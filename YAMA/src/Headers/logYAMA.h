@@ -1,12 +1,12 @@
 /*
- * logMaster.h
+ * logYAMA.h
  *
- *  Created on: 7/9/2017
+ *  Created on: 8/9/2017
  *      Author: utnso
  */
 
-#ifndef HEADERS_LOGMASTER_H_
-#define HEADERS_LOGMASTER_H_
+#ifndef HEADERS_LOGYAMA_H_
+#define HEADERS_LOGYAMA_H_
 
 #include "commons/log.h"
 #include <stdlib.h>
@@ -31,4 +31,4 @@ void logDebug(const char* mensaje, ...);
 
 
 
-#endif /* HEADERS_LOGMASTER_H_ */
+#endif /* HEADERS_LOGYAMA_H_ */
