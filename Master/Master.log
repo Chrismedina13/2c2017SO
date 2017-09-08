@@ -42,9 +42,93 @@
 
 [INFO] 16:39:16:39 YAMA/(2569:2569): Archivo de configuracion YAMA PUERTO : 5200 
 
+<<<<<<< HEAD
 [INFO] 18:34:51:980 YAMA/(5101:5101): HOLAAA
 [ERROR] 18:34:51:980 YAMA/(5101:5101): Muestra Error
 [INFO] 18:34:51:980 YAMA/(5101:5101): Archivo de configuracion IP YAMA : 127.0.0.1 
 
 [INFO] 18:34:51:980 YAMA/(5101:5101): Archivo de configuracion YAMA PUERTO : 5200 
+=======
+[INFO] 16:54:56:937 YAMA/(2770:2770): HOLAAA
+[ERROR] 16:54:56:943 YAMA/(2770:2770): Muestra Error
+[INFO] 16:54:56:943 YAMA/(2770:2770): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:54:56:943 YAMA/(2770:2770): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:58:07:782 YAMA/(2797:2797): HOLAAA
+[ERROR] 16:58:07:784 YAMA/(2797:2797): Muestra Error
+[INFO] 16:58:07:784 YAMA/(2797:2797): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:58:07:791 YAMA/(2797:2797): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:49:24:397 YAMA/(3510:3510): HOLAAA
+[ERROR] 17:49:24:402 YAMA/(3510:3510): Muestra Error
+[INFO] 17:49:24:402 YAMA/(3510:3510): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:49:24:402 YAMA/(3510:3510): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:50:55:255 YAMA/(3545:3545): HOLAAA
+[ERROR] 17:50:55:255 YAMA/(3545:3545): Muestra Error
+[INFO] 17:50:55:256 YAMA/(3545:3545): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:50:55:256 YAMA/(3545:3545): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:59:53:716 YAMA/(3605:3605): HOLAAA
+[ERROR] 17:59:53:718 YAMA/(3605:3605): Muestra Error
+[INFO] 17:59:53:718 YAMA/(3605:3605): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:59:53:718 YAMA/(3605:3605): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:03:19:951 YAMA/(3648:3648): HOLAAA
+[ERROR] 18:03:19:952 YAMA/(3648:3648): Muestra Error
+[INFO] 18:03:19:952 YAMA/(3648:3648): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:03:19:952 YAMA/(3648:3648): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:03:19:953 YAMA/(3648:3648): SocketCliente = -1 
+
+[INFO] 18:03:39:519 YAMA/(3689:3689): HOLAAA
+[ERROR] 18:03:39:519 YAMA/(3689:3689): Muestra Error
+[INFO] 18:03:39:519 YAMA/(3689:3689): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:03:39:519 YAMA/(3689:3689): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:03:39:519 YAMA/(3689:3689): SocketCliente = -1 
+
+[INFO] 18:05:03:1 YAMA/(3753:3753): HOLAAA
+[ERROR] 18:05:03:1 YAMA/(3753:3753): Muestra Error
+[INFO] 18:05:03:1 YAMA/(3753:3753): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:05:03:1 YAMA/(3753:3753): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:05:03:2 YAMA/(3753:3753): Se recibio: Hola Masterq·
+[INFO] 18:05:03:2 YAMA/(3753:3753): SocketCliente = -1 
+
+[INFO] 18:09:06:442 YAMA/(3810:3810): HOLAAA
+[ERROR] 18:09:06:445 YAMA/(3810:3810): Muestra Error
+[INFO] 18:09:06:446 YAMA/(3810:3810): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:09:06:446 YAMA/(3810:3810): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:09:06:446 YAMA/(3810:3810): Se recibio: Ö¿ì[Ö¿-”Z·Är·
+[INFO] 18:09:06:446 YAMA/(3810:3810): SocketCliente = -1 
+
+[INFO] 18:10:10:584 YAMA/(3833:3833): HOLAAA
+[ERROR] 18:10:10:584 YAMA/(3833:3833): Muestra Error
+[INFO] 18:10:10:584 YAMA/(3833:3833): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:10:10:584 YAMA/(3833:3833): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:10:10:584 YAMA/(3833:3833): Se recibio: €¿ì}€¿-T^·ÄÓu·
+[INFO] 18:10:10:584 YAMA/(3833:3833): SocketCliente = -1 
+
+[INFO] 18:15:25:654 YAMA/(3893:3893): HOLAAA
+[ERROR] 18:15:25:654 YAMA/(3893:3893): Muestra Error
+[INFO] 18:15:25:654 YAMA/(3893:3893): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:15:25:654 YAMA/(3893:3893): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:15:25:655 YAMA/(3893:3893): Se recibio: Hola MasterÃn·
+[INFO] 18:15:25:655 YAMA/(3893:3893): SocketCliente = -1 
+>>>>>>> 5cd86e6755c62ed0894043ff4b76832d2c5b3041
 
