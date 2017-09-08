@@ -5,15 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/FileSystem.c \
-../src/configuracion.c 
+../src/configuracion.c \
+../src/socketsFileSystem.c 
 
 OBJS += \
 ./src/FileSystem.o \
-./src/configuracion.o 
+./src/configuracion.o \
+./src/socketsFileSystem.o 
 
 C_DEPS += \
 ./src/FileSystem.d \
-./src/configuracion.d 
+./src/configuracion.d \
+./src/socketsFileSystem.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
