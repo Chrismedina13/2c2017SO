@@ -27,14 +27,14 @@ int main(void) {
 	//socketClienteParaFileSystem
 
 	int FDsocketClienteFileSystem;
-	FDsocketClienteFileSystem = SocketCliente("127.0.0.1",5060); //127.0.0.1 es la ip local , 5060 puerto del DataNode
+	FDsocketClienteFileSystem = SocketCliente(config->ipFileSystem,config->puertoFileSystem);
 
 	printf("SocketCliente = %d \n",FDsocketClienteFileSystem);
 
-	char buffer[11];
-	recv(FDsocketClienteFileSystem,buffer,11,0);
+	char buffer[13];
+	if(recv(FDsocketClienteFileSystem,buffer,13,0) != -1){
 	printf("Se recibio: %s",buffer);
-
+	}
 	free(config);
 
 

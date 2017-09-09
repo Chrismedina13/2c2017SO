@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
 	printf("Se conecto un DataNode su FD es el  = %d\n",FDServidor);
 
-	if(send(FDServidor,"Hola DataNode",11,0) != -1){
+	if(send(FDServidor,"Hola DataNode",13,0) != -1){
 
 		puts("Mensaje a DataNode enviado correctamente");
 	}

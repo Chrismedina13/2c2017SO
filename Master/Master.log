@@ -132,3 +132,79 @@
 [INFO] 18:15:25:655 YAMA/(3893:3893): SocketCliente = -1 
 >>>>>>> 5cd86e6755c62ed0894043ff4b76832d2c5b3041
 
+[INFO] 22:40:13:661 YAMA/(2454:2454): HOLAAA
+[ERROR] 22:40:13:673 YAMA/(2454:2454): Muestra Error
+[INFO] 22:40:13:706 YAMA/(2454:2454): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:40:13:706 YAMA/(2454:2454): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:40:13:706 YAMA/(2454:2454): Se recibio: Hola Masterók·
+[INFO] 22:40:13:706 YAMA/(2454:2454): SocketCliente = -1 
+
+[INFO] 22:51:06:261 YAMA/(2725:2725): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:51:06:261 YAMA/(2725:2725): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:51:06:262 YAMA/(2725:2725): SocketCliente = 4 
+
+[INFO] 22:51:06:262 YAMA/(2725:2725): SocketCliente = -1 
+
+[INFO] 22:51:06:262 YAMA/(2725:2725): Se recibio: Hola Master
+[INFO] 22:54:10:40 YAMA/(2789:2789): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:54:10:42 YAMA/(2789:2789): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:54:10:44 YAMA/(2789:2789): SocketCliente = 4 
+
+[INFO] 22:54:10:44 YAMA/(2789:2789): SocketCliente = -1 
+
+[INFO] 22:54:10:44 YAMA/(2789:2789): Se recibio: Hola Master
+[INFO] 22:54:10:44 YAMA/(2789:2789): Se recibio: 8€¿-Z·ÄHola Master
+[INFO] 22:55:40:334 YAMA/(2848:2848): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:55:40:335 YAMA/(2848:2848): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:55:40:336 YAMA/(2848:2848): SocketCliente = -1 
+
+[INFO] 22:55:40:336 YAMA/(2848:2848): Se recibio: 
+[INFO] 22:56:49:328 YAMA/(2883:2883): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:56:49:330 YAMA/(2883:2883): Archivo de configuracion YAMA PUERTO : 5300 
+
+[INFO] 22:56:49:330 YAMA/(2883:2883): SocketCliente = -1 
+
+[INFO] 22:56:49:330 YAMA/(2883:2883): Se recibio: 
+[INFO] 23:04:00:819 YAMA/(3066:3066): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 23:04:00:819 YAMA/(3066:3066): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 23:04:00:820 YAMA/(3066:3066): SocketCliente = -1 
+
+[INFO] 23:04:00:820 YAMA/(3066:3066): Se recibio: 
+[INFO] 23:10:15:185 YAMA/(3268:3268): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 23:10:15:185 YAMA/(3268:3268): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 23:10:15:186 YAMA/(3268:3268): SocketCliente = 4 
+
+[INFO] 23:10:15:186 YAMA/(3268:3268): Se recibio: Soy YAMA
+[INFO] 23:11:47:738 YAMA/(3363:3363): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 23:11:47:739 YAMA/(3363:3363): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 23:11:47:740 YAMA/(3363:3363): SocketCliente = 4 
+
+[INFO] 23:11:47:740 YAMA/(3363:3363): SocketCliente = 5 
+
+[INFO] 23:11:47:740 YAMA/(3363:3363): Se recibio: Hola Master
+[INFO] 23:11:47:740 YAMA/(3363:3363): Se recibio: Soy YAMAHola Master
+[INFO] 23:15:56:572 YAMA/(3418:3418): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 23:15:56:578 YAMA/(3418:3418): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 23:15:56:579 YAMA/(3418:3418): SocketCliente = 4 
+
+[INFO] 23:15:56:579 YAMA/(3418:3418): SocketCliente = 5 
+
+[INFO] 23:15:56:579 YAMA/(3418:3418): Se recibio: Hola Master
+[INFO] 23:15:56:579 YAMA/(3418:3418): Se recibio: Soy YAMAHola Master

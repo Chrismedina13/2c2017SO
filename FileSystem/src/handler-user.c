@@ -5,6 +5,7 @@
  *      Author: utnso
  */
 
+/*
 #include "handler-user.h"
 #include <commons/collections/queue.h>
 #include <stdbool.h>
@@ -443,3 +444,4 @@ void datosPedidosSobreElHeap(PCB* pcb){
 	//printf("Cantidad de memoria solicitada en Heap = %i \n",);
 	//printf("Cantidad de liberada en Heap = %i \n",);
 }
+*/

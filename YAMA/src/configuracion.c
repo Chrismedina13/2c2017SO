@@ -28,8 +28,10 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 	configuracion->puertoFileSystem = config_get_int_value(configTemporal, FS_PUERTO);
 	configuracion->retardo = config_get_int_value(configTemporal, RETARDO_PLANIFICACION);
 	configuracion->algoritmo_bal = strdup(config_get_string_value(configTemporal, ALGORITMO_BALANCEO));
+	configuracion->puertoYama = config_get_int_value(configTemporal, YAMA_PUERTO);
 
-    config_destroy(configTemporal);
+
+	config_destroy(configTemporal);
 
     return configuracion;
 

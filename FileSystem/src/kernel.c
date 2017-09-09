@@ -7,7 +7,7 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-
+/*
 #include "kernel.h"
 #include "handler-user.h"
 #include "handler-console.h"
@@ -45,8 +45,8 @@ int main(int argc, char *argv[]) {
 	logInfo("%i semaforo",valoresDelosSemoros[2]);
 
 
-	/* Parte de creacion de servidor kernel para aceptar conexiones de consolas y cpu */
-	logInfo("Inicializando sockets servidor");
+	// Parte de creacion de servidor kernel para aceptar conexiones de consolas y cpu
+/*	logInfo("Inicializando sockets servidor");
 	crearSockets(&kernelStruct);
 
 
@@ -115,5 +115,6 @@ void inicializarSemaforos(Configuration* config){
 		valoresDelosSemoros[i] = config->sem_init[i];
 		bloqueadosPorSemaforo[i] = queue_create();
 	}
-}
+}*/
+
 

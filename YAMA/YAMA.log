@@ -70,3 +70,112 @@
 
 [INFO] 18:15:21:354 YAMA/(3883:3883): Archivo de configuracion PUERTO FileSystem : 5300 
 
+[INFO] 22:50:43:556 YAMA/(2692:2692): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:50:43:556 YAMA/(2692:2692): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 22:50:43:556 YAMA/(2692:2692): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:50:43:557 YAMA/(2692:2692): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:50:43:557 YAMA/(2692:2692): Archivo de configuracion Algoritmo de Balanceo : 0 
+
+[INFO] 22:53:44:320 YAMA/(2761:2761): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:53:44:320 YAMA/(2761:2761): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 22:53:44:320 YAMA/(2761:2761): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:53:44:320 YAMA/(2761:2761): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:53:44:320 YAMA/(2761:2761): Archivo de configuracion Algoritmo de Balanceo : 0 
+
+[INFO] 22:55:29:812 YAMA/(2819:2819): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:55:29:857 YAMA/(2819:2819): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 22:55:29:857 YAMA/(2819:2819): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:55:29:857 YAMA/(2819:2819): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:55:29:857 YAMA/(2819:2819): Archivo de configuracion Algoritmo de Balanceo : 0 
+
+[INFO] 22:56:33:4 YAMA/(2862:2862): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:56:34:6 YAMA/(2862:2862): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 22:56:34:6 YAMA/(2862:2862): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:56:34:6 YAMA/(2862:2862): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:56:34:6 YAMA/(2862:2862): Archivo de configuracion Algoritmo de Balanceo : 0 
+
+[INFO] 23:03:47:846 YAMA/(3055:3055): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:03:47:846 YAMA/(3055:3055): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:03:47:846 YAMA/(3055:3055): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:03:47:846 YAMA/(3055:3055): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:03:47:846 YAMA/(3055:3055): Archivo de configuracion Algoritmo de Balanceo : 0 
+
+[INFO] 23:09:11:144 YAMA/(3247:3247): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:09:11:145 YAMA/(3247:3247): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:09:11:145 YAMA/(3247:3247): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:09:11:145 YAMA/(3247:3247): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:09:11:145 YAMA/(3247:3247): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:10:10:398 YAMA/(3258:3258): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:10:10:399 YAMA/(3258:3258): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:10:10:399 YAMA/(3258:3258): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:10:10:399 YAMA/(3258:3258): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:10:10:399 YAMA/(3258:3258): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:10:15:186 YAMA/(3258:3258): Se conecto un Master su FD es el  = 5
+
+[INFO] 23:10:15:186 YAMA/(3258:3258): Mensaje a Master enviado correctamente
+[INFO] 23:11:23:276 YAMA/(3306:3306): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:11:23:281 YAMA/(3306:3306): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:11:23:282 YAMA/(3306:3306): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:11:23:282 YAMA/(3306:3306): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:11:23:282 YAMA/(3306:3306): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:11:36:144 YAMA/(3327:3327): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:11:36:146 YAMA/(3327:3327): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:11:36:146 YAMA/(3327:3327): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:11:36:146 YAMA/(3327:3327): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:11:36:146 YAMA/(3327:3327): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:11:47:739 YAMA/(3327:3327): Se conecto un Master su FD es el  = 5
+
+[INFO] 23:11:47:739 YAMA/(3327:3327): Mensaje a Master enviado correctamente
+[INFO] 23:15:53:410 YAMA/(3407:3407): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:15:53:411 YAMA/(3407:3407): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 23:15:53:411 YAMA/(3407:3407): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:15:53:411 YAMA/(3407:3407): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:15:53:411 YAMA/(3407:3407): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:15:56:579 YAMA/(3407:3407): Se conecto un Master su FD es el  = 5
+
+[INFO] 23:15:56:579 YAMA/(3407:3407): Mensaje a Master enviado correctamente

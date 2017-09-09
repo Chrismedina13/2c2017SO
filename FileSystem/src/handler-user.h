@@ -5,6 +5,7 @@
  *      Author: utnso
  */
 
+/*
 #ifndef HANDLER_USER_C_
 #define HANDLER_USER_C_
 

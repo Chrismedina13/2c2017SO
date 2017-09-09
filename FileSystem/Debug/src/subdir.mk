@@ -6,16 +6,22 @@
 C_SRCS += \
 ../src/FileSystem.c \
 ../src/configuracion.c \
+../src/handler-user.c \
+../src/kernel.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
 ./src/FileSystem.o \
 ./src/configuracion.o \
+./src/handler-user.o \
+./src/kernel.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
 ./src/FileSystem.d \
 ./src/configuracion.d \
+./src/handler-user.d \
+./src/kernel.d \
 ./src/socketsFileSystem.d 
 
 

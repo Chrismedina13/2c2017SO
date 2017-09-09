@@ -6,6 +6,8 @@
  */
 
 #include "Headers/socketsDataNode.h"
+#include <sys/socket.h>
+
 
 int SocketCliente(const char* ip, int port) {
 	int FDCliente;
