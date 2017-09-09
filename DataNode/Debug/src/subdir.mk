@@ -6,16 +6,19 @@
 C_SRCS += \
 ../src/DataNode.c \
 ../src/configuracionDN.c \
+../src/logDataNode.c \
 ../src/socketsDataNode.c 
 
 OBJS += \
 ./src/DataNode.o \
 ./src/configuracionDN.o \
+./src/logDataNode.o \
 ./src/socketsDataNode.o 
 
 C_DEPS += \
 ./src/DataNode.d \
 ./src/configuracionDN.d \
+./src/logDataNode.d \
 ./src/socketsDataNode.d 
 
 
