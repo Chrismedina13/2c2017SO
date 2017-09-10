@@ -5,8 +5,8 @@
  *      Author: utnso
  */
 
-#ifndef HEADERS_LOGFILESYSTEM_H_
-#define HEADERS_LOGFILESYSTEM_H_
+#ifndef HEADERS_LOGWORKER_H_
+#define HEADERS_LOGWORKER_H_
 
 #include "commons/log.h"
 #include <stdlib.h>
@@ -24,4 +24,4 @@ void logError(const char* mensaje, ...);
 void logWarnig(const char* mensaje, ...);
 void logDebug(const char* mensaje, ...);
 
-#endif /* HEADERS_LOGFILESYSTEM_H_ */
+#endif /* HEADERS_LOGWORKER_H_ */

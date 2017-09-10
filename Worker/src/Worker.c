@@ -13,7 +13,11 @@
 
 int main(int argc, char *argv[]) {
 
+	//Archivo de logs
+	crearLog("Worker.log","WORKER",1,log_level_from_string("INFO"));
+
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+	logInfo("Leo  %s \n",ARCHIVO_CONFIGURACION);
 
 	printf("Archivo de configuracion puerto DataNode : %i \n", config->puertoDataNode);
 	printf("Archivo de configuracion puerto worker : %i \n", config->puertoWorker);
@@ -24,6 +28,8 @@ int main(int argc, char *argv[]) {
 
 	//socketServer
 	int FDServidor = socketServidor(config->puertoWorker);
+
+	logInfo("SocketCliente = %d \n", FDServidor);
 
 	printf("Se conecto un Master su FD es el  = %d\n",FDServidor);
 

@@ -1,11 +1,4 @@
-/*
- * logFileSystem.c
- *
- *  Created on: 10/9/2017
- *      Author: utnso
- */
-
-#include "Headers/logFileSystem.h"
+#include "Headers/logWorker.h"
 
 void crearLog(char* archivo, char* nombreDelPrograma, bool mostrarPorConsola,
 		t_log_level nivelDeLog) {

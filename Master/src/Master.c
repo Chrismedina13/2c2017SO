@@ -12,7 +12,7 @@
 int main(int argc, char *argv[]) {
 
 	//Archivo de Logs
-	crearLog("Master.log", "YAMA", 1, log_level_from_string("INFO"));
+	crearLog("Master.log", "MASTER", 1, log_level_from_string("INFO"));
 
 	//Archivo de configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
@@ -31,11 +31,9 @@ int main(int argc, char *argv[]) {
 
 	logInfo("SocketCliente = %d \n", FDsocketClienteYAMA);
 
-
 	char buffer[11];
 	recv(FDsocketClienteWorker, buffer, 11, 0);
 	logInfo("Se recibio: %s", buffer);
-
 
 	char buffer2[8];
 	recv(FDsocketClienteYAMA, buffer2, 8, 0);

@@ -8,12 +8,12 @@
 #include "Headers/logMaster.h"
 
 
-void crearLog(char* archivo,char* nombreDelPrograma,bool mostrarPorConsola,t_log_level nivelDeLog){
+void crearLog(char* archivo, char* nombreDelPrograma, bool mostrarPorConsola,
+		t_log_level nivelDeLog) {
 
-	logger = log_create(archivo,nombreDelPrograma,mostrarPorConsola,nivelDeLog);
+	logger = log_create(archivo, nombreDelPrograma, mostrarPorConsola,
+			nivelDeLog);
 }
-
-
 void logInfo(const char* mensajeDeEntrada, ...){
 	va_list arguments;
 	va_start(arguments, mensajeDeEntrada);

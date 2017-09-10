@@ -15,7 +15,7 @@
 int main(void) {
 	//Archivo de Logs
 
-	crearLog("DataNode.log", "YAMA", 1, log_level_from_string("INFO"));
+	crearLog("DataNode.log", "DATANODE", 1, log_level_from_string("INFO"));
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);

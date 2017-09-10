@@ -6,16 +6,19 @@
 C_SRCS += \
 ../src/Worker.c \
 ../src/configuracionW.c \
+../src/logWorker.c \
 ../src/socketsWorker.c 
 
 OBJS += \
 ./src/Worker.o \
 ./src/configuracionW.o \
+./src/logWorker.o \
 ./src/socketsWorker.o 
 
 C_DEPS += \
 ./src/Worker.d \
 ./src/configuracionW.d \
+./src/logWorker.d \
 ./src/socketsWorker.d 
 
 

@@ -212,3 +212,46 @@
 
 [INFO] 14:21:37:601 YAMA/(3505:3505): Archivo de configuracion Puerto YAMA : 5200 
 
+[INFO] 20:17:50:561 YAMA/(4448:4448): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:17:50:561 YAMA/(4448:4448): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 20:17:50:561 YAMA/(4448:4448): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:17:50:561 YAMA/(4448:4448): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:17:50:561 YAMA/(4448:4448): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:17:56:900 YAMA/(4448:4448): Se conecto un Master su FD es el  = 5
+
+[INFO] 20:17:56:900 YAMA/(4448:4448): Mensaje a Master enviado correctamente
+[INFO] 20:24:41:499 YAMA/(4621:4621): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:24:41:502 YAMA/(4621:4621): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 20:24:41:503 YAMA/(4621:4621): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:24:41:503 YAMA/(4621:4621): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:24:41:503 YAMA/(4621:4621): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:25:15:350 YAMA/(4698:4698): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:25:15:352 YAMA/(4698:4698): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 20:25:15:352 YAMA/(4698:4698): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:25:15:352 YAMA/(4698:4698): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:25:15:352 YAMA/(4698:4698): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:28:42:979 YAMA/(4867:4867): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:28:42:981 YAMA/(4867:4867): Archivo de configuracion puerto fileSystem : 5300 
+
+[INFO] 20:28:42:981 YAMA/(4867:4867): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:28:42:981 YAMA/(4867:4867): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:28:42:981 YAMA/(4867:4867): Archivo de configuracion Puerto YAMA : 5200 
+
