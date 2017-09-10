@@ -1,6 +1,7 @@
 /*
  ============================================================================
  Name        : FileSystem.c
+
  Author      : 
  Version     :
  Copyright   : Your copyright notice
@@ -10,6 +11,10 @@
 #include "Headers/FileSystem.h"
 
 int main(int argc, char *argv[]) {
+
+	//Archivo de logs
+	crearLog("FileSystem.log","YAMA",1,log_level_from_string("INFO"));
+
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
@@ -21,12 +26,19 @@ int main(int argc, char *argv[]) {
 
 	printf("Se conecto un DataNode su FD es el  = %d\n",FDServidor);
 
+	logInfo("FD del DataNode : %i \n",FDServidor);
+
 	if(send(FDServidor,"Hola DataNode",13,0) != -1){
 
 		puts("Mensaje a DataNode enviado correctamente");
+
+		logInfo("Comunicacion con DataNode establecida");
 	}
 	else{
 		puts("Error en el envio");
+
+		logInfo("Error en la comunicacion con DataNode");
+
 	}
 
 	free(config);

@@ -208,3 +208,13 @@
 
 [INFO] 23:15:56:579 YAMA/(3418:3418): Se recibio: Hola Master
 [INFO] 23:15:56:579 YAMA/(3418:3418): Se recibio: Soy YAMAHola Master
+[INFO] 13:13:48:52 YAMA/(2784:2784): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 13:13:48:52 YAMA/(2784:2784): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 13:13:48:53 YAMA/(2784:2784): SocketCliente = -1 
+
+[INFO] 13:13:48:53 YAMA/(2784:2784): SocketCliente = 5 
+
+[INFO] 13:13:48:53 YAMA/(2784:2784): Se recibio: cn·
+[INFO] 13:13:48:53 YAMA/(2784:2784): Se recibio: Soy YAMAcn·

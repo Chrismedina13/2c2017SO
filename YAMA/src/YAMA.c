@@ -8,10 +8,7 @@
  ============================================================================
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "Headers/yama.h"
-#include "Headers/socketsYAMA.h"
 
 
 int main(int argc, char *argv[]) {

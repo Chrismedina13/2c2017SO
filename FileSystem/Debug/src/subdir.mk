@@ -8,6 +8,7 @@ C_SRCS += \
 ../src/configuracion.c \
 ../src/handler-user.c \
 ../src/kernel.c \
+../src/logFileSystem.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
@@ -15,6 +16,7 @@ OBJS += \
 ./src/configuracion.o \
 ./src/handler-user.o \
 ./src/kernel.o \
+./src/logFileSystem.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
@@ -22,6 +24,7 @@ C_DEPS += \
 ./src/configuracion.d \
 ./src/handler-user.d \
 ./src/kernel.d \
+./src/logFileSystem.d \
 ./src/socketsFileSystem.d 
 
 

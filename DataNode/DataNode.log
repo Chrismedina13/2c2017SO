@@ -42,3 +42,47 @@
 [INFO] 06:47:37:280 YAMA/(3411:3411): SocketCliente = 4 
 
 [INFO] 06:47:37:282 YAMA/(3411:3411): Se recibio: Hola DataNode
+[INFO] 13:13:34:43 YAMA/(2764:2764): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 13:13:34:44 YAMA/(2764:2764): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 13:13:34:44 YAMA/(2764:2764): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 13:13:34:44 YAMA/(2764:2764): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 13:13:34:44 YAMA/(2764:2764): Archivo de configuracion nombre nodo : NODO1 
+
+[INFO] 13:13:34:44 YAMA/(2764:2764): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 13:13:34:45 YAMA/(2764:2764): SocketCliente = 4 
+
+[INFO] 13:13:34:45 YAMA/(2764:2764): Se recibio: Hola DataNode
+[INFO] 14:27:20:345 YAMA/(3626:3626): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): Archivo de configuracion nombre nodo : NODO1 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 14:27:20:347 YAMA/(3626:3626): SocketCliente = -1 
+
+[INFO] 14:27:30:740 YAMA/(3646:3646): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 14:27:30:742 YAMA/(3646:3646): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 14:27:30:742 YAMA/(3646:3646): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 14:27:30:742 YAMA/(3646:3646): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 14:27:30:742 YAMA/(3646:3646): Archivo de configuracion nombre nodo : NODO1 
+
+[INFO] 14:27:30:742 YAMA/(3646:3646): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 14:27:30:744 YAMA/(3646:3646): SocketCliente = 4 
+
+[INFO] 14:27:30:744 YAMA/(3646:3646): Se recibio: Hola DataNode
