@@ -26,20 +26,10 @@ int main(int argc, char *argv[]) {
 	printf("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
 	printf("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
 
-	//socketServer
-	int FDServidor = socketServidor(config->puertoWorker);
+	logInfo("Comunicacion con los Masters");
 
-	logInfo("SocketCliente = %d \n", FDServidor);
-
-	printf("Se conecto un Master su FD es el  = %d\n",FDServidor);
-
-	if(send(FDServidor,"Hola Master",11,0) != -1){
-
-		puts("Mensaje a Master enviado correctamente");
-	}
-	else{
-		puts("Error en el envio");
-	}
+	//Creo esta funcion en donde se encarga la comunicacion con el master aca iria el select y los works
+	comunicacionConMaster(config->puertoWorker);
 
 	free(config); // no estoy seguro si se libera asi
 	return EXIT_SUCCESS;

@@ -6,6 +6,26 @@
  */
 #include "Headers/socketsWorker.h"
 
+void comunicacionConMaster(int puertoWorker){
+
+	int socketWorker;
+
+	socketWorker = socketServidor(puertoWorker);
+
+	logInfo("SocketCliente = %d \n", socketWorker);
+
+	logInfo("Se conecto un Master su FD es el  = %d\n",socketWorker);
+
+	if(send(socketWorker,"Hola Master",11,0) != -1){
+
+		puts("Mensaje a Master enviado correctamente");
+	}
+	else{
+		puts("Error en el envio");
+	}
+
+}
+
 int socketServidor(int puerto){
 
 	int FDSocket;
