@@ -56,6 +56,9 @@ int socketServidor(int puerto){
 	return FDAccept;
 
 
+
+
+
 }
 
 

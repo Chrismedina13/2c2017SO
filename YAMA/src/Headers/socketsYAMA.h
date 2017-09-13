@@ -20,4 +20,7 @@ struct sockaddr_in their_addr;
 
 int socketServidor(int puerto);
 
+int SocketCliente(const char* ip, int port);
+
+
 #endif /* HEADERS_SOCKETSYAMA_H_ */

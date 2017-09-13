@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
 
 
-	//socketServer
+/*	//socketServer
 		int FDServidor = socketServidor(config->puertoYama);
 
 		logInfo("Se conecto un Master su FD es el  = %d\n",FDServidor);
@@ -39,8 +39,21 @@ int main(int argc, char *argv[]) {
 		else{
 			logInfo("Error en el envio");
 		}
+*/
+
+		//socketClienteParaFileSystem
+
+			int FDsocketClienteFileSystem;
+			FDsocketClienteFileSystem = SocketCliente(config->ipFileSystem,config->puertoFileSystem);
+
+			logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
+
+			char buffer[13];
+			if(recv(FDsocketClienteFileSystem,buffer,13,0) != -1){
+				logInfo("Se recibio: %s",buffer);
+			}
 
 
-
+			free(config);
 	return EXIT_SUCCESS;
 }

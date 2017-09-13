@@ -23,7 +23,8 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 		exit(1);
 		}
 	}
-	configuracion->puerto = config_get_int_value(configTemporal, PUERTO);
+	configuracion->puerto1 = config_get_int_value(configTemporal, PUERTO1);
+	configuracion->puerto2 = config_get_int_value(configTemporal, PUERTO2);
 
     config_destroy(configTemporal);
 

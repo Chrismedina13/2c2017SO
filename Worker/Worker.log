@@ -1,0 +1,10 @@
+[INFO] 17:30:28:325 WORKER/(2898:2898): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 17:30:28:328 WORKER/(2898:2898): Comunicacion con los Masters
+[INFO] 17:32:15:901 WORKER/(3018:3018): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 17:32:15:902 WORKER/(3018:3018): Comunicacion con los Masters
+[INFO] 17:32:51:654 WORKER/(2898:2898): SocketCliente = 5 
+
+[INFO] 17:32:51:654 WORKER/(2898:2898): Se conecto un Master su FD es el  = 5
+

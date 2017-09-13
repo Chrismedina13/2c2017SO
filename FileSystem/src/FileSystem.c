@@ -19,26 +19,45 @@ int main(int argc, char *argv[]) {
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	printf("Archivo de configuracion puerto FILESYSTEM : %i \n",
-			config->puerto);
+			config->puerto1);
+	printf("Archivo de configuracion puerto FILESYSTEM : %i \n",
+			config->puerto2);
+
 
 	//socketServer
-	int FDServidor = socketServidor(config->puerto);
+	int FDServidorYAMA = socketServidor(config->puerto1);
 
-	printf("Se conecto un DataNode su FD es el  = %d\n", FDServidor);
+	int FDServidorDN = socketServidor(config->puerto2);
 
-	logInfo("FD del DataNode : %i \n", FDServidor);
+	printf("Se conecto un Yama su FD es el  = %d\n", FDServidorYAMA);
+	printf("Se conecto un DataNode su FD es el  = %d\n", FDServidorDN);
 
-	if (send(FDServidor, "Hola DataNode", 13, 0) != -1) {
+	logInfo("FD del DataNode : %i \n", FDServidorDN);
+	logInfo("FD del Yama : %i \n", FDServidorYAMA);
+
+	if (send(FDServidorDN, "Hola DataNode", 13, 0) != -1) {
 
 		puts("Mensaje a DataNode enviado correctamente");
 
 		logInfo("Comunicacion con DataNode establecida");
 	} else {
-		puts("Error en el envio");
+		puts("Error en el envio a Data Node");
 
 		logInfo("Error en la comunicacion con DataNode");
-
 	}
+
+
+	if (send(FDServidorYAMA, "Hola YAMA", 13, 0) != -1) {
+
+			puts("Mensaje a DataNode enviado correctamente");
+
+			logInfo("Comunicacion con YAMA establecida");
+		} else {
+			puts("Error en el envio a YAMA");
+
+			logInfo("Error en la comunicacion con YAMA");
+
+		}
 
 	free(config);
 

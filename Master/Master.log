@@ -1,0 +1,20 @@
+[INFO] 17:27:34:297 MASTER/(2837:2837): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:27:34:307 MASTER/(2837:2837): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:27:34:307 MASTER/(2837:2837): SocketCliente = -1 
+
+[INFO] 17:27:34:307 MASTER/(2837:2837): SocketCliente = -1 
+
+[INFO] 17:27:34:307 MASTER/(2837:2837): Se recibio: {·
+[INFO] 17:27:34:307 MASTER/(2837:2837): Se recibio: yƒ¿-”c·Ä{·
+[INFO] 17:32:51:653 MASTER/(3038:3038): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:32:51:654 MASTER/(3038:3038): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:32:51:655 MASTER/(3038:3038): SocketCliente = 4 
+
+[INFO] 17:32:51:655 MASTER/(3038:3038): SocketCliente = 5 
+
+[INFO] 17:32:51:655 MASTER/(3038:3038): Se recibio: Hola Master
+[INFO] 17:32:51:655 MASTER/(3038:3038): Se recibio: Soy YAMAHola Master
