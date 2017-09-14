@@ -5,26 +5,67 @@
  *      Author: utnso
  */
 #include "Headers/socketsWorker.h"
+#define MAX 100
+void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 
-void comunicacionConMaster(int puertoWorker){
 
-	int socketWorker;
+	//Creo Servidor Principal
+	int socketWorkerServidor;
+	socketWorkerServidor = socketServidor(puertoWorker);
 
-	socketWorker = socketServidor(puertoWorker);
+	fd_set master;
+	fd_set read_fds;
+	int fd_max;
+	int i;
+	int FD_Cliente;
 
-	logInfo("SocketCliente = %d \n", socketWorker);
+	FD_SET(socketWorkerServidor,&master);
+	fd_max = socketWorkerServidor;
 
-	logInfo("Se conecto un Master su FD es el  = %d\n",socketWorker);
+	for(;;){
 
-	if(send(socketWorker,"Hola Master",11,0) != -1){
+		read_fds = master;
+		if(select(fd_max+1, &read_fds,NULL,NULL,NULL) == -1){
 
-		puts("Mensaje a Master enviado correctamente");
+			logInfo("Error en el select");
+		}
+		for(i = 0;i <= fd_max; i++){
+
+			if(FD_ISSET(i,&read_fds)){
+
+				if(i == socketWorkerServidor){
+
+					if((FD_Cliente = aceptarYRegistrarSocket(socketWorkerServidor,mastersConectados)) == -1){
+
+						logInfo("Error en el aceept despues del select");
+
+					}else{
+						FD_SET(FD_Cliente,&master);
+						if(FD_Cliente > fd_max){
+							fd_max = FD_Cliente;
+						}
+						logInfo("Nueva conexion del socket cliente Master de FD: %i",FD_Cliente);
+					}
+				}else{
+
+					//Recibo datos de algun cliente
+					char buffer[5];
+					if(recv(i,buffer,5,0) != -1){
+
+						logInfo("Se recibio Del Master %s",buffer);
+					}else{
+
+						logInfo("Error de recepcion o cerro la conexion");
+						close(i);
+						FD_CLR(i,&master);
+					}
+				}
+
+				}
+			}
+
+		}
 	}
-	else{
-		puts("Error en el envio");
-	}
-
-}
 
 int socketServidor(int puerto){
 
@@ -59,15 +100,30 @@ int socketServidor(int puerto){
 		puts("Error en el listen");
 	}
 
-	size = sizeof(struct sockaddr_in);
-	FDAccept = accept(FDSocket,(struct sockaddr *)&their_addr, &size);
+	//crea El servidor , no la acepta
 
-	if(FDAccept == -1 ){
+	return FDSocket;
+}
 
-		puts("Error en el Accept");
+int aceptarYRegistrarSocket(int socketServidor,t_list* conectados){
+
+	struct sockaddr cliente;
+	socklen_t longitudCliente = sizeof(cliente);
+	int newSocketFileDescriptor;
+
+	newSocketFileDescriptor = accept(socketServidor, &cliente,
+			&longitudCliente);
+
+	if (newSocketFileDescriptor == -1) {
+		logError("Socket accept failed FD: %d\n", socketServidor);
+		return 0;
 	}
 
-	return FDAccept;
+	list_add(conectados,newSocketFileDescriptor);
+
+	return newSocketFileDescriptor;
+
+
 }
 
 

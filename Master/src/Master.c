@@ -27,12 +27,14 @@ int main(int argc, char *argv[]) {
 	int FDsocketClienteYAMA;
 	FDsocketClienteYAMA = SocketCliente(config->ipYama, config->puertoYama);
 
-	logInfo("SocketCliente = %d \n", FDsocketClienteWorker);
+	logInfo("SocketCliente Worker= %d \n", FDsocketClienteWorker);
 
-	logInfo("SocketCliente = %d \n", FDsocketClienteYAMA);
+	logInfo("SocketCliente YAMA = %d \n", FDsocketClienteYAMA);
 
 	char buffer[11];
-	recv(FDsocketClienteWorker, buffer, 11, 0);
+	send(FDsocketClienteWorker, "Holaa", 5, 0);
+
+	recv(FDsocketClienteWorker,buffer,11,0);
 	logInfo("Se recibio: %s", buffer);
 
 	char buffer2[8];

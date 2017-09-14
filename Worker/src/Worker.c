@@ -11,7 +11,10 @@
 #include "Headers/Worker.h"
 #include "Headers/socketsWorker.h"
 
+
 int main(int argc, char *argv[]) {
+
+	t_list* mastersConectados;
 
 	//Archivo de logs
 	crearLog("Worker.log","WORKER",1,log_level_from_string("INFO"));
@@ -29,7 +32,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Comunicacion con los Masters");
 
 	//Creo esta funcion en donde se encarga la comunicacion con el master aca iria el select y los works
-	comunicacionConMaster(config->puertoWorker);
+	comunicacionConMaster(config->puertoWorker,mastersConectados);
 
 	free(config); // no estoy seguro si se libera asi
 	return EXIT_SUCCESS;
