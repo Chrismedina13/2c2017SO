@@ -120,3 +120,109 @@
 
 [INFO] 10:57:32:998 MASTER/(4528:4528): Se recibio: C{·
 [INFO] 10:57:32:998 MASTER/(4528:4528): Se recibio: Úü¿-Äc·ÄC{·
+[INFO] 16:44:23:779 MASTER/(4612:4612): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:44:23:782 MASTER/(4612:4612): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:44:23:783 MASTER/(4612:4612): SocketCliente Worker= 4 
+
+[INFO] 16:44:23:783 MASTER/(4612:4612): SocketCliente YAMA = -1 
+
+[INFO] 16:46:20:553 MASTER/(4712:4712): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:46:20:553 MASTER/(4712:4712): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:46:20:554 MASTER/(4712:4712): SocketCliente Worker= -1 
+
+[INFO] 16:46:20:554 MASTER/(4712:4712): SocketCliente YAMA = -1 
+
+[INFO] 16:46:20:554 MASTER/(4712:4712): Se recibio: £û·
+[INFO] 16:46:20:554 MASTER/(4712:4712): Se recibio: òÿ¿-$ä·Ä£û·
+[INFO] 16:47:02:943 MASTER/(4779:4779): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:47:02:943 MASTER/(4779:4779): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:47:02:944 MASTER/(4779:4779): SocketCliente Worker= 4 
+
+[INFO] 16:47:02:944 MASTER/(4779:4779): SocketCliente YAMA = -1 
+
+[INFO] 17:08:26:694 MASTER/(5164:5164): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:08:26:694 MASTER/(5164:5164): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:08:26:695 MASTER/(5164:5164): SocketCliente Worker= 4 
+
+[INFO] 17:08:26:695 MASTER/(5164:5164): SocketCliente YAMA = -1 
+
+[INFO] 17:09:49:58 MASTER/(5225:5225): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:09:49:58 MASTER/(5225:5225): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:09:49:58 MASTER/(5225:5225): SocketCliente Worker= 4 
+
+[INFO] 17:09:49:58 MASTER/(5225:5225): SocketCliente YAMA = -1 
+
+[INFO] 17:10:55:315 MASTER/(5256:5256): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:10:55:319 MASTER/(5256:5256): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:10:55:320 MASTER/(5256:5256): SocketCliente Worker= 4 
+
+[INFO] 17:10:55:320 MASTER/(5256:5256): SocketCliente YAMA = -1 
+
+[INFO] 17:11:00:452 MASTER/(5267:5267): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:11:00:452 MASTER/(5267:5267): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:11:00:453 MASTER/(5267:5267): SocketCliente Worker= 4 
+
+[INFO] 17:11:00:453 MASTER/(5267:5267): SocketCliente YAMA = -1 
+
+[INFO] 17:11:33:60 MASTER/(5256:5256): Se recibio: #x·
+[INFO] 17:11:33:60 MASTER/(5267:5267): Se recibio: Cs·
+[INFO] 17:11:33:60 MASTER/(5267:5267): Se recibio: ê·¿-Ä[·ÄCs·
+[INFO] 17:11:33:60 MASTER/(5256:5256): Se recibio: ý¼¿-¤`·Ä#x·
+[INFO] 17:18:45:951 MASTER/(5421:5421): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:18:45:953 MASTER/(5421:5421): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:18:45:954 MASTER/(5421:5421): SocketCliente Worker= 4 
+
+[INFO] 17:18:45:954 MASTER/(5421:5421): SocketCliente YAMA = -1 
+
+[INFO] 17:18:52:52 MASTER/(5432:5432): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:18:52:52 MASTER/(5432:5432): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:18:52:54 MASTER/(5432:5432): SocketCliente Worker= 4 
+
+[INFO] 17:18:52:54 MASTER/(5432:5432): SocketCliente YAMA = -1 
+
+[INFO] 17:45:17:712 MASTER/(5947:5947): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:45:17:713 MASTER/(5947:5947): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:45:17:716 MASTER/(5947:5947): SocketCliente Worker= 4 
+
+[INFO] 17:45:17:716 MASTER/(5947:5947): SocketCliente YAMA = -1 
+
+[INFO] 17:45:19:581 MASTER/(5947:5947): Se recibio: Óv·
+[INFO] 17:45:19:581 MASTER/(5947:5947): Se recibio: ç€¿-T_·ÄÓv·
+[INFO] 18:01:59:866 MASTER/(6527:6527): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:01:59:866 MASTER/(6527:6527): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:01:59:866 MASTER/(6527:6527): SocketCliente Worker= -1 
+
+[INFO] 18:01:59:866 MASTER/(6527:6527): SocketCliente YAMA = -1 
+
+[INFO] 18:01:59:866 MASTER/(6527:6527): Se recibio: #u·
+[INFO] 18:01:59:867 MASTER/(6527:6527): Se recibio: Gš¿-¤]·Ä#u·
+[INFO] 18:09:42:850 MASTER/(7164:7164): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:09:42:850 MASTER/(7164:7164): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:09:42:851 MASTER/(7164:7164): SocketCliente Worker= 4 
+
+[INFO] 18:09:42:851 MASTER/(7164:7164): SocketCliente YAMA = -1 
+

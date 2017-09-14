@@ -11,7 +11,6 @@
 #include "Headers/Worker.h"
 #include "Headers/socketsWorker.h"
 
-
 int main(int argc, char *argv[]) {
 
 	t_list* mastersConectados;

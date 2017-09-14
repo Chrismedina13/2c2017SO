@@ -6,6 +6,7 @@
  */
 #include "Headers/socketsWorker.h"
 #define MAX 100
+
 void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 
 
@@ -18,6 +19,8 @@ void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 	int fd_max;
 	int i;
 	int FD_Cliente;
+	int bytesRecibidos;
+	char buffer[5];
 
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
@@ -49,15 +52,17 @@ void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 				}else{
 
 					//Recibo datos de algun cliente
-					char buffer[5];
-					if(recv(i,buffer,5,0) != -1){
+					if((bytesRecibidos = recv(i,buffer,5,0)) <= 0){
+						if(bytesRecibidos == 0){
+							logInfo("Conexion cerrada del FD : %i",i);
 
-						logInfo("Se recibio Del Master %s",buffer);
-					}else{
-
-						logInfo("Error de recepcion o cerro la conexion");
+						}
 						close(i);
 						FD_CLR(i,&master);
+
+					}else{
+
+						logInfo("Recibi de Master: %s",buffer);
 					}
 				}
 
