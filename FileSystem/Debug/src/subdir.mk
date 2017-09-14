@@ -6,6 +6,7 @@
 C_SRCS += \
 ../src/FileSystem.c \
 ../src/configuracion.c \
+../src/consola.c \
 ../src/handler-user.c \
 ../src/kernel.c \
 ../src/logFileSystem.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 OBJS += \
 ./src/FileSystem.o \
 ./src/configuracion.o \
+./src/consola.o \
 ./src/handler-user.o \
 ./src/kernel.o \
 ./src/logFileSystem.o \
@@ -22,6 +24,7 @@ OBJS += \
 C_DEPS += \
 ./src/FileSystem.d \
 ./src/configuracion.d \
+./src/consola.d \
 ./src/handler-user.d \
 ./src/kernel.d \
 ./src/logFileSystem.d \

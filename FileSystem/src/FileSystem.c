@@ -1,14 +1,9 @@
-/*
- ============================================================================
- Name        : FileSystem.c
-
- Author      : 
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
- ============================================================================
- */
 #include "Headers/FileSystem.h"
+#include <pthread.h>
+#include "commons/string.h"
+#include "Headers/consola.h"
+
+#include <stdbool.h>
 
 int main(int argc, char *argv[]) {
 
@@ -24,7 +19,7 @@ int main(int argc, char *argv[]) {
 			config->puerto2);
 
 
-	//socketServer
+	/*socketServer
 	int FDServidorYAMA = socketServidor(config->puerto1);
 
 	int FDServidorDN = socketServidor(config->puerto2);
@@ -58,8 +53,12 @@ int main(int argc, char *argv[]) {
 			logInfo("Error en la comunicacion con YAMA");
 
 		}
+		*/
+
 
 	free(config);
+
+	consolaFileSystem();
 
 	return EXIT_SUCCESS;
 }
