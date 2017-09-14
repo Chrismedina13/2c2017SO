@@ -12,7 +12,7 @@ void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 
 	//Creo Servidor Principal
 	int socketWorkerServidor;
-	socketWorkerServidor = socketServidor(puertoWorker);
+	socketWorkerServidor = lib_socketServidor(puertoWorker);
 
 	fd_set master;
 	fd_set read_fds;
@@ -38,7 +38,7 @@ void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 
 				if(i == socketWorkerServidor){
 
-					if((FD_Cliente = aceptarYRegistrarSocket(socketWorkerServidor,mastersConectados)) == -1){
+					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketWorkerServidor,mastersConectados)) == -1){
 
 						logInfo("Error en el aceept despues del select");
 

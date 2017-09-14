@@ -19,6 +19,7 @@ struct sockaddr_in my_addr;
 struct sockaddr_in their_addr;
 
 int lib_socketServidor(int puerto);
+int lib_aceptarYRegistrarSocket(int socketServidor,t_list* conectados);
 
 
 #endif /* SOCKETS_H_ */

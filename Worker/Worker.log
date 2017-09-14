@@ -1,0 +1,11 @@
+[INFO] 18:16:35:783 WORKER/(7218:7218): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 18:16:35:796 WORKER/(7218:7218): Comunicacion con los Masters
+[INFO] 18:18:43:783 WORKER/(7320:7320): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 18:18:43:787 WORKER/(7320:7320): Comunicacion con los Masters
+[INFO] 18:18:50:921 WORKER/(7320:7320): Nueva conexion del socket cliente Master de FD: 5
+[INFO] 18:18:50:922 WORKER/(7320:7320): Recibi de Master: Holaa
+[INFO] 18:29:12:24 WORKER/(7605:7605): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 18:29:12:24 WORKER/(7605:7605): Comunicacion con los Masters

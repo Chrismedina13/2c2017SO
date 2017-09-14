@@ -226,3 +226,13 @@
 
 [INFO] 18:09:42:851 MASTER/(7164:7164): SocketCliente YAMA = -1 
 
+[INFO] 18:18:50:921 MASTER/(7333:7333): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:18:50:921 MASTER/(7333:7333): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:18:50:922 MASTER/(7333:7333): SocketCliente Worker= 4 
+
+[INFO] 18:18:50:922 MASTER/(7333:7333): SocketCliente YAMA = -1 
+
+[INFO] 18:18:53:177 MASTER/(7333:7333): Se recibio: Ãv·
+[INFO] 18:18:53:177 MASTER/(7333:7333): Se recibio: âÌ¿-D_·ÄÃv·
