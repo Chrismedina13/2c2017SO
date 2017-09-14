@@ -16,6 +16,14 @@ char** getComandos(){
 }
 
 
+void liberarComandos(char** array) {
+	int i = 0;
+	while (array[i] != NULL) {
+		free(array[i++]);
+	}
+	free(array);
+}
+
 
 char* getStdinString() {
 
@@ -46,6 +54,7 @@ void consolaFileSystem(){
 			printf("Ingrese un comando: ");
 			char** comandos = getComandos();
 			compararComando=true;
+
 
 
 			if(*comandos!=NULL && compararComando){
@@ -129,6 +138,16 @@ void consolaFileSystem(){
 											}
 			                             }
 
+			if (compararComando) {
+				printf("«%s» no es un comando válido. Si necesita ayuda use: «%s»",
+								comandos[0], INFO);
+			}
+
+liberarComandos(comandos);
+
+
 		}
-	}
+}
+
+
 

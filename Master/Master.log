@@ -156,3 +156,23 @@
 [INFO] 16:38:22:196 MASTER/(5613:5613): Se recibio: Â´¿-`·Äƒw·
 [INFO] 16:38:22:199 MASTER/(5633:5633): Se recibio: S{·
 [INFO] 16:38:22:199 MASTER/(5633:5633): Se recibio: ¯¿-Ôc·ÄS{·
+[INFO] 19:42:14:618 MASTER/(9306:9306): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 19:42:14:620 MASTER/(9306:9306): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 19:42:14:620 MASTER/(9306:9306): SocketCliente Worker= 4 
+
+[INFO] 19:42:14:620 MASTER/(9306:9306): SocketCliente YAMA = -1 
+
+[INFO] 19:42:19:724 MASTER/(9316:9316): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 19:42:19:724 MASTER/(9316:9316): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 19:42:19:725 MASTER/(9316:9316): SocketCliente Worker= 4 
+
+[INFO] 19:42:19:725 MASTER/(9316:9316): SocketCliente YAMA = -1 
+
+[INFO] 19:42:21:518 MASTER/(9306:9306): Se recibio: ƒy·
+[INFO] 19:42:21:518 MASTER/(9316:9316): Se recibio: Ãk·
+[INFO] 19:42:21:518 MASTER/(9316:9316): Se recibio: .Œ¿-DT·ÄÃk·
+[INFO] 19:42:21:518 MASTER/(9306:9306): Se recibio: í¡¿-b·Äƒy·
