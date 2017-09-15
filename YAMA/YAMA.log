@@ -64,3 +64,39 @@
 [INFO] 18:34:29:845 YAMA/(4019:4019): SocketCliente = 4 
 
 [INFO] 18:35:16:33 YAMA/(4019:4019): Se recibio: Hola YAMA
+[INFO] 20:25:30:937 YAMA/(4601:4601): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:25:30:937 YAMA/(4601:4601): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 20:25:30:937 YAMA/(4601:4601): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:25:30:937 YAMA/(4601:4601): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:25:30:937 YAMA/(4601:4601): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:25:30:937 YAMA/(4601:4601): SocketCliente = -1 
+
+[INFO] 20:25:53:728 YAMA/(4624:4624): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:25:53:729 YAMA/(4624:4624): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 20:25:53:729 YAMA/(4624:4624): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:25:53:729 YAMA/(4624:4624): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:25:53:729 YAMA/(4624:4624): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:25:53:729 YAMA/(4624:4624): SocketCliente = -1 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 20:26:27:830 YAMA/(4685:4685): SocketCliente = -1 
+

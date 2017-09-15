@@ -24,22 +24,19 @@ int main(int argc, char *argv[]) {
 	int FDsocketClienteWorker;
 	FDsocketClienteWorker = SocketCliente("127.0.0.1", 5050); //127.0.0.1 es la ip local , 5050 puerto del worker
 
-	int FDsocketClienteYAMA;
-	FDsocketClienteYAMA = SocketCliente(config->ipYama, config->puertoYama);
+	logInfo("Creando el hilo para comunicarme con Yama");
+	pthread_t hiloYama;
+	pthread_create(&hiloYama, NULL, (void*)comunicacionYama,(config->puertoYama,config->ipYama));
 
 	logInfo("SocketCliente Worker= %d \n", FDsocketClienteWorker);
-
-	logInfo("SocketCliente YAMA = %d \n", FDsocketClienteYAMA);
 
 	char buffer[11];
 	send(FDsocketClienteWorker, "Holaa", 5, 0);
 
-	recv(FDsocketClienteWorker,buffer,11,0);
+	recv(FDsocketClienteWorker, buffer, 11, 0);
 	logInfo("Se recibio: %s", buffer);
 
-	char buffer2[8];
-	recv(FDsocketClienteYAMA, buffer2, 8, 0);
-	logInfo("Se recibio: %s", buffer2);
+	pthread_join(hiloYama,NULL);
 
 	free(config);
 	return EXIT_SUCCESS;
