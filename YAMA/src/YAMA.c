@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
 
 
-/*	//socketServer
+	//socketServer
 		int FDServidor = socketServidor(config->puertoYama);
 
 		logInfo("Se conecto un Master su FD es el  = %d\n",FDServidor);
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
 		else{
 			logInfo("Error en el envio");
 		}
-*/
+
 
 		//socketClienteParaFileSystem
 

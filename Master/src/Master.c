@@ -9,6 +9,8 @@
  */
 #include "Headers/Master.h"
 
+#include "Headers/ComunicacionConYama.h"
+
 int main(int argc, char *argv[]) {
 
 	//Archivo de Logs
@@ -25,16 +27,15 @@ int main(int argc, char *argv[]) {
 	FDsocketClienteWorker = SocketCliente("127.0.0.1", 5050); //127.0.0.1 es la ip local , 5050 puerto del worker
 
 	logInfo("Creando el hilo para comunicarme con Yama");
+
+	ParametrosComunicacionYAMA* parametrosYAMA = setParametrosComunicacionYAMA(config->ipYama,config->puertoYama);
+
 	pthread_t hiloYama;
-	pthread_create(&hiloYama, NULL, (void*)comunicacionYama,(config->puertoYama,config->ipYama));
+	pthread_create(&hiloYama, NULL, (void*) comunicacionYama, parametrosYAMA);
 
 	logInfo("SocketCliente Worker= %d \n", FDsocketClienteWorker);
 
-	char buffer[11];
 	send(FDsocketClienteWorker, "Holaa", 5, 0);
-
-	recv(FDsocketClienteWorker, buffer, 11, 0);
-	logInfo("Se recibio: %s", buffer);
 
 	pthread_join(hiloYama,NULL);
 

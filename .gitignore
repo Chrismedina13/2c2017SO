@@ -42,6 +42,17 @@
 *.idb
 *.pdb
 
+# Debug files
+*.dSYM/
+*.su
+*/Debug/
+
+# LOG files
+*.log
+
+.metadata
+RemoteSystemsTempFiles/
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd
