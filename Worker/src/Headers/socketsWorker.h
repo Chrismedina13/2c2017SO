@@ -15,9 +15,9 @@
 struct sockaddr_in my_addr;
 struct sockaddr_in their_addr;
 
-int socketServidor(int puerto);
+
 void comunicacionCoMaster(int puertoWorker,t_list* mastersConectados);
-int aceptarYRegistrarSocket(int socketServidor,t_list* conectados);
+
 
 #endif /* SOCKETSWORKER_H_ */
 

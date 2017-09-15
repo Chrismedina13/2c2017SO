@@ -27,6 +27,7 @@
 void consolaFileSystem();
 char** getComandos();
 char* getStdinString();
+void liberarComandos(char** array);
 
 
 
