@@ -1,0 +1,24 @@
+[INFO] 22:24:43:365 YAMA/(3313:3313): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:24:43:383 YAMA/(3313:3313): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 22:24:43:383 YAMA/(3313:3313): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:24:43:383 YAMA/(3313:3313): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:24:43:383 YAMA/(3313:3313): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 22:24:43:383 YAMA/(3313:3313): SocketCliente = -1 
+
+[INFO] 22:28:27:256 YAMA/(3503:3503): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 22:28:27:266 YAMA/(3503:3503): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 22:28:27:266 YAMA/(3503:3503): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 22:28:27:266 YAMA/(3503:3503): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 22:28:27:266 YAMA/(3503:3503): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 22:28:27:266 YAMA/(3503:3503): SocketCliente = -1 
+
