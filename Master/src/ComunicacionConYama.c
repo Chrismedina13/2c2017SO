@@ -15,7 +15,7 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 }
 
-ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int ip,char* puerto){
+ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto,char* ip){
 
 	ParametrosComunicacionYAMA* parametros = malloc(sizeof(ParametrosComunicacionYAMA));
 	parametros->ipYAMA = ip;

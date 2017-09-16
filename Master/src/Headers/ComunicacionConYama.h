@@ -15,7 +15,7 @@ typedef struct ParametrosComunicacionYAMA{
 }ParametrosComunicacionYAMA;
 
 void comunicacionYama(ParametrosComunicacionYAMA* parametros);
-ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int ip,char* puerto);
+ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto,char* ip);
 
 
 #endif /* HEADERS_MASTER_H_ */

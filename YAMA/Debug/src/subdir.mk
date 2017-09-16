@@ -4,18 +4,24 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/ComunicacionConFileSystem.c \
+../src/ComunicacionConMaster.c \
 ../src/YAMA.c \
 ../src/configuracion.c \
 ../src/logYAMA.c \
 ../src/socketsYAMA.c 
 
 OBJS += \
+./src/ComunicacionConFileSystem.o \
+./src/ComunicacionConMaster.o \
 ./src/YAMA.o \
 ./src/configuracion.o \
 ./src/logYAMA.o \
 ./src/socketsYAMA.o 
 
 C_DEPS += \
+./src/ComunicacionConFileSystem.d \
+./src/ComunicacionConMaster.d \
 ./src/YAMA.d \
 ./src/configuracion.d \
 ./src/logYAMA.d \

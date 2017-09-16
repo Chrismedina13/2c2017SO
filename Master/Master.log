@@ -176,3 +176,10 @@
 [INFO] 19:42:21:518 MASTER/(9316:9316): Se recibio: Ãk·
 [INFO] 19:42:21:518 MASTER/(9316:9316): Se recibio: .Œ¿-DT·ÄÃk·
 [INFO] 19:42:21:518 MASTER/(9306:9306): Se recibio: í¡¿-b·Äƒy·
+[INFO] 12:00:56:58 MASTER/(3691:3691): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 12:00:56:69 MASTER/(3691:3691): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 12:00:56:70 MASTER/(3691:3691): Creando el hilo para comunicarme con Yama
+[INFO] 12:00:56:74 MASTER/(3691:3691): SocketCliente Worker= -1 
+

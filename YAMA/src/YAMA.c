@@ -24,36 +24,23 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion Algoritmo de Balanceo : %s \n", config->algoritmo_bal);
 	logInfo("Archivo de configuracion Puerto YAMA : %i \n", config->puertoYama);
 
+	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystem, config->ipFileSystem);
+	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
+
+	logInfo("Creando hilos para comunicacion con YAMA y FS");
+
+	pthread_t hiloComunicacionConFileSystem;
+	pthread_t hiloComunicacionConMaster;
+
+	pthread_create(&hiloComunicacionConFileSystem,NULL,(void*) comunicacionConFileSystem, parametrosFileSystem);
+	pthread_create(&hiloComunicacionConMaster,NULL,(void*) comunicacionConMaster, parametrosMaster);
 
 
 
-	//socketServer
-		int FDServidor = socketServidor(config->puertoYama);
+	pthread_join(hiloComunicacionConMaster,NULL);
+	pthread_join(hiloComunicacionConFileSystem,NULL);
 
-		logInfo("Se conecto un Master su FD es el  = %d\n",FDServidor);
+	free(config);
 
-		if(send(FDServidor,"Soy YAMA",8,0) != -1){
-
-			logInfo("Mensaje a Master enviado correctamente");
-		}
-		else{
-			logInfo("Error en el envio");
-		}
-
-
-		//socketClienteParaFileSystem
-
-			int FDsocketClienteFileSystem;
-			FDsocketClienteFileSystem = SocketCliente(config->ipFileSystem,config->puertoFileSystem);
-
-			logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
-
-			char buffer[13];
-			if(recv(FDsocketClienteFileSystem,buffer,13,0) != -1){
-				logInfo("Se recibio: %s",buffer);
-			}
-
-
-			free(config);
 	return EXIT_SUCCESS;
 }
