@@ -5,28 +5,28 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/FileSystem.c \
+../src/comunicacionConDN.c \
+../src/comunicacionConYama.c \
 ../src/configuracion.c \
 ../src/consola.c \
-../src/handler-user.c \
-../src/kernel.c \
 ../src/logFileSystem.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
 ./src/FileSystem.o \
+./src/comunicacionConDN.o \
+./src/comunicacionConYama.o \
 ./src/configuracion.o \
 ./src/consola.o \
-./src/handler-user.o \
-./src/kernel.o \
 ./src/logFileSystem.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
 ./src/FileSystem.d \
+./src/comunicacionConDN.d \
+./src/comunicacionConYama.d \
 ./src/configuracion.d \
 ./src/consola.d \
-./src/handler-user.d \
-./src/kernel.d \
 ./src/logFileSystem.d \
 ./src/socketsFileSystem.d 
 

@@ -1,9 +1,10 @@
 #include "Headers/FileSystem.h"
-#include <pthread.h>
 #include "commons/string.h"
 #include "Headers/consola.h"
-
+#include "Headers/comunicacionConYama.h"
+#include "Headers/comunicacionConDN.h"
 #include <stdbool.h>
+#include <pthread.h>
 
 int main(int argc, char *argv[]) {
 
@@ -19,46 +20,30 @@ int main(int argc, char *argv[]) {
 			config->puerto2);
 
 
-	/*socketServer
-	int FDServidorYAMA = socketServidor(config->puerto1);
+	//logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %s \n", config->puerto1);
+	//logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n", config->puerto2);
 
-	int FDServidorDN = socketServidor(config->puerto2);
-
-	printf("Se conecto un Yama su FD es el  = %d\n", FDServidorYAMA);
-	printf("Se conecto un DataNode su FD es el  = %d\n", FDServidorDN);
-
-	logInfo("FD del DataNode : %i \n", FDServidorDN);
-	logInfo("FD del Yama : %i \n", FDServidorYAMA);
-
-	if (send(FDServidorDN, "Hola DataNode", 13, 0) != -1) {
-
-		puts("Mensaje a DataNode enviado correctamente");
-
-		logInfo("Comunicacion con DataNode establecida");
-	} else {
-		puts("Error en el envio a Data Node");
-
-		logInfo("Error en la comunicacion con DataNode");
-	}
+	//logInfo("Creando el hilo para comunicarme con Data Node");
+	//logInfo("Creando el hilo para comunicarme con YAMA");
 
 
-	if (send(FDServidorYAMA, "Hola YAMA", 13, 0) != -1) {
 
-			puts("Mensaje a DataNode enviado correctamente");
+	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto2, config->puerto1);
+	pthread_t hiloDN, hiloYAMA;
 
-			logInfo("Comunicacion con YAMA establecida");
-		} else {
-			puts("Error en el envio a YAMA");
+	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
+	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
 
-			logInfo("Error en la comunicacion con YAMA");
+	consolaFileSystem();
 
-		}
-		*/
+
+	pthread_join(hiloYAMA,NULL);
+	pthread_join(hiloDN,NULL);
 
 
 	free(config);
 
-	consolaFileSystem();
+
 
 	return EXIT_SUCCESS;
 }

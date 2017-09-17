@@ -1,29 +1,15 @@
-[INFO] 18:25:32:426 DATANODE/(3799:3799): Archivo de configuracion puerto DataNode : 5060 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion puerto DataNode : 5060 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): Archivo de configuracion puerto worker : 5050 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion puerto worker : 5050 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): Archivo de configuracion puerto fileSystem : 5000 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion puerto fileSystem : 5001 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): Archivo de configuracion ip fileSystem : 127.0.0.1 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion ip fileSystem : 127.0.0.1 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): Archivo de configuracion nombre nodo : NODO1 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion nombre nodo : NODO1 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
 
-[INFO] 18:25:32:429 DATANODE/(3799:3799): SocketCliente = 4 
+[INFO] 11:36:51:385 DATANODE/(16502:16502): SocketCliente = 4 
 
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion puerto DataNode : 5060 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion puerto worker : 5050 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion puerto fileSystem : 5001 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion ip fileSystem : 127.0.0.1 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion nombre nodo : NODO1 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
-
-[INFO] 18:35:16:33 DATANODE/(4033:4033): SocketCliente = 4 
-
-[INFO] 18:35:16:34 DATANODE/(4033:4033): Se recibio: Hola DataNode
+[INFO] 11:36:51:385 DATANODE/(16502:16502): Se recibio: Hola DataNode
