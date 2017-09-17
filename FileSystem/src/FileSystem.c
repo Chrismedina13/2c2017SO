@@ -20,11 +20,11 @@ int main(int argc, char *argv[]) {
 			config->puerto2);
 
 
-	//logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %s \n", config->puerto1);
-	//logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n", config->puerto2);
+	logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n", config->puerto1);
+	logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n", config->puerto2);
 
-	//logInfo("Creando el hilo para comunicarme con Data Node");
-	//logInfo("Creando el hilo para comunicarme con YAMA");
+	logInfo("Creando el hilo para comunicarme con Data Node");
+	logInfo("Creando el hilo para comunicarme con YAMA");
 
 
 

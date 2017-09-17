@@ -25,11 +25,14 @@ endif
 # All Target
 all: YAMA
 
+dependents:
+	-cd /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug && $(MAKE) all
+
 # Tool invocations
-YAMA: $(OBJS) $(USER_OBJS)
+YAMA: $(OBJS) $(USER_OBJS) /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug/libSO_lib.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "YAMA" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug" -o "YAMA" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -40,5 +43,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
+/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug/libSO_lib.so:
 
 -include ../makefile.targets

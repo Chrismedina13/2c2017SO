@@ -15,13 +15,11 @@ void comunicacionYAMA(ParametrosComunicacion* parametros){
 
 		if (send(FDServidorYAMA, "Hola YAMA", 13, 0) != -1) {
 
-				puts("Mensaje a DataNode enviado correctamente");
 
-				logInfo("Comunicacion con YAMA establecida");
+				logInfo("Comunicacion con YAMA establecida, Mensaje enviado correctamente");
 			} else {
-				puts("Error en el envio a YAMA");
 
-				logInfo("Error en la comunicacion con YAMA");
+				logInfo("Error en la comunicacion con YAMA ");
 
 			}
 }

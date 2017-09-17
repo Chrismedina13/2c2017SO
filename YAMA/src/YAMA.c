@@ -13,6 +13,7 @@
 
 int main(int argc, char *argv[]) {
 
+	t_list* mastersConectados;
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion Puerto YAMA : %i \n", config->puertoYama);
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystem, config->ipFileSystem);
-	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
+	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama,mastersConectados);
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");
 
@@ -36,9 +37,9 @@ int main(int argc, char *argv[]) {
 	pthread_create(&hiloComunicacionConMaster,NULL,(void*) comunicacionConMaster, parametrosMaster);
 
 
-
 	pthread_join(hiloComunicacionConMaster,NULL);
 	pthread_join(hiloComunicacionConFileSystem,NULL);
+
 
 	free(config);
 

@@ -9,9 +9,15 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 	logInfo("SocketCliente YAMA = %d \n", FDsocketClienteYAMA);
 
-	char buffer2[8];
-	recv(FDsocketClienteYAMA, buffer2, 8, 0);
-	logInfo("Se recibio de YAMA: %s", buffer2);
+	if(send(FDsocketClienteYAMA,"Hola Yama soy Master", 20, 0) != -1){
+
+		logInfo("Mensaje a Yama mandado correctamente");
+
+	}else{
+
+		logInfo("Error envio de mensaje a YAMA");
+
+	}
 
 }
 

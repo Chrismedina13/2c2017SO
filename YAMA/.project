@@ -3,6 +3,7 @@
 	<name>YAMA</name>
 	<comment></comment>
 	<projects>
+		<project>SO_lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
