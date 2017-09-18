@@ -9,7 +9,8 @@
  */
 
 #include "Headers/Worker.h"
-#include "Headers/socketsWorker.h"
+
+#include "Headers/comunicacionConMaster.h"
 
 int main(int argc, char *argv[]) {
 

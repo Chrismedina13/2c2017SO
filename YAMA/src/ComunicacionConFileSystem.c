@@ -3,7 +3,7 @@
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
 	int FDsocketClienteFileSystem;
-	FDsocketClienteFileSystem = SocketCliente(param->ip,param->puerto);
+	FDsocketClienteFileSystem = lib_SocketCliente(param->ip,param->puerto);
 	logInfo("SocketCliente = %d \n", FDsocketClienteFileSystem);
 	char buffer[13];
 	if (recv(FDsocketClienteFileSystem, buffer, 13, 0) != -1) {

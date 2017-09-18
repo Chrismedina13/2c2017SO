@@ -4,7 +4,7 @@
  *  Created on: 6/9/2017
  *      Author: utnso
  */
-#include "Headers/socketsWorker.h"
+#include "Headers/comunicacionConMaster.h"
 #define MAX 100
 
 void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){

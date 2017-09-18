@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "socketsMaster.h"
 #include "configuracion.h"
 #include "logMaster.h"
+#include "SO_lib/sockets.h"
 
 typedef struct ParametrosComunicacionYAMA{
 

@@ -5,7 +5,7 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 	logInfo("%i,%s",parametros->puertoYAMA,parametros->ipYAMA);
 
 	int FDsocketClienteYAMA;
-	FDsocketClienteYAMA = SocketCliente(parametros->ipYAMA, parametros->puertoYAMA);
+	FDsocketClienteYAMA = lib_SocketCliente(parametros->ipYAMA, parametros->puertoYAMA);
 
 	logInfo("SocketCliente YAMA = %d \n", FDsocketClienteYAMA);
 

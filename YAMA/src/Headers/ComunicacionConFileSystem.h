@@ -9,7 +9,7 @@
 
 #ifndef HEADERS_COMUNICACIONCONFILESYSTEM_H_
 #define HEADERS_COMUNICACIONCONFILESYSTEM_H_
-#include "socketsYAMA.h"
+#include <SO_lib/sockets.h>
 
 typedef struct ParametrosComunicacionConFileSystem{
 	int puerto;

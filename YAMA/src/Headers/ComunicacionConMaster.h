@@ -7,7 +7,6 @@
 
 #ifndef HEADERS_COMUNICACIONCONMASTER_H_
 #define HEADERS_COMUNICACIONCONMASTER_H_
-#include "socketsYAMA.h"
 #include "SO_lib/sockets.h"
 #include "commons/collections/list.h"
 

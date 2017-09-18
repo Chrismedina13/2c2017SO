@@ -12,7 +12,6 @@
 #include "logYAMA.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "socketsYAMA.h"
 #include "ComunicacionConMaster.h"
 #include "ComunicacionConFileSystem.h"
 #include "pthread.h"

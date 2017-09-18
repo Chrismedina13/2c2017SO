@@ -8,8 +8,7 @@
  ============================================================================
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "Headers/DataNode.h"
 
 int main(void) {
@@ -30,7 +29,7 @@ int main(void) {
 	//socketClienteParaFileSystem
 
 	int FDsocketClienteFileSystem;
-	FDsocketClienteFileSystem = SocketCliente(config->ipFileSystem,config->puertoFileSystem);
+	FDsocketClienteFileSystem = lib_SocketCliente(config->ipFileSystem,config->puertoFileSystem);
 
 	logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
 

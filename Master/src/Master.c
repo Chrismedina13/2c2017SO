@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 
 	//socketsCliente
 	int FDsocketClienteWorker;
-	FDsocketClienteWorker = SocketCliente("127.0.0.1", 5050); //127.0.0.1 es la ip local , 5050 puerto del worker
+	FDsocketClienteWorker = lib_SocketCliente("127.0.0.1", 5050); //127.0.0.1 es la ip local , 5050 puerto del worker
 
 	logInfo("Creando el hilo para comunicarme con Yama");
 
