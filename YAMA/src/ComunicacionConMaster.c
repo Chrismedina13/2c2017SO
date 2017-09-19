@@ -6,7 +6,7 @@
  */
 #include "Headers/ComunicacionConMaster.h"
 
-void comunicacionConMaster(ParametrosComunicacionConMaster* parametros){
+void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 
 	//Creo Servidor Principal
 	int socketYAMAServidor;
@@ -30,18 +30,13 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametros){
 
 			logInfo("Error en el select");
 		}
-		else{
-
-			logInfo("Select creado correctamente");
-		}
 		for(i = 0;i <= fd_max; i++){
-
 
 			if(FD_ISSET(i,&read_fds)){
 
 				if(i == socketYAMAServidor){
 
-					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketYAMAServidor,parametros->mastersConectados)) == -1){
+					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketYAMAServidor)) == -1){
 
 						logInfo("Error en el aceept despues del select");
 
@@ -75,10 +70,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametros){
 		}
 	}
 
-ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto,t_list* mastersConectados){
+ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto){
 	ParametrosComunicacionConMaster* parametros = malloc(sizeof(ParametrosComunicacionConMaster));
 	parametros->puerto = puerto;
-	parametros->mastersConectados = mastersConectados;
 	return parametros;
 }
 

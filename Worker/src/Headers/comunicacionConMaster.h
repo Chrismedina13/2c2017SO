@@ -16,7 +16,7 @@ struct sockaddr_in my_addr;
 struct sockaddr_in their_addr;
 
 
-void comunicacionCoMaster(int puertoWorker,t_list* mastersConectados);
+void comunicacionCoMaster(int puertoWorker);
 
 
 #endif /* SOCKETSWORKER_H_ */

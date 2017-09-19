@@ -7,7 +7,6 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-
 #include "Headers/yama.h"
 
 
@@ -26,7 +25,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion Puerto YAMA : %i \n", config->puertoYama);
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystem, config->ipFileSystem);
-	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama,mastersConectados);
+	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");
 
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]) {
 	pthread_t hiloComunicacionConMaster;
 
 	pthread_create(&hiloComunicacionConFileSystem,NULL,(void*) comunicacionConFileSystem, parametrosFileSystem);
-	pthread_create(&hiloComunicacionConMaster,NULL,(void*) comunicacionConMaster, parametrosMaster);
+	pthread_create(&hiloComunicacionConMaster,NULL,(void*) comunicacionConMasters, parametrosMaster);
 
 
 	pthread_join(hiloComunicacionConMaster,NULL);

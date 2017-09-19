@@ -7,7 +7,7 @@
 #include "Headers/comunicacionConMaster.h"
 #define MAX 100
 
-void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
+void comunicacionConMaster(int puertoWorker){
 
 
 	//Creo Servidor Principal
@@ -38,7 +38,7 @@ void comunicacionConMaster(int puertoWorker,t_list* mastersConectados){
 
 				if(i == socketWorkerServidor){
 
-					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketWorkerServidor,mastersConectados)) == -1){
+					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketWorkerServidor)) == -1){
 
 						logInfo("Error en el aceept despues del select");
 

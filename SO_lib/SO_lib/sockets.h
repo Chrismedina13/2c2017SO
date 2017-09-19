@@ -24,7 +24,7 @@ struct sockaddr_in my_addr;
 struct sockaddr_in their_addr;
 
 int lib_socketServidor(int puerto);
-int lib_aceptarYRegistrarSocket(int socketServidor,t_list* conectados);
+int lib_aceptarYRegistrarSocket(int socketServidor);
 int lib_SocketCliente(const char* ip, int port);
 
 

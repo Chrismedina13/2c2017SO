@@ -12,9 +12,8 @@
 
 typedef struct ParametrosComunicacionConMaster{
 	int puerto;
-	t_list* mastersConectados;
 } ParametrosComunicacionConMaster;
 
-ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto,t_list* mastersConectados);
-void comunicacionConMaster(ParametrosComunicacionConMaster* parametro);
+ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
+void comunicacionConMasters(ParametrosComunicacionConMaster* parametro);
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

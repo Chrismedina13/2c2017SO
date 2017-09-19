@@ -44,20 +44,17 @@ int lib_socketServidor(int puerto){
 	return FDSocket;
 }
 
-int lib_aceptarYRegistrarSocket(int socketServidor,t_list* conectados){
+int lib_aceptarYRegistrarSocket(int socketServidor){
 
 	struct sockaddr cliente;
 	socklen_t longitudCliente = sizeof(cliente);
 	int newSocketFileDescriptor;
-
 	newSocketFileDescriptor = accept(socketServidor, &cliente,&longitudCliente);
 
 	if (newSocketFileDescriptor == -1) {
-		printf("Socket accept failed FD: %d\n", socketServidor);
+		puts("Socket accept failed" );
 		return 0;
 	}
-
-	list_add(conectados,newSocketFileDescriptor);
 
 	return newSocketFileDescriptor;
 }
