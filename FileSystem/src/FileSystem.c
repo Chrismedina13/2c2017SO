@@ -19,31 +19,29 @@ int main(int argc, char *argv[]) {
 	printf("Archivo de configuracion puerto FILESYSTEM : %i \n",
 			config->puerto2);
 
-
-	logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n", config->puerto1);
-	logInfo("Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n", config->puerto2);
+	logInfo(
+			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
+			config->puerto1);
+	logInfo(
+			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
+			config->puerto2);
 
 	logInfo("Creando el hilo para comunicarme con Data Node");
 	logInfo("Creando el hilo para comunicarme con YAMA");
 
+	ParametrosComunicacion* parametros = setParametrosComunicacion(
+			config->puerto2, config->puerto1);
 
-
-	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto2, config->puerto1);
-	pthread_t hiloDN, hiloYAMA;
-
+	pthread_t hiloDN, hiloYAMA, hiloConsolaFS;
+	logInfo("Creando el hilo para mantener la consola de FS");
+	pthread_create(&hiloConsolaFS, NULL, (void*) consolaFileSystem, NULL);
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
 
-	consolaFileSystem();
-
-
-	pthread_join(hiloYAMA,NULL);
-	pthread_join(hiloDN,NULL);
-
+	pthread_join(hiloYAMA, NULL);
+	pthread_join(hiloDN, NULL);
+	pthread_join(hiloConsolaFS, NULL);
 
 	free(config);
-
-
-
 	return EXIT_SUCCESS;
 }

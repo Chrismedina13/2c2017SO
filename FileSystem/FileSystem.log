@@ -4,3 +4,18 @@
 [INFO] 11:36:51:385 FS/(16490:16493): FD del DataNode : 7 
 
 [INFO] 11:36:51:385 FS/(16490:16493): Comunicacion con DataNode establecida
+[INFO] 22:00:44:211 FS/(2609:2609): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 22:00:44:211 FS/(2609:2609): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 22:00:44:211 FS/(2609:2609): Creando el hilo para comunicarme con Data Node
+[INFO] 22:00:44:211 FS/(2609:2609): Creando el hilo para comunicarme con YAMA
+[INFO] 22:00:44:213 FS/(2609:2614): 5001
+[INFO] 22:08:09:216 FS/(3229:3229): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 22:08:09:216 FS/(3229:3229): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para comunicarme con Data Node
+[INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para comunicarme con YAMA
+[INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para mantener la consola de FS
+[INFO] 22:08:09:217 FS/(3229:3231): 5001
