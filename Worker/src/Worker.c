@@ -22,10 +22,11 @@ int main(int argc, char *argv[]) {
 
 	printf("Archivo de configuracion puerto DataNode : %i \n", config->puertoDataNode);
 	printf("Archivo de configuracion puerto worker : %i \n", config->puertoWorker);
-	printf("Archivo de configuracion puerto fileSystem : %i \n", config->puertoFileSystem);
+	printf("Archivo de configuracion puerto fileSystem para DATA NODE : %i \n", config->puertoFileSystem1);
 	printf("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
 	printf("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
 	printf("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
+	printf("Archivo de configuracion puerto fileSystem para WORKER : %i \n", config->puertoFileSystem2);
 
 	logInfo("Comunicacion con los Masters");
 

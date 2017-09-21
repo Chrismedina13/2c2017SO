@@ -24,10 +24,11 @@ void comunicacionYAMA(ParametrosComunicacion* parametros){
 			}
 }
 
-ParametrosComunicacion* setParametrosComunicacion(int puertoDN,int puertoYAMA){
+ParametrosComunicacion* setParametrosComunicacion(int puertoDN,int puertoYAMA, int puertoWorker){
 
 	ParametrosComunicacion* parametros = malloc(sizeof(ParametrosComunicacion));
 	parametros->puertoFS_dn = puertoDN;
 	parametros->puertoFS_yama = puertoYAMA;
+	parametros->puertoFS_worker = puertoWorker;
 	return parametros;
 }

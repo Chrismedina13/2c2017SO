@@ -17,10 +17,11 @@
 typedef struct ParametrosComunicacion{
 	int puertoFS_dn;
 	int puertoFS_yama;
+	int puertoFS_worker;
 }ParametrosComunicacion;
 
 void comunicacionDN(ParametrosComunicacion* parametros);
-ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA);
+ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA, int puertoWorker);
 
 
 

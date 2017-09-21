@@ -14,7 +14,8 @@
 
 //Keys para la configuracion
 #define IP_FILESYSTEM "IP_FILESYSTEM"
-#define PUERTO_FILESYSTEM "PUERTO_FILESYSTEM"
+#define PUERTO_FILESYSTEM1 "PUERTO_FILESYSTEM1"
+#define PUERTO_FILESYSTEM2 "PUERTO_FILESYSTEM2"
 #define NOMBRE_NODO "NOMBRE_NODO"
 #define PUERTO_WORKER "PUERTO_WORKER"
 #define PUERTO_DATANODE "PUERTO_DATANODE"
@@ -23,7 +24,8 @@
 
 typedef struct Configuracion {
 	char* ipFileSystem;
-	int puertoFileSystem;
+	int puertoFileSystem1;
+	int puertoFileSystem2;
 	char* nombreNodo;
 	int puertoWorker;
 	int puertoDataNode;
