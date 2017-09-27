@@ -9,22 +9,65 @@
 
 void comunicacionDN(ParametrosComunicacion* parametros){
 
-    logInfo("%i",parametros->puertoFS_dn);
-    int FDServidorDN = socketServidor(parametros->puertoFS_dn);
-	printf("Se conecto un DataNode su FD es el  = %d\n", FDServidorDN);
-	logInfo("FD del DataNode : %i \n", FDServidorDN);
+	int socketWorkerServidor;
+	socketWorkerServidor = lib_socketServidor(parametros->puertoFS_dn);
 
+	fd_set master;
+	fd_set read_fds;
+	int fd_max;
+	int i;
+	int FD_Cliente;
+	int bytesRecibidos;
+	char buffer[5];
 
-	if (send(FDServidorDN, "Hola DataNode", 13, 0) != -1) {
+	FD_SET(socketWorkerServidor,&master);
+	fd_max = socketWorkerServidor;
 
-		puts("Mensaje a DataNode enviado correctamente");
+	for(;;){
 
-		logInfo("Comunicacion con DataNode establecida");
-	} else {
-		puts("Error en el envio a Data Node");
+		read_fds = master;
+		if(select(fd_max+1, &read_fds,NULL,NULL,NULL) == -1){
 
-		logInfo("Error en la comunicacion con DataNode");
-	}
+			logInfo("Error en el select");
+		}
+		for(i = 0;i <= fd_max; i++){
+
+			if(FD_ISSET(i,&read_fds)){
+
+				if(i == socketWorkerServidor){
+
+					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketWorkerServidor)) == -1){
+
+						logInfo("Error en el aceept despues del select");
+
+					}else{
+						FD_SET(FD_Cliente,&master);
+						if(FD_Cliente > fd_max){
+							fd_max = FD_Cliente;
+						}
+						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente);
+					}
+				}else{
+
+					//Recibo datos de algun cliente
+					if((bytesRecibidos = recv(i,buffer,17,0)) <= 0){
+						if(bytesRecibidos == 0){
+							logInfo("Conexion cerrada del FD : %i",i);
+
+						}
+						close(i);
+						FD_CLR(i,&master);
+
+					}else{
+
+						logInfo("Recibi de DATANODE: %s",buffer);
+					}
+				}
+
+				}
+			}
+
+		}
 }
 
 

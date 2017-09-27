@@ -11,7 +11,7 @@
 
 #include "Headers/DataNode.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	//Archivo de Logs
 
 	crearLog("DataNode.log", "DATANODE", 1, log_level_from_string("INFO"));
@@ -33,9 +33,9 @@ int main(void) {
 
 	logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
 
-	char buffer[13];
-	if(recv(FDsocketClienteFileSystem,buffer,13,0) != -1){
-		logInfo("Se recibio: %s",buffer);
+
+	if(send(FDsocketClienteFileSystem,"Hola soy DATANODE",17,0) != -1){
+		logInfo("Se mando mensaje a FS correctamente");
 	}
 	free(config);
 

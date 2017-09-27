@@ -14,11 +14,6 @@ int main(int argc, char *argv[]) {
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
-	printf("Archivo de configuracion puerto FILESYSTEM : %i \n",
-			config->puerto1);
-	printf("Archivo de configuracion puerto FILESYSTEM : %i \n",
-			config->puerto2);
-
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
 			config->puerto1);
@@ -30,7 +25,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Creando el hilo para comunicarme con YAMA");
 
 	ParametrosComunicacion* parametros = setParametrosComunicacion(
-			config->puerto2, config->puerto1);
+			config->puerto2, config->puerto1,2000); // Hay que agregar el Puerto de Worker
 
 	pthread_t hiloDN, hiloYAMA, hiloConsolaFS;
 	logInfo("Creando el hilo para mantener la consola de FS");

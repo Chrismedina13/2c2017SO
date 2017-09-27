@@ -6,6 +6,7 @@
 C_SRCS += \
 ../src/FileSystem.c \
 ../src/comunicacionConDN.c \
+../src/comunicacionConWorker.c \
 ../src/comunicacionConYama.c \
 ../src/configuracion.c \
 ../src/consola.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 OBJS += \
 ./src/FileSystem.o \
 ./src/comunicacionConDN.o \
+./src/comunicacionConWorker.o \
 ./src/comunicacionConYama.o \
 ./src/configuracion.o \
 ./src/consola.o \
@@ -24,6 +26,7 @@ OBJS += \
 C_DEPS += \
 ./src/FileSystem.d \
 ./src/comunicacionConDN.d \
+./src/comunicacionConWorker.d \
 ./src/comunicacionConYama.d \
 ./src/configuracion.d \
 ./src/consola.d \

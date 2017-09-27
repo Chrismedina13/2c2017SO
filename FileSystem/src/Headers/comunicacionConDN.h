@@ -13,6 +13,7 @@
 #include "socketsFileSystem.h"
 #include "configuracion.h"
 #include "logFileSystem.h"
+#include "SO_lib/sockets.h"
 
 typedef struct ParametrosComunicacion{
 	int puertoFS_dn;
