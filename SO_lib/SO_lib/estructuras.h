@@ -22,5 +22,11 @@ typedef struct RespuestaTransformacionYAMA{
 
 }RespuestaTransformacionYAMA;
 
+//paquete para mandar y recibir mensajes
+typedef struct Paquete {
+	uint32_t codigo;
+	uint32_t tamanio;
+	char* mensaje;
+} Paquete;
 
 #endif /* SO_LIB_ESTRUCTURAS_H_ */
