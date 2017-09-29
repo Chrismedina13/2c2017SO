@@ -6,6 +6,8 @@
 #include "configuracion.h"
 #include "logMaster.h"
 #include "SO_lib/sockets.h"
+#include "SO_lib/estructuras.h"
+#include "SO_lib/Protocolo.h"
 
 typedef struct ParametrosComunicacionYAMA{
 

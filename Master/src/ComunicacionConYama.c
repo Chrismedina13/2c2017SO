@@ -1,23 +1,30 @@
 #include "Headers/ComunicacionConYama.h"
+#include "SO_lib/estructuras.h"
+
 
 void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
-	logInfo("%i,%s",parametros->puertoYAMA,parametros->ipYAMA);
+	Paquete* paqueteDeEnvioDeJOB;
 
 	int FDsocketClienteYAMA;
 	FDsocketClienteYAMA = lib_SocketCliente(parametros->ipYAMA, parametros->puertoYAMA);
 
-	logInfo("SocketCliente YAMA = %d \n", FDsocketClienteYAMA);
+	char job[100];
 
-	if(send(FDsocketClienteYAMA,"Hola Yama soy Master", 20, 0) != -1){
+	logInfo("Ingrese JOB a Ejecutar");
+	scanf("%c", job);
 
-		logInfo("Mensaje a Yama mandado correctamente");
+	logInfo("Se va a ejecutar %s", job);
 
-	}else{
+	int tamanioJOB = strlen(job);
 
-		logInfo("Error envio de mensaje a YAMA");
+	paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO,tamanioJOB,job);
 
+	if(enviarPaquete(FDsocketClienteYAMA,paqueteDeEnvioDeJOB) == -1){
+		logInfo("Error en envio de job");
 	}
+
+	destruirPaquete(paqueteDeEnvioDeJOB);
 
 }
 

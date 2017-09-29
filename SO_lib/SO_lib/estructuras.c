@@ -22,10 +22,12 @@ RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 	return respuesta;
 }
 
-void destruirTransformacionYAMA(RespuestaTransformacionYAMA* respuesta) {
+//void destruirTransformacionYAMA(RespuestaTransformacionYAMA* respuesta) {
 
 	//Aca hace un free del malloc de la estructura
-}
+//}
+
+
 
 Paquete* createPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje) {
 	Paquete *Paquete = calloc(1, sizeof(Paquete));
@@ -43,6 +45,7 @@ void destruirPaquete(Paquete* package) {
 		free(package);
 	}
 }
+
 size_t sizePackage(Paquete *package) {
 	size_t total;
 	total = sizeof(uint32_t) + sizeof(uint32_t);
@@ -83,3 +86,4 @@ int enviarPaquete(int fileDescriptor, Paquete *package) {
 
 	return 1; //SI ESTA OK
 }
+
