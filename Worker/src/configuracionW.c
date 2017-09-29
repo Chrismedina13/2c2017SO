@@ -25,7 +25,8 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 	}
 
 	configuracion->ipFileSystem = strdup(config_get_string_value(configTemporal, IP_FILESYSTEM));
-	configuracion->puertoFileSystem = config_get_int_value(configTemporal, PUERTO_FILESYSTEM);
+	configuracion->puertoFileSystemDN = config_get_int_value(configTemporal, PUERTO_FILESYSTEM1);
+	configuracion->puertoFileSystemW = config_get_int_value(configTemporal, PUERTO_FILESYSTEM2);
 	configuracion->nombreNodo = strdup(config_get_string_value(configTemporal, NOMBRE_NODO));
     configuracion->puertoWorker = config_get_int_value(configTemporal,PUERTO_WORKER);
     configuracion->puertoDataNode = config_get_int_value(configTemporal,PUERTO_DATANODE);

@@ -24,8 +24,8 @@
 
 typedef struct Configuracion {
 	char* ipFileSystem;
-	int puertoFileSystem1;
-	int puertoFileSystem2;
+	int puertoFileSystemDN;
+	int puertoFileSystemW;
 	char* nombreNodo;
 	int puertoWorker;
 	int puertoDataNode;
