@@ -23,9 +23,9 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 		exit(1);
 		}
 	}
-	configuracion->puerto1 = config_get_int_value(configTemporal, PUERTO1);
-	configuracion->puerto2 = config_get_int_value(configTemporal, PUERTO2);
-	configuracion->puerto3 = config_get_int_value(configTemporal, PUERTO3);
+	configuracion->puerto_dn = config_get_int_value(configTemporal, PUERTODN);
+	configuracion->puerto_yama = config_get_int_value(configTemporal, PUERTOYAMA);
+	configuracion->puerto_worker = config_get_int_value(configTemporal, PUERTOWORKER);
 
     config_destroy(configTemporal);
 

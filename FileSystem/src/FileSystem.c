@@ -16,23 +16,26 @@ int main(int argc, char *argv[]) {
 
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
-			config->puerto1);
+			config->puerto_dn);
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
-			config->puerto2);
+			config->puerto_yama);
 
 	logInfo("Creando el hilo para comunicarme con Data Node");
 	logInfo("Creando el hilo para comunicarme con YAMA");
+	logInfo("Creando el hilo para comunicarme con WORKER");
 
-	ParametrosComunicacion* parametros = setParametrosComunicacion(
-			config->puerto2, config->puerto1,2000); // Hay que agregar el Puerto de Worker
+	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
 
-	pthread_t hiloDN, hiloYAMA, hiloConsolaFS;
+	pthread_t hiloDN, hiloYAMA, hiloConsolaFS, hiloWorker;
 	logInfo("Creando el hilo para mantener la consola de FS");
 	pthread_create(&hiloConsolaFS, NULL, (void*) consolaFileSystem, NULL);
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
 
+//	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
+
+//	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
 	pthread_join(hiloDN, NULL);
 	pthread_join(hiloConsolaFS, NULL);

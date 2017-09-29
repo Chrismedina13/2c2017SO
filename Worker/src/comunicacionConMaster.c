@@ -7,12 +7,12 @@
 #include "Headers/comunicacionConMaster.h"
 #define MAX 100
 
-void comunicacionConMaster(int puertoWorker){
+void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster){
 
 
 	//Creo Servidor Principal
 	int socketWorkerServidor;
-	socketWorkerServidor = lib_socketServidor(puertoWorker);
+	socketWorkerServidor = lib_socketServidor(parametrosMaster->puertoWorker);
 
 	fd_set master;
 	fd_set read_fds;

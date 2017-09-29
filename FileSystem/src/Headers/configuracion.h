@@ -12,14 +12,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#define PUERTO1 "PUERTO1"
-#define PUERTO2 "PUERTO2"
-#define PUERTO3 "PUERTO3"
+#define PUERTODN "PUERTODN"
+#define PUERTOYAMA "PUERTOYAMA"
+#define PUERTOWORKER "PUERTOWORKER"
 
 typedef struct Configuracion{
-	int puerto1;
-	int puerto2;
-	int puerto3;
+	int puerto_dn;
+	int puerto_yama;
+	int puerto_worker;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* ruta);

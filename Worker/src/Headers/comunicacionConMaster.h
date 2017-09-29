@@ -15,8 +15,15 @@
 struct sockaddr_in my_addr;
 struct sockaddr_in their_addr;
 
+typedef struct ParametrosComunicacionConMaster{
+	int puertoWorker;
+}ParametrosComunicacionConMaster;
 
-void comunicacionCoMaster(int puertoWorker);
+
+void comunicacionConMaster(ParametrosComunicacionConMaster* parametros);
+
+ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
+
 
 
 #endif /* SOCKETSWORKER_H_ */
