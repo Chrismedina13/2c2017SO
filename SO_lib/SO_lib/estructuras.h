@@ -30,6 +30,11 @@ typedef struct Paquete {
 } Paquete;
 
 //funciones
+RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
+		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
+		char* archivoTemporal);
+void destruirTransformacionYAMA(RespuestaTransformacionYAMA* respuesta);
+Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje);
 void destruirPaquete(Paquete* package);
 size_t sizePackage(Paquete *package);
 char* serializarPaquete(Paquete *package);
