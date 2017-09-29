@@ -9,6 +9,9 @@
 #define SO_LIB_ESTRUCTURAS_H_
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <string.h>
 
 //YAMA armara una lista con esta estructura , la serializara y mandara a Master que deserealizara
 
