@@ -16,4 +16,6 @@ void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
 		int* offset);
 
+int deserializarINT(char* stream);
+
 #endif
