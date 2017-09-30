@@ -5,6 +5,7 @@
 #include "Headers/comunicacionConDN.h"
 #include <stdbool.h>
 #include <pthread.h>
+#include "Headers/comunicacionConWorker.h"
 
 int main(int argc, char *argv[]) {
 
@@ -32,10 +33,9 @@ int main(int argc, char *argv[]) {
 	pthread_create(&hiloConsolaFS, NULL, (void*) consolaFileSystem, NULL);
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
+	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
-//	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
-
-//	pthread_join(hiloWorker, NULL);
+	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
 	pthread_join(hiloDN, NULL);
 	pthread_join(hiloConsolaFS, NULL);
