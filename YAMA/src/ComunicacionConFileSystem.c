@@ -1,4 +1,6 @@
 #include "Headers/ComunicacionConFileSystem.h"
+#include "Headers/logYAMA.h"
+
 
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
