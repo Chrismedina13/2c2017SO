@@ -20,7 +20,7 @@ void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 	int i;
 	int FD_Cliente;
 	int bytesRecibidos;
-	char buffer[20];
+	char buffer[4];
 
 	FD_SET(socketYAMAServidor,&master);
 	fd_max = socketYAMAServidor;
@@ -52,7 +52,7 @@ void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 				}else{
 
 					//Recibo datos de algun cliente
-					if((bytesRecibidos = recv(i,buffer,20,0)) <= 0){
+					if((bytesRecibidos = recv(i,buffer,4,0)) <= 0){
 						if(bytesRecibidos == 0){
 							logInfo("Conexion cerrada del FD : %i",i);
 
@@ -62,7 +62,9 @@ void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 
 					}else{
 
-						logInfo("Recibi de Master: %s",buffer);
+						int codigo = deserializarINT(buffer);
+						logInfo("Recibi de Master: %i",codigo);
+						mensajesRecibidosDeMaster(codigo,i);
 					}
 				}
 
@@ -78,5 +80,21 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto){
 	return parametros;
 }
 
+void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 
+	char pesoMensaje[4];
+	int tamanio;
+	char* mensaje;
 
+	switch (codigo) {
+		case NOMBRE_ARCHIVO:
+			recv(FDMaster,pesoMensaje,4,0);
+			tamanio = deserializarINT(pesoMensaje);
+			logInfo("tamanio de lo que recibo %i",tamanio);
+			recv(FDMaster, mensaje, tamanio,0);
+			logInfo("Se recibio el nombre del archivo:  %s", mensaje);
+			break;
+		default:
+			break;
+	}
+}

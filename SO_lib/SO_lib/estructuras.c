@@ -62,7 +62,7 @@ char* serializarPaquete(Paquete *package) {
 	size_t size_to_send;
 
 	size_to_send = sizeof(uint32_t);
-	memcpy(serializarPaquete + offset, &(package->mensaje), size_to_send);
+	memcpy(serializarPaquete + offset, &(package->codigo), size_to_send);
 	offset += size_to_send;
 
 	size_to_send = sizeof(uint32_t);

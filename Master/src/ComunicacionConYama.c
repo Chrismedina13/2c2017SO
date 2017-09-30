@@ -7,7 +7,7 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 	int FDsocketClienteYAMA;
 	FDsocketClienteYAMA = lib_SocketCliente(parametros->ipYAMA, parametros->puertoYAMA);
 
-	char* job = malloc(100);
+	char* job = malloc(50);
 
 	logInfo("Ingrese JOB a Ejecutar");
 	scanf("%s", job);
@@ -15,6 +15,8 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 	logInfo("Se va a ejecutar %s", job);
 
 	int tamanioJOB = strlen(job);
+
+	logInfo("%i",tamanioJOB);
 
 	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO,tamanioJOB,job);
 

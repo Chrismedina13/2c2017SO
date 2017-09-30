@@ -11,3 +11,10 @@ void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
 	memcpy(datoSerializado, buffer + *offset, tamanio);
 	*offset += tamanio;
 }
+
+int deserializarINT(char* stream){
+	size_t size = sizeof(int);
+	int value;
+	memcpy(&value, stream, size);
+	return value;
+}
