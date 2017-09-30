@@ -75,4 +75,10 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster){
 
 
 
+ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto){
+
+	ParametrosComunicacionConMaster* parametros = malloc(sizeof(ParametrosComunicacionConMaster));
+	parametros->puertoWorker = puerto;
+	return parametros;
+}
 

@@ -29,7 +29,7 @@ RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 
 
 
-Paquete* createPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje) {
+Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje) {
 	Paquete *Paquete = calloc(1, sizeof(Paquete));
 	size_t sizeBuffer = (sizeof(char) * tamanio);
 	Paquete->mensaje = calloc(1, sizeBuffer);
