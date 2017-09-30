@@ -6,6 +6,8 @@
  */
 #include "Headers/configuracion.h"
 #include "commons/config.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 

@@ -7,6 +7,7 @@
 #include "Headers/consola.h"
 #include "commons/string.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 char** getComandos(){
 	char* buffer = getStdinString();
