@@ -22,6 +22,11 @@ int main(int argc, char *argv[]) {
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
 
+	//arranco a definir las estructuras administrativas
+
+//tabla de directorios
+	tablaDeDirectorios = list_create();
+
 	logInfo("Creando el hilo para comunicarme con Data Node");
 	logInfo("Creando el hilo para comunicarme con YAMA");
 	logInfo("Creando el hilo para comunicarme con WORKER");

@@ -16,8 +16,23 @@
 #include "pthread.h"
 #include "comunicacionConDN.h"
 #include "comunicacionConYama.h"
+#include <commons/collections/list.h>
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
+
+
+struct tabla_directorios {
+  int index;
+  char nombre[255];
+  int padre;
+}tabla_directorios;
+
+t_list *tablaDeDirectorios;
+
+
+
+
+
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */
