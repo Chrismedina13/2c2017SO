@@ -5,6 +5,8 @@
  *      Author: utnso
  */
 #include "Headers/ComunicacionConMaster.h"
+#include "Headers/logYAMA.h"
+
 
 void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 

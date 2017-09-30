@@ -5,7 +5,11 @@
  *      Author: utnso
  */
 #include "Headers/comunicacionConMaster.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #define MAX 100
+
 
 void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster){
 

@@ -25,9 +25,10 @@ struct tabla_directorios {
   int index;
   char nombre[255];
   int padre;
-}tabla_directorios;
+}tabla_directorios; // registros dentro de tablaDeDirectorios
 
-t_list *tablaDeDirectorios;
+tabla_directorios tablaDeDirectorios[100]; //vector de directorios
+
 
 
 

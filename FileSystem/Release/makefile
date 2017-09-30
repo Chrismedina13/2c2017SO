@@ -23,26 +23,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: YAMA
-
-dependents:
-	-cd /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release && $(MAKE) clean all
+all: FileSystem
 
 # Tool invocations
-YAMA: $(OBJS) $(USER_OBJS) /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release/libSO_lib.so
+FileSystem: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release" -o "YAMA" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "FileSystem" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) YAMA
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) FileSystem
 	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release/libSO_lib.so:
 
 -include ../makefile.targets

@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 
 	//Creo esta funcion en donde se encarga la comunicacion con el master aca iria el select y los works
 
-	int terminoReduccionGlobal = 0;
+	int terminoReduccionGlobal = 1;
 	if(terminoReduccionGlobal){
 
 		pthread_t hiloFS;
