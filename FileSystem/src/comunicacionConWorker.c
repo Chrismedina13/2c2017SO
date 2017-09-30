@@ -12,7 +12,7 @@
 
 void comunicacionWorker(ParametrosComunicacion* parametros){
 
-	int FDServidorWORKER = socketServidor(parametros->puertoFS_dn);
+	int FDServidorWORKER = socketServidor(parametros->puertoFS_worker);
 		printf("Se conecto un Yama su FD es el  = %d\n", FDServidorWORKER);
 	    logInfo("FD del Yama : %i \n", FDServidorWORKER);
 
