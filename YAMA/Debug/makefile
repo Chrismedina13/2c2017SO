@@ -26,13 +26,13 @@ endif
 all: YAMA
 
 dependents:
-	-cd /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release && $(MAKE) clean all
+	-cd /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug && $(MAKE) clean all
 
 # Tool invocations
-YAMA: $(OBJS) $(USER_OBJS) /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release/libSO_lib.so
+YAMA: $(OBJS) $(USER_OBJS) /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug/libSO_lib.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release" -o "YAMA" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug" -o "YAMA" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -43,6 +43,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Release/libSO_lib.so:
+/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/Debug/libSO_lib.so:
 
 -include ../makefile.targets

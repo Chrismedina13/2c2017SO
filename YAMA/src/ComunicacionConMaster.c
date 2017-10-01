@@ -91,8 +91,10 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			recv(FDMaster,pesoMensaje,4,0);
 			tamanio = deserializarINT(pesoMensaje);
 			logInfo("tamanio de lo que recibo %i",tamanio);
+			mensaje = malloc(tamanio);
 			recv(FDMaster, mensaje, tamanio,0);
-			logInfo("Se recibio el nombre del archivo:  %s", mensaje);
+			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,strlen(mensaje));
+			free(mensaje);
 			break;
 		default:
 			break;
