@@ -10,6 +10,7 @@ C_SRCS += \
 ../src/comunicacionConYama.c \
 ../src/configuracion.c \
 ../src/consola.c \
+../src/estructurasFS.c \
 ../src/logFileSystem.c \
 ../src/socketsFileSystem.c 
 
@@ -20,6 +21,7 @@ OBJS += \
 ./src/comunicacionConYama.o \
 ./src/configuracion.o \
 ./src/consola.o \
+./src/estructurasFS.o \
 ./src/logFileSystem.o \
 ./src/socketsFileSystem.o 
 
@@ -30,6 +32,7 @@ C_DEPS += \
 ./src/comunicacionConYama.d \
 ./src/configuracion.d \
 ./src/consola.d \
+./src/estructurasFS.d \
 ./src/logFileSystem.d \
 ./src/socketsFileSystem.d 
 
