@@ -93,7 +93,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			logInfo("tamanio de lo que recibo %i",tamanio);
 			mensaje = malloc(tamanio);
 			recv(FDMaster, mensaje, tamanio,0);
-			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,strlen(mensaje));
+			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,strlen(mensaje)); // recibe mas de lo que debe
+			agregarJObACola(mensaje);
 			free(mensaje);
 			break;
 		default:

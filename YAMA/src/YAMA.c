@@ -9,10 +9,9 @@
  */
 #include "Headers/yama.h"
 
-
 int main(int argc, char *argv[]) {
 
-	t_list* mastersConectados;
+	jobsAPlanificar = queue_create();
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
@@ -41,6 +40,7 @@ int main(int argc, char *argv[]) {
 
 
 	free(config);
+	queue_destroy_and_destroy_elements(jobsAPlanificar,free);
 
 	return EXIT_SUCCESS;
 }
