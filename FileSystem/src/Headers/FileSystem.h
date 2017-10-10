@@ -25,15 +25,14 @@ struct tabla_directorios {
   int index;
   char nombre[255];
   int padre;
-}tabla_directorios; // registros dentro de tablaDeDirectorios
+}tabla_directorios; // registros dentro de tabla_de_directorios
 
-tabla_directorios tablaDeDirectorios[100]; //vector de directorios
-
-
-
-
-
-
+struct tabla_archivos {
+	int ruta; //nombre
+	int tamanio;
+	int tipo;
+//	struct tabla_bloques bloques;
+}tabla_archivos;
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */
