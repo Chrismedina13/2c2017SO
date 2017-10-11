@@ -48,7 +48,7 @@
 */Debug/
 
 # LOG files
-**.log
+**/*.log
 /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/DataNode/DataNode.log
 /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/FileSystem.log
 /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/Master.log
