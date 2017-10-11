@@ -10,6 +10,9 @@
 #ifndef HEADERS_COMUNICACIONCONFILESYSTEM_H_
 #define HEADERS_COMUNICACIONCONFILESYSTEM_H_
 #include <SO_lib/sockets.h>
+#include <pthread.h>
+#include <commons/collections/queue.h>
+#include "planificacionYAMA.h"
 
 typedef struct ParametrosComunicacionConFileSystem{
 	int puerto;

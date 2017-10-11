@@ -20,6 +20,7 @@
 #define RETARDO_PLANIFICACION "RETARDO_PLANIFICACION"
 #define ALGORITMO_BALANCEO "ALGORITMO_BALANCEO"
 #define YAMA_PUERTO "YAMA_PUERTO"
+#define DISPONIBILIDAD_BASE "DISPONIBILIDAD_BASE"
 
 
 typedef struct Configuracion {
@@ -28,6 +29,7 @@ typedef struct Configuracion {
 	int retardo;
 	char* algoritmo_bal;
 	int puertoYama;
+	int disponibilidadBase;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);

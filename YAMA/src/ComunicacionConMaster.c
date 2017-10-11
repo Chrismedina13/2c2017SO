@@ -95,7 +95,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			recv(FDMaster, mensaje, tamanio,0);
 			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,strlen(mensaje)); // recibe mas de lo que debe
 			agregarJObACola(mensaje);
-			free(mensaje);
+			sem_post(&semaforoYAMA);
 			break;
 		default:
 			break;

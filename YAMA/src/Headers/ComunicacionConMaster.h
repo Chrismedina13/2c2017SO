@@ -10,6 +10,7 @@
 #include "SO_lib/sockets.h"
 #include "commons/collections/list.h"
 #include "SO_lib/Protocolo.h"
+#include "yama.h"
 typedef struct ParametrosComunicacionConMaster{
 	int puerto;
 } ParametrosComunicacionConMaster;

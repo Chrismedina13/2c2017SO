@@ -12,6 +12,8 @@
 int main(int argc, char *argv[]) {
 
 	jobsAPlanificar = queue_create();
+	sem_init(&semaforoYAMA,0,0);
+
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
@@ -22,6 +24,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion Retardo de Planificacion : %i \n", config->retardo);
 	logInfo("Archivo de configuracion Algoritmo de Balanceo : %s \n", config->algoritmo_bal);
 	logInfo("Archivo de configuracion Puerto YAMA : %i \n", config->puertoYama);
+	logInfo("Archivo de configuracion Disponibilidad Base : %i \n", config->disponibilidadBase);
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystem, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
@@ -38,7 +41,7 @@ int main(int argc, char *argv[]) {
 	pthread_join(hiloComunicacionConMaster,NULL);
 	pthread_join(hiloComunicacionConFileSystem,NULL);
 
-
+	sem_destroy(&semaforoYAMA);
 	free(config);
 	queue_destroy_and_destroy_elements(jobsAPlanificar,free);
 
