@@ -19,3 +19,115 @@
 [INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para comunicarme con YAMA
 [INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para mantener la consola de FS
 [INFO] 22:08:09:217 FS/(3229:3231): 5001
+[INFO] 17:59:47:357 FS/(2870:2870): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 17:59:47:359 FS/(2870:2870): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 17:59:47:359 FS/(2870:2870): Creando estructuras Administrativas
+[INFO] 17:59:47:359 FS/(2870:2870): Creando el hilo para comunicarme con Data Node
+[INFO] 17:59:47:359 FS/(2870:2870): Creando el hilo para comunicarme con YAMA
+[INFO] 17:59:47:360 FS/(2870:2870): Creando el hilo para comunicarme con WORKER
+[INFO] 18:01:19:618 FS/(2934:2934): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:01:19:619 FS/(2934:2934): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:01:19:619 FS/(2934:2934): Creando estructuras Administrativas
+[INFO] 18:01:19:619 FS/(2934:2934): Creando el hilo para comunicarme con Data Node
+[INFO] 18:01:19:619 FS/(2934:2934): Creando el hilo para comunicarme con YAMA
+[INFO] 18:01:19:619 FS/(2934:2934): Creando el hilo para comunicarme con WORKER
+[INFO] 18:01:40:109 FS/(2969:2969): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:01:40:109 FS/(2969:2969): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:01:40:109 FS/(2969:2969): Creando estructuras Administrativas
+[INFO] 18:01:40:109 FS/(2969:2969): Creando el hilo para comunicarme con Data Node
+[INFO] 18:01:40:109 FS/(2969:2969): Creando el hilo para comunicarme con YAMA
+[INFO] 18:01:40:109 FS/(2969:2969): Creando el hilo para comunicarme con WORKER
+[INFO] 18:02:22:432 FS/(3030:3030): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:02:22:434 FS/(3030:3030): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:02:22:434 FS/(3030:3030): Creando estructuras Administrativas
+[INFO] 18:02:22:434 FS/(3030:3030): Creando el hilo para comunicarme con Data Node
+[INFO] 18:02:22:434 FS/(3030:3030): Creando el hilo para comunicarme con YAMA
+[INFO] 18:02:22:434 FS/(3030:3030): Creando el hilo para comunicarme con WORKER
+[INFO] 18:02:26:969 FS/(3064:3064): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:02:26:970 FS/(3064:3064): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:02:26:970 FS/(3064:3064): Creando estructuras Administrativas
+[INFO] 18:02:26:970 FS/(3064:3064): Creando el hilo para comunicarme con Data Node
+[INFO] 18:02:26:970 FS/(3064:3064): Creando el hilo para comunicarme con YAMA
+[INFO] 18:02:26:970 FS/(3064:3064): Creando el hilo para comunicarme con WORKER
+[INFO] 18:02:36:259 FS/(3089:3089): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:02:36:260 FS/(3089:3089): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:02:36:260 FS/(3089:3089): Creando estructuras Administrativas
+[INFO] 18:02:36:260 FS/(3089:3089): Creando el hilo para comunicarme con Data Node
+[INFO] 18:02:36:260 FS/(3089:3089): Creando el hilo para comunicarme con YAMA
+[INFO] 18:02:36:260 FS/(3089:3089): Creando el hilo para comunicarme con WORKER
+[INFO] 18:03:05:201 FS/(3155:3155): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:03:05:210 FS/(3155:3155): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:03:05:210 FS/(3155:3155): Creando estructuras Administrativas
+[INFO] 18:03:05:210 FS/(3155:3155): Creando el hilo para comunicarme con Data Node
+[INFO] 18:03:05:210 FS/(3155:3155): Creando el hilo para comunicarme con YAMA
+[INFO] 18:03:05:210 FS/(3155:3155): Creando el hilo para comunicarme con WORKER
+[INFO] 18:03:48:262 FS/(3223:3223): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:03:48:262 FS/(3223:3223): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:03:48:262 FS/(3223:3223): Creando estructuras Administrativas
+[INFO] 18:03:48:262 FS/(3223:3223): Creando el hilo para comunicarme con Data Node
+[INFO] 18:03:48:262 FS/(3223:3223): Creando el hilo para comunicarme con YAMA
+[INFO] 18:03:48:262 FS/(3223:3223): Creando el hilo para comunicarme con WORKER
+[INFO] 18:04:06:361 FS/(3277:3277): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:04:06:368 FS/(3277:3277): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:04:06:368 FS/(3277:3277): Creando estructuras Administrativas
+[INFO] 18:04:06:368 FS/(3277:3277): Creando el hilo para comunicarme con Data Node
+[INFO] 18:04:06:368 FS/(3277:3277): Creando el hilo para comunicarme con YAMA
+[INFO] 18:04:06:368 FS/(3277:3277): Creando el hilo para comunicarme con WORKER
+[INFO] 18:06:09:660 FS/(3445:3445): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:06:09:660 FS/(3445:3445): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:06:09:661 FS/(3445:3445): Creando estructuras Administrativas
+[INFO] 18:06:09:661 FS/(3445:3445): Creando el hilo para comunicarme con Data Node
+[INFO] 18:06:09:661 FS/(3445:3445): Creando el hilo para comunicarme con YAMA
+[INFO] 18:06:09:661 FS/(3445:3445): Creando el hilo para comunicarme con WORKER
+[INFO] 18:07:23:124 FS/(3505:3505): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:07:23:132 FS/(3505:3505): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:07:23:132 FS/(3505:3505): Creando estructuras Administrativas
+[INFO] 18:07:23:132 FS/(3505:3505): Creando el hilo para comunicarme con Data Node
+[INFO] 18:07:23:132 FS/(3505:3505): Creando el hilo para comunicarme con YAMA
+[INFO] 18:07:23:133 FS/(3505:3505): Creando el hilo para comunicarme con WORKER
+[INFO] 18:09:21:340 FS/(3684:3684): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:09:21:340 FS/(3684:3684): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:09:21:340 FS/(3684:3684): Creando estructuras Administrativas
+[INFO] 18:09:21:340 FS/(3684:3684): Creando el hilo para comunicarme con Data Node
+[INFO] 18:09:21:340 FS/(3684:3684): Creando el hilo para comunicarme con YAMA
+[INFO] 18:09:21:340 FS/(3684:3684): Creando el hilo para comunicarme con WORKER
+[INFO] 18:09:39:955 FS/(3712:3712): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:09:39:955 FS/(3712:3712): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:09:39:955 FS/(3712:3712): Creando estructuras Administrativas
+[INFO] 18:09:39:955 FS/(3712:3712): Creando el hilo para comunicarme con Data Node
+[INFO] 18:09:39:955 FS/(3712:3712): Creando el hilo para comunicarme con YAMA
+[INFO] 18:09:39:955 FS/(3712:3712): Creando el hilo para comunicarme con WORKER
+[INFO] 18:17:07:364 FS/(4048:4048): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:17:07:365 FS/(4048:4048): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:17:07:365 FS/(4048:4048): Creando estructuras Administrativas
+[INFO] 18:17:07:365 FS/(4048:4048): Creando el hilo para comunicarme con Data Node
+[INFO] 18:17:07:365 FS/(4048:4048): Creando el hilo para comunicarme con YAMA
+[INFO] 18:17:07:365 FS/(4048:4048): Creando el hilo para comunicarme con WORKER
