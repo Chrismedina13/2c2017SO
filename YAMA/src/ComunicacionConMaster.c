@@ -91,9 +91,10 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			recv(FDMaster,pesoMensaje,4,0);
 			tamanio = deserializarINT(pesoMensaje);
 			logInfo("tamanio de lo que recibo %i",tamanio);
-			mensaje = malloc(tamanio);
+			mensaje = malloc(tamanio + 1);
+			mensaje[tamanio] = '\0';
 			recv(FDMaster, mensaje, tamanio,0);
-			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,strlen(mensaje)); // recibe mas de lo que debe
+			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,tamanio); // recibe mas de lo que debe
 			agregarJObACola(mensaje);
 			sem_post(&semaforoYAMA);
 			break;
