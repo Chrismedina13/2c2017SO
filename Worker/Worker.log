@@ -1,1 +1,21 @@
 
+[INFO] 18:01:20:669 WORKER/(13081:13081): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 18:01:20:675 WORKER/(13081:13081): Comunicacion con los Masters
+[INFO] 18:01:20:675 WORKER/(13081:13081): Comunicacion con los FILESYSTEM
+[INFO] 18:01:20:684 WORKER/(13081:13086): SocketCliente = 4 
+
+[INFO] 18:01:20:684 WORKER/(13081:13086): Se recibio: Hola WORKER
+[INFO] 18:01:25:27 WORKER/(13081:13085): Nueva conexion del socket cliente Master de FD: 6
+[INFO] 18:01:25:28 WORKER/(13081:13085): Recibi de Master: Holaa
+[INFO] 18:01:55:653 WORKER/(13081:13085): Conexion cerrada del FD : 6
+[INFO] 23:55:29:942 WORKER/(15324:15324): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 23:55:29:954 WORKER/(15324:15324): Comunicacion con los Masters
+[INFO] 23:55:29:954 WORKER/(15324:15324): Comunicacion con los FILESYSTEM
+[INFO] 23:55:29:960 WORKER/(15324:15326): SocketCliente = 4 
+
+[INFO] 23:55:29:960 WORKER/(15324:15326): Se recibio: Hola WORKER
+[INFO] 23:55:35:171 WORKER/(15324:15325): Nueva conexion del socket cliente Master de FD: 6
+[INFO] 23:55:35:173 WORKER/(15324:15325): Recibi de Master: Holaa
+[INFO] 23:55:42:478 WORKER/(15324:15325): Conexion cerrada del FD : 6

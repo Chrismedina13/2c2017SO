@@ -19,3 +19,35 @@
 [INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para comunicarme con YAMA
 [INFO] 22:08:09:216 FS/(3229:3229): Creando el hilo para mantener la consola de FS
 [INFO] 22:08:09:217 FS/(3229:3231): 5001
+[INFO] 18:01:00:14 FS/(12793:12793): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 18:01:00:14 FS/(12793:12793): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 18:01:00:17 FS/(12793:12793): Creando estructuras Administrativas
+[INFO] 18:01:00:17 FS/(12793:12793): Creando el hilo para comunicarme con Data Node
+[INFO] 18:01:00:17 FS/(12793:12793): Creando el hilo para comunicarme con YAMA
+[INFO] 18:01:00:18 FS/(12793:12793): Creando el hilo para comunicarme con WORKER
+[INFO] 18:01:05:883 FS/(12793:12794): Nueva conexion del socket cliente DataNode de FD: 9
+[INFO] 18:01:14:909 FS/(12793:12795): FD del Yama : 7 
+
+[INFO] 18:01:14:909 FS/(12793:12795): Comunicacion con YAMA establecida, Mensaje enviado correctamente
+[INFO] 18:01:20:684 FS/(12793:12796): FD del Yama : 5 
+
+[INFO] 18:01:20:684 FS/(12793:12796): Comunicacion con WORKER establecida, Mensaje enviado correctamente
+[INFO] 19:23:17:115 FS/(12793:12794): Conexion cerrada del FD : 9
+[INFO] 23:55:14:617 FS/(15149:15149): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : 5000 
+
+[INFO] 23:55:14:620 FS/(15149:15149): Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : 5001 
+
+[INFO] 23:55:14:622 FS/(15149:15149): Creando estructuras Administrativas
+[INFO] 23:55:14:622 FS/(15149:15149): Creando el hilo para comunicarme con Data Node
+[INFO] 23:55:14:622 FS/(15149:15149): Creando el hilo para comunicarme con YAMA
+[INFO] 23:55:14:622 FS/(15149:15149): Creando el hilo para comunicarme con WORKER
+[INFO] 23:55:19:359 FS/(15149:15151): Nueva conexion del socket cliente DataNode de FD: 9
+[INFO] 23:55:25:272 FS/(15149:15152): FD del Yama : 7 
+
+[INFO] 23:55:25:272 FS/(15149:15152): Comunicacion con YAMA establecida, Mensaje enviado correctamente
+[INFO] 23:55:25:272 FS/(15149:15152): Recibi de Yama: 0
+[INFO] 23:55:29:959 FS/(15149:15153): FD del Yama : 5 
+
+[INFO] 23:55:29:959 FS/(15149:15153): Comunicacion con WORKER establecida, Mensaje enviado correctamente

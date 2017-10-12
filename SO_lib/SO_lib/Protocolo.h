@@ -21,5 +21,4 @@
 //MASTER - FS
 #define ALMACENADO_FINAL 9
 
-
 #endif /* SO_LIB_PROTOCOLO_H_ */

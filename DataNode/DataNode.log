@@ -13,3 +13,33 @@
 [INFO] 11:36:51:385 DATANODE/(16502:16502): SocketCliente = 4 
 
 [INFO] 11:36:51:385 DATANODE/(16502:16502): Se recibio: Hola DataNode
+[INFO] 18:01:14:905 DATANODE/(12990:12990): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 18:01:14:908 DATANODE/(12990:12990): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 18:01:14:908 DATANODE/(12990:12990): Archivo de configuracion puerto fileSystem : 5001 
+
+[INFO] 18:01:14:909 DATANODE/(12990:12990): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 18:01:14:909 DATANODE/(12990:12990): Archivo de configuracion nombre nodo : NODO1 
+
+[INFO] 18:01:14:909 DATANODE/(12990:12990): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 18:01:14:910 DATANODE/(12990:12990): SocketCliente = 4 
+
+[INFO] 18:01:14:910 DATANODE/(12990:12990): Se mando mensaje a FS correctamente
+[INFO] 23:55:25:264 DATANODE/(15233:15233): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:55:25:271 DATANODE/(15233:15233): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:55:25:271 DATANODE/(15233:15233): Archivo de configuracion puerto fileSystem : 5001 
+
+[INFO] 23:55:25:271 DATANODE/(15233:15233): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:55:25:271 DATANODE/(15233:15233): Archivo de configuracion nombre nodo : NODO1 
+
+[INFO] 23:55:25:271 DATANODE/(15233:15233): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:55:25:272 DATANODE/(15233:15233): SocketCliente = 4 
+
+[INFO] 23:55:25:272 DATANODE/(15233:15233): Se mando mensaje a FS correctamente

@@ -1,0 +1,20 @@
+[INFO] 18:01:25:27 MASTER/(13175:13175): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:01:25:27 MASTER/(13175:13175): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:01:25:27 MASTER/(13175:13175): Creando el hilo para comunicarme con Yama
+[INFO] 18:01:25:27 MASTER/(13175:13175): SocketCliente Worker= 4 
+
+[INFO] 18:01:25:34 MASTER/(13175:13180): Ingrese JOB a Ejecutar
+[INFO] 18:01:55:653 MASTER/(13175:13180): Se va a ejecutar fernanadodejatedejoderlas<3pelotas/cahu.txt
+[INFO] 18:01:55:653 MASTER/(13175:13180): 43
+[INFO] 23:55:35:158 MASTER/(15417:15417): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 23:55:35:170 MASTER/(15417:15417): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 23:55:35:173 MASTER/(15417:15417): Creando el hilo para comunicarme con Yama
+[INFO] 23:55:35:173 MASTER/(15417:15417): SocketCliente Worker= 4 
+
+[INFO] 23:55:35:174 MASTER/(15417:15421): Ingrese JOB a Ejecutar
+[INFO] 23:55:42:477 MASTER/(15417:15421): Se va a ejecutar holacamila.txt
+[INFO] 23:55:42:477 MASTER/(15417:15421): 14

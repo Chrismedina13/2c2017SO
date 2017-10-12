@@ -9,7 +9,8 @@ C_SRCS += \
 ../src/YAMA.c \
 ../src/configuracion.c \
 ../src/logYAMA.c \
-../src/planificacionYAMA.c 
+../src/planificacionYAMA.c \
+../src/tabla_estados.c 
 
 OBJS += \
 ./src/ComunicacionConFileSystem.o \
@@ -17,7 +18,8 @@ OBJS += \
 ./src/YAMA.o \
 ./src/configuracion.o \
 ./src/logYAMA.o \
-./src/planificacionYAMA.o 
+./src/planificacionYAMA.o \
+./src/tabla_estados.o 
 
 C_DEPS += \
 ./src/ComunicacionConFileSystem.d \
@@ -25,7 +27,8 @@ C_DEPS += \
 ./src/YAMA.d \
 ./src/configuracion.d \
 ./src/logYAMA.d \
-./src/planificacionYAMA.d 
+./src/planificacionYAMA.d \
+./src/tabla_estados.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

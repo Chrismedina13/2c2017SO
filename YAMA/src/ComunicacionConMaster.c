@@ -94,7 +94,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			mensaje = malloc(tamanio + 1);
 			mensaje[tamanio] = '\0';
 			recv(FDMaster, mensaje, tamanio,0);
-			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,tamanio); // recibe mas de lo que debe
+			logInfo("Se recibio el nombre del archivo: %s de tamanio %i",mensaje,tamanio); // recibe mas de lo que debe.cm:ya esta ok
+
+			//creo una tabla  de estados para el master
+			crear_tabla_estados(FDMaster,mensaje);
+
 			agregarJObACola(mensaje);
 			sem_post(&semaforoYAMA);
 			break;

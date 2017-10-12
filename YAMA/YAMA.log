@@ -1,0 +1,40 @@
+[INFO] 18:01:05:859 YAMA/(12897:12897): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 18:01:05:873 YAMA/(12897:12897): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 18:01:05:873 YAMA/(12897:12897): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 18:01:05:873 YAMA/(12897:12897): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 18:01:05:873 YAMA/(12897:12897): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 18:01:05:873 YAMA/(12897:12897): Archivo de configuracion Disponibilidad Base : 2 
+
+[INFO] 18:01:05:878 YAMA/(12897:12897): Creando hilos para comunicacion con YAMA y FS
+[INFO] 18:01:05:884 YAMA/(12897:12902): SocketCliente = 5 
+
+[INFO] 18:01:25:34 YAMA/(12897:12903): Nueva conexion del socket cliente Master de FD: 6
+[INFO] 18:01:55:653 YAMA/(12897:12903): Recibi de Master: 1
+[INFO] 18:01:55:653 YAMA/(12897:12903): tamanio de lo que recibo 43
+[INFO] 18:01:55:653 YAMA/(12897:12903): Se recibio el nombre del archivo: fernanadodejatedejoderlas<3pelotas/cahu.txt de tamanio 43
+[INFO] 18:01:55:653 YAMA/(12897:12903): Conexion cerrada del FD : 6
+[INFO] 23:55:19:353 YAMA/(15172:15172): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Archivo de configuracion puerto fileSystem : 5000 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Archivo de configuracion Retardo de Planificacion : 1 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Archivo de configuracion Algoritmo de Balanceo : RR 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Archivo de configuracion Puerto YAMA : 5200 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Archivo de configuracion Disponibilidad Base : 2 
+
+[INFO] 23:55:19:358 YAMA/(15172:15172): Creando hilos para comunicacion con YAMA y FS
+[INFO] 23:55:19:359 YAMA/(15172:15174): SocketCliente = 5 
+
+[INFO] 23:55:35:174 YAMA/(15172:15175): Nueva conexion del socket cliente Master de FD: 6
+[INFO] 23:55:42:478 YAMA/(15172:15175): Recibi de Master: 1
+[INFO] 23:55:42:478 YAMA/(15172:15175): tamanio de lo que recibo 14
+[INFO] 23:55:42:478 YAMA/(15172:15175): Se recibio el nombre del archivo: holacamila.txt de tamanio 14
+[INFO] 23:55:42:478 YAMA/(15172:15175): Conexion cerrada del FD : 6
