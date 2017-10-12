@@ -9,6 +9,12 @@
 
 int main(int argc, char *argv[]) {
 
+	//probandommap
+
+	pruebammap();
+printf("ok");
+
+
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
@@ -40,11 +46,13 @@ logInfo("Creando estructuras Administrativas");
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
 	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
-	consolaFileSystem();
+	//consolaFileSystem();
 
 	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
 	pthread_join(hiloDN, NULL);
+
+
 
 
 	free(config);

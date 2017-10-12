@@ -31,8 +31,9 @@ struct tabla_archivos {
 	int ruta; //nombre
 	int tamanio;
 	int tipo;
-//	struct tabla_bloques bloques;
+	void* bloque;
 }tabla_archivos;
+
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */

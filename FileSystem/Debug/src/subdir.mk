@@ -12,6 +12,7 @@ C_SRCS += \
 ../src/consola.c \
 ../src/estructurasFS.c \
 ../src/logFileSystem.c \
+../src/pruebas.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
@@ -23,6 +24,7 @@ OBJS += \
 ./src/consola.o \
 ./src/estructurasFS.o \
 ./src/logFileSystem.o \
+./src/pruebas.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
@@ -34,6 +36,7 @@ C_DEPS += \
 ./src/consola.d \
 ./src/estructurasFS.d \
 ./src/logFileSystem.d \
+./src/pruebas.d \
 ./src/socketsFileSystem.d 
 
 
