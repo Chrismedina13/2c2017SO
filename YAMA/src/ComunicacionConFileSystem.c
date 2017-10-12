@@ -30,15 +30,27 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 		logInfo("Error en envio de job");
 	}
 
+	logInfo("%i",param->disponibilidadBase);
+	logInfo("%s",param->algoritmo);
 	destruirPaquete(paqueteDeEnvioDeJOB);
+
+	/* Aca tiene que hacer un recv de FS la lista de bloque que componen al archivo
+	   la ubicacion de sus copias y espacio ocupado en el bloque. Empieza la planificacion
+	   con esos datos
+
+	   Recibiria
+	   BLOQUE | copia 1 | copia 2 | bytes ocupados
+	*/
 
 }
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
-		int puerto, char* ip) {
+		int puerto, char* ip,char* algoritmo,int disponiblidadBase) {
 	ParametrosComunicacionConFileSystem* parametros = malloc(
 			sizeof(ParametrosComunicacionConFileSystem));
 	parametros->ip = ip;
 	parametros->puerto = puerto;
+	parametros->algoritmo = algoritmo;
+	parametros->disponibilidadBase = disponiblidadBase;
 	return parametros;
 }

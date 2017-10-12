@@ -32,6 +32,23 @@ typedef struct Paquete {
 	char* mensaje;
 } Paquete;
 
+
+typedef struct ubicacionBloque{
+
+	int nodo;  //Nodo donde se encuentra la copia
+	int bloque; // Bloque adentro del nodo donde se encuentra
+}UbicacionBloque;
+
+typedef struct ubiacionBloquesArchivo{
+
+	int bloque; //numero del bloque del archivo
+	UbicacionBloque* ubicacionCopia1; //ubicacion copia 1
+	UbicacionBloque* ubicacionCopia2; //ubicacion copia 2
+	int bytesOcupados; //bytesOCupados por ese bloque
+}UbicacionBloquesArchivo;
+
+
+
 //funciones
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,

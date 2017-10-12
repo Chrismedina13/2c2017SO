@@ -19,14 +19,9 @@ int main(int argc, char *argv[]) {
 
 	//Archivo de configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
-	logInfo("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
-	logInfo("Archivo de configuracion puerto fileSystem : %i \n", config->puertoFileSystem);
-	logInfo("Archivo de configuracion Retardo de Planificacion : %i \n", config->retardo);
-	logInfo("Archivo de configuracion Algoritmo de Balanceo : %s \n", config->algoritmo_bal);
-	logInfo("Archivo de configuracion Puerto YAMA : %i \n", config->puertoYama);
-	logInfo("Archivo de configuracion Disponibilidad Base : %i \n", config->disponibilidadBase);
 
-	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystem, config->ipFileSystem);
+	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(
+			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");

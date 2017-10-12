@@ -15,10 +15,12 @@
 typedef struct ParametrosComunicacionConFileSystem {
 	int puerto;
 	int ip;
+	char* algoritmo;
+	int disponibilidadBase;
 } ParametrosComunicacionConFileSystem;
 
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* parametros);
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
-		int puerto, char* ip);
+		int puerto, char* ip,char* algoritmo,int disponiblidadBase);
 
 #endif /* HEADERS_COMUNICACIONCONFILESYSTEM_H_ */
