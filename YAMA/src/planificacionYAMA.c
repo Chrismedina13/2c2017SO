@@ -32,5 +32,3 @@ char* retirarJobDeLista(){
 	return job;
 }
 
-t_list* planificacion(t_list* lista fr)
-
