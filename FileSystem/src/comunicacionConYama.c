@@ -24,10 +24,10 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	}
 	//cm:recibe de yama el nombre del archivo
 	char buffer[4];
-	int i;
+	recv(FDServidorYAMA,buffer,4,0);
 	int codigo = deserializarINT(buffer);
 	logInfo("Recibi de Yama: %i", codigo);
-	mensajesRecibidosDeYama(codigo, i);
+	mensajesRecibidosDeYama(codigo, FDServidorYAMA);
 }
 
 ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA,
