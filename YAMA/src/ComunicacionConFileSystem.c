@@ -62,6 +62,8 @@ t_list* planificar(listaDeWorkersAPlanificar lo que me manda FS,param->algoritmo
 }*/
 }
 
+
+
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip,char* algoritmo,int disponiblidadBase) {
 	ParametrosComunicacionConFileSystem* parametros = malloc(

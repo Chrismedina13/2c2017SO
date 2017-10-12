@@ -32,22 +32,23 @@ typedef struct Paquete {
 	char* mensaje;
 } Paquete;
 
-typedef struct worker{
+typedef struct nodo{
 
-	int worker;
+	int nodo;
 	int disponibilidad;
 	int carga;
-}workerParaPlanificar;
+	t_list* partesDelArchivo;
+}nodoParaPlanificar;
 
 typedef struct ubicacionBloque{
 
 	int nodo;  //Nodo donde se encuentra la copia
-	int bloque; // Bloque adentro del nodo donde se encuentra
+	int bloqueDelNodoDeLaCopia; // Bloque adentro del nodo donde se encuentra
 }UbicacionBloque;
 
 typedef struct ubiacionBloquesArchivo{
 
-	int bloque; //numero del bloque del archivo
+	int parteDelArchivo; //numero del bloque del archivo
 	UbicacionBloque* ubicacionCopia1; //ubicacion copia 1
 	UbicacionBloque* ubicacionCopia2; //ubicacion copia 2
 	int bytesOcupados; //bytesOCupados por ese bloque
