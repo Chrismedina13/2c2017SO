@@ -11,10 +11,14 @@
 #include "yama.h"
 #include <semaphore.h>
 #include "commons/collections/queue.h"
+#include "SO_lib/estructuras.h"
 
 pthread_mutex_t mutexJobsAPlanificar;
+pthread_mutex_t mutexWorkerAPlanificar;
+
 void agregarJObACola(char* job);
 char* retirarJobDeLista();
+void agregarWorkerALista(workerParaPlanificar* worker);
 
 
 

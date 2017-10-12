@@ -7,6 +7,14 @@
 
 #include "Headers/planificacionYAMA.h"
 
+void agregarWorkerALista(workerParaPlanificar* worker){
+
+	pthread_mutex_lock(&mutexWorkerAPlanificar);
+	list_add(listaDeWorkerTotales,worker);
+	pthread_mutex_lock(&mutexWorkerAPlanificar);
+
+}
+
 
 void agregarJObACola(char* job){
 
@@ -23,3 +31,6 @@ char* retirarJobDeLista(){
 	pthread_mutex_unlock(&mutexJobsAPlanificar);
 	return job;
 }
+
+t_list* planificacion(t_list* lista fr)
+

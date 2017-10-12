@@ -42,7 +42,24 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	   BLOQUE | copia 1 | copia 2 | bytes ocupados
 	*/
 
-}
+	//Devuelve directamente lo que se le tiene que devover a MAster
+
+/*
+t_list* planificar(listaDeWorkersAPlanificar lo que me manda FS,param->algoritmo,param->disponibilidadBase){
+
+		if(string_equals_ignore_case(param->algoritmo,"W-CLOCK")){
+
+			//Planificar con W-CLOCK
+		}else{
+
+			//Planificar con CLOCK
+
+		}
+
+	}
+
+
+}*/
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip,char* algoritmo,int disponiblidadBase) {

@@ -32,6 +32,12 @@ typedef struct Paquete {
 	char* mensaje;
 } Paquete;
 
+typedef struct worker{
+
+	int worker;
+	int disponibilidad;
+	int carga;
+}workerParaPlanificar;
 
 typedef struct ubicacionBloque{
 

@@ -12,6 +12,7 @@
 int main(int argc, char *argv[]) {
 
 	jobsAPlanificar = queue_create();
+	listaDeWorkerTotales = list_create();
 	sem_init(&semaforoYAMA,0,0);
 
 	//Archivo de Logs
@@ -39,6 +40,6 @@ int main(int argc, char *argv[]) {
 	sem_destroy(&semaforoYAMA);
 	free(config);
 	queue_destroy_and_destroy_elements(jobsAPlanificar,free);
-
+	list_destroy(listaDeWorkerTotales);
 	return EXIT_SUCCESS;
 }
