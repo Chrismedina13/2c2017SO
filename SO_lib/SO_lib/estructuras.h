@@ -32,13 +32,14 @@ typedef struct Paquete {
 	uint32_t tamanio;
 	char* mensaje;
 } Paquete;
-
+//nodoParaPlanificar es un nodo de la lista de listaDeWorkerTotales
 typedef struct nodo {
 
 	int nodo;
 	int disponibilidad;
 	int carga;
 	t_list* partesDelArchivo;
+	t_list* partesAplanificar;
 } nodoParaPlanificar;
 
 typedef struct ubicacionBloque {

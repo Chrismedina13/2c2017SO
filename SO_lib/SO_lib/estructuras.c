@@ -21,6 +21,7 @@ nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 }
 void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo) {
 	list_destroy_and_destroy_elements(nodo->partesDelArchivo, free);
+	list_destroy_and_destroy_elements(nodo->partesAplanificar, free);
 	free(nodo);
 }
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
