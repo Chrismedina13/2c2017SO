@@ -7,24 +7,23 @@
 
 #include "Headers/planificacionYAMA.h"
 
-void agregarWorkerALista(nodoParaPlanificar* worker){
+void agregarWorkerALista(nodoParaPlanificar* worker) {
 
 	pthread_mutex_lock(&mutexWorkerAPlanificar);
-	list_add(listaDeWorkerTotales,worker);
+	list_add(listaDeWorkerTotales, worker);
 	pthread_mutex_lock(&mutexWorkerAPlanificar);
 
 }
 
-
-void agregarJObACola(char* job){
+void agregarJObACola(char* job) {
 
 	pthread_mutex_lock(&mutexJobsAPlanificar);
-	queue_push(jobsAPlanificar,job);
+	queue_push(jobsAPlanificar, job);
 	pthread_mutex_unlock(&mutexJobsAPlanificar);
 
 }
 
-char* retirarJobDeLista(){
+char* retirarJobDeLista() {
 
 	pthread_mutex_lock(&mutexJobsAPlanificar);
 	char* job = queue_pop(jobsAPlanificar);
@@ -32,71 +31,102 @@ char* retirarJobDeLista(){
 	return job;
 }
 
-t_list* planificar(t_list* listaDeWorkersAPlanificar,char* algoritmo, int disponibilidadBase){
+t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
+		int disponibilidadBase) {
 
-		if(string_equals_ignore_case(algoritmo,"W-CLOCK")){
+	if (string_equals_ignore_case(algoritmo, "W-CLOCK")) {
 
-			return planificarConW_Clock(listaDeWorkersAPlanificar,disponibilidadBase);
-		}else{
+		return planificarConW_Clock(listaDeWorkersAPlanificar,
+				disponibilidadBase);
+	} else {
 
-			return planificarConClock(listaDeWorkersAPlanificar,disponibilidadBase);
-
-		}
+		return planificarConClock(listaDeWorkersAPlanificar, disponibilidadBase);
 
 	}
 
-t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
+}
 
-		actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
+t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
+		int disponibilidadBase) {
 
+	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
+			disponibilidadBase);
+
+}
+//
+t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
+		int disponibilidadBase) {
+
+	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
+			disponibilidadBase);
+
+	base
 
 }
 
-t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
-
-	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
-
-}
-
-void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar, int disponibilidadBase){
+void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
+		int disponibilidadBase) {
 
 	int nodo1;
 	int nodo2;
 	int a = 1;
-	while(a <= list_size(listaDeWorkersAPLanificar)){
+	while (a <= list_size(listaDeWorkersAPLanificar)) {
 
-		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPLanificar,a);
+		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPLanificar,
+				a);
 		nodo1 = bloque->ubicacionCopia1->nodo;
 		nodo2 = bloque->ubicacionCopia2->nodo;
-		if(!estaNodorEnLaListaDeTotales(nodo1)){
+		if (!estaNodorEnLaListaDeTotales(nodo1)) {
 
-			nodoParaPlanificar* nodoA = crearNodoParaPlanificar(bloque->ubicacionCopia1->nodo,disponibilidadBase,0);
+			nodoParaPlanificar* nodoA = crearNodoParaPlanificar(
+					bloque->ubicacionCopia1->nodo, disponibilidadBase, 0,
+					bloque->parteDelArchivo);
 			agregarWorkerALista(nodoA);
-		}
-	    if(!estaNodorEnLaListaDeTotales(nodo2)){
+		} else {
+			//si ya esta el nodo en la lista, agrega una parte de archivo
 
-	    	nodoParaPlanificar* nodoB = crearNodoParaPlanificar(bloque->ubicacionCopia2->nodo,disponibilidadBase,0);
-	    	agregarWorkerALista(nodoB);
-	    }
-
-	    a++;
+			list_add(nodoAPlanificar->partesDelArchivo, parteDeArchivo);
 		}
+		if (!estaNodorEnLaListaDeTotales(nodo2)) {
+
+			nodoParaPlanificar* nodoB = crearNodoParaPlanificar(
+					bloque->ubicacionCopia2->nodo, disponibilidadBase, 0,
+					bloque->parteDelArchivo);
+			agregarWorkerALista(nodoB);
+		}
+
+		a++;
+	}
 }
+void agregarPartedeArchivoANodo(int nodoBUscado, int bloque) {
+	int i;
 
-bool estaNodorEnLaListaDeTotales(int nodo){
+	for (i = 1; i < list_size(listaDeWorkerTotales); i++) {
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales, i);
 
-	int i=1;
+		if (nodo->nodo == nodoBUscado) {
+			nodoParaPlanificar* nodoaModificar = list_remove(
+					listaDeWorkerTotales, i);
+			list_add(nodoaModificar->partesDelArchivo, bloque);
+			list_add(listaDeWorkerTotales, nodoaModificar);
+		}
+	}
+}
+bool estaNodorEnLaListaDeTotales(int nodo) {
 
-	if(list_size(listaDeWorkerTotales) == 0){
+	int i = 1;
+
+	if (list_size(listaDeWorkerTotales) == 0) {
 
 		return false;
-	}else{
-		while(i <= list_size(listaDeWorkerTotales)){
+	} else {
+		while (i <= list_size(listaDeWorkerTotales)) {
 
-			nodoParaPlanificar* nodoAPlanificar = list_get(listaDeWorkerTotales,i);
-			if(nodoAPlanificar->nodo == nodo){
+			nodoParaPlanificar* nodoAPlanificar = list_get(listaDeWorkerTotales,
+					i);
+			if (nodoAPlanificar->nodo == nodo) {
 				return true;
-			}else{
+			} else {
 
 				i++;
 			}

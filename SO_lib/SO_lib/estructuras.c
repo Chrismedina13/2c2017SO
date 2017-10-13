@@ -7,17 +7,22 @@
 
 #include "estructuras.h"
 
-nodoParaPlanificar* crearNodoParaPlanificar(int nodo,int disponibilidad,int carga){
+nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
+		int carga, int parteDeArchivo) {
 
 	nodoParaPlanificar* nodoAPlanificar = malloc(sizeof(nodoParaPlanificar));
 	nodoAPlanificar->nodo = nodo;
 	nodoAPlanificar->disponibilidad = disponibilidad;
 	nodoAPlanificar->carga = carga;
 	nodoAPlanificar->partesDelArchivo = list_create();
+	list_add(nodoAPlanificar->partesDelArchivo,parteDeArchivo);
 	return nodoAPlanificar;
 // Hacer un destruir de esto
 }
-
+void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo) {
+	list_destroy_and_destroy_elements(nodo->partesDelArchivo, free);
+	free(nodo);
+}
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal) {
@@ -30,16 +35,8 @@ RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 	respuesta->ipWorkwer = ipWorker;
 	respuesta->bloque = bloque;
 	respuesta->bytesOcupados = bytesOcupados;
-	return respuesta;
+	return respuesta; //nodo de la lista de repuesta
 }
-
-//void destruirTransformacionYAMA(RespuestaTransformacionYAMA* respuesta) {
-
-	//Aca hace un free del malloc de la estructura
-//}
-
-
-
 Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje) {
 	Paquete *Paquete = calloc(1, sizeof(Paquete));
 	size_t sizeBuffer = (sizeof(char) * tamanio);
@@ -92,9 +89,10 @@ int enviarPaquete(int fileDescriptor, Paquete *package) {
 	char* serializedPkg = serializarPaquete(package);
 	result = send(fileDescriptor, serializedPkg, sizePackage(package), 0);
 	free(serializedPkg);
-	if (result == -1)
-		return -1; //SI DA ERROR
-
-	return 1; //SI ESTA OK
+	if (result == -1) {
+		return -1;
+	} //SI DA ERROR
+	else {
+		return 1;
+	} //SI ESTA OK
 }
-
