@@ -9,10 +9,11 @@
 
 int main(int argc, char *argv[]) {
 
+
 	//probandommap
 
-	pruebammap();
-printf("ok");
+	//pruebammap();
+//printf("ok");
 
 
 	//Archivo de logs
@@ -28,7 +29,14 @@ printf("ok");
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
 
+
 logInfo("Creando estructuras Administrativas");
+
+//bitarray_create(bloques,20*4);
+//inicializarBitmap(bloques);
+//imprimirResultado(bloques);
+
+
 
 
 
@@ -54,7 +62,11 @@ logInfo("Creando estructuras Administrativas");
 
 
 
+	//list_remove_and_destroy_element(ubiacionBloquesArchivo);
+	//list_remove_and_destroy_element(nodos);
+	//list_remove_and_destroy_element(bitmapNodos);
 
-	free(config);
+
+		free(config);
 	return EXIT_SUCCESS;
 }
