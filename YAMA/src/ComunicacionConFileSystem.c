@@ -44,22 +44,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	//Devuelve directamente lo que se le tiene que devover a MAster
 
-/*
-t_list* planificar(listaDeWorkersAPlanificar lo que me manda FS,param->algoritmo,param->disponibilidadBase){
-
-		if(string_equals_ignore_case(param->algoritmo,"W-CLOCK")){
-
-			//Planificar con W-CLOCK
-		}else{
-
-			//Planificar con CLOCK
-
-		}
-
-	}
+	t_list* listaDeWorkersAPlanificar;
 
 
-}*/
 }
 
 

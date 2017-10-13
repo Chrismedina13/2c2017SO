@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include "commons/collections/list.h"
 
 //YAMA armara una lista con esta estructura , la serializara y mandara a Master que deserealizara
 

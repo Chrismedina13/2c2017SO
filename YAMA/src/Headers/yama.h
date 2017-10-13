@@ -18,6 +18,8 @@
 #include "commons/collections/queue.h"
 #include "commons/string.h"
 #include <semaphore.h>
+#include "commons/bitarray.h"
+
 
 t_queue* jobsAPlanificar; // VARIABLE GLOBAL TIPO LISTA DONDE SE GUARDAN LOS JOBS A PLANIFICAR
 sem_t semaforoYAMA; //Espera que llegue el job de MASTER para ejecutar la pate de comunicacion con FS

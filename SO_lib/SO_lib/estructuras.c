@@ -7,6 +7,17 @@
 
 #include "estructuras.h"
 
+nodoParaPlanificar* crearNodoParaPlanificar(int nodo,int disponibilidad,int carga){
+
+	nodoParaPlanificar* nodoAPlanificar = malloc(sizeof(nodoParaPlanificar));
+	nodoAPlanificar->nodo = nodo;
+	nodoAPlanificar->disponibilidad = disponibilidad;
+	nodoAPlanificar->carga = carga;
+	nodoAPlanificar->partesDelArchivo = list_create();
+	return nodoAPlanificar;
+// Hacer un destruir de esto
+}
+
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal) {
