@@ -53,15 +53,12 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 			disponibilidadBase);
 
 }
-//
+
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 		int disponibilidadBase) {
 
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
 			disponibilidadBase);
-
-	base
-
 }
 
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
@@ -84,8 +81,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 			agregarWorkerALista(nodoA);
 		} else {
 			//si ya esta el nodo en la lista, agrega una parte de archivo
-
-			list_add(nodoAPlanificar->partesDelArchivo, parteDeArchivo);
+			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
 		}
 		if (!estaNodorEnLaListaDeTotales(nodo2)) {
 
@@ -93,6 +89,9 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 					bloque->ubicacionCopia2->nodo, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
 			agregarWorkerALista(nodoB);
+		}else {
+			//si ya esta el nodo en la lista, agrega una parte de archivo
+			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
 		}
 
 		a++;
@@ -108,7 +107,7 @@ void agregarPartedeArchivoANodo(int nodoBUscado, int bloque) {
 			nodoParaPlanificar* nodoaModificar = list_remove(
 					listaDeWorkerTotales, i);
 			list_add(nodoaModificar->partesDelArchivo, bloque);
-			list_add(listaDeWorkerTotales, nodoaModificar);
+			list_add_in_index(listaDeWorkerTotales, nodoaModificar,i);
 		}
 	}
 }

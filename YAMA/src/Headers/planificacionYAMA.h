@@ -22,6 +22,7 @@ void agregarWorkerALista(nodoParaPlanificar* worker);
 t_list* planificar(t_list* listaDeWorkersAPlanificar,char* algoritmo, int disponibilidadBase);
 t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase);
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase);
+void agregarPartedeArchivoANodo(int nodoBUscado, int bloque);
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,int disponibilidadBase);
 bool estaNodorEnLaListaDeTotales(int nodo);
 
