@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <CUnit/Basic.h>
+#include "SO_lib/estructuras.h"
+
 
 void test1(void);
 void test2(void);
@@ -26,10 +28,10 @@ int main() {
   CU_add_test(prueba, "dos", test2);
   CU_add_test(prueba, "tres", test3);
 
+
   CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();
   CU_cleanup_registry();
-
   return CU_get_error();
 }
 
