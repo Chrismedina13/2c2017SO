@@ -9,20 +9,45 @@
 
 int pruebammap (){
 
-	void* file2;
-	   FILE * fp;
-	   fp = fopen ("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt", "r");
+        struct stat sb;
+        off_t len;
+        char *p;
+        int fd;
 
-	   while(!feof(fp)){
+        fd = open ("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt", O_RDONLY);
+        if (fd == -1) {
+                printf("Error al abrir archivo\n");
+                return 1;
+        }
 
-	   fputc(fgetc(fp), stdout);
-	   }
-	   file2 = mmap (NULL, sizeof(fp), PROT_READ, MAP_PRIVATE, fp,0);
+        if (fstat (fd, &sb) == -1) {
+                printf("Error al hacer stat\n");
+                return 1;
+        }
 
-	   printf("%s", file2);
+        if (!S_ISREG (sb.st_mode)) {
+                printf ("No es un archivo regular\n");
+                return 1;
+        }
 
-	   fclose(fp);
+        p = (char *)mmap (0, sb.st_size, PROT_READ, MAP_SHARED, fd, 0);
+        if (p == MAP_FAILED) {
+                printf("Fallo el mapeo\n");
+                return 1;
+        }
 
-	   return (0);
+        if (close (fd) == -1) {
+                printf("Error al cerrar el archivo\n");
+                return 1;
+        }
+	/* mostramos el archivo completo */
+        printf ("%s\n", p);
+
+        if (munmap (p, sb.st_size) == -1) {
+                printf("Error al cerrar la proyeccion \n");
+                return 1;
+        }
+
+        return 0;
 
 }

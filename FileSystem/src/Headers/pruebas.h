@@ -5,10 +5,11 @@
  *      Author: utnso
  */
 
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
-#include <stdio.h>
-#include <stdlib.h>
-#define tam_bloque 1024 //fijarse
 
 int pruebasmmap ();

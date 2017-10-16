@@ -10,10 +10,9 @@
 int main(int argc, char *argv[]) {
 
 
-	//probandommap
-
-	//pruebammap();
-//printf("ok");
+	//PRUEBA DE MMAP FUNCIONANDO!!!!
+	pruebammap();
+	printf("ok");
 
 
 	//Archivo de logs
