@@ -7,14 +7,11 @@
 
 #include "Headers/FileSystem.h"
 
-	//estructuras
-
-	struct tabla_directorios tabla_de_directorios[100];
 
 int cargarDirectorios() {
 
-	/*Carga los directorios de directorios.dat en una estructura tipo tabla_directorios
-	 * devuelve el index del ultimo directorio cargado.
+	/*Carga los directorios de directorios.dat en una estructura tipo tabla_directorios.
+	 *La estructura esta declarada global en FileSystem.h
 	 */
 
   FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "r");
@@ -25,13 +22,24 @@ int cargarDirectorios() {
 
   int count = 0;
 
-  while (count < 100 && !feof(fp)) {
-  fscanf(fp, tabla_de_directorios[count].index, tabla_de_directorios[count].nombre,
-		  tabla_de_directorios[count].padre);
-  count++;
+  while (count < 99) {
+	  if(feof(fp)){
+		  break;
+	  }
+	  fscanf(fp, "%d %s %d", &tabla_de_directorios[count].index, tabla_de_directorios[count].nombre,
+			  &tabla_de_directorios[count].padre);
+
+	  /*Prueba si se carga correctamente
+	   printf("indice cargado: %d \n", tabla_de_directorios[count].index);
+	   printf("nombre cargado: %s \n", tabla_de_directorios[count].nombre);
+	   printf("padre cargado: %d \n", tabla_de_directorios[count].padre);
+	   */
+
+	  count++;
   }
+  fclose(fp);
   logInfo("Tabla de Directorios cargada correctamente. \n");
-  return 1;
+  return (1);
 }
 
 int cantidadDirectorios(){
@@ -40,31 +48,28 @@ int cantidadDirectorios(){
 	 *
 	 */
 
-	int count = -1;
+	int count = 0;
 
 	while(1){
 		if(tabla_de_directorios[count].index == count) count++;
 		else return(count-1);
 	}
 
-
 };
 
-int existeDirectorio(char* nombre, int padre) {
+int existeDirectorio(char* nombre, int padre) { //no esta funcionando como deberia
 
 	/* Recibe nombre del directorio a buscar y el index del padre
 	 * devuelve 1 si existe, -1 si no existe.
 	 */
 
 	int count = 0;
-	int cantDir;
+	int cantDir = cantidadDirectorios();
 
-	cantDir = cantidadDirectorios();
-
-	while (count < cantDir) {
-		if (tabla_de_directorios[count].nombre == nombre &&
-				tabla_de_directorios[count].padre == padre)
+	while (count <= cantDir) {
+		if (tabla_de_directorios[count].nombre == nombre && tabla_de_directorios[count].padre == padre) { //hay un problema con el tipo de datos en padre
 			return(1);
+		}
 		count++;
 	}
 	return(-1);
