@@ -66,18 +66,55 @@ t_list* dev_nodos_a_planificar() {
 t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 		int disponibilidadBase) {
 
-	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
-			disponibilidadBase);
+	 int parte = 0;
+	 t_list* partesDelArchivo = list_create();
+	 int cantidadDePartesDelArchivo = list_size(listaDeWorkersAPlanificar);
+
+	 while(cantidadDePartesDelArchivo > 0){
+
+		 list_add(partesDelArchivo,parte);
+		 cantidadDePartesDelArchivo --;
+		 parte ++;
+	 }
+
+
+	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
+
 	//busco de la lista de nodos a planificar aquellos que tienen partes de archivo
-	t_list*nodosFinalesAPLanificar= dev_nodos_a_planificar();
+	t_list* nodosFinalesAPLanificar= dev_nodos_a_planificar();
 	//cm falta liberar nodosFinalesAPLanificar
+
+
+	nodoParaPlanificar* punteroClock;
+	nodoParaPlanificar* punteroClockAuxiliar;
+
+	list_destroy(partesDelArchivo);
+
 }
 
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 		int disponibilidadBase) {
 
-	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
-			disponibilidadBase);
+	 int parte = 0;
+	 t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
+	 int cantidadDePartesDelArchivo = list_size(listaDeWorkersAPlanificar);
+
+	 while(cantidadDePartesDelArchivo > 0){
+
+		 list_add(partesDelArchivo,parte);
+		 cantidadDePartesDelArchivo --;
+		 parte ++;
+	 }
+
+	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
+	t_list* nodosFinalesAPLanificar= dev_nodos_a_planificar();
+
+	nodoParaPlanificar* punteroClock;
+	nodoParaPlanificar* punteroClockAuxiliar;
+
+	//Con los punteros ,Nodos finales a planificar y partes del archivo
+
+	list_destroy(partesDelArchivo);
 }
 
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
