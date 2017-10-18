@@ -22,7 +22,7 @@ int cargarDirectorios() {
 
   int count = 0;
 
-  while (count < 99) {
+  while (count <= 99) {
 	  if(feof(fp)){
 		  break;
 	  }
@@ -48,27 +48,27 @@ int cantidadDirectorios(){
 	 *
 	 */
 
-	int count = 0;
+	int count = 1;
 
-	while(1){
-		if(tabla_de_directorios[count].index == count) count++;
-		else return(count-1);
-	}
+	  	while(1){
+	  		if(!tabla_de_directorios[count].index) return(count);
+	  		count++;
+	  	}
 
 };
 
-int existeDirectorio(char* nombre, int padre) { //no esta funcionando como deberia
+int existeDirectorio(char* nombre, int padre) {
 
 	/* Recibe nombre del directorio a buscar y el index del padre
-	 * devuelve 1 si existe, -1 si no existe.
+	 * devuelve el index si existe, -1 si no existe.
 	 */
 
 	int count = 0;
 	int cantDir = cantidadDirectorios();
 
 	while (count <= cantDir) {
-		if (tabla_de_directorios[count].nombre == nombre && tabla_de_directorios[count].padre == padre) { //hay un problema con el tipo de datos en padre
-			return(1);
+		if ((strcmp(tabla_de_directorios[count].nombre,nombre) != 0) && tabla_de_directorios[count].padre == padre) {
+			return(count);
 		}
 		count++;
 	}
@@ -83,14 +83,18 @@ int crearDirectorio(char* nombre, int padre) {
 
 	int cantDir;
 	int existe;
+	int count = 0;
+	int indice;
 
 	cantDir = cantidadDirectorios();
 	existe = existeDirectorio(nombre, padre);
 
-	if (cantDir<99 && existe == -1){
-	strcpy(tabla_de_directorios[cantDir+1].index, cantDir+1);
-	strcpy(tabla_de_directorios[cantDir+1].nombre, nombre);
-	strcpy(tabla_de_directorios[cantDir+1].padre, padre);
+	if (cantDir<=100 && existe == -1){
+	indice = buscarIndice();
+	tabla_de_directorios[cantDir].index = indice;
+	strcpy(tabla_de_directorios[cantDir].nombre, nombre);
+	tabla_de_directorios[cantDir].padre = padre;
+
 	}
 
 	else {
@@ -102,3 +106,129 @@ int crearDirectorio(char* nombre, int padre) {
 	return(1);
 
 };
+
+int eliminarDirectorio(int index){ //checkear si tiene archivos dentro
+
+	/*Recibe el index de un directorio a borrar
+	 *devuelve 1 si lo borra, -1 si no puede borrarlo (porque tiene cosas adentro).
+	 */
+
+	int count = 0;
+
+	while(count <= 99){
+		if(tabla_de_directorios[count].padre == index) return(-1); //si es padre de alguien no puede borrarlo
+		//if (contieneArchivos()=1) return (-1);
+		count++;
+	}
+
+	tabla_de_directorios[index].index = -2;
+	strcpy(tabla_de_directorios[index].nombre,"deleted");
+	tabla_de_directorios[index].padre = -2;
+
+	count = 0;
+
+	while(count <= 99){
+		if(tabla_de_directorios[count].index == -2){
+			tabla_de_directorios[count].index = tabla_de_directorios[count+1].index;//no deberiamos cambiar el index sino todos los que lo tengan como padre hay que cambiarlos tambien
+			strcpy(tabla_de_directorios[count].nombre, tabla_de_directorios[count+1].nombre);
+			tabla_de_directorios[count].padre = tabla_de_directorios[count+1].padre;
+			tabla_de_directorios[count+1].index = -2;
+			strcpy(tabla_de_directorios[count+1].nombre,"being deleted");
+			tabla_de_directorios[count+1].padre = -2;
+		}
+		count++;
+	}
+
+	return(1);
+}
+
+int mostrarTablaDeDirectorios(){
+
+	/*Muestra con printf la comp del struct tabla_de_directorios
+	 *
+	 */
+
+	int count = 0;
+
+	printf("\n indice %d: %d \n", count, tabla_de_directorios[0].index);
+	printf("nombre %d: %s \n", count, tabla_de_directorios[0].nombre);
+	printf("padre %d: %d \n", count, tabla_de_directorios[0].padre);
+
+	count++;
+
+	while(count <= 99 && tabla_de_directorios[count].index != 0 ){
+	   printf("indice %d: %d \n", count, tabla_de_directorios[count].index);
+	   printf("nombre %d: %s \n", count, tabla_de_directorios[count].nombre);
+	   printf("padre %d: %d \n", count, tabla_de_directorios[count].padre);
+	   count++;
+	}
+	return(1);
+}
+
+int cambiarNombreDirectorio(int index, char* nombre){
+
+	/*Cambia el nombre de un directorio, siempre y cuando este exista.
+	 *recibe el index y nombre.
+	 *devuelve 1 si lo puede cambiar, -1 si no existe.
+	 */
+	int padre = padreDirectorio(index);
+
+	if(existeDirectorio(nombre,padre) != 1)return(-1);
+	strcpy(tabla_de_directorios[index].nombre, nombre);
+	return(1);
+
+}
+
+int buscarIndice(){
+
+	/* Find the smallest positive missing number in an array that contains
+	 * all positive integers
+	 */
+
+	int i=0;
+
+	while(i<100){
+		tabla_de_directoriosAux[i].index = tabla_de_directorios[i].index;
+		tabla_de_directoriosAux[i].padre = tabla_de_directorios[i].padre;
+		strcpy(tabla_de_directoriosAux[i].nombre, tabla_de_directorios[i].nombre);
+		i++;
+	}
+
+  int count;
+  int cantDir = cantidadDirectorios();
+
+  // Mark arr[i] as visited by making arr[arr[i] - 1] negative. Note that
+  // 1 is subtracted because index start from 0 and positive numbers start from 1
+  for(count = 0; count < cantDir; count++)
+  {
+    if(abs(tabla_de_directoriosAux[count].index) - 1 < cantDir && tabla_de_directoriosAux[abs(tabla_de_directoriosAux[count].index) - 1].index > 0)
+    	tabla_de_directoriosAux[abs(tabla_de_directoriosAux[count].index) - 1].index = -tabla_de_directoriosAux[abs(tabla_de_directoriosAux[count].index) - 1].index;
+  }
+
+  // Return the first index value at which is positive
+  for(count = 0; count < cantDir; count++)
+    if (tabla_de_directoriosAux[count].index > 0)
+      return count+1;  // 1 is added becuase indexes start from 0
+
+  return cantDir+1;
+}
+
+int padreDirectorio(int index){
+
+	/*Recibe index del directorio a buscar
+	 *devuelve el index del padre. -2 si no lo encuentra.
+	 */
+
+	int count = 0;
+	int cantDir = cantidadDirectorios();
+
+	while (count <= cantDir) {
+			if (tabla_de_directorios[count].index == index) {
+				return(tabla_de_directorios[count].padre);
+			}
+			count++;
+	}
+	return(-2);
+
+
+}

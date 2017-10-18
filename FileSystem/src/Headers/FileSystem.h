@@ -31,8 +31,8 @@ struct tabla_directorios {
   int padre;
 }tabla_directorios; // registros dentro de tabla_de_directorios
 
-struct tabla_directorios tabla_de_directorios[100]; //declaracion global de la estructura
 
+struct tabla_directorios tabla_de_directoriosAux[100], tabla_de_directorios[100]; //declaracion global de la estructura
 
 t_list* ubiacionBloquesArchivo();  // en estructuras.h tengo la estructura. seria mi "tabla de archivos"
 
