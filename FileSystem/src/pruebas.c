@@ -7,14 +7,14 @@
 
 #include "Headers/pruebas.h"
 
-int pruebammap (){
+int pasarAMemoria (const char* rutaDelArchivo, char* p){
 
         struct stat sb;
         off_t len;
-        char *p;
+
         int fd;
 
-        fd = open ("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt", O_RDONLY);
+        fd = open (rutaDelArchivo, O_RDONLY);
         if (fd == -1) {
                 printf("Error al abrir archivo\n");
                 return 1;

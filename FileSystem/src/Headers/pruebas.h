@@ -11,5 +11,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include "commons/collections/list.h"
+#include "commons/string.h"
 
-int pruebasmmap ();
+int pasarAMemoria (const char*,char* );
