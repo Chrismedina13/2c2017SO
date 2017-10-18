@@ -89,7 +89,7 @@ int crearDirectorio(char* nombre, int padre) {
 	cantDir = cantidadDirectorios();
 	existe = existeDirectorio(nombre, padre);
 
-	if (cantDir<=100 && existe == -1){
+	if (cantDir<=100 && existe != -1){
 	indice = buscarIndice();
 	tabla_de_directorios[cantDir].index = indice;
 	strcpy(tabla_de_directorios[cantDir].nombre, nombre);
@@ -230,5 +230,31 @@ int padreDirectorio(int index){
 	}
 	return(-2);
 
+
+}
+
+int actualizarArchivo(){
+
+	/*Actualiza el archivo directorios.dat
+	 *
+	 */
+
+	int count = 0;
+	int cantDir = cantidadDirectorios();
+
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
+	  if (!fp) {
+		  perror("Error al abrir el Archivo de directorios");
+		  return (-1);
+	  }
+
+	while(count <= cantDir){
+		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
+		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
+		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
+		count++;
+	}
+
+	  return(1);
 
 }

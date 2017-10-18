@@ -12,14 +12,6 @@ int main(int argc, char *argv[]) {
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
-	//prubas fs
-
-	cargarDirectorios();
-	mostrarTablaDeDirectorios();
-	int padre = padreDirectorio(4);
-	printf("%d", padre);
-
-
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);

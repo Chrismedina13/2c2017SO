@@ -19,6 +19,7 @@
 #include <commons/collections/list.h>
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
+#include "commons/string.h"
 
 
 
