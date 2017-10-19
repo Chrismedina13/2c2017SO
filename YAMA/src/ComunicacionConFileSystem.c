@@ -30,8 +30,6 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 		logInfo("Error en envio de job");
 	}
 
-	logInfo("%i",param->disponibilidadBase);
-	logInfo("%s",param->algoritmo);
 	destruirPaquete(paqueteDeEnvioDeJOB);
 
 	/* Aca tiene que hacer un recv de FS la lista de bloque que componen al archivo
@@ -44,7 +42,21 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	//Devuelve directamente lo que se le tiene que devover a MAster
 
-	t_list* listaDeWorkersAPlanificar;
+	logInfo("Creando Planificacion de prueba");
+
+
+	t_list* listaDeWorkersAPlanificar = list_create();
+	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(0,12,1,12,2,13);
+	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1,100,3,20,1,19);
+	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(2,100,2,20,3,19);
+	list_add(listaDeWorkersAPlanificar,ubi1);
+	list_add(listaDeWorkersAPlanificar,ubi2);
+	list_add(listaDeWorkersAPlanificar,ubi3);
+
+	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
+
+
+	planificar(listaDeWorkersAPlanificar,param->algoritmo,param->disponibilidadBase);
 
 
 }

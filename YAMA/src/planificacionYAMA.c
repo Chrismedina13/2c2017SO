@@ -34,11 +34,16 @@ char* retirarJobDeLista() {
 t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
 		int disponibilidadBase) {
 
+	listaDeWorkerTotales = list_create(); //Inicializo
+
 	if (string_equals_ignore_case(algoritmo, "W-CLOCK")) {
 
-		return planificarConW_Clock(listaDeWorkersAPlanificar,
-				disponibilidadBase);
+		logInfo("PLanificando con W-CLOCK");
+
+		return planificarConW_Clock(listaDeWorkersAPlanificar,disponibilidadBase);
 	} else {
+
+		logInfo("PLanificando con CLOCK");
 
 		return planificarConClock(listaDeWorkersAPlanificar, disponibilidadBase);
 
@@ -49,8 +54,12 @@ t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
 t_list* dev_nodos_a_planificar() {
 	//busco de la lista de nodos a planificar aquellos que tienen partes de archivo
 	t_list* nodosFinalesAPLanificar = list_create();
-	int b = 1;
-	while (b <= list_size(listaDeWorkerTotales)) {
+
+	logInfo("La lista de workers totales son %i",list_size(listaDeWorkerTotales));
+
+	int b = 0;
+	int tamanioDeLaListaDeWorkersTotalesSinRemove = list_size(listaDeWorkerTotales);
+	while (b < tamanioDeLaListaDeWorkersTotalesSinRemove) {
 		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales, b);
 		if (!list_is_empty(nodo->partesDelArchivo)) {
 			nodoParaPlanificar* nodoConBloques = list_remove(
@@ -98,6 +107,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	 int parte = 0;
 	 t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
 	 int cantidadDePartesDelArchivo = list_size(listaDeWorkersAPlanificar);
+	 t_list* nodosFinalesAPLanificar;
 
 	 while(cantidadDePartesDelArchivo > 0){
 
@@ -106,15 +116,38 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 		 parte ++;
 	 }
 
+	 logInfo("El archivo esta dividido en %i", list_size(partesDelArchivo));
+
+
+	 logInfo("Actualizar lista de workers Totales");
+
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
-	t_list* nodosFinalesAPLanificar= dev_nodos_a_planificar();
+
+	logInfo("La lista de workers totales se actualizo con %i",list_size(listaDeWorkerTotales));
+
+	nodosFinalesAPLanificar = dev_nodos_a_planificar();
+
+	logInfo("La lista de workers a planificar son %i",list_size(nodosFinalesAPLanificar));
 
 	nodoParaPlanificar* punteroClock;
 	nodoParaPlanificar* punteroClockAuxiliar;
 
+	int partesParaPlanificar = 0;
+	int indexDeNodoConMayorDisponibilidad;
+
+	while(partesParaPlanificar < cantidadDePartesDelArchivo){
+
+		int parte = list_get(partesDelArchivo,partesParaPlanificar);
+
+		indexDeNodoConMayorDisponibilidad = nodoConMayorDisponibilidadClock(nodosFinalesAPLanificar);
+
+
+	}
+
 	//Con los punteros ,Nodos finales a planificar y partes del archivo
 
 	list_destroy(partesDelArchivo);
+	list_destroy(nodosFinalesAPLanificar);
 }
 
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
@@ -122,19 +155,20 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 
 	int nodo1;
 	int nodo2;
-	int a = 1;
-	while (a <= list_size(listaDeWorkersAPLanificar)) {
+	int a = 0;
+	while (a <list_size(listaDeWorkersAPLanificar)) {
 
 		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPLanificar,
 				a);
-		nodo1 = bloque->ubicacionCopia1->nodo;
-		nodo2 = bloque->ubicacionCopia2->nodo;
+		nodo1 = bloque->ubicacionCopia1.nodo;
+		nodo2 = bloque->ubicacionCopia2.nodo;
 		if (!estaNodorEnLaListaDeTotales(nodo1)) {
 
 			nodoParaPlanificar* nodoA = crearNodoParaPlanificar(
-					bloque->ubicacionCopia1->nodo, disponibilidadBase, 0,
+					bloque->ubicacionCopia1.nodo, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
-			agregarWorkerALista(nodoA);
+			logInfo("Se va agregar el nodo %i", nodo1);
+		list_add(listaDeWorkerTotales,nodoA);
 		} else {
 			//si ya esta el nodo en la lista, agrega una parte de archivo
 			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
@@ -142,9 +176,11 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		if (!estaNodorEnLaListaDeTotales(nodo2)) {
 
 			nodoParaPlanificar* nodoB = crearNodoParaPlanificar(
-					bloque->ubicacionCopia2->nodo, disponibilidadBase, 0,
+					bloque->ubicacionCopia2.nodo, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
-			agregarWorkerALista(nodoB);
+			logInfo("Se va agregar el nodo %i", nodo2);
+
+			list_add(listaDeWorkerTotales,nodoB);
 		} else {
 			//si ya esta el nodo en la lista, agrega una parte de archivo
 			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
@@ -169,13 +205,13 @@ void agregarPartedeArchivoANodo(int nodoBUscado, int bloque) {
 }
 bool estaNodorEnLaListaDeTotales(int nodo) {
 
-	int i = 1;
+	int i = 0;
 
 	if (list_size(listaDeWorkerTotales) == 0) {
 
 		return false;
 	} else {
-		while (i <= list_size(listaDeWorkerTotales)) {
+		while (i < list_size(listaDeWorkerTotales)) {
 
 			nodoParaPlanificar* nodoAPlanificar = list_get(listaDeWorkerTotales,
 					i);
@@ -190,5 +226,19 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 
 		return false;
 	}
+
+}
+
+int nodoConMayorDisponibilidadClock(t_list* nodos){
+
+	return 0;
+}
+
+int nodoConMayorDisponibilidadW_Clock(t_list* nodos){
+
+	return 0;
+
+
+
 
 }

@@ -9,7 +9,7 @@
 #include <SO_lib/sockets.h>
 #include <pthread.h>
 #include <commons/collections/queue.h>
-#include "planificacionYAMA.h"
+#include "planificacionYAMA.h"+
 #include "SO_lib/Protocolo.h"
 
 typedef struct ParametrosComunicacionConFileSystem {

@@ -25,6 +25,9 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 void agregarPartedeArchivoANodo(int nodoBUscado, int bloque);
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,int disponibilidadBase);
 bool estaNodorEnLaListaDeTotales(int nodo);
+int nodoConMayorDisponibilidadW_Clock(t_list* nodos);
+int nodoConMayorDisponibilidadClock(t_list* nodos);
+
 
 
 
