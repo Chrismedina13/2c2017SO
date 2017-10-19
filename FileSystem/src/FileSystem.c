@@ -10,9 +10,6 @@
 
 int main(int argc, char *argv[]) {
 
-<<<<<<< HEAD
-=======
-
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
 
 	char* p;
@@ -21,9 +18,6 @@ int main(int argc, char *argv[]) {
 	if(pasoAMemoria == 0) printf("\nPaso a memoria correctamente\n\n");
 	else printf("\nError al pasar a memoria\n\n");
 
-
-
->>>>>>> 6cc20880372b392ed0682117f762f25e29f3ea67
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
