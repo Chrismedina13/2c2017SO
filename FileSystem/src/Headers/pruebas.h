@@ -15,7 +15,6 @@
 #include "commons/string.h"
 
 int pasarAMemoria (const char* rutaArchivo);
-/*pasa a memoria el archivo que tiene como parametro y su direccion se lo asigna por referencia al parametro puntero
-y devuelve el tamaño del archivo.*/
+/*pasa a memoria el archivo que tiene como parametro y devuelve el tamaño del archivo.*/
 int cantidadDeBloques(int tamanio); // Devuelve la cantidad de bloques que se pueden hacer con 1MB
-void mostrarBloque(char*puntero,int numeroDeBloque,int cantidadDeBloques); //Muestra por pantalla el bloque que esta en la posicion que le digamos.
+void dividirArchivo(char*puntero,int cantidadDeBloques); //Separo el contenido del archivo pasado a memoria en la cantidad de bloques que le diga.

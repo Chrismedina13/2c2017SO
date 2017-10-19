@@ -13,10 +13,10 @@ int main(int argc, char *argv[]) {
 
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
 
-	char* p;
+
 	const char* nombreDelArchivo = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
-	int pasoAMemoria = pasarAMemoria(nombreDelArchivo);//PASAMOS POR REFERENCIA EL PUNTERO QUE APUNTA A MEMORIA
-	if(pasoAMemoria == 0) printf("\nPaso a memoria correctamente\n\n");
+	int pasoAMemoria = pasarAMemoria(nombreDelArchivo);
+	if(pasoAMemoria == 0) printf("\nPaso a memoria y division de archivo correctamente\n\n");
 	else printf("\nError al pasar a memoria\n\n");
 
 

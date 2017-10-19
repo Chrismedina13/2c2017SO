@@ -52,8 +52,8 @@ int pasarAMemoria(const char * rutaDelArchivo){
         int cantidadBloques = cantidadDeBloques(sb.st_size);
         printf("Cantidad de bloques: %d\n\n",cantidadBloques);
 
-        //PROBAMOS MOSTRAR UNO DE LOS BLOQUES
-        mostrarBloque(p,0,cantidadBloques);
+        //divido el archivo en archivos de 1 KB
+        dividirArchivo(p,cantidadBloques);
 
         //LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
         if (munmap (p, sb.st_size) == -1) {
@@ -74,11 +74,25 @@ int cantidadDeBloques(int tamanio){
 	return cantidad;
 }
 
-void mostrarBloque(char*puntero,int numeroDeBloque,int cantidadDeBloques){
-	int KB = 1024;
-	if(cantidadDeBloques <= numeroDeBloque) printf("Error, el numero de bloque supera a la cantidad total\n\n");
-	else{
-		char* bloque = string_substring(puntero, numeroDeBloque*KB, KB);
-		printf("%s\n\n",bloque);
+// Muestra el bloque que quiero
+void dividirArchivo(char*puntero,int cantidadDeBloques){
+	int i = 0,KB = 1024;
+	for(i=0;i<cantidadDeBloques;i++){
+		char *nombreArchivo = string_new();
+		FILE* fd;
+		char* numeroDeArchivo = string_itoa(i);
+		string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/bloque");
+		string_append(&nombreArchivo, numeroDeArchivo); //Le agrego el numero de archivo al nombre
+		string_append(&nombreArchivo, ".txt"); //le agrego la extencion de archivo al nombre
+		fd = fopen(nombreArchivo,"w");
+		if (fd==NULL) {
+			printf("Error al abrir el archivo.");
+
+		}
+		char* bloque = string_substring(puntero, i*KB, KB);
+		fputs( bloque, fd );
+		fclose(fd);
 	}
+
 }
+
