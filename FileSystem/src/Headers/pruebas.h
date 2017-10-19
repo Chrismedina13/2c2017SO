@@ -16,5 +16,6 @@
 
 int pasarAMemoria (const char* rutaArchivo);
 /*pasa a memoria el archivo que tiene como parametro y devuelve el tamaño del archivo.*/
-int cantidadDeBloques(int tamanio); // Devuelve la cantidad de bloques que se pueden hacer con 1MB
-void dividirArchivo(char*puntero,int cantidadDeBloques); //Separo el contenido del archivo pasado a memoria en la cantidad de bloques que le diga.
+int cantidadDeBloques(int tamanio); // Devuelve la cantidad de bloques que se pueden hacer con 1KB
+t_list* dividirArchivo(char*puntero,int cantidadDeBloques); //Separo el contenido del archivo pasado a memoria en la cantidad de bloques que le diga.
+int imprimirArchivo(t_list* lista);
