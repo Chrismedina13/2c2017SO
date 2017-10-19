@@ -50,21 +50,22 @@ struct tabla_archivos tabla_de_archivos;
 
 //tabla de nodos
 
-struct tabla_nodos {
-	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
-	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
-	t_list* listaNodos; //nodo1, nodo2, nodo3
-	bloques_nodos* bitMapNodos;
-}tabla_nodos;
-
-struct tabla_nodos tabla_de_nodos;
-
-struct bloques_nodos{
+typedef struct bloques_nodos{
 	int bloqueslibres;
 	int bloquestotales;
 }bloques_nodos;
 
-struct bloques_nodos bloque_de_nodos;
+struct tabla_nodos {
+	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
+	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
+	t_list* listaNodos; //nodo1, nodo2, nodo3
+	bloques_nodos* nodosCapacidad; //total por nodo, y libre
+}tabla_nodos;
+
+struct tabla_nodos tabla_de_nodos;
+
+struct bloques_nodos bloques_por_nodo;
+
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
