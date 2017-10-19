@@ -19,11 +19,14 @@
 #include <commons/collections/list.h>
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
+#include "commons/string.h"
 
 
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
 
+
+//tabla de directorios
 
 struct tabla_directorios {
   int index;
@@ -32,19 +35,37 @@ struct tabla_directorios {
 }tabla_directorios; // registros dentro de tabla_de_directorios
 
 
-t_list* ubiacionBloquesArchivo();  // en estructuras.h tengo la estructura. seria mi "tabla de archivos"
+struct tabla_directorios tabla_de_directoriosAux[100], tabla_de_directorios[100]; //declaracion global de la estructura
+
+//tabla de archivos
+
+struct tabla_archivos {
+	int tamanio; //en bytes
+	char tipo[255];
+	int directorio; //index del directorio
+	UbicacionBloquesArchivo* bloques;
+}tabla_archivos;
+
+struct tabla_archivos tabla_de_archivos;
 
 //tabla de nodos
 
-int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
-int bloqueslibres; //cantidad de bloques libres entre todos los nodos
-t_list* listadoNodos(); //nodo1, nodo2, nodo3
-t_list* bitmapNodos(); // los bitmap (bitarray bloques)x nodo
-
-struct bloques_nodos{
-int bloqueslibres;
-int bloquestotales;
+typedef struct bloques_nodos{
+	int bloqueslibres;
+	int bloquestotales;
 }bloques_nodos;
+
+struct tabla_nodos {
+	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
+	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
+	t_list* listaNodos; //nodo1, nodo2, nodo3
+	bloques_nodos* nodosCapacidad; //total por nodo, y libre
+}tabla_nodos;
+
+struct tabla_nodos tabla_de_nodos;
+
+struct bloques_nodos bloques_por_nodo;
+
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 

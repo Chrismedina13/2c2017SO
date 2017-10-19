@@ -6,17 +6,21 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include "Headers/comunicacionConWorker.h"
+#include "Headers/pruebas.h"
 
 int main(int argc, char *argv[]) {
 
-
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
-	pruebammap();
-	printf("ok");
 
+
+	const char* nombreDelArchivo = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
+	int pasoAMemoria = pasarAMemoria(nombreDelArchivo);
+	if(pasoAMemoria == 0) printf("\nPaso a memoria y division de archivo correctamente\n\n");
+	else printf("\nError al pasar a memoria\n\n");
 
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
+
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
