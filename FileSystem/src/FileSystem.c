@@ -10,7 +10,6 @@
 
 int main(int argc, char *argv[]) {
 
-
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
 
 
@@ -19,25 +18,8 @@ int main(int argc, char *argv[]) {
 	if(pasoAMemoria == 0) printf("\nPaso a memoria y division de archivo correctamente\n\n");
 	else printf("\nError al pasar a memoria\n\n");
 
-
-
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
-
-	//PRUEBA DE ESCTRUCTURAS FS
-	//cargar directorios
-	cargarDirectorios();
-
-	//cantidad directorios
-	int cantDir = cantidadDirectorios();
-	logInfo("el index del ultimo directorio es: %d \n", cantDir);
-
-	//existe directorio
-	char* nombreDir = "yamafs";
-	int padreDir = 0;
-	int existe = existeDirectorio(nombreDir, padreDir);
-	if(existe == 1)	logInfo("el directorio %s existe.\n", nombreDir);
-	else logInfo("el directorio %s no existe.\n", nombreDir);
 
 
 	//Configuracion
