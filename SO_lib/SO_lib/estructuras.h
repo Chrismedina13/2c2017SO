@@ -51,8 +51,8 @@ typedef struct ubicacionBloque {
 typedef struct ubiacionBloquesArchivo {
 
 	int parteDelArchivo; //numero del bloque del archivo
-	UbicacionBloque* ubicacionCopia1; //ubicacion copia 1
-	UbicacionBloque* ubicacionCopia2; //ubicacion copia 2
+	UbicacionBloque ubicacionCopia1; //ubicacion copia 1
+	UbicacionBloque ubicacionCopia2; //ubicacion copia 2
 	int bytesOcupados; //bytesOCupados por ese bloque
 } UbicacionBloquesArchivo;
 
@@ -68,4 +68,12 @@ void destruirPaquete(Paquete* package);
 size_t sizePackage(Paquete *package);
 char* serializarPaquete(Paquete *package);
 int enviarPaquete(int fileDescriptor, Paquete *package);
+
+UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
+		,int copia2Nodo,int copia2Bloque);
+
+void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
+
+
+
 #endif /* SO_LIB_ESTRUCTURAS_H_ */

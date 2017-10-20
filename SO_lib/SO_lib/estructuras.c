@@ -24,6 +24,27 @@ void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo) {
 	list_destroy_and_destroy_elements(nodo->partesAplanificar, free);
 	free(nodo);
 }
+
+UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
+		,int copia2Nodo,int copia2Bloque){
+
+	UbicacionBloquesArchivo* ubi = malloc(24);
+	ubi->bytesOcupados = bytesOcupados;
+	ubi->parteDelArchivo = parteDelArchivo;
+	ubi->ubicacionCopia1.nodo = copia1Nodo;
+	ubi->ubicacionCopia1.bloqueDelNodoDeLaCopia = copia1Bloque;
+	ubi->ubicacionCopia2.nodo = copia2Nodo;
+	ubi->ubicacionCopia2.bloqueDelNodoDeLaCopia =copia2Bloque;
+	return ubi;
+
+}
+
+void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi){
+
+	free(ubi);
+}
+
+
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal) {

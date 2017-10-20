@@ -9,6 +9,8 @@
  */
 
 #include "Test.h"
+#include <stdio.h>
+
 
 void test1(void);
 
@@ -32,10 +34,10 @@ int main() {
 void test1() {
 
 	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(0,0,1,12,2,22);
-	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1,0,2,12,3,22);
-	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(2,0,1,12,3,22);
+	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1,0,3,12,1,22);
+	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(2,0,2,12,3,22);
 
-
+	listaDeWorkerTotales = list_create();
 	t_list* listaDenodosAPlanificar = list_create();
 
 	list_add(listaDenodosAPlanificar,ubi1);
@@ -70,8 +72,8 @@ t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
 t_list* dev_nodos_a_planificar() {
 	//busco de la lista de nodos a planificar aquellos que tienen partes de archivo
 	t_list* nodosFinalesAPLanificar = list_create();
-	int b = 1;
-	while (b <= list_size(listaDeWorkerTotales)) {
+	int b = 0;
+	while (b < list_size(listaDeWorkerTotales)) {
 		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales, b);
 		if (!list_is_empty(nodo->partesDelArchivo)) {
 			nodoParaPlanificar* nodoConBloques = list_remove(
@@ -102,6 +104,9 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
 			disponibilidadBase);
 
+	printf("Resultado %i ",list_size(listaDeWorkerTotales));
+
+
 	t_list*nodosFinalesAPLanificar= dev_nodos_a_planificar();
 	return nodosFinalesAPLanificar;
 }
@@ -111,17 +116,17 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 
 	int nodo1;
 	int nodo2;
-	int a = 1;
-	while (a <= list_size(listaDeWorkersAPLanificar)) {
+	int a = 0;
+	while (a < list_size(listaDeWorkersAPLanificar)) {
 
 		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPLanificar,
 				a);
-		nodo1 = bloque->ubicacionCopia1->nodo;
-		nodo2 = bloque->ubicacionCopia2->nodo;
+		nodo1 = bloque->ubicacionCopia1.nodo;
+		nodo2 = bloque->ubicacionCopia2.nodo;
 		if (!estaNodorEnLaListaDeTotales(nodo1)) {
 
 			nodoParaPlanificar* nodoA = crearNodoParaPlanificar(
-					bloque->ubicacionCopia1->nodo, disponibilidadBase, 0,
+					bloque->ubicacionCopia1.nodo, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
 			list_add(listaDeWorkerTotales, nodoA);
 		} else {
@@ -131,7 +136,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		if (!estaNodorEnLaListaDeTotales(nodo2)) {
 
 			nodoParaPlanificar* nodoB = crearNodoParaPlanificar(
-					bloque->ubicacionCopia2->nodo, disponibilidadBase, 0,
+					bloque->ubicacionCopia2.nodo, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
 			list_add(listaDeWorkerTotales, nodoB);
 		} else {
@@ -158,13 +163,13 @@ void agregarPartedeArchivoANodo(int nodoBUscado, int bloque) {
 }
 bool estaNodorEnLaListaDeTotales(int nodo) {
 
-	int i = 1;
+	int i = 0;
 
 	if (list_size(listaDeWorkerTotales) == 0) {
 
 		return false;
 	} else {
-		while (i <= list_size(listaDeWorkerTotales)) {
+		while (i < list_size(listaDeWorkerTotales)) { // modificar esto
 
 			nodoParaPlanificar* nodoAPlanificar = list_get(listaDeWorkerTotales,
 					i);
@@ -182,16 +187,3 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 
 }
 
-UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
-		,int copia2Nodo,int copia2Bloque){
-
-	UbicacionBloquesArchivo* ubi = malloc(24);
-	ubi->bytesOcupados = bytesOcupados;
-	ubi->parteDelArchivo = parteDelArchivo;
-	ubi->ubicacionCopia1->nodo = copia1Nodo;
-	ubi->ubicacionCopia1->bloqueDelNodoDeLaCopia = copia1Bloque;
-	ubi->ubicacionCopia2->nodo = copia2Nodo;
-	ubi->ubicacionCopia2->bloqueDelNodoDeLaCopia =copia2Bloque;
-	return ubi;
-
-}

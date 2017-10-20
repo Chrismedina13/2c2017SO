@@ -53,7 +53,13 @@ int pasarAMemoria(const char * rutaDelArchivo){
         printf("Cantidad de bloques: %d\n\n",cantidadBloques);
 
         //divido el archivo en archivos de 1 KB
-        dividirArchivo(p,cantidadBloques);
+        t_list* lista = dividirArchivo(p,cantidadBloques);
+
+        //imprimo por pantalla uno de archivos de la lista
+        int salida = imprimirArchivo(lista);
+        if(salida == 0) printf("Archivo impreso correctamente");
+   		else printf("Archivo no impreso");
+
 
         //LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
         if (munmap (p, sb.st_size) == -1) {
@@ -75,8 +81,9 @@ int cantidadDeBloques(int tamanio){
 }
 
 // Muestra el bloque que quiero
-void dividirArchivo(char*puntero,int cantidadDeBloques){
+t_list* dividirArchivo(char*puntero,int cantidadDeBloques){
 	int i = 0,KB = 1024;
+	t_list* lista = list_create();
 	for(i=0;i<cantidadDeBloques;i++){
 		char *nombreArchivo = string_new();
 		FILE* fd;
@@ -91,8 +98,53 @@ void dividirArchivo(char*puntero,int cantidadDeBloques){
 		}
 		char* bloque = string_substring(puntero, i*KB, KB);
 		fputs( bloque, fd );
+		list_add(lista,nombreArchivo);
 		fclose(fd);
 	}
+	return lista;
 
+}
+
+int imprimirArchivo(t_list* lista){
+	char* ruta =(char*) list_get(lista,0);
+	char* p;
+	struct stat sb;
+	int fd;
+
+	fd = open (ruta, O_RDONLY);
+	if (fd == -1) {
+			printf("Error al abrir archivo\n");
+			return -1;
+	}
+
+	if (fstat (fd, &sb) == -1) {
+			printf("Error al hacer stat\n");
+			return -1;
+	}
+
+	if (!S_ISREG (sb.st_mode)) {
+			printf ("No es un archivo regular\n");
+			return -1;
+	}
+	p = (char *)mmap (0, sb.st_size, PROT_READ, MAP_SHARED, fd, 0);
+	if (p == MAP_FAILED) {
+			printf("Fallo el mapeo\n");
+			return -1;
+	}
+
+	if (close (fd) == -1) {
+			printf("Error al cerrar el archivo\n");
+			return -1;
+	}
+
+
+	//MOSTRAMOS EL ARCHIVO COMPLETO
+	printf("%s\n",p);
+
+	//LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
+	if (munmap (p, sb.st_size) == -1) {
+			printf("Error al cerrar la proyeccion \n");
+			return -1;
+	}	return 0;
 }
 

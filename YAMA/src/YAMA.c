@@ -9,10 +9,11 @@
  */
 #include "Headers/yama.h"
 
+
+
 int main(int argc, char *argv[]) {
 
 	jobsAPlanificar = queue_create();
-	listaDeWorkerTotales = list_create();
 	sem_init(&semaforoYAMA,0,0);
 
 	//Archivo de Logs
