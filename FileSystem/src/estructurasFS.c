@@ -268,12 +268,16 @@ int cambiarNombreDirectorio(int index, char* nombre){
 
 //funciones
 
-/*
+
 int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
+	int maxArchivos = MAX;
+	tabla_archivos *archivosPtr = malloc (maxArchivos * sizeof (tabla_archivos));
 	int tamanioBloque = 1; //debe haber una global, preguntar Ari
 	int indiceArchivo = 0;
-	char* rutaLocal = generarRutaLocal(ruta, nombre, directorio);
+	int tamArchivo;
+	char* rutaLocal;
+	UbicacionBloquesArchivo* bloquesPtr;
 
 	//abro mi archivo y cargo la info que necesito en el puntero a archivos
 
@@ -283,11 +287,16 @@ int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 	  return (-1);
 	}
 
-	archivosPtr[indiceArchivo]->tamanio = tamanioArchivo(fp);
-	strcpy(archivosPtr[indiceArchivo]->tipo, tipo);
-	archivosPtr[indiceArchivo]->bloques = bloquesPtr;
+	tamArchivo = tamanioArchivo(fp);
+
+	archivosPtr[indiceArchivo].tamanio = tamArchivo;
+	strcpy(archivosPtr[indiceArchivo].tipo, tipo);
+	archivosPtr[indiceArchivo].directorio = directorio;
+	archivosPtr[indiceArchivo].bloques = bloquesPtr;
 
 	//creo mi registro de archivo local
+
+	 rutaLocal = string_from_format("yamafs/metadata/archivos/%d/%s", nombre, directorio);
 
 	FILE * fp2 = fopen(rutaLocal, "w");
 	if (!fp2){
@@ -297,50 +306,61 @@ int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
 	fscanf(fp2, "TAMANIO=%d\n TIPO=%c\n DIRECTORIO=%s\n", &archivosPtr[indiceArchivo].tamanio, &archivosPtr[indiceArchivo].tipo, &archivosPtr[indiceArchivo].directorio); //carga la info del archivo
 
-	int cantBloques = tamanioArchivo(fp)/tamanioBloque;
+	int cantBloques = tamArchivo/tamanioBloque;
 	int count = 0;
 	int copia = 0;
+	int infoNodoCopia;
+	int infoBloqueCopia;
+	int infoBytesOcupados;
+	//UbicacionBloquesArchivo* bloques;
 
-	while (count <= cantBloques){
+	while (count < cantBloques){
 		while(copia <= 1){
-			infoNodoCopia = archivosPtr[indiceArchivo]->bloques[count]->ubicacionCopia1->nodo;
-			infoBloqueCopia = archivosPtr[indiceArchivo]->bloques[count]->ubicacionCopia1->bloqueDelNodoDeLaCopia;
+			infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
+			infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
 			fscanf(fp2, "BLOQUE%dCOPIA%d=[Nodo%d, %d]\n", count, copia, infoNodoCopia, infoBloqueCopia);
 			copia++;
 		}
 
-		infoBytes = archivosPtr[indiceArchivo]->bloques[count]->bytesOcupados;
+		infoBytesOcupados = archivosPtr[indiceArchivo].bloques[count].bytesOcupados;
 
-		fscanf(fp2, "BLOQUE%dBYTES=%d\n", count, infoBytes);
+		fscanf(fp2, "BLOQUE%dBYTES=%d\n", count, infoBytesOcupados);
 
 		copia = 0;
 		count++;
 	}
-
+	close(fp);
+	close(fp2);
 	return(1);
 
 }
 
-*/
-/*
-
-char* generarRutaLocal(char* ruta, char* nombre, int directorio){
+char* generarRutaLocal(char* nombre, int directorio){
 
 	char* rutaLocal;
 
-	rutaLocal = string_from_format("yamafs/metadata/archivos/%d/%s", directorio, nombre);
+	strcpy(rutaLocal, string_from_format("yamafs/metadata/archivos/%d/%s", nombre, directorio));
 	return(rutaLocal);
 
 }
 
-*/
+int tamanioArchivo(int fp){
+
+	int tam;
+	fseek(fp, 0L, SEEK_END);
+	tam = ftell(fp);
+	return(tam);
+
+}
+
 /*
 int cambiarNombreArchivo(char* ruta, char* nombre, int directorio){
 
 	//Cambia el nombre de un archivo, siempre y cuando este exista.
-	 //*recibe el nombre del archivo y el index de su directorio.
-	 //*devuleve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
+	//recibe el nombre del archivo y el index de su directorio.
+	//devuleve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
+
 
 	char* rutaLocal = generarRutaLocal(ruta, nombre, directorio);
 
@@ -348,6 +368,7 @@ int cambiarNombreArchivo(char* ruta, char* nombre, int directorio){
 	cambiarRutaLocal(ruta, rutaLocal);
 	return(1);
 }
+
 */
 
 

@@ -17,6 +17,8 @@ int main(int argc, char *argv[]) {
 
 	tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
 
+	//estructuras para manejo de archivos
+
 
 	//probando funciones de manejo de archivo
 
