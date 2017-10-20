@@ -10,6 +10,19 @@
 
 int main(int argc, char *argv[]) {
 
+	//puntero para tabla de archivos
+
+
+	int max_archivos = MAX;
+
+	tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
+
+
+	//probando funciones de manejo de archivo
+
+	int tamanio_registro_archivos = sizeof(tabla_archivos);
+	printf("%d /n", tamanio_registro_archivos);
+
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
 
 
