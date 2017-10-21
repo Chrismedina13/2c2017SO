@@ -7,6 +7,7 @@
 
 #ifndef HEADERS_FILESYSTEM_H_
 #define HEADERS_FILESYSTEM_H_
+#define MAX 1000
 #include "configuracion.h"
 #include <stddef.h>
 #include <string.h>
@@ -20,7 +21,6 @@
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
 #include "commons/string.h"
-
 
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
@@ -39,14 +39,14 @@ struct tabla_directorios tabla_de_directoriosAux[100], tabla_de_directorios[100]
 
 //tabla de archivos
 
-struct tabla_archivos {
+typedef struct tabla_archivos {
 	int tamanio; //en bytes
-	char tipo[255];
+	char tipo;
 	int directorio; //index del directorio
 	UbicacionBloquesArchivo* bloques;
 }tabla_archivos;
 
-struct tabla_archivos tabla_de_archivos;
+//tabla_archivos* archivosPtr;
 
 //tabla de nodos
 

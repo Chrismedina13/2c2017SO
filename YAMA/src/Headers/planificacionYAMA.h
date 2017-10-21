@@ -27,7 +27,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,int dispo
 bool estaNodorEnLaListaDeTotales(int nodo);
 int nodoConMayorDisponibilidadW_Clock(t_list* nodos);
 int nodoConMayorDisponibilidadClock(t_list* nodos);
-
+t_list* dev_nodos_a_planificar(void);
 
 
 
