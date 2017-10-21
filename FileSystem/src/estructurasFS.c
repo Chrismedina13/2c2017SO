@@ -61,6 +61,32 @@ int cantidadDirectorios(){
 
 };
 
+int actualizarTablaDeDirectorios(){
+
+	/*Actualiza el archivo directorios.dat
+	 *
+	 */
+
+	int count = 0;
+	int cantDir = cantidadDirectorios();
+
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
+	  if (!fp) {
+		  perror("Error al abrir el Archivo de directorios");
+		  return (-1);
+	  }
+
+	while(count <= cantDir){
+		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
+		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
+		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
+		count++;
+	}
+
+	  return(1);
+
+}
+
 int buscarIndice(){
 
 	/* Find the smallest positive missing number in an array that contains
@@ -115,32 +141,6 @@ int padreDirectorio(int index){
 
 }
 
-int actualizarTablaDeDirectorios(){
-
-	/*Actualiza el archivo directorios.dat
-	 *
-	 */
-
-	int count = 0;
-	int cantDir = cantidadDirectorios();
-
-	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
-	  if (!fp) {
-		  perror("Error al abrir el Archivo de directorios");
-		  return (-1);
-	  }
-
-	while(count <= cantDir){
-		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
-		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
-		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
-		count++;
-	}
-
-	  return(1);
-
-}
-
 int existeDirectorio(char* nombre, int padre) {
 
 	/* Recibe nombre del directorio a buscar y el index del padre
@@ -185,6 +185,7 @@ int crearDirectorio(char* nombre, int padre) {
 		return(-1);
 	}
 
+	actualizarTablaDeDirectorios();
 	logInfo("Directorio creado correctamente. \n");
 	return(1);
 
@@ -222,6 +223,7 @@ int eliminarDirectorio(int index){ //checkear si tiene archivos dentro
 		count++;
 	}
 
+	actualizarTablaDeDirectorios();
 	return(1);
 }
 
@@ -258,6 +260,15 @@ int cambiarNombreDirectorio(int index, char* nombre){
 
 	if(existeDirectorio(nombre,padre) != 1)return(-1);
 	strcpy(tabla_de_directorios[index].nombre, nombre);
+	actualizarTablaDeDirectorios();
+	return(1);
+
+}
+
+int moverDirectorio(int index, int padre, int padreNew){
+
+	tabla_de_directorios[index].padre = padreNew;
+	actualizarTablaDeDirectorios();
 	return(1);
 
 }
@@ -265,17 +276,11 @@ int cambiarNombreDirectorio(int index, char* nombre){
 
 //manejo de archivos
 
-
 //funciones
 
 
 int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
-	logInfo("mira chris");
-
-	int maxArchivos = 10;
-	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
-	//tabla_archivos *archivosPtr = malloc (10);
 	int tamanioBloque = 1024*1024; //debe haber una global, preguntar Ari
 	int indiceArchivo = 0;
 	int tamArchivo;
@@ -363,23 +368,34 @@ int tamanioArchivo(int fp){
 
 }
 
-int cambiarNombreArchivo(char* ruta, char* nombre, int directorio){
+int cambiarNombreArchivo(char* ruta, char* nombreNew, int directorio){
 
 	//Cambia el nombre de un archivo, siempre y cuando este exista.
 	//recibe el nombre del archivo y el index de su directorio.
 	//devuleve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
 
 
-	char* newRutaLocal = generarRutaLocal(nombre, directorio);
+	char* newRutaLocal = generarRutaLocal(nombreNew, directorio);
 
-	if(strcmp(newRutaLocal,"error") != 0)return(-1);
-	//if (cambiarRutaLocal(ruta, newRutaLocal) == 1){
-		return(1);
-//	}
- return(-1);
+	if(strcmp(newRutaLocal,"error") == 0)return(-1);
+	rename(ruta, newRutaLocal);
+	return(1);
 
 }
 
-//int cambiarRutaLocal()
+int eliminarArchivo(char* ruta){
 
+	remove(ruta);
+	return (1);
+}
+
+int moverArchivo(char* ruta, int directorio){ //falta terminar
+
+	FILE * fp = fopen(ruta, "r");
+		if (!fp) {
+		  perror("Error al abrir el Archivo");
+		  return (-1);
+		}
+
+}
 

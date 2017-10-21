@@ -11,6 +11,10 @@
 
 int main(int argc, char *argv[]) {
 
+	//incializacion
+
+	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
+
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
