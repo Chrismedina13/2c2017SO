@@ -62,13 +62,6 @@ int main(int argc, char *argv[]) {
 logInfo("Creando estructuras Administrativas");
 
 
-
-
-
-
-
-
-
 	logInfo("Creando el hilo para comunicarme con Data Node");
 
 	logInfo("Creando el hilo para comunicarme con YAMA");
@@ -76,9 +69,10 @@ logInfo("Creando estructuras Administrativas");
 
 	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
 
-	pthread_t hiloDN, hiloYAMA,hiloWorker;
+	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
 
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
+	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
 
 
 	int estado_seguro=false; //estado_seguro va a estar en true una vez que los nodos tengan el arch y las estructuras esten actualizadas
@@ -96,7 +90,7 @@ logInfo("Creando estructuras Administrativas");
 	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
 	pthread_join(hiloDN, NULL);
-
+	pthread_join(hiloConsola, NULL);
 
 
 	//list_remove_and_destroy_element(ubiacionBloquesArchivo);
