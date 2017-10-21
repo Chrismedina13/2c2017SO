@@ -14,17 +14,17 @@ int main(int argc, char *argv[]) {
 	//puntero para tabla de archivos
 
 
-	int max_archivos = MAX;
+	//int max_archivos = MAX;
 
-	tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
+	//tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
 
 	//estructuras para manejo de archivos
 
 
 	//probando funciones de manejo de archivo
 
-	int tamanio_registro_archivos = sizeof(tabla_archivos);
-	printf("%d /n", tamanio_registro_archivos);
+	//int tamanio_registro_archivos = sizeof(tabla_archivos);
+	//printf("%d /n", tamanio_registro_archivos);
 
 	//PRUEBA DE MMAP FUNCIONANDO!!!!
 /*
@@ -82,8 +82,8 @@ logInfo("Creando estructuras Administrativas");
 
 	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
-	pthread_join(hiloDN, NULL);
 	pthread_join(hiloConsola, NULL);
+	pthread_join(hiloDN, NULL);
 
 
 
