@@ -69,10 +69,12 @@ struct bloques_nodos bloques_por_nodo;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
-t_bitarray* bloques(); //bitmap de bloques por nodo.
 
-void inicializarBitmap(t_bitarray bloques);
-void imprimirResultado(t_bitarray bloques);
+int bitmap[20];
+t_list* listabitmap_nodo(); //  un bit map por cada nodo
+
+
+
 
 
 

@@ -61,9 +61,7 @@ int main(int argc, char *argv[]) {
 
 logInfo("Creando estructuras Administrativas");
 
-//bitarray_create(bloques,20*4);
-//inicializarBitmap(bloques);
-//imprimirResultado(bloques);
+
 
 
 
@@ -72,6 +70,7 @@ logInfo("Creando estructuras Administrativas");
 
 
 	logInfo("Creando el hilo para comunicarme con Data Node");
+
 	logInfo("Creando el hilo para comunicarme con YAMA");
 	logInfo("Creando el hilo para comunicarme con WORKER");
 
@@ -80,7 +79,16 @@ logInfo("Creando estructuras Administrativas");
 	pthread_t hiloDN, hiloYAMA,hiloWorker;
 
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
+
+
+	int estado_seguro=false; //estado_seguro va a estar en true una vez que los nodos tengan el arch y las estructuras esten actualizadas
+    if(estado_seguro){
+	logInfo("file system en estado seguro. Me puedo conectar con YAMA");
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
+    }else{
+    	logInfo(" FILE SYSTEM NO ESTA EN ESTADO SEGURO. NO ME PUEDO COMUNICAR CON YAMA");
+    }
+
 	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
 	//consolaFileSystem();
