@@ -77,7 +77,7 @@ t_list* dev_nodos_a_planificar(void) {
 			b--;
 		}
 		b++;
-		tamanioDeLaListaDeWorkersTotalesSinRemove --;
+		tamanioDeLaListaDeWorkersTotalesSinRemove--;
 	}
 	return nodosFinalesAPLanificar;
 }
@@ -132,15 +132,6 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
 			disponibilidadBase);
 
-	int c = 0;
-
-	while (c < list_size(listaDeWorkerTotales)) {
-
-		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales, c);
-		logInfo("%i", nodo->nodo);
-		c++;
-	}
-
 	logInfo("La lista de workers totales se actualizo con %i",
 			list_size(listaDeWorkerTotales));
 
@@ -152,22 +143,50 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	nodoParaPlanificar* punteroClock;
 	nodoParaPlanificar* punteroClockAuxiliar;
 
-	int partesParaPlanificar = 0;
-	int indexDeNodoConMayorDisponibilidad;
-
-	while (partesParaPlanificar < cantidadDePartesDelArchivo) {
-
-		int parte = list_get(partesDelArchivo, partesParaPlanificar);
-
-		indexDeNodoConMayorDisponibilidad = nodoConMayorDisponibilidadClock(
-				nodosFinalesAPLanificar);
-
-	}
-
+	nodoConMayorDisponibilidadClock(nodosFinalesAPLanificar); //me devulve la lista ordenada segun la dispo y la carga
 	//Con los punteros ,Nodos finales a planificar y partes del archivo
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
+
+}
+
+//asignar partes a planificar a nodos
+void asignarpartseANodos(t_list* partesDelArchivo, t_list* nodos) {
+
+	int i, j = 0;
+
+	while (i < list_size(partesDelArchivo)) {
+		int parte = list_get(partesDelArchivo, i);
+
+		bool dev_si_nodo_contiene_parteArch(int valor) {
+			return valor == parte;
+
+		}
+
+		while (j < list_size(nodos)) {
+			nodoParaPlanificar* nodo = list_get(nodos, j);
+
+			if (list_any_satisfy(nodo->partesDelArchivo,
+					dev_si_nodo_contiene_parteArch)) {
+				//fijarme si tengo dsponibillidad
+				if (nodo->disponibilidad > 0) {
+					//resta la disponibilidad
+					nodo->disponibilidad--;
+					//asignar la parte al nodo
+					//cm:comentoporque rompelist_add(nodo->partesAplanificar, parte);
+
+				} else {
+
+				}
+
+				nodo->disponibilidad
+
+			}
+
+		}
+
+	}
 }
 
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
@@ -257,10 +276,26 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 	}
 
 }
+nodoParaPlanificar* dev_mayor_disponib(nodoParaPlanificar* nodo1,
+		nodoParaPlanificar* nodo2) {
+	if (nodo1->disponibilidad >= nodo2->disponibilidad) {
 
-int nodoConMayorDisponibilidadClock(t_list* nodos) {
+		if (nodo1->disponibilidad == nodo2->disponibilidad) {
+			if (nodo1->carga >= nodo2->carga) {
+				return nodo1;
+			} else {
+				return nodo2;
+			}
+		}
+		return nodo1;
 
-	return 0;
+	} else {
+		return nodo2;
+	}
+}
+void nodoConMayorDisponibilidadClock(t_list* nodos) {
+// ordenar la lista segun la disponibilidad y si esta fuera la misma segun la carga
+	list_sort(nodos, dev_mayor_disponib);
 }
 
 int nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
