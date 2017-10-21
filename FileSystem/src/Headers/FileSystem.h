@@ -7,7 +7,7 @@
 
 #ifndef HEADERS_FILESYSTEM_H_
 #define HEADERS_FILESYSTEM_H_
-#define MAX 1000
+#define MAX 10
 #include "configuracion.h"
 #include <stddef.h>
 #include <string.h>
@@ -48,6 +48,14 @@ typedef struct tabla_archivos {
 
 //tabla_archivos* archivosPtr;
 
+//funciones de tabla de archivos
+
+int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio);
+
+char* generarRutaLocal(char* nombre, int directorio);
+
+int tamanioArchivo(int fp);
+
 //tabla de nodos
 
 typedef struct bloques_nodos{
@@ -69,9 +77,13 @@ struct bloques_nodos bloques_por_nodo;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
+typedef struct nodos{
+	int bitmap[20];
+	int id_nodo;
+}nodos;
 
-int bitmap[20];
-t_list* listabitmap_nodo(); //  un bit map por cada nodo
+t_list* listabitmap_nodo(); //  en esta lista pongo nodos
+
 
 
 

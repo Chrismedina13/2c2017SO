@@ -56,6 +56,8 @@ void comunicacionConMasters(ParametrosComunicacionConMaster* parametros){
 						if(bytesRecibidos == 0){
 							logInfo("Conexion cerrada del FD : %i",i);
 
+
+
 						}
 						close(i);
 						FD_CLR(i,&master);
@@ -106,3 +108,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster){
 			break;
 	}
 }
+
+
+
+
