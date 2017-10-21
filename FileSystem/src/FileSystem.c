@@ -11,40 +11,6 @@
 
 int main(int argc, char *argv[]) {
 
-	//puntero para tabla de archivos
-
-
-	//int max_archivos = MAX;
-
-	//tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
-
-	//estructuras para manejo de archivos
-
-
-	//probando funciones de manejo de archivo
-
-	//int tamanio_registro_archivos = sizeof(tabla_archivos);
-	//printf("%d /n", tamanio_registro_archivos);
-
-	//PRUEBA DE MMAP FUNCIONANDO!!!!
-/*
-
-	const char* nombreDelArchivoTxt = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
-	const char* nombreDelArchivoBin = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.bin";
-
- //¡BINARIO!
-	int pasoAMemoriaBinario = pasarAMemoriaBinario(nombreDelArchivoBin);
-	if(pasoAMemoriaBinario == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN BINARIO
-
-//¡TXT!
-	int pasoAMemoriaTxt = pasarAMemoriaTxt(nombreDelArchivoTxt);
-	if(pasoAMemoriaTxt == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN TXT.
-
-*/
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
@@ -58,6 +24,22 @@ int main(int argc, char *argv[]) {
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
+
+/*
+ * Crear las esctructuras
+ * Se conectan los Datanode
+ *Romper el archivo
+ *Divide los bloques en los distintos nodos que se hayan conectado
+ *FS esta en estado seguro, deja conectar a YAMA
+ *Queda esperando los pedidos del YAMA
+ *
+ *
+ *
+ *
+ *Se conecta un dataNode
+ *Le pido su id
+ *Lo guardo en tabla de no
+ */
 
 
 logInfo("Creando estructuras Administrativas");
