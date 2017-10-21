@@ -14,8 +14,32 @@
 #include "commons/collections/list.h"
 #include "commons/string.h"
 
-int pasarAMemoria (const char* rutaArchivo);
-/*pasa a memoria el archivo que tiene como parametro y devuelve el tamaño del archivo.*/
-int cantidadDeBloques(int tamanio); // Devuelve la cantidad de bloques que se pueden hacer con 1KB
-t_list* dividirArchivo(char*puntero,int cantidadDeBloques); //Separo el contenido del archivo pasado a memoria en la cantidad de bloques que le diga.
+typedef struct ArchivoEnMemoria{
+	char* puntero;
+	struct stat sb;
+}ArchivoEnMemoria;
+
+/*Funcion principal (TEXTO)*/
+int pasarAMemoriaTxt(const char * rutaDelArchivo);
+
+/*Funcion principal (BINARIOS)*/
+int pasarAMemoriaBinario (const char* rutaArchivo);
+
+/*Recibe como parametros la ruta del archivo y retorna:
+ *  Una estructura formada por un puntero a la memoria donde se guardo el archivo (USO DE MMAP)
+ * 	Un stat del archivo, que sirve para obtener el tamaño del archivo.
+ */
+ArchivoEnMemoria damePunteroYTamanio(const char* rutaArchivo);
+
+/*Retorna la cantidad de bloques de 1KB se pueden hacer con un tamaño de archivo (FUNCION ESPECIAL PARA BINARIOS*/
+int cantidadDeBloques(int tamanio);
+
+/*Retorna una lista de RUTAS DE ARCHIVOS. Recibe como parametros un puntero a memoria y la cantidad de bloques que puede tener de 1 KB (BINARIO)*/
+t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques);
+
+/*Retorna una lista de RUTAS DE ARCHIVOS. Recibe como parametros un puntero a memoria (TEXTO)*/
+t_list* dividirArchivoTxt(char* p);
+
+//Funcion que imprime un archivo (CREADA PARA VER EL USO DE LAS LISTAS)
 int imprimirArchivo(t_list* lista);
+

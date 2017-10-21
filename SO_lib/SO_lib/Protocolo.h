@@ -21,4 +21,13 @@
 //MASTER - FS
 #define ALMACENADO_FINAL 9
 
+//FS - DATA NODE
+#define ENVIO_BLOQUE 10
+
+
+//FS - YAMA
+#define UBICACION_BLOQUES 11
+
+
+
 #endif /* SO_LIB_PROTOCOLO_H_ */
