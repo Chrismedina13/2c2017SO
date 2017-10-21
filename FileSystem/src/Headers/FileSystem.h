@@ -69,9 +69,13 @@ struct bloques_nodos bloques_por_nodo;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
+typedef struct nodos{
+	int bitmap[20];
+	int id_nodo;
+}nodos;
 
-int bitmap[20];
-t_list* listabitmap_nodo(); //  un bit map por cada nodo
+t_list* listabitmap_nodo(); //  en esta lista pongo nodos
+
 
 
 

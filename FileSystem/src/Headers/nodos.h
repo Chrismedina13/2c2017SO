@@ -14,4 +14,6 @@ int bloquesLibres(t_bitarray bloques);
 
 void funcion(t_bitarray bloques);
 
+void inicializarEstructuras();
+
 #endif /* HEADERS_NODOS_H_ */

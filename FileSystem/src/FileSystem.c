@@ -7,6 +7,7 @@
 #include <pthread.h>
 #include "Headers/comunicacionConWorker.h"
 #include "Headers/pruebas.h"
+#include "Headers/nodos.h"
 
 int main(int argc, char *argv[]) {
 
@@ -62,6 +63,7 @@ int main(int argc, char *argv[]) {
 logInfo("Creando estructuras Administrativas");
 
 
+
 	logInfo("Creando el hilo para comunicarme con Data Node");
 
 	logInfo("Creando el hilo para comunicarme con YAMA");
@@ -73,19 +75,10 @@ logInfo("Creando estructuras Administrativas");
 
 	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
 	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
-
-
-	int estado_seguro=false; //estado_seguro va a estar en true una vez que los nodos tengan el arch y las estructuras esten actualizadas
-    if(estado_seguro){
-	logInfo("file system en estado seguro. Me puedo conectar con YAMA");
 	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
-    }else{
-    	logInfo(" FILE SYSTEM NO ESTA EN ESTADO SEGURO. NO ME PUEDO COMUNICAR CON YAMA");
-    }
-
 	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
-	//consolaFileSystem();
+
 
 	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
@@ -93,9 +86,6 @@ logInfo("Creando estructuras Administrativas");
 	pthread_join(hiloConsola, NULL);
 
 
-	//list_remove_and_destroy_element(ubiacionBloquesArchivo);
-	//list_remove_and_destroy_element(nodos);
-	//list_remove_and_destroy_element(bitmapNodos);
 
 
 		free(config);
