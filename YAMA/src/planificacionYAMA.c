@@ -151,6 +151,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 
 }
 
+/*
 //asignar partes a planificar a nodos
 void asignarpartseANodos(t_list* partesDelArchivo, t_list* nodos) {
 
@@ -188,7 +189,7 @@ void asignarpartseANodos(t_list* partesDelArchivo, t_list* nodos) {
 
 	}
 }
-
+*/
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		int disponibilidadBase) {
 
@@ -293,6 +294,8 @@ nodoParaPlanificar* dev_mayor_disponib(nodoParaPlanificar* nodo1,
 		return nodo2;
 	}
 }
+
+
 void nodoConMayorDisponibilidadClock(t_list* nodos) {
 // ordenar la lista segun la disponibilidad y si esta fuera la misma segun la carga
 	list_sort(nodos, dev_mayor_disponib);
