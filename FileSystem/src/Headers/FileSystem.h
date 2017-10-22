@@ -92,6 +92,5 @@ t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 
 
 
-
 #endif /* HEADERS_FILESYSTEM_H_ */
 

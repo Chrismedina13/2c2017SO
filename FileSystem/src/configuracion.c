@@ -26,6 +26,7 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 	configuracion->puerto_dn = config_get_int_value(configTemporal, PUERTODN);
 	configuracion->puerto_yama = config_get_int_value(configTemporal, PUERTOYAMA);
 	configuracion->puerto_worker = config_get_int_value(configTemporal, PUERTOWORKER);
+	configuracion->puerto_worker = config_get_int_value(configTemporal, ESTADORECUPERACION);
 
     config_destroy(configTemporal);
 

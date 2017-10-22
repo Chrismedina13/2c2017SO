@@ -59,8 +59,22 @@ int main(int argc, char *argv[]) {
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
 
+	if(config->estado_recuperacion==0){
+		logInfo( "FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
+		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
 
-logInfo("Creando estructuras Administrativas");
+
+
+
+	}else{
+		logInfo("FILE SYSTEM SE ENCUENTRA EN ESTADO DE RECUPERACION");
+		logInfo("LEVANTANDO ESTRUCTURAS DEL ESTADO ANTERIOR...");
+         recuperacionFS();
+		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS.
+		//HAY QUE VER SI ME FALTA INFO LE PREGUNTO A YAMA (?)
+	}
+
+
 
 
 

@@ -15,11 +15,13 @@
 #define PUERTODN "PUERTODN"
 #define PUERTOYAMA "PUERTOYAMA"
 #define PUERTOWORKER "PUERTOWORKER"
+#define ESTADORECUPERACION "ESTADORECUPERACION"
 
 typedef struct Configuracion{
 	int puerto_dn;
 	int puerto_yama;
 	int puerto_worker;
+	int estado_recuperacion;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* ruta);
