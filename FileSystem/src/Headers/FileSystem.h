@@ -34,8 +34,25 @@ struct tabla_directorios {
   int padre;
 }tabla_directorios; // registros dentro de tabla_de_directorios
 
+//zona declaracion estructuras tabla de directorios
 
 struct tabla_directorios tabla_de_directoriosAux[100], tabla_de_directorios[100]; //declaracion global de la estructura
+
+//funciones de tabla de directorios
+
+int cargarDirectorios();
+
+int cantidadDirectorios();
+
+int crearDirectorio(char* nombre, int padre);
+
+int eliminarDirectorio(int index);
+
+int mostrarTablaDeDirectorios();
+
+int cambiarNombreDirectorio(int index, char* nombre);
+
+int moverDirectorio(int index, int padre, int padreNew);
 
 //tabla de archivos
 
@@ -46,7 +63,11 @@ typedef struct tabla_archivos {
 	UbicacionBloquesArchivo* bloques;
 }tabla_archivos;
 
-//tabla_archivos* archivosPtr;
+//zona declaracion estructuras tabla de archivos
+
+int maxArchivos = MAX;
+
+extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 

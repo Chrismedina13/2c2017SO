@@ -70,4 +70,24 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 		}
 }
 
+//PRUEBA DE MMAP FUNCIONANDO!!!!
+/*
+
+	const char* nombreDelArchivoTxt = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
+	const char* nombreDelArchivoBin = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.bin";
+
+ //¡BINARIO!
+	int pasoAMemoriaBinario = pasarAMemoriaBinario(nombreDelArchivoBin);
+	if(pasoAMemoriaBinario == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
+	else printf("\nError al pasar a memoria\n\n");
+//FIN BINARIO
+
+//¡TXT!
+	int pasoAMemoriaTxt = pasarAMemoriaTxt(nombreDelArchivoTxt);
+	if(pasoAMemoriaTxt == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
+	else printf("\nError al pasar a memoria\n\n");
+//FIN TXT.
+
+*/
+
 

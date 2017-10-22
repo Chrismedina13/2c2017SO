@@ -11,40 +11,10 @@
 
 int main(int argc, char *argv[]) {
 
-	//puntero para tabla de archivos
+	//incializacion
 
+	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
 
-	//int max_archivos = MAX;
-
-	//tabla_archivos *archivosPtr = malloc (max_archivos * sizeof (tabla_archivos));
-
-	//estructuras para manejo de archivos
-
-
-	//probando funciones de manejo de archivo
-
-	//int tamanio_registro_archivos = sizeof(tabla_archivos);
-	//printf("%d /n", tamanio_registro_archivos);
-
-	//PRUEBA DE MMAP FUNCIONANDO!!!!
-/*
-
-	const char* nombreDelArchivoTxt = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
-	const char* nombreDelArchivoBin = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.bin";
-
- //¡BINARIO!
-	int pasoAMemoriaBinario = pasarAMemoriaBinario(nombreDelArchivoBin);
-	if(pasoAMemoriaBinario == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN BINARIO
-
-//¡TXT!
-	int pasoAMemoriaTxt = pasarAMemoriaTxt(nombreDelArchivoTxt);
-	if(pasoAMemoriaTxt == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN TXT.
-
-*/
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
@@ -59,6 +29,7 @@ int main(int argc, char *argv[]) {
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
 
+<<<<<<< HEAD
 	if(config->estado_recuperacion==0){
 		logInfo( "FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
 		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
@@ -73,6 +44,23 @@ int main(int argc, char *argv[]) {
 		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS.
 		//HAY QUE VER SI ME FALTA INFO LE PREGUNTO A YAMA (?)
 	}
+=======
+/*
+ * Crear las esctructuras
+ * Se conectan los Datanode
+ *Romper el archivo
+ *Divide los bloques en los distintos nodos que se hayan conectado
+ *FS esta en estado seguro, deja conectar a YAMA
+ *Queda esperando los pedidos del YAMA
+ *
+ *
+ *
+ *
+ *Se conecta un dataNode
+ *Le pido su id
+ *Lo guardo en tabla de no
+ */
+>>>>>>> 58bb47da030973ddf05e5119652ddd853f1a8ebe
 
 
 
