@@ -8,6 +8,6 @@
 #ifndef HEADERS_RECUPERACIONFS_H_
 #define HEADERS_RECUPERACIONFS_H_
 
-
+void recuperacionFS();
 
 #endif /* HEADERS_RECUPERACIONFS_H_ */

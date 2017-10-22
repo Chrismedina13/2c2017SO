@@ -7,6 +7,8 @@
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
 
+
+
 void comunicacionDN(ParametrosComunicacion* parametros){
 
 	int socketWorkerServidor;
@@ -45,7 +47,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						if(FD_Cliente > fd_max){
 							fd_max = FD_Cliente;
 						}
-						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente);
+						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
 					}
 				}else{
 
@@ -60,7 +62,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 					}else{
 
-						logInfo("Recibi de DATANODE: %s",buffer);
+						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje
 					}
 				}
 
@@ -69,6 +71,24 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 		}
 }
+
+
+
+void mensajesEnviadosADN(char* contenidoBloque, int FD_DN){
+char* bloque = malloc(1024*1024);
+bloque=contenidoBloque;
+int tamanioBloque = strlen(bloque);
+logInfo("Se envia bloque a DN");
+Paquete* paqueteDeEnvioDeBloque = crearPaquete(10,tamanioBloque,bloque);
+
+if(enviarPaquete(FD_DN,paqueteDeEnvioDeBloque) == -1){
+	logInfo("Error en envio de job");
+}
+
+destruirPaquete(paqueteDeEnvioDeBloque);
+free(bloque);
+}
+
 
 //PRUEBA DE MMAP FUNCIONANDO!!!!
 /*

@@ -14,6 +14,7 @@ C_SRCS += \
 ../src/logFileSystem.c \
 ../src/nodos.c \
 ../src/pruebas.c \
+../src/recuperacionFS.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
@@ -27,6 +28,7 @@ OBJS += \
 ./src/logFileSystem.o \
 ./src/nodos.o \
 ./src/pruebas.o \
+./src/recuperacionFS.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
@@ -40,6 +42,7 @@ C_DEPS += \
 ./src/logFileSystem.d \
 ./src/nodos.d \
 ./src/pruebas.d \
+./src/recuperacionFS.d \
 ./src/socketsFileSystem.d 
 
 

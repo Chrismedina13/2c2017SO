@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
 
-<<<<<<< HEAD
+
 	if(config->estado_recuperacion==0){
 		logInfo( "FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
 		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
@@ -44,7 +44,8 @@ int main(int argc, char *argv[]) {
 		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS.
 		//HAY QUE VER SI ME FALTA INFO LE PREGUNTO A YAMA (?)
 	}
-=======
+
+
 /*
  * Crear las esctructuras
  * Se conectan los Datanode
@@ -60,8 +61,6 @@ int main(int argc, char *argv[]) {
  *Le pido su id
  *Lo guardo en tabla de no
  */
->>>>>>> 58bb47da030973ddf05e5119652ddd853f1a8ebe
-
 
 
 
