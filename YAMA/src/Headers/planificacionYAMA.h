@@ -28,6 +28,10 @@ bool estaNodorEnLaListaDeTotales(int nodo);
 int nodoConMayorDisponibilidadW_Clock(t_list* nodos);
 void nodoConMayorDisponibilidadClock(t_list* nodos);
 t_list* dev_nodos_a_planificar(void);
+int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte);
+void sumarDisponibilidadBaseAtodoslosNodos(t_list* nodosFinalesAPLanificar,int disponibilidadBase);
+bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo);
+void asignarFuncionDeDisponibilidadW_ClockANodos(int disponibilidadBase);
 
 
 

@@ -99,12 +99,16 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,
 			disponibilidadBase);
 
+	asignarFuncionDeDisponibilidadW_ClockANodos(disponibilidadBase);
+
+
 	//busco de la lista de nodos a planificar aquellos que tienen partes de archivo
 	t_list* nodosFinalesAPLanificar = dev_nodos_a_planificar();
 	//cm falta liberar nodosFinalesAPLanificar
 
 	nodoParaPlanificar* punteroClock;
 	nodoParaPlanificar* punteroClockAuxiliar;
+
 
 	list_destroy(partesDelArchivo);
 
@@ -146,50 +150,102 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	nodoConMayorDisponibilidadClock(nodosFinalesAPLanificar); //me devulve la lista ordenada segun la dispo y la carga
 	//Con los punteros ,Nodos finales a planificar y partes del archivo
 
+	int t,desplazamientoPuntero = 0;
+	int indexParaActualizar;// me devuelve donde tengo que actualizar segun el punteroauxiliar
+
+	logInfo("Asignando partes a planificar a los nodos");
+
+	while (t < list_size(partesDelArchivo)) {
+
+		int parte = list_get(partesDelArchivo, t);
+		punteroClock = list_get(nodosFinalesAPLanificar, desplazamientoPuntero);
+		if (punteroClock->disponibilidad != 0) {
+			if (estaParteEnNodo(parte, punteroClock)) {
+				nodoParaPlanificar* nodoParaActuaizar = list_remove(
+						nodosFinalesAPLanificar, desplazamientoPuntero);
+				nodoParaActuaizar->disponibilidad--;
+				list_add(nodoParaActuaizar->partesAplanificar, parte);
+				list_add_in_index(nodosFinalesAPLanificar,
+						desplazamientoPuntero, nodoParaActuaizar);
+				t++; // se analiza la otra parte
+				desplazamientoPuntero++; // avanza el puntero a la otra posicion de los nodos
+			} else {
+
+				indexParaActualizar = moverPunteroAuxiliar(punteroClockAuxiliar,
+						nodosFinalesAPLanificar, desplazamientoPuntero,parte); // me devuelve el index del lugar donde tiene la parte
+				if (indexParaActualizar == -1) { //entra aca si da una vuelta y todas las disponibilidades estan en 0
+					sumarDisponibilidadBaseAtodoslosNodos(nodosFinalesAPLanificar,disponibilidadBase);
+					indexParaActualizar = moverPunteroAuxiliar(
+							punteroClockAuxiliar, nodosFinalesAPLanificar,
+							desplazamientoPuntero,parte);
+					nodoParaPlanificar* nodoAActualizar = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
+					nodoAActualizar->disponibilidad --;
+					list_add(nodoAActualizar->partesAplanificar,parte);
+					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
+					t ++;
+					desplazamientoPuntero ++;
+
+				}else{
+					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
+					nodo->disponibilidad --;
+					list_add(nodo->partesAplanificar,parte);
+					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
+					t ++;
+					desplazamientoPuntero ++;
+
+				}
+			}
+
+		} else {
+			punteroClock->disponibilidad = disponibilidadBase;
+
+			if (estaParteEnNodo(parte, punteroClock)) {
+				nodoParaPlanificar* nodoParaActuaizar = list_remove(
+						nodosFinalesAPLanificar, desplazamientoPuntero);
+				nodoParaActuaizar->disponibilidad--;
+				list_add(nodoParaActuaizar->partesAplanificar, parte);
+				list_add_in_index(nodosFinalesAPLanificar,
+						desplazamientoPuntero, nodoParaActuaizar);
+				t++;
+				desplazamientoPuntero++;
+			} else {
+
+				indexParaActualizar = moverPunteroAuxiliar(punteroClockAuxiliar,
+						nodosFinalesAPLanificar, desplazamientoPuntero,parte); // me devuelve el index del lugar donde tiene la parte
+				if (indexParaActualizar == -1) { //entra aca si da una vuelta y todas las disponibilidades estan en 0
+					sumarDisponibilidadBaseAtodoslosNodos(nodosFinalesAPLanificar,disponibilidadBase);
+					indexParaActualizar = moverPunteroAuxiliar(
+							punteroClockAuxiliar, nodosFinalesAPLanificar,
+							desplazamientoPuntero,parte);
+					nodoParaPlanificar* nodoAActualizar = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
+					nodoAActualizar->disponibilidad --;
+					list_add(nodoAActualizar->partesAplanificar,parte);
+					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
+					t ++;
+					desplazamientoPuntero ++;
+
+				}else{
+					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
+					nodo->disponibilidad --;
+					list_add(nodo->partesAplanificar,parte);
+					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
+					t ++;
+					desplazamientoPuntero ++;
+
+				}
+			}
+
+		}
+	}
+
+	logInfo("Armar estructura para mandar a Master");
+
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
 
 }
 
-/*
-//asignar partes a planificar a nodos
-void asignarpartseANodos(t_list* partesDelArchivo, t_list* nodos) {
 
-	int i, j = 0;
-
-	while (i < list_size(partesDelArchivo)) {
-		int parte = list_get(partesDelArchivo, i);
-
-		bool dev_si_nodo_contiene_parteArch(int valor) {
-			return valor == parte;
-
-		}
-
-		while (j < list_size(nodos)) {
-			nodoParaPlanificar* nodo = list_get(nodos, j);
-
-			if (list_any_satisfy(nodo->partesDelArchivo,
-					dev_si_nodo_contiene_parteArch)) {
-				//fijarme si tengo dsponibillidad
-				if (nodo->disponibilidad > 0) {
-					//resta la disponibilidad
-					nodo->disponibilidad--;
-					//asignar la parte al nodo
-					//cm:comentoporque rompelist_add(nodo->partesAplanificar, parte);
-
-				} else {
-
-				}
-
-				nodo->disponibilidad
-
-			}
-
-		}
-
-	}
-}
-*/
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		int disponibilidadBase) {
 
@@ -306,3 +362,99 @@ int nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
 	return 0;
 
 }
+
+bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
+
+	int posicionPartesDelArchivo = 0;
+	while(posicionPartesDelArchivo < list_size(nodo->partesDelArchivo)){
+
+		if (parte == list_get(nodo->partesDelArchivo,posicionPartesDelArchivo)){
+
+			return true;
+		}else{
+
+			posicionPartesDelArchivo ++;
+		}
+
+
+	}
+
+	return false;
+}
+
+int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,
+		t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte) {
+
+	int desplazamiento = desplazamientoPuntero + 1;
+
+	while (desplazamiento < list_size(nodosFinalesAPLanificar)
+			&& desplazamiento != desplazamientoPuntero) {
+
+		punteroClockAuxiliar = list_get(nodosFinalesAPLanificar,
+				desplazamiento);
+		if (estaParteEnNodo(parte, punteroClockAuxiliar)) {
+
+			return desplazamiento;
+		} else {
+
+			if (desplazamiento == (list_size(nodosFinalesAPLanificar) - 1)) {
+
+				desplazamiento = 0;
+
+			} else {
+
+				desplazamiento++;
+			}
+		}
+
+	}
+	return -1;
+
+}
+
+void sumarDisponibilidadBaseAtodoslosNodos(t_list* nodosFinalesAPLanificar,int disponibilidadBase){
+
+	int i = 0;
+	while(i < list_size(nodosFinalesAPLanificar)){
+
+		nodoParaPlanificar* nodo =list_remove(nodosFinalesAPLanificar,i);
+		nodo->disponibilidad = disponibilidadBase;
+		list_add_in_index(nodosFinalesAPLanificar,i,nodo);
+
+		i++;
+	}
+
+}
+
+void asignarFuncionDeDisponibilidadW_ClockANodos(int disponibilidadBase){
+
+	int a,b = 0;
+	int mayorCargaDeTrabajo;
+
+	while(a < list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,a);
+		if (nodo->carga >= mayorCargaDeTrabajo){
+
+			mayorCargaDeTrabajo = nodo->carga;
+		}
+
+		a ++;
+	}
+
+	logInfo("La mayor carga de trabajo es %i", mayorCargaDeTrabajo);
+
+	logInfo("Asignado funcion de disponibilidad a nodos");
+
+	while(b < list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodoAActualizar = list_remove(listaDeWorkerTotales,b);
+		nodoAActualizar->disponibilidad = nodoAActualizar->carga + disponibilidadBase + mayorCargaDeTrabajo;
+		list_add_in_index(listaDeWorkerTotales,b,nodoAActualizar);
+
+		b++;
+	}
+
+}
+
+
