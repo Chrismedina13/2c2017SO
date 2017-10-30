@@ -33,6 +33,7 @@ void sumarDisponibilidadBaseAtodoslosNodos(t_list* nodosFinalesAPLanificar,int d
 bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo);
 void asignarFuncionDeDisponibilidadW_ClockANodos(int disponibilidadBase);
 void asignarFuncionDeDisponibilidadClockANodos(int disponibilidadBase);
+void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanificar);
 
 
 

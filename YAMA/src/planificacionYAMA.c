@@ -201,8 +201,8 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 		}
 	}
 
-
-
+	logInfo("Actualizar carga de trabajo de los nodos planificados");
+	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
 	list_destroy(partesDelArchivo);
 
@@ -334,7 +334,16 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 		}
 	}
 
+	logInfo("Actualizar carga de trabajo de los nodos planificados");
+	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
+
 	logInfo("Armar estructura para mandar a Master");
+
+
+	logInfo("Actualizar tabla global de Yama");
+
+
+	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales");
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
@@ -570,6 +579,20 @@ void asignarFuncionDeDisponibilidadClockANodos(int disponibilidadBase){
 	}
 
 }
+
+void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanificar){
+
+	int a = 0;
+	while(a < list_size(nodosFinalesAPLanificar)){
+
+		nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,a);
+		nodo->carga += list_size(nodo->partesAplanificar);
+		list_add_in_index(nodosFinalesAPLanificar,a,nodo);
+
+		a++;
+	}
+}
+
 
 
 
