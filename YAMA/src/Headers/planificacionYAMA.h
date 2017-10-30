@@ -32,6 +32,7 @@ int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,t_list* nodosF
 void sumarDisponibilidadBaseAtodoslosNodos(t_list* nodosFinalesAPLanificar,int disponibilidadBase);
 bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo);
 void asignarFuncionDeDisponibilidadW_ClockANodos(int disponibilidadBase);
+void asignarFuncionDeDisponibilidadClockANodos(int disponibilidadBase);
 
 
 

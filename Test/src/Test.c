@@ -8,6 +8,7 @@
  ============================================================================
  */
 
+/*
 #include "Test.h"
 #include <stdio.h>
 
@@ -186,4 +187,4 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 	}
 
 }
-
+*/
