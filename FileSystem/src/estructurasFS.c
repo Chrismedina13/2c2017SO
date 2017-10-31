@@ -12,6 +12,57 @@
 
 //funciones
 
+int cantidadDirectorios(){
+
+	/*devuelve el index del ultimo directorio.
+	 *
+	 */
+
+	int count = 1;
+
+	  	while(1){
+	  		if(!tabla_de_directorios[count].index) return(count);
+	  		count++;
+	  	}
+
+};
+
+int actualizarTablaDeDirectorios(){
+
+	/*Actualiza el archivo directorios.dat
+	 *
+	 */
+
+	int count = 0;
+	int cantDir = cantidadDirectorios();
+
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
+	  if (!fp) {
+		  perror("Error al abrir el Archivo de directorios");
+		  return (-1);
+	  }
+
+	char* ruta;
+
+	while(count <= cantDir){
+		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
+		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
+		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
+
+		ruta = string_from_format("yamafs/metadata/archivos/%d/%s", tabla_de_directorios[count].index, tabla_de_directorios[count].nombre);
+
+	int status = mkdir(ruta, 0777);
+		if (status == -1){
+			//return(-1);
+		}
+
+		count++;
+	}
+
+	  return(1);
+
+}
+
 int cargarDirectorios() {
 
 	/*Carga los directorios de directorios.dat en una estructura tipo tabla_directorios.
@@ -43,48 +94,8 @@ int cargarDirectorios() {
   }
   fclose(fp);
   logInfo("Tabla de Directorios cargada correctamente. \n");
+  //actualizarTablaDeDirectorios();
   return (1);
-}
-
-int cantidadDirectorios(){
-
-	/*devuelve el index del ultimo directorio.
-	 *
-	 */
-
-	int count = 1;
-
-	  	while(1){
-	  		if(!tabla_de_directorios[count].index) return(count);
-	  		count++;
-	  	}
-
-};
-
-int actualizarTablaDeDirectorios(){
-
-	/*Actualiza el archivo directorios.dat
-	 *
-	 */
-
-	int count = 0;
-	int cantDir = cantidadDirectorios();
-
-	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
-	  if (!fp) {
-		  perror("Error al abrir el Archivo de directorios");
-		  return (-1);
-	  }
-
-	while(count <= cantDir){
-		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
-		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
-		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
-		count++;
-	}
-
-	  return(1);
-
 }
 
 int buscarIndice(){
@@ -172,11 +183,11 @@ int crearDirectorio(char* nombre, int padre) {
 	cantDir = cantidadDirectorios();
 	existe = existeDirectorio(nombre, padre);
 
-	if (cantDir<=100 && existe != -1){
+	if (cantDir<=100 && existe == -1){
 	indice = buscarIndice();
-	tabla_de_directorios[cantDir].index = indice;
-	strcpy(tabla_de_directorios[cantDir].nombre, nombre);
-	tabla_de_directorios[cantDir].padre = padre;
+	tabla_de_directorios[cantDir+1].index = indice;
+	strcpy(tabla_de_directorios[cantDir+1].nombre, nombre);
+	tabla_de_directorios[cantDir+1].padre = padre;
 
 	}
 
@@ -273,6 +284,11 @@ int moverDirectorio(int index, int padre, int padreNew){
 
 }
 
+int make_directory(const char* ruta) {
+
+    mkdir(ruta, 777);
+    return(1);
+}
 
 //manejo de archivos
 
@@ -281,11 +297,13 @@ int moverDirectorio(int index, int padre, int padreNew){
 
 int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
-	int tamanioBloque = 1024*1024; //debe haber una global, preguntar Ari
+	int tamanioBloque = 1024*1024;
 	int indiceArchivo = 0;
 	int tamArchivo;
+	int maxArchivos = MAX;
 	char* rutaLocal;
 	UbicacionBloquesArchivo* bloquesPtr;
+	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
 
 	//abro mi archivo y cargo la info que necesito en el puntero a archivos
 
@@ -368,7 +386,7 @@ int tamanioArchivo(int fp){
 
 }
 
-int cambiarNombreArchivo(char* ruta, char* nombreNew, int directorio){
+int cambiarNombreArchivo(char* rutaLocal, char* nombreNew, int directorio){
 
 	//Cambia el nombre de un archivo, siempre y cuando este exista.
 	//recibe el nombre del archivo y el index de su directorio.
@@ -378,24 +396,78 @@ int cambiarNombreArchivo(char* ruta, char* nombreNew, int directorio){
 	char* newRutaLocal = generarRutaLocal(nombreNew, directorio);
 
 	if(strcmp(newRutaLocal,"error") == 0)return(-1);
-	rename(ruta, newRutaLocal);
+	rename(rutaLocal, newRutaLocal);
 	return(1);
 
 }
 
-int eliminarArchivo(char* ruta){
+int eliminarArchivo(char* rutaLocal){
 
-	remove(ruta);
+	remove(rutaLocal);
 	return (1);
 }
 
-int moverArchivo(char* ruta, int directorio){ //falta terminar
+int moverArchivo(char* rutaLocal, char* nombre, int directorio){
 
-	FILE * fp = fopen(ruta, "r");
+	/*Borra el registro del archivo en el directorio actual y lo mueve a un nuevo directorio
+	 * retorna 1 si lo puede hacer, -1 si falla.
+	 */
+
+
+	char caracter;
+	char* newRutaLocal = generarRutaLocal(nombre, directorio);
+
+	FILE * fp = fopen(rutaLocal, "r");
 		if (!fp) {
-		  perror("Error al abrir el Archivo");
+		  perror("Error al localizar el Archivo");
 		  return (-1);
 		}
 
+	FILE * newfp = fopen(newRutaLocal, "w");
+		if (!fp) {
+			  perror("Error al crear el Archivo");
+			  return (-1);
+			}
+
+
+	while(!feof(fp)){
+		caracter = fgetc(fp);
+		fputc(caracter, newfp);
+	}
+
+
+	fclose(fp);
+	fclose(newfp);
+
+	eliminarArchivo(rutaLocal);
+
+	return(1);
+
 }
+
+int mostrarArchivo(char* rutaLocal){
+
+	char caracter;
+
+	FILE * fp = fopen(rutaLocal, "r");
+			if (!fp) {
+			  perror("Error al abrir el Archivo");
+			  return (-1);
+			}
+
+	while(!feof(fp)){
+		caracter = fgetc(fp);
+		printf("%c", caracter);
+	}
+
+	fclose(fp);
+
+	return(1);
+
+}
+
+//int archivosDirectorio(int directorio){
+
+
+
 

@@ -7,11 +7,14 @@
 
 #ifndef HEADERS_FILESYSTEM_H_
 #define HEADERS_FILESYSTEM_H_
-#define MAX 10
+#define MAX 100
 #include "configuracion.h"
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "socketsFileSystem.h"
 #include "logFileSystem.h"
 #include "pthread.h"
@@ -21,6 +24,7 @@
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
 #include "commons/string.h"
+
 
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
@@ -65,7 +69,7 @@ typedef struct tabla_archivos {
 
 //zona declaracion estructuras tabla de archivos
 
-int maxArchivos = MAX;
+//int maxArchivos = MAX;
 
 extern tabla_archivos *archivosPtr;
 
