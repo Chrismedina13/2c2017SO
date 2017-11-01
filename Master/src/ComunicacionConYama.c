@@ -66,7 +66,7 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char mensaje,
 		break;
 
 	case FIN_REDUCCION_LOCAL:
-		logInfo("Master envia señal de finalización de Reducción Local");
+		logInfo("Master envia señal de finalización de Reducción Local(EXITO o FRACASO)");
 		Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
 
@@ -79,7 +79,7 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char mensaje,
 		break;
 
 	case FIN_REDUCCION_GLOBAL:
-		logInfo("Master envia señal de finalización de Reducción Global");
+		logInfo("Master envia señal de finalización de Reducción Global(EXITO o FRACASO)");
 
 		Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
@@ -93,7 +93,7 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char mensaje,
 		break;
 
 	case ALMACENADO_FINAL:
-		logInfo("Master envia señal de finalización de Almacenamiento Final.");
+		logInfo("Master envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
 
 		Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
