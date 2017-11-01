@@ -20,10 +20,10 @@ int main(int argc, char *argv[]) {
 
 	//pruebas
 
+	cargarDirectorios();
 	mostrarTablaDeDirectorios();
-	crearDirectorio("archivos", 2);
+	crearDirectorio("prueba",2);
 	mostrarTablaDeDirectorios();
-
 
 
 

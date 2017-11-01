@@ -81,6 +81,8 @@ char* generarRutaLocal(char* nombre, int directorio);
 
 int tamanioArchivo(int fp);
 
+int cantDir;
+
 //tabla de nodos
 
 typedef struct bloques_nodos{
