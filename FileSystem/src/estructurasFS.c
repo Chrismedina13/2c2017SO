@@ -18,10 +18,10 @@ int cantidadDirectorios(){
 	 *
 	 */
 
-	int count = 1;
+	int count = 0;
 
 	  	while(1){
-	  		if(!tabla_de_directorios[count].index) return(count);
+	  		if(tabla_de_directorios[count].index) return(count);
 	  		count++;
 	  	}
 
@@ -34,7 +34,7 @@ int actualizarTablaDeDirectorios(){
 	 */
 
 	int count = 0;
-	int cantDir = cantidadDirectorios();
+	int status;
 
 	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
 	  if (!fp) {
@@ -51,10 +51,11 @@ int actualizarTablaDeDirectorios(){
 
 		ruta = string_from_format("yamafs/metadata/archivos/%d/%s", tabla_de_directorios[count].index, tabla_de_directorios[count].nombre);
 
-	int status = mkdir(ruta, 0777);
-		if (status == -1){
-			//return(-1);
-		}
+	//if(existeDirectorio(tabla_de_directorios[count].nombre,tabla_de_directorios[count].padre) == -1){
+		status = mkdir(ruta, 0777);
+		//if (status == -1){
+		//	return(-1);
+		//}
 
 		count++;
 	}
@@ -92,6 +93,7 @@ int cargarDirectorios() {
 
 	  count++;
   }
+  cantDir = count;
   fclose(fp);
   logInfo("Tabla de Directorios cargada correctamente. \n");
   //actualizarTablaDeDirectorios();
@@ -114,7 +116,6 @@ int buscarIndice(){
 	}
 
   int count;
-  int cantDir = cantidadDirectorios();
 
   // Mark arr[i] as visited by making arr[arr[i] - 1] negative. Note that
   // 1 is subtracted because index start from 0 and positive numbers start from 1
@@ -139,7 +140,6 @@ int padreDirectorio(int index){
 	 */
 
 	int count = 0;
-	int cantDir = cantidadDirectorios();
 
 	while (count <= cantDir) {
 			if (tabla_de_directorios[count].index == index) {
@@ -159,7 +159,6 @@ int existeDirectorio(char* nombre, int padre) {
 	 */
 
 	int count = 0;
-	int cantDir = cantidadDirectorios();
 
 	while (count <= cantDir) {
 		if ((strcmp(tabla_de_directorios[count].nombre,nombre) != 0) && tabla_de_directorios[count].padre == padre) {
@@ -176,18 +175,17 @@ int crearDirectorio(char* nombre, int padre) {
 	 * devuelve 1 si puede crearlo, -1 si ya existe o la cantidad de directorios no se lo permite.
 	 */
 
-	int cantDir;
 	int existe;
 	int indice;
 
-	cantDir = cantidadDirectorios();
 	existe = existeDirectorio(nombre, padre);
 
 	if (cantDir<=100 && existe == -1){
 	indice = buscarIndice();
-	tabla_de_directorios[cantDir+1].index = indice;
-	strcpy(tabla_de_directorios[cantDir+1].nombre, nombre);
-	tabla_de_directorios[cantDir+1].padre = padre;
+	tabla_de_directorios[cantDir].index = indice;
+	strcpy(tabla_de_directorios[cantDir].nombre, nombre);
+	tabla_de_directorios[cantDir].padre = padre;
+	cantDir++;
 
 	}
 
@@ -202,7 +200,7 @@ int crearDirectorio(char* nombre, int padre) {
 
 };
 
-int eliminarDirectorio(int index){ //checkear si tiene archivos dentro
+int eliminarDirectorio(int index){ //se puede hacer con una funcion ya hecha, rehacer
 
 	/*Recibe el index de un directorio a borrar
 	 *devuelve 1 si lo borra, -1 si no puede borrarlo (porque tiene cosas adentro).
@@ -220,6 +218,7 @@ int eliminarDirectorio(int index){ //checkear si tiene archivos dentro
 	strcpy(tabla_de_directorios[index].nombre,"deleted");
 	tabla_de_directorios[index].padre = -2;
 
+
 	count = 0;
 
 	while(count <= 99){
@@ -234,6 +233,7 @@ int eliminarDirectorio(int index){ //checkear si tiene archivos dentro
 		count++;
 	}
 
+	cantDir--;
 	actualizarTablaDeDirectorios();
 	return(1);
 }
@@ -246,9 +246,9 @@ int mostrarTablaDeDirectorios(){
 
 	int count = 0;
 
-	printf("\n indice %d: %d \n", count, tabla_de_directorios[0].index);
-	printf("nombre %d: %s \n", count, tabla_de_directorios[0].nombre);
-	printf("padre %d: %d \n", count, tabla_de_directorios[0].padre);
+	printf("\n indice %d: %d \n", count, tabla_de_directorios[count].index);
+	printf("nombre %d: %s \n", count, tabla_de_directorios[count].nombre);
+	printf("padre %d: %d \n", count, tabla_de_directorios[count].padre);
 
 	count++;
 
