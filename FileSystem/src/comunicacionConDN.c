@@ -48,11 +48,16 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							fd_max = FD_Cliente;
 						}
 						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
+					//aca creo la lisat de nodos y lo meto
+
 					}
 				}else{
 
 					//Recibo datos de algun cliente
-					if((bytesRecibidos = recv(i,buffer,17,0)) <= 0){
+
+
+					if((bytesRecibidos = recv(i,buffer,4,0)) <= 0){
+
 						if(bytesRecibidos == 0){
 							logInfo("Conexion cerrada del FD : %i",i);
 
@@ -61,6 +66,8 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						FD_CLR(i,&master);
 
 					}else{
+						int codigo = deserializarINT(buffer);
+						mensajesRecibidosDeDN(codigo,i);
 
 						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje
 					}
@@ -88,7 +95,34 @@ if(enviarPaquete(FD_DN,paqueteDeEnvioDeBloque) == -1){
 destruirPaquete(paqueteDeEnvioDeBloque);
 free(bloque);
 }
+void mensajesRecibidosDeDN(int codigo, int FD_DN) {
+	switch (codigo) {
+	case SET_BLOQUE:
+		char* buffer = malloc(4);
 
+
+		//recv(FD_DN,buffer,4,0);
+		//int tamanio= deserializarINT(buffer);
+		//char* codigo = malloc(tamanio);
+		//recv(FD_DN,codigo, tamanio);
+
+
+
+
+
+		//PLANIFICA
+		logInfo("Master recibe de Yama solicitud de transformación.");
+
+
+
+		break;
+	case GET_BLOQUE:
+		logInfo("Master recibe de Yama solicitud de Reducción Local.");
+
+		break;
+
+	}
+}
 
 //PRUEBA DE MMAP FUNCIONANDO!!!!
 /*

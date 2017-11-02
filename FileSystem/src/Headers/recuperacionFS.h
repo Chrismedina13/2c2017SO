@@ -10,4 +10,10 @@
 
 void recuperacionFS();
 
+void recuperarTablaDeDirectorios();
+
+void recuperarTablasDeArchivos();
+
+void recuperarTablaNodos();
+
 #endif /* HEADERS_RECUPERACIONFS_H_ */

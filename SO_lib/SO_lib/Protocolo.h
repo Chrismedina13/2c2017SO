@@ -24,8 +24,8 @@
 
 //FS - DATA NODE
 #define GET_BLOQUE 12
-#define SET_BLOQUE 13
-#define ENVIO_BLOQUE 10
+#define SET_BLOQUE 10
+
 
 
 

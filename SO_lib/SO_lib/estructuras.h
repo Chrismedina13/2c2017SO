@@ -56,7 +56,10 @@ typedef struct ubiacionBloquesArchivo {
 	int bytesOcupados; //bytesOCupados por ese bloque
 } UbicacionBloquesArchivo;
 
-
+typedef struct SetBloque {
+	int nrobloque;
+	char* contenidoBloque;
+}SetBloque;
 
 //funciones
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
