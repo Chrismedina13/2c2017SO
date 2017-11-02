@@ -12,6 +12,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -24,7 +25,6 @@
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
 #include "commons/string.h"
-
 
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
@@ -47,17 +47,13 @@ struct tabla_directorios tabla_de_directoriosAux[100], tabla_de_directorios[100]
 
 int cargarDirectorios();
 
-int cantidadDirectorios();
-
 int crearDirectorio(char* nombre, int padre);
 
 int eliminarDirectorio(int index);
 
-int mostrarTablaDeDirectorios();
-
 int cambiarNombreDirectorio(int index, char* nombre);
 
-int moverDirectorio(int index, int padre, int padreNew);
+int moverDirectorio(int index, int padreNew);
 
 //tabla de archivos
 

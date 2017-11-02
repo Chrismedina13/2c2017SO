@@ -12,7 +12,7 @@
 
 //funciones
 
-int cantidadDirectorios(){
+int cantidadDirectorios(){ // en desuso, variable global cantDir
 
 	/*devuelve el index del ultimo directorio.
 	 *
@@ -34,32 +34,32 @@ int actualizarTablaDeDirectorios(){
 	 */
 
 	int count = 0;
-	int status;
+	char* ruta;
 
-	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w+");
 	  if (!fp) {
 		  perror("Error al abrir el Archivo de directorios");
 		  return (-1);
 	  }
 
-	char* ruta;
-
 	while(count <= cantDir){
-		fprintf(fp, "%d /n", tabla_de_directorios[count].index);
-		fprintf(fp, "%s /n", tabla_de_directorios[count].nombre);
-		fprintf(fp, "%d /n", tabla_de_directorios[count].padre);
 
-		ruta = string_from_format("yamafs/metadata/archivos/%d/%s", tabla_de_directorios[count].index, tabla_de_directorios[count].nombre);
+		if(tabla_de_directorios[count].index == 0 && tabla_de_directorios[count].padre == 0)break;
 
-	//if(existeDirectorio(tabla_de_directorios[count].nombre,tabla_de_directorios[count].padre) == -1){
-		status = mkdir(ruta, 0777);
-		//if (status == -1){
-		//	return(-1);
-		//}
+		fprintf(fp, "%d \n", tabla_de_directorios[count].index);
+		fprintf(fp, "%s \n", tabla_de_directorios[count].nombre);
+		fprintf(fp, "%d \n", tabla_de_directorios[count].padre);
+
+		if(count >= 3){
+
+			ruta = string_from_format("yamafs/metadata/archivos/%d", tabla_de_directorios[count].index);
+			mkdir(ruta,0777);
+		}
 
 		count++;
 	}
 
+	  fclose(fp);
 	  return(1);
 
 }
@@ -84,19 +84,19 @@ int cargarDirectorios() {
 	  }
 	  fscanf(fp, "%d %s %d", &tabla_de_directorios[count].index, tabla_de_directorios[count].nombre,
 			  &tabla_de_directorios[count].padre);
-
-	  /*Prueba si se carga correctamente
+	  if(!strcmp(tabla_de_directorios[count].nombre,""))break;
+	  //Prueba si se carga correctamente
 	   printf("indice cargado: %d \n", tabla_de_directorios[count].index);
 	   printf("nombre cargado: %s \n", tabla_de_directorios[count].nombre);
 	   printf("padre cargado: %d \n", tabla_de_directorios[count].padre);
-	   */
+	   //
 
 	  count++;
   }
   cantDir = count;
   fclose(fp);
   logInfo("Tabla de Directorios cargada correctamente. \n");
-  //actualizarTablaDeDirectorios();
+  actualizarTablaDeDirectorios();
   return (1);
 }
 
@@ -161,7 +161,7 @@ int existeDirectorio(char* nombre, int padre) {
 	int count = 0;
 
 	while (count <= cantDir) {
-		if ((strcmp(tabla_de_directorios[count].nombre,nombre) != 0) && tabla_de_directorios[count].padre == padre) {
+		if ((strcmp(tabla_de_directorios[count].nombre,nombre) == 0) && tabla_de_directorios[count].padre == padre) {
 			return(count);
 		}
 		count++;
@@ -186,7 +186,7 @@ int crearDirectorio(char* nombre, int padre) {
 	strcpy(tabla_de_directorios[cantDir].nombre, nombre);
 	tabla_de_directorios[cantDir].padre = padre;
 	cantDir++;
-
+	actualizarTablaDeDirectorios();
 	}
 
 	else {
@@ -194,7 +194,6 @@ int crearDirectorio(char* nombre, int padre) {
 		return(-1);
 	}
 
-	actualizarTablaDeDirectorios();
 	logInfo("Directorio creado correctamente. \n");
 	return(1);
 
@@ -207,6 +206,7 @@ int eliminarDirectorio(int index){ //se puede hacer con una funcion ya hecha, re
 	 */
 
 	int count = 0;
+	char* ruta;
 
 	while(count <= 99){
 		if(tabla_de_directorios[count].padre == index) return(-1); //si es padre de alguien no puede borrarlo
@@ -214,10 +214,12 @@ int eliminarDirectorio(int index){ //se puede hacer con una funcion ya hecha, re
 		count++;
 	}
 
+	ruta = string_from_format("yamafs/metadata/archivos/%d", index);
+	rmdir(ruta);
+
 	tabla_de_directorios[index].index = -2;
 	strcpy(tabla_de_directorios[index].nombre,"deleted");
 	tabla_de_directorios[index].padre = -2;
-
 
 	count = 0;
 
@@ -267,16 +269,17 @@ int cambiarNombreDirectorio(int index, char* nombre){
 	 *recibe el index y nombre.
 	 *devuelve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
 	 */
-	int padre = padreDirectorio(index);
 
-	if(existeDirectorio(nombre,padre) != 1)return(-1);
+	//int padre = padreDirectorio(index);
+
+	//if(existeDirectorio(nombre,padre) == -1)return(-1);
 	strcpy(tabla_de_directorios[index].nombre, nombre);
 	actualizarTablaDeDirectorios();
 	return(1);
 
 }
 
-int moverDirectorio(int index, int padre, int padreNew){
+int moverDirectorio(int index, int padreNew){
 
 	tabla_de_directorios[index].padre = padreNew;
 	actualizarTablaDeDirectorios();
