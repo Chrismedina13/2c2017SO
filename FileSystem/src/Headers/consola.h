@@ -21,7 +21,7 @@
 #define MD5 "md5"
 #define INFO "info"
 #define HELP "help"
-
+#define RM_D "-d"
 
 
 void consolaFileSystem();
