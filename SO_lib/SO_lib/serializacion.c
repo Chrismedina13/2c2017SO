@@ -1,4 +1,5 @@
 #include "serializacion.h"
+#include "estructuras.h"
 
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 		int* offset) {
@@ -32,7 +33,7 @@ char* serializarBloque(SetBloque * setbloque){
 }
 
 
-SetBloque deserilizarBloque(char* bloqueSerializado){
+SetBloque * deserilizarBloque(char* bloqueSerializado){
 	SetBloque * setbloque = malloc(sizeof(int)+ 1024*1024);
 	int desplazamiento = 0;
 	deserializarDato(setbloque->nrobloque,bloqueSerializado,sizeof(int),&desplazamiento);

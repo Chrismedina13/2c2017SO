@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include "estructuras.h"
 
 //defincion de funciones
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
@@ -20,6 +21,6 @@ int deserializarINT(char* stream);
 
 char* serializarBloque(SetBloque * setbloque);
 
-char* deserilizarBloque(char* bloqueSerializado);
+SetBloque* deserilizarBloque(char* bloqueSerializado);
 
 #endif

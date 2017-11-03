@@ -80,7 +80,6 @@ int tamanioArchivo(int fp);
 
 int cantDir;
 
-int maxNodos= 20;
 
 //tabla de nodos
 

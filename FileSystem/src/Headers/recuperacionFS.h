@@ -8,6 +8,8 @@
 #ifndef HEADERS_RECUPERACIONFS_H_
 #define HEADERS_RECUPERACIONFS_H_
 
+#define LIMITE 50
+
 void recuperacionFS();
 
 void recuperarTablaDeDirectorios();

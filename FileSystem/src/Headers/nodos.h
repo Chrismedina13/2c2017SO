@@ -16,4 +16,5 @@ void funcion(t_bitarray bloques);
 
 void inicializarEstructuras();
 
+int crearRegistroArchivoNodos(int tamanio, int libres, int nodos, char* nodosPtr);
 #endif /* HEADERS_NODOS_H_ */

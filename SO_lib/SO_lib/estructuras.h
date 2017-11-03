@@ -56,7 +56,7 @@ typedef struct ubiacionBloquesArchivo {
 	int bytesOcupados; //bytesOCupados por ese bloque
 } UbicacionBloquesArchivo;
 
-typedef struct SetBloque {
+typedef struct SetBloque{
 	int nrobloque;
 	char* contenidoBloque;
 }SetBloque;

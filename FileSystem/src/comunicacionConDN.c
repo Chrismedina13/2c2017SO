@@ -98,7 +98,7 @@ free(bloque);
 void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 	switch (codigo) {
 	case SET_BLOQUE:
-		char* buffer = malloc(4);
+	//	char* buffer = malloc(4);
 
 
 		//recv(FD_DN,buffer,4,0);

@@ -6,10 +6,11 @@
  */
 #include "Headers/nodos.h"
 #include "Headers/FileSystem.h"
+#include "SO_lib/estructuras.h"
 
 
-
-int crearRegistroArchivo(int tamanio,int libres, int nodos, char * nodosPtr){ //puntero a la lista de struct bloques_nodos
+int maxNodos= 20;
+int crearRegistroArchivoNodos(int tamanio,int libres, int nodos, char * nodosPtr){ //puntero a la lista de struct bloques_nodos
 
 	FILE * fp = fopen("yamafs/metadata/nodos.bin", "w");
 	if (!fp) {
@@ -23,7 +24,7 @@ int crearRegistroArchivo(int tamanio,int libres, int nodos, char * nodosPtr){ //
 	fscanf(fp, "TAMANIO=%d\n LIBRE=%d\n NODOS=[", tamanio, libres); //carga la info del archivo
 
 	while(count <= cantNodos){
-		fscanf(fp, "Nodo%d", nodos[count]);
+	//	fscanf(fp, "Nodo%d", nodos[count]);
 		if (count<= cantNodos-1)fscanf(fp, ",");
 		count++;
 	}
@@ -39,7 +40,7 @@ int crearRegistroArchivo(int tamanio,int libres, int nodos, char * nodosPtr){ //
 	//		nodoLibre = nodosPtr[index].bloqueslibres;
 
 			fscanf(fp, "Nodo%dTotal=%d\n Nodo%dLibre=%d\n", index, nodoTot, index, nodoLibre);
-			index++;
+		//	index++;
 		}
 		count2++;
 	}
