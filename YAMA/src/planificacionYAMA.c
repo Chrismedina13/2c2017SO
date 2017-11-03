@@ -32,15 +32,15 @@ char* retirarJobDeLista() {
 }
 
 t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
-		int disponibilidadBase) {
+		int disponibilidadBase,char* jobAejecutar) {
 
-	listaDeWorkerTotales = list_create(); //Inicializo
+	//Inicializo
 
 	if (string_equals_ignore_case(algoritmo, "W-CLOCK")) {
 
 		logInfo("PLanificando con W-CLOCK");
 
-		return planificarConW_Clock(listaDeWorkersAPlanificar,
+		t_list* listaConLaPlanificacion = planificarConW_Clock(listaDeWorkersAPlanificar,
 				disponibilidadBase);
 	} else {
 
@@ -376,7 +376,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 			logInfo("Tamanio Lista de workersTotales %i",
 					list_size(listaDeWorkerTotales));
 		} else {
-			//si ya esta el nodo en la lista, agrega una parte de archivo
+			//si ya esta el nodo en la lista, agre ga una parte de archivo
 			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
 		}
 		if (!estaNodorEnLaListaDeTotales(nodo2)) {

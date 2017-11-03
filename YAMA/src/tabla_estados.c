@@ -13,5 +13,4 @@ void crear_tabla_estados(int master, int mensaje) {
 	registro->master = master;
 	registro->arch_temp = mensaje;
 
-
 }
