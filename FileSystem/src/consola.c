@@ -4,9 +4,8 @@
  *  Created on: 14/9/2017
  *      Author: utnso
  */
+#include "Headers/FileSystem.h"
 #include "Headers/consola.h"
-#include "commons/string.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 char** getComandos(){
@@ -47,7 +46,6 @@ char* getStdinString() {
 	return buffer2;
 }
 
-
 void consolaFileSystem(){
 		bool compararComando;
 
@@ -75,17 +73,44 @@ void consolaFileSystem(){
 						}
 			        }
 			if(*comandos!=NULL && compararComando){
-								if(string_equals_ignore_case(comandos[0], RM)){
-									compararComando=false;
-									printf(" Eliminar un Archivo/Directorio/Bloque."
-											"Si un directorio a eliminar no se encuentra vacío, la operación debe fallar."
-											" Además, si el bloque a eliminar fuera la última copia del mismo,"
-											" se deberá abortar la operación informando lo sucedido."
-											   "\n ");
 
-									//hacer el comando
+						if(string_equals_ignore_case(comandos[0], RM)){
+							compararComando=false;
+
+							//empieza comando
+
+							//directorio
+
+							printf("%s", comandos[0]);
+							printf("%s", comandos[1]);
+
+							if(string_equals_ignore_case(comandos[1], RM_D)){
+
+								printf("halo");
+
+								int tamanio;
+								char* directorioString;
+								int directorio;
+
+								tamanio = string_length(comandos[3]);
+								directorioString = string_substring(comandos[3], 26, tamanio - 26);
+								tamanio = string_length(directorioString);
+								directorioString = string_substring(directorioString, 0, tamanio -1);
+								directorio = atoi(directorioString);
+
+								int status = eliminarDirectorio(directorio);
+								if (status == 1){
+									logInfo("Directorio eliminado correctamente.");
 								}
-					        }
+								if (status == -1){
+									logInfo("Directorio contiene archivos dentro. No pudo ser eliminado");
+								}
+
+							}
+
+
+						}
+
 			if(*comandos!=NULL && compararComando){
 								if(string_equals_ignore_case(comandos[0], RENAME)){
 									compararComando=false;
@@ -180,7 +205,8 @@ liberarComandos(comandos);
 
 
 		}
-  }
 
+	}
+}
 
 

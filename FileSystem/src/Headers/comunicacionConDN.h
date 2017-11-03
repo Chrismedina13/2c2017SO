@@ -27,6 +27,7 @@ void comunicacionDN(ParametrosComunicacion* parametros);
 ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA, int puertoWorker);
 
 void mensajesEnviadosADN(char* codigo, int FD_DN);
+void mensajesRecibidosDeDN(int codigo, int FD_DN);
 
 
 #endif /* HEADERS_COMUNICACIONCONDN_H_ */
