@@ -51,4 +51,77 @@ int crearRegistroArchivoNodos(int tamanio,int libres, int nodos, char * nodosPtr
 }
 
 
+t_list* distribuirBloques(t_list* bloques, t_list* nodos){
+	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
+	int tamanioListaBloques = list_size(bloques);
+	int indiceBloque = 0;
+	t_list* listaUbicacionesBloquesArchivos = list_create();
+
+	while(indiceBloque<tamanioListaBloques){
+	char* bloque = list_get(bloques,indiceBloque);
+	int indiceConOriginal = elegirNodo(nodos);
+		Nodo* nodoConOriginal = list_remove(nodos,indiceConOriginal);
+		int indiceConCopia = elegirNodo(nodos);
+		Nodo* nodoConCopia = list_remove(nodos,indiceConCopia);
+		int parteDelNodoDelOriginal = actualizarBitmapDelNodo(&nodoConOriginal);
+		int parteDelNodoDeLaCopia = actualizarBitmapDelNodo(&nodoConCopia);
+		list_add(nodos,nodoConOriginal);
+		list_add(nodos,nodoConCopia);
+
+		//CREO LA ESTRUCTURA UbicacionBloquesArchivo PARA ENVIARSELA A YAMA
+		UbicacionBloquesArchivo* ubicacionBloquesArchivo;
+		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+		ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
+		ubicacionBloquesArchivo->ubicacionCopia1.bloqueDelNodoDeLaCopia = parteDelNodoDelOriginal;
+		ubicacionBloquesArchivo->ubicacionCopia1.nodo = nodoConOriginal->id_nodo;
+		ubicacionBloquesArchivo->ubicacionCopia2.bloqueDelNodoDeLaCopia = parteDelNodoDeLaCopia;
+		ubicacionBloquesArchivo->ubicacionCopia1.nodo = nodoConCopia->id_nodo;
+		list_add(listaUbicacionesBloquesArchivos,ubicacionBloquesArchivo);
+	}
+	return listaUbicacionesBloquesArchivos;
+	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
+}
+
+int elegirNodo(t_list* nodos){
+	int i = 1;
+	int indice=0;
+	Nodo* nodoMasVacio = list_get(nodos,0);
+	while(i<list_size(nodos)){
+		if(bloquesLibres(list_get(nodos,i))>bloquesLibres(nodoMasVacio)){
+			indice = i;
+			i=list_size(nodos);
+		}
+	}
+	return indice;
+}
+
+int bloquesLibres(Nodo* nodo){
+	int i,libres=0;
+	for(i=0;i<20;i++){
+		if(nodo->bitmap[i] == 0) libres++;
+	}
+	return libres;
+}
+
+int actualizarBitmapDelNodo(Nodo* nodo){
+	int i;
+	int indiceBloqueAGuardar;
+	for(i=0;i<20;i++){
+		if(nodo->bitmap[i] == 0){
+			indiceBloqueAGuardar = i;
+			nodo->bitmap[i] = 1;
+			i=20;
+		}
+	}
+	return indiceBloqueAGuardar;
+}
+
+static Nodo* inicializarEstructuras(int id){
+	Nodo* nuevoNodo = malloc(sizeof(Nodo));
+	int i;
+	for(i=0; i<20; i++) nuevoNodo->bitmap[i] = 0;
+	nuevoNodo->id_nodo = id;
+    return nuevoNodo;
+}
+
 
