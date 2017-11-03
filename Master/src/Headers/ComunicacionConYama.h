@@ -18,6 +18,8 @@ typedef struct ParametrosComunicacionYAMA{
 
 void comunicacionYama(ParametrosComunicacionYAMA* parametros);
 ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto,char* ip);
+void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio);
+void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA);
 
 
 #endif /* HEADERS_MASTER_H_ */

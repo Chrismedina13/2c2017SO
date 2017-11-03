@@ -82,12 +82,21 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 	parametros->puerto = puerto;
 	return parametros;
 }
-//
 
 void mensajesEnviadosAMaster(int codigo, int FDMaster) {
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("YAMA envia a Master solicitud de transformación.");
+		// FALTA serializar paquete
+
+		Paquete* paqueteSolicitudTransf = crearPaquete(SOL_TRANSFORMACION,
+				tamanio, mensaje);
+
+		if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
+			logInfo("Error en envio de solicitud de transformación a MASTER");
+		}
+
+		destruirPaquete(paqueteSolicitudTransf);
 
 		// Yama envia solicitud de transformacion YAMA , serializando esa lista
 
@@ -125,6 +134,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		//creo una tabla  de estados para el master
 		//crear_tabla_estados(FDMaster, mensaje);
+		Job* job = crearJOB(FDMaster,mensaje);
+		list_add(listaDeJobs, job);
 
 		agregarJObACola(mensaje);
 		sem_post(&semaforoYAMA);
