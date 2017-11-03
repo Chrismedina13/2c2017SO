@@ -68,6 +68,7 @@ Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje) {
 	Paquete->codigo = codigo;
 	return Paquete;
 }
+
 void destruirPaquete(Paquete* package) {
 	if (package != NULL) {
 		if (package->mensaje != NULL)
