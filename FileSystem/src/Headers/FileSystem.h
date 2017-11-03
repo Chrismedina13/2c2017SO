@@ -25,6 +25,7 @@
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
 #include "commons/string.h"
+#include <dirent.h>
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
 

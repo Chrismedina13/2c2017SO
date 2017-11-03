@@ -12,6 +12,25 @@
 
 //funciones
 
+int pathToIndex(char* path){
+
+	/*Recibe un path y te devuelve el index del directorio.
+	 *Devuleve el index del directorio, -1 si el directorio no existe.
+	 */
+
+	int tamanio;
+	char* directorioString;
+	int directorio;
+
+	tamanio = string_length(path);
+	directorioString = string_substring(path, 26, tamanio - 26);
+	tamanio = string_length(directorioString);
+	directorioString = string_substring(directorioString, 0, tamanio -1);
+	directorio = atoi(directorioString);
+
+	return(directorio);
+}
+
 int cantidadDirectorios(){ // en desuso, variable global cantDir
 
 	/*devuelve el index del ultimo directorio.
@@ -159,7 +178,7 @@ int existeDirectorio(char* nombre, int padre) {
 	 */
 
 	int count = 0;
-
+	if(padre == -2)return(-1);
 	while (count <= cantDir) {
 		if ((strcmp(tabla_de_directorios[count].nombre,nombre) == 0) && tabla_de_directorios[count].padre == padre) {
 			return(count);
@@ -294,12 +313,16 @@ int cambiarNombreDirectorio(int index, char* nombre){
 	 *devuelve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
 	 */
 
-	//int padre = padreDirectorio(index);
+	int padre = padreDirectorio(index);
 
-	//if(existeDirectorio(nombre,padre) == -1)return(-1);
-	strcpy(tabla_de_directorios[index].nombre, nombre);
-	actualizarTablaDeDirectorios();
-	return(1);
+	if(existeDirectorio(nombre,padre) == -1){
+		strcpy(tabla_de_directorios[index].nombre, nombre);
+		actualizarTablaDeDirectorios();
+		return(1);
+	}
+	else {
+		return(1);
+	}
 
 }
 

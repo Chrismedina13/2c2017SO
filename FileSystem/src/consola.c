@@ -54,7 +54,25 @@ void consolaFileSystem(){
 			char** comandos = getComandos();
 			compararComando=true;
 
+			//comandos para probar cosas
 
+			if(*comandos!=NULL && compararComando){
+				if(string_equals_ignore_case(comandos[0], "mostrar")){
+					compararComando=false;
+
+					if(string_equals_ignore_case(comandos[1],DIRE)){
+
+						int status;
+
+						status = mostrarTablaDeDirectorios();
+					}
+				}
+			}
+
+
+			//fin comandos para probar cosas
+
+			//comienzan comandos consola FS
 
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], LS)){
@@ -69,9 +87,12 @@ void consolaFileSystem(){
 						if(string_equals_ignore_case(comandos[0], FORMAT)){
 							compararComando=false;
 							printf(" \n");
-							//hacer el comando
+
+							cargarDirectorios();
+
 						}
 			        }
+
 			if(*comandos!=NULL && compararComando){
 
 						if(string_equals_ignore_case(comandos[0], RM)){
@@ -81,24 +102,13 @@ void consolaFileSystem(){
 
 							//directorio
 
-							printf("%s", comandos[0]);
-							printf("%s", comandos[1]);
+							if(string_equals_ignore_case(comandos[1], DIRE)){
 
-							if(string_equals_ignore_case(comandos[1], RM_D)){
-
-								printf("halo");
-
-								int tamanio;
-								char* directorioString;
 								int directorio;
+								int status;
 
-								tamanio = string_length(comandos[2]);
-								directorioString = string_substring(comandos[2], 26, tamanio - 26);
-								tamanio = string_length(directorioString);
-								directorioString = string_substring(directorioString, 0, tamanio -1);
-								directorio = atoi(directorioString);
-
-								int status = eliminarDirectorio(directorio);
+								directorio = pathToIndex(comandos[2]);
+								status = eliminarDirectorio(directorio);
 								if (status == 1){
 									logInfo("Directorio eliminado correctamente.");
 								}
@@ -108,16 +118,48 @@ void consolaFileSystem(){
 
 							}
 
-							if(string_equals_ignore_case(comandos[1], RM_A))
+							//archivo
+
+							if(string_equals_ignore_case(comandos[1], FILE)){
+
+							}
+
+							//nodo
+
+							if(string_equals_ignore_case(comandos[1], BLOQ)){
+
+							}
 
 						}
 
 			if(*comandos!=NULL && compararComando){
-								if(string_equals_ignore_case(comandos[0], RENAME)){
-									compararComando=false;
-									//hacer el comando
+							if(string_equals_ignore_case(comandos[0], RENAME)){
+								compararComando=false;
+
+								//empieza comando
+
+								//directorio
+
+								if(string_equals_ignore_case(comandos[1], DIRE)){
+
+									int status;
+									int index;
+
+									index = pathToIndex(comandos[2]);
+									printf("%d", index);
+									printf("%s", comandos[3]);
+									status = cambiarNombreDirectorio(index, comandos[3]);
+									if(status == 1) {
+										logInfo("Nombre de directorio cambiado correctamente.");
+									}
+									if(status == -1){
+										logInfo("Directorio no existe. No pudo ser cambiado.");
+									}
+
+
 								}
-					        }
+							}
+						}
 
 			if(*comandos!=NULL && compararComando){
 								if(string_equals_ignore_case(comandos[0], MV)){
@@ -136,7 +178,21 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 								if(string_equals_ignore_case(comandos[0], MKDIR)){
 									compararComando=false;
-									//hacer el comando
+
+									if(string_equals_ignore_case(comandos[1], DIRE)){
+
+										int status;
+										int padre;
+
+										padre = atoi(comandos[3]);
+										status = crearDirectorio(comandos[2],padre);
+										if(status == 1){
+											logInfo("Directorio creado correctamente.");
+										}
+										if(status == -1){
+											logInfo("Directorio ya existe o cantidad maxima de directorios alcanzada. El directorio no fue creado.");
+										}
+									}
 								}
 					        }
 			if(*comandos!=NULL && compararComando){
