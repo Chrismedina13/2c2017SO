@@ -24,10 +24,10 @@ char* serializarBloque(SetBloque * setbloque);
 SetBloque* deserilizarBloque(char* bloqueSerializado);
 
 
-char* serializarUbicacionBloque(UbicacionBloque * ubicacionbloque);
+char serializarUbicacionBloque(UbicacionBloque  ubicacionbloque);
 UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
 
 
 char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
-UbicacionBloquesArchivo deserializarUbicacionArchivo(char* UbicacionSerializado);
+UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
 #endif
