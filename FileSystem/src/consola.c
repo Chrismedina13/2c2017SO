@@ -92,8 +92,8 @@ void consolaFileSystem(){
 								char* directorioString;
 								int directorio;
 
-								tamanio = string_length(comandos[3]);
-								directorioString = string_substring(comandos[3], 26, tamanio - 26);
+								tamanio = string_length(comandos[2]);
+								directorioString = string_substring(comandos[2], 26, tamanio - 26);
 								tamanio = string_length(directorioString);
 								directorioString = string_substring(directorioString, 0, tamanio -1);
 								directorio = atoi(directorioString);
@@ -103,11 +103,12 @@ void consolaFileSystem(){
 									logInfo("Directorio eliminado correctamente.");
 								}
 								if (status == -1){
-									logInfo("Directorio contiene archivos dentro. No pudo ser eliminado");
+									logInfo("Directorio contiene archivos dentro o no existe. No pudo ser eliminado");
 								}
 
 							}
 
+							if(string_equals_ignore_case(comandos[1], RM_A))
 
 						}
 

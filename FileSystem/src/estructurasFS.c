@@ -199,6 +199,30 @@ int crearDirectorio(char* nombre, int padre) {
 
 };
 
+int contieneArchivos(int index){
+
+	/*Se fija si un directorio contiene archivos (files)
+	 * Si contiene archivos devuelve 1, si esta vacio -1.
+	 */
+	char* ruta;
+	ruta = string_from_format("yamafs/metadata/archivos/%d", index);
+	  int n = 0;
+	  struct dirent *d;
+	  DIR *dir = opendir(ruta);
+	  if (dir == NULL) //Not a directory or doesn't exist
+		return 1;
+	  while ((d = readdir(dir)) != NULL) {
+		if(++n > 2)
+		  break;
+	  }
+	  closedir(dir);
+	  if (n <= 2) //Directory Empty
+		return -1;
+	  else
+		return 1;
+
+}
+
 int eliminarDirectorio(int index){ //se puede hacer con una funcion ya hecha, rehacer
 
 	/*Recibe el index de un directorio a borrar
@@ -209,7 +233,7 @@ int eliminarDirectorio(int index){ //se puede hacer con una funcion ya hecha, re
 	char* ruta;
 
 	while(count <= 99){
-		if(tabla_de_directorios[count].padre == index) return(-1); //si es padre de alguien no puede borrarlo
+		if(tabla_de_directorios[count].padre == index || contieneArchivos(index) == 1) return(-1); //si es padre de alguien no puede borrarlo
 		//if (contieneArchivos()=1) return (-1);
 		count++;
 	}
