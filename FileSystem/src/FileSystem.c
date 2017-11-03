@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include "Headers/comunicacionConWorker.h"
-#include "Headers/pruebas.h"
 #include "Headers/nodos.h"
 
 int main(int argc, char *argv[]) {

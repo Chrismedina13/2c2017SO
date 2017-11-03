@@ -14,7 +14,10 @@
 int main(int argc, char *argv[]) {
 
 	jobsAPlanificar = queue_create();
+	listaDeWorkerTotales = list_create();
+	listaDeJobs = list_create();
 	sem_init(&semaforoYAMA,0,0);
+	tabla_estados = list_create();
 
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
@@ -25,6 +28,8 @@ int main(int argc, char *argv[]) {
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(
 			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
+
+
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");
 
@@ -43,4 +48,16 @@ int main(int argc, char *argv[]) {
 	queue_destroy_and_destroy_elements(jobsAPlanificar,free);
 	list_destroy(listaDeWorkerTotales);
 	return EXIT_SUCCESS;
+}
+
+
+Job* crearJOB(int FDMAster,char* nombreDelJob){
+
+    	Job* job = malloc((sizeof(int)*2)+(sizeof(char)*strlen(nombreDelJob)));
+    	job->master = FDMAster;
+    	job->nombreDelArchivo = nombreDelJob;
+    	job->identificadorJob = generarNumeroAleatorioNoRepetido();
+    	return job;
+
+
 }

@@ -56,7 +56,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
 
-	planificar(listaDeWorkersAPlanificar,param->algoritmo,param->disponibilidadBase);
+	planificar(listaDeWorkersAPlanificar,param->algoritmo,param->disponibilidadBase,jobAEjecutar);
 
 
 }

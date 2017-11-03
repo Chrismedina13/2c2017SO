@@ -82,10 +82,15 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 	parametros->puerto = puerto;
 	return parametros;
 }
+//
+
 void mensajesEnviadosAMaster(int codigo, int FDMaster) {
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("YAMA envia a Master solicitud de transformación.");
+
+		// Yama envia solicitud de transformacion YAMA , serializando esa lista
+
 		break;
 	case SOL_REDUCCION_LOCAL:
 		logInfo("YAMA envia a Master solicitud de Reducción Local.");
@@ -119,7 +124,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 				tamanio);
 
 		//creo una tabla  de estados para el master
-		crear_tabla_estados(FDMaster, mensaje);
+		//crear_tabla_estados(FDMaster, mensaje);
 
 		agregarJObACola(mensaje);
 		sem_post(&semaforoYAMA);

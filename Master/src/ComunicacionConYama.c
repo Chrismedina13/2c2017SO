@@ -114,6 +114,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("Master recibe de Yama solicitud de transformación.");
+		// REcibir paquete de solicitud de transformacion y deserializar
 		break;
 	case SOL_REDUCCION_LOCAL:
 		logInfo("Master recibe de Yama solicitud de Reducción Local.");
