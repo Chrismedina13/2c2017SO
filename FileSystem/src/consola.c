@@ -62,9 +62,7 @@ void consolaFileSystem(){
 
 					if(string_equals_ignore_case(comandos[1],DIRE)){
 
-						int status;
-
-						status = mostrarTablaDeDirectorios();
+						int status= mostrarTablaDeDirectorios();
 					}
 				}
 			}

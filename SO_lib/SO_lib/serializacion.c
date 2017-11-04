@@ -1,5 +1,6 @@
 #include "serializacion.h"
 #include "estructuras.h"
+#include "commons/string.h"
 
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 		int* offset) {
@@ -33,17 +34,17 @@ char* serializarBloque(SetBloque * setbloque){
 }
 
 
-SetBloque * deserilizarBloque(char* bloqueSerializado){
-	SetBloque * setbloque = malloc(sizeof(int)+ 1024*1024);
+SetBloque  deserilizarBloque(char* bloqueSerializado){
+	SetBloque  setbloque;
 	int desplazamiento = 0;
-	deserializarDato(setbloque->nrobloque,bloqueSerializado,sizeof(int),&desplazamiento);
-	deserializarDato(setbloque->contenidoBloque,bloqueSerializado,1024*1024,&desplazamiento);
+	deserializarDato(&(setbloque.nrobloque),bloqueSerializado,sizeof(int),&desplazamiento);
+	deserializarDato(&(setbloque.contenidoBloque),bloqueSerializado,1024*1024,&desplazamiento);
 
 return setbloque;
 }
 
 
-char serializarUbicacionBloque( UbicacionBloque  ubicacionbloque){
+char* serializarUbicacionBloque( UbicacionBloque  ubicacionbloque){
 	char* ubicacionBloqueSerializado = malloc(sizeof(int)*2);
 	int desplazamiento =0 ;
 	serializarDato(ubicacionBloqueSerializado, &(ubicacionbloque.nodo), sizeof(int), &desplazamiento);
@@ -52,18 +53,20 @@ char serializarUbicacionBloque( UbicacionBloque  ubicacionbloque){
 }
 
 char * serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura){
-char* estructuraSerializada = malloc(sizeof(int)*6);
-int desplazamiento=0;
-serializarDato(estructuraSerializada, &(estructura->parteDelArchivo), sizeof(int), &desplazamiento);
-serializarUbicacionBloque(estructura.ubicacionCopia1);
-serializarUbicacionBloque(estructura.ubicacionCopia2);
-serializarDato(estructuraSerializada, &(estructura->bytesOcupados),sizeof(int), &desplazamiento);
+	char* estructuraSerializada = malloc(sizeof(int)*6);
+	int desplazamiento=0;
+	serializarDato(estructuraSerializada, &(estructura->parteDelArchivo), sizeof(int), &desplazamiento);
+	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),sizeof(int), &desplazamiento);
+	strcat(estructuraSerializada, serializarUbicacionBloque(estructura->ubicacionCopia1));
+	strcat(estructuraSerializada, serializarUbicacionBloque(estructura->ubicacionCopia2));
+
+	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),sizeof(int), &desplazamiento);
 		return estructuraSerializada;
 }
 
 
-UbicacionBloque  deserializarUbicacionBloque(char*ubicacionbloqueserializado){
-	UbicacionBloque ubicacionbloque = malloc(sizeof(int)*2);
+UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado){
+	UbicacionBloque ubicacionbloque;
 	int desplazamiento=0;
 	deserializarDato(&(ubicacionbloque.nodo), ubicacionbloqueserializado,sizeof(int), &desplazamiento);
 	deserializarDato(&(ubicacionbloque.bloqueDelNodoDeLaCopia), ubicacionbloqueserializado, sizeof(int), &desplazamiento);
@@ -73,16 +76,14 @@ UbicacionBloque  deserializarUbicacionBloque(char*ubicacionbloqueserializado){
 }
 
 
-
-
 UbicacionBloquesArchivo *deserializarUbicacionArchivo(char* UbicacionSerializada){
 UbicacionBloquesArchivo * ubicacionbloquesarchivos = malloc(sizeof(int)*6);
 int desplazamiento=0;
 deserializarDato(&(ubicacionbloquesarchivos->parteDelArchivo), UbicacionSerializada, sizeof(int), &desplazamiento);
+deserializarDato(&(ubicacionbloquesarchivos->bytesOcupados), UbicacionSerializada, sizeof(int), &desplazamiento);
 ubicacionbloquesarchivos->ubicacionCopia1=deserializarUbicacionBloque(UbicacionSerializada);
 ubicacionbloquesarchivos->ubicacionCopia2=deserializarUbicacionBloque(UbicacionSerializada);
 
-deserializarDato(&(ubicacionbloquesarchivos->bytesOcupados), UbicacionSerializada, sizeof(int), &desplazamiento);
 
 return ubicacionbloquesarchivos;
 }
