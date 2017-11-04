@@ -67,7 +67,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 					}else{
 						int codigo = deserializarINT(buffer);
-						mensajesRecibidosDeDN(codigo,i);
+						//mensajesRecibidosDeDN(codigo,i);
 
 						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje
 					}
@@ -79,22 +79,38 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 		}
 }
 
+/*void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
+	switch (codigo) {
+	case SET_BLOQUE:
+		Paquete* paqueteEnvioDeBloque = crearPaquete(SET_BLOQUE, tamanio,mensaje);
+
+		if (enviarPaquete(FD_DataNode, paqueteEnvioDeBloque) == -1) {
+			logInfo("Error en envio del Bloque");
+		}
+
+		destruirPaquete(paqueteEnvioDeBloque);
+		break;
+
+	case GET_BLOQUE:
+		logInfo(
+				"FILESYSTEM SOLICITA UN BLOQUE");
+		Paquete* paqueteGetBloque= crearPaquete(GET_BLOQUE, tamanio,
+				mensaje);
+
+		if (enviarPaquete(FD_DataNode, paqueteGetBloque) == -1) {
+			logInfo("Error en envio de respuesta de Transformacion.");
+		}
+
+		destruirPaquete(paqueteGetBloque);
+
+		break;
 
 
-void mensajesEnviadosADN(char* contenidoBloque, int FD_DN){
-char* bloque = malloc(1024*1024);
-bloque=contenidoBloque;
-int tamanioBloque = strlen(bloque);
-logInfo("Se envia bloque a DN");
-Paquete* paqueteDeEnvioDeBloque = crearPaquete(10,tamanioBloque,bloque);
-
-if(enviarPaquete(FD_DN,paqueteDeEnvioDeBloque) == -1){
-	logInfo("Error en envio de job");
+	default:
+		break;
+	}
 }
 
-destruirPaquete(paqueteDeEnvioDeBloque);
-free(bloque);
-}
 void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 	switch (codigo) {
 	case SET_BLOQUE:

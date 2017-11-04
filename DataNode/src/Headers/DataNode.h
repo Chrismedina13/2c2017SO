@@ -13,6 +13,8 @@
 #include "configuracionDN.h"
 #include "logDataNode.h"
 #include <SO_lib/sockets.h>
+#include "SO_lib/estructuras.h"
+#include "SO_lib/Protocolo.h"
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf"
 

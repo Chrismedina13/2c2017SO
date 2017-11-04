@@ -6,17 +6,20 @@
 C_SRCS += \
 ../src/DataNode.c \
 ../src/configuracionDN.c \
-../src/logDataNode.c 
+../src/logDataNode.c \
+../src/prueb.c 
 
 OBJS += \
 ./src/DataNode.o \
 ./src/configuracionDN.o \
-./src/logDataNode.o 
+./src/logDataNode.o \
+./src/prueb.o 
 
 C_DEPS += \
 ./src/DataNode.d \
 ./src/configuracionDN.d \
-./src/logDataNode.d 
+./src/logDataNode.d \
+./src/prueb.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
