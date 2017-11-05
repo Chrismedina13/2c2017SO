@@ -25,7 +25,6 @@ void liberarComandos(char** array) {
 	free(array);
 }
 
-
 char* getStdinString() {
 
 	unsigned int maxlen = 16, size = 16;
@@ -61,7 +60,7 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], LS)){
 					compararComando=false;
 
-					if (string_length(comandos[1])>0){ //funciona sin comillas
+					if (string_length(comandos[1])>0){
 
 						DIR *d;
 						struct dirent *dir;
@@ -127,6 +126,16 @@ void consolaFileSystem(){
 
 					if(string_equals_ignore_case(comandos[1], ARCH)){
 
+						int status;
+
+						status = eliminarArchivo(comandos[2]);
+						if (status == 1){
+							logInfo("Archivo eliminado correctamente.");
+						}
+						if (status == -1){
+							logInfo("Archivo no existe. No pudo ser eliminado");
+						}
+
 					}
 
 					//nodo
@@ -159,8 +168,24 @@ void consolaFileSystem(){
 							logInfo("Directorio no existe. No pudo ser cambiado.");
 						}
 
+					}
+
+					//archivo
+
+					if(string_equals_ignore_case(comandos[1], ARCH)){
+
+						int status;
+
+						status = cambiarNombreArchivo(comandos[2], comandos[3]);
+						if(status == 1) {
+							logInfo("Nombre de archivo cambiado correctamente.");
+						}
+						if(status == -1){
+							logInfo("Archivo no existe. No pudo ser cambiado.");
+						}
 
 					}
+
 				}
 			}
 
@@ -187,11 +212,25 @@ void consolaFileSystem(){
 						}
 
 					}
+
+					if(string_equals_ignore_case(comandos[1], ARCH)){
+
+						int status;
+
+						status = moverArchivo(comandos[2], comandos[3]);
+						if(status == 1) {
+							logInfo("Archivo movido cambiado correctamente.");
+						}
+						if(status == -1){
+							logInfo("Archivo no existe. No pudo ser movido.");
+						}
+
+					}
 				}
 			}
 
 			if(*comandos!=NULL && compararComando){
-				if(string_equals_ignore_case(comandos[0], CAT)){ //Revisar! por algun motivo hay que escribir sin comillas. Ej cat yamafs/metadata/archivos/3/texto.txt
+				if(string_equals_ignore_case(comandos[0], CAT)){
 					compararComando=false;
 
 					//empieza comando
@@ -235,6 +274,7 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], CPFROM)){
 					compararComando=false;
 					//hacer el comando
+
 				}
 			}
 
@@ -262,7 +302,13 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], INFO)){
 					compararComando=false;
-					//hacer el comando
+
+					int status;
+
+					status = mostrarArchivo(comandos[1]);
+					if(status == -1){
+						logInfo("Archivo no existe o no pudo ser abierto.");
+					}
 				}
 			 }
 
@@ -272,8 +318,6 @@ void consolaFileSystem(){
 					printf(
 							"format - Formatear el Filesystem. \n"
 							"rm [path_archivo] ó rm -d [path_directorio] ó rm -b [path_archivo] [nro_bloque] [nro_copia]. \n"
-							"Eliminar un Archivo/Directorio/Bloque. Si un directorio a eliminar no se encuentra vacío, la operación debe fallar. \n"
-							"Además, si el bloque a eliminar fuera la última copia del mismo, se deberá abortar la operación informando lo sucedido. \n"
 							"rename [path_original] [nombre_final] - Renombra un Archivo o Directorio. \n"
 							"mv [path_original] [path_final] - Mueve un Archivo o Directorio. \n"
 							"cat [path_archivo] - Muestra el contenido del archivo como texto plano. \n"

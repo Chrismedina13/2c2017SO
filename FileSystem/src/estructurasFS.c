@@ -22,12 +22,22 @@ int pathToIndex(char* path){
 	char* directorioString;
 	int directorio;
 
-	tamanio = string_length(path);
-	directorioString = string_substring(path, 26, tamanio - 26);
-	tamanio = string_length(directorioString);
-	directorioString = string_substring(directorioString, 0, tamanio -1);
-	directorio = atoi(directorioString);
+	if(string_ends_with(path, "1") || string_ends_with(path, "2") || string_ends_with(path, "3") || string_ends_with(path, "4") || string_ends_with(path, "5") ||
+			string_ends_with(path, "6") || string_ends_with(path, "7") || string_ends_with(path, "8") || string_ends_with(path, "9") || string_ends_with(path, "0")){
 
+		tamanio = string_length(path);
+		directorioString = string_substring(path, 26, tamanio - 26);
+		tamanio = string_length(directorioString);
+		directorioString = string_substring(directorioString, 0, tamanio -1);
+		directorio = atoi(directorioString);
+	}
+
+	if(string_ends_with(path, ".txt") || string_ends_with(path, ".bin")){
+
+		char** secciones = string_split(path, "/");
+		directorio = atoi(secciones[3]);
+
+	}
 	return(directorio);
 }
 
@@ -345,7 +355,7 @@ int make_directory(const char* ruta) {
 //funciones
 
 
-int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
+int crearRegistroArchivo(char* ruta, char* nombre, char* tipo, int directorio){
 
 	int tamanioBloque = 1024*1024;
 	int indiceArchivo = 0;
@@ -374,13 +384,13 @@ int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
 	rutaLocal = string_from_format("yamafs/metadata/archivos/%d/%s", directorio, nombre);
 
-	FILE * fp2 = fopen(rutaLocal, "w");
+	FILE * fp2 = fopen(rutaLocal, "w+");
 	if (!fp2){
 	  perror("Error al crear el registro de Archivo");
 	  return (-1);
 	}
 
-	fscanf(fp2, "TAMANIO=%d\n TIPO=%c\n DIRECTORIO=%d\n", &archivosPtr[indiceArchivo].tamanio, &archivosPtr[indiceArchivo].tipo, &archivosPtr[indiceArchivo].directorio); //carga la info del archivo
+	fprintf(fp2, "TAMANIO=%d\nTIPO=%s\n", archivosPtr[indiceArchivo].tamanio, archivosPtr[indiceArchivo].tipo); //carga la info del archivo
 
 	int cantBloques;
 	int count = 0;
@@ -398,22 +408,31 @@ int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio){
 
 	while (count < cantBloques){
 		while(copia <= 1){
-			infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
-			infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
+		//	infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
+		//	infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-			fscanf(fp2, "BLOQUE%dCOPIA%d=[Nodo%d, %d]\n", count, copia, infoNodoCopia, infoBloqueCopia);
+			//probando
+
+			infoNodoCopia = 1;
+			infoBloqueCopia = 13;
+
+			fprintf(fp2, "BLOQUE%dCOPIA%d=[Nodo%d, %d]\n", count, copia, infoNodoCopia, infoBloqueCopia);
 			copia++;
 		}
 
-		infoBytesOcupados = archivosPtr[indiceArchivo].bloques[count].bytesOcupados;
+		//infoBytesOcupados = archivosPtr[indiceArchivo].bloques[count].bytesOcupados;
 
-		fscanf(fp2, "BLOQUE%dBYTES=%d\n", count, infoBytesOcupados);
+		//probando
+
+		infoBytesOcupados = 600;
+
+		fprintf(fp2, "BLOQUE%dBYTES=%d\n", count, infoBytesOcupados);
 
 		copia = 0;
 		count++;
 	}
-	close(fp);
-	close(fp2);
+	fclose(fp);
+	fclose(fp2);
 	return(1);
 
 }
@@ -422,7 +441,7 @@ char* generarRutaLocal(char* nombre, int directorio){
 
 	char* rutaLocal;
 
-	strcpy(rutaLocal, string_from_format("yamafs/metadata/archivos/%d/%s", nombre, directorio));
+	strcpy(rutaLocal, string_from_format("yamafs/metadata/archivos/%d/%s", directorio, nombre));
 	return(rutaLocal);
 
 }
@@ -436,14 +455,17 @@ int tamanioArchivo(int fp){
 
 }
 
-int cambiarNombreArchivo(char* rutaLocal, char* nombreNew, int directorio){
+int cambiarNombreArchivo(char* rutaLocal, char* nombreNew){
 
 	//Cambia el nombre de un archivo, siempre y cuando este exista.
 	//recibe el nombre del archivo y el index de su directorio.
 	//devuleve 1 si lo puede cambiar, -1 si no existe o no puede cambiarlo.
 
+	int directorio;
+	char* newRutaLocal;
 
-	char* newRutaLocal = generarRutaLocal(nombreNew, directorio);
+	directorio = pathToIndex(rutaLocal);
+	newRutaLocal = generarRutaLocal(nombreNew, directorio);
 
 	if(strcmp(newRutaLocal,"error") == 0)return(-1);
 	rename(rutaLocal, newRutaLocal);
@@ -457,7 +479,7 @@ int eliminarArchivo(char* rutaLocal){
 	return (1);
 }
 
-int moverArchivo(char* rutaLocal, char* nombre, int directorio){
+int moverArchivo(char* rutaLocal, char* newRutaLocal){
 
 	/*Borra el registro del archivo en el directorio actual y lo mueve a un nuevo directorio
 	 * retorna 1 si lo puede hacer, -1 si falla.
@@ -465,7 +487,6 @@ int moverArchivo(char* rutaLocal, char* nombre, int directorio){
 
 
 	char caracter;
-	char* newRutaLocal = generarRutaLocal(nombre, directorio);
 
 	FILE * fp = fopen(rutaLocal, "r");
 		if (!fp) {

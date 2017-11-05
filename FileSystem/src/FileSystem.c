@@ -13,6 +13,18 @@ int main(int argc, char *argv[]) {
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
+	//probando probando
+
+	crearRegistroArchivo("/home/utnso/ejemplo.txt", "ejemplo.txt", "TEXTO", 3);
+
+	int resultado = pathToIndex("yamafs/metadata/archivos/3/ejemplo.txt");
+	printf("%d", resultado);
+
+	//eliminarArchivo("yamafs/metadata/archivos/3/ejemplo.txt");
+
+	//rename("yamafs/metadata/archivos/3/ejemplo.txt","yamafs/metadata/archivos/3/ejemplo2.txt");
+	//cambiarNombreArchivo("yamafs/metadata/archivos/3/ejemplo.txt", "otroejemplo.txt");
+
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
