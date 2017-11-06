@@ -6,6 +6,8 @@
  */
 #include "Headers/manejoDeArchivos.h"
 
+
+/*FUNCION PRINCIPAL*/
 t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 
 
@@ -30,7 +32,7 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
         return bloques;
 
 }
-
+/*FUNCION PRINCIPAL*/
 t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
 
 

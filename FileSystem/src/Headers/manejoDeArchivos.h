@@ -17,8 +17,18 @@
 #include "commons/collections/list.h"
 #include "commons/string.h"
 
-
+/*
+ * t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
+ * RECIBE UNA RUTA DE UN ARCHIVO BINARIO A DIVIDIR,
+ * RETORNA UNA LISTA DE CONTENIDOS DE LOS SUBARCHIVOS (CON CHAR*)
+ */
 t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
+
+/*
+ * t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
+ * RECIBE UNA RUTA DE UN ARCHIVO DE TEXTO A DIVIDIR,
+ * RETORNA UNA LISTA DE CONTENIDOS DE LOS SUBARCHIVOS (CON CHAR*)
+ */
 t_list* obtenerBloquesTexto(const char * rutaDelArchivo);
 int cantidadDeBloques(int tamanio);
 char* obtenerPuntero(const char* rutaArchivo);

@@ -10,6 +10,7 @@
 
 #include "commons/bitarray.h"
 #include "commons/collections/list.h"
+#include "FileSystem.h"
 
 typedef struct Nodo{
 	int bitmap[20];
@@ -24,6 +25,6 @@ int actualizarBitmapDelNodo(Nodo* nodo);
 t_list* distribuirBloques(t_list* bloques, t_list* nodos);
 
 
-int crearRegistroArchivoNodos(int tamanio, int libres, int nodos, char* nodosPtr);
+int crearRegistroArchivoNodos(tabla_nodos tablaNodos);
 
 #endif /* HEADERS_NODOS_H_ */

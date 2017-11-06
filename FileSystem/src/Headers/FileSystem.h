@@ -83,21 +83,21 @@ int cantDir;
 
 //tabla de nodos
 
-typedef struct bloques_nodos{
+typedef struct bloques_nodo{
+	int nodo;
 	int bloqueslibres;
 	int bloquestotales;
-}bloques_nodos;
+}bloques_nodo;
 
-struct tabla_nodos {
+typedef struct tabla_nodos {
 	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
 	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
 	t_list* listaNodos; //nodo1, nodo2, nodo3
-	bloques_nodos* nodosCapacidad; //total por nodo, y libre
+	t_list* listaCapacidadNodos; //total por nodo, y libre t_list* bloques_nodos;
 }tabla_nodos;
 
 struct tabla_nodos tabla_de_nodos;
 
-struct bloques_nodos bloques_por_nodo;
 
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
@@ -108,13 +108,6 @@ typedef struct nodos{
 }nodos;
 
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
-
-
-
-
-
-
-
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */

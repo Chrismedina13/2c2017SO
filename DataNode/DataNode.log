@@ -57,3 +57,18 @@
 
 [INFO] 10:41:06:78 DATANODE/(2492:2492): SocketCliente = -1 
 
+[INFO] 16:47:37:791 DATANODE/(4533:4533): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 16:47:37:826 DATANODE/(4533:4533): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 16:47:37:832 DATANODE/(4533:4533): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 16:47:37:832 DATANODE/(4533:4533): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 16:47:37:833 DATANODE/(4533:4533): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 16:47:37:833 DATANODE/(4533:4533): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 16:47:37:840 DATANODE/(4533:4533): SocketCliente = 4 
+
+[INFO] 16:47:37:843 DATANODE/(4533:4533): Se mando mensaje a FS correctamente

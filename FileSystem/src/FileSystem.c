@@ -10,6 +10,34 @@
 
 int main(int argc, char *argv[]) {
 
+	tabla_de_nodos.tamanio=40;
+	tabla_de_nodos.bloqueslibres=10;
+	tabla_de_nodos.listaNodos = list_create();
+	tabla_de_nodos.listaCapacidadNodos = list_create();
+
+	int* numero1 = 1;
+	int* numero2 = 2;
+	list_add(tabla_de_nodos.listaNodos,numero1);
+	list_add(tabla_de_nodos.listaNodos,numero2);
+
+	bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
+	nodo1->nodo=1;
+	nodo1->bloquestotales=20;
+	nodo1->bloqueslibres=5;
+
+	list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
+/*
+	bloques_nodo* nodo2 = malloc(sizeof(bloques_nodo));;
+	nodo2->nodo=2;
+	nodo2->bloquestotales=20;
+	nodo2->bloqueslibres=5;
+
+	list_add(&(tabla_de_nodos.listaCapacidadNodos),nodo2);
+*/
+	int resp = crearRegistroArchivoNodos(tabla_de_nodos);
+	if(resp==0) printf("\narchivo creado correctamente\n");
+	else printf("\narchivo no creado.\n");
+
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 

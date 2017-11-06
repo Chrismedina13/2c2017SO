@@ -5,48 +5,50 @@
  *      Author: utnso
  */
 #include "Headers/nodos.h"
-#include "Headers/FileSystem.h"
 #include "SO_lib/estructuras.h"
 
 
 int maxNodos= 20;
-int crearRegistroArchivoNodos(int tamanio,int libres, int nodos, char * nodosPtr){ //puntero a la lista de struct bloques_nodos
+/*
+ * SUPONIENDO QUE PREVIAMENTE YA SE ENCUENTRA INICIALIZADA LA SIGUIENTE ESTRUCTURA:
 
-	FILE * fp = fopen("yamafs/metadata/nodos.bin", "w");
+typedef struct tabla_nodos {
+	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
+	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
+	t_list* listaNodos; //nodo1, nodo2, nodo3
+	t_list* listaCapacidadNodos; //total por nodo y libre t_list* bloques_nodos;
+}tabla_nodos;
+
+ */
+int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
+
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/nodos.txt", "w");
 	if (!fp) {
 	  perror("Error al abrir el Archivo");
 	  return (-1);
 	}
 
 	int count = 0;
-	int cantNodos= sizeof(nodos);
+	int cantNodos= list_size(tablaNodos.listaNodos);
 
-	fscanf(fp, "TAMANIO=%d\n LIBRE=%d\n NODOS=[", tamanio, libres); //carga la info del archivo
-
+	fprintf(fp, "TAMANIO=%d\n LIBRE=%d\n NODOS=[", tablaNodos.tamanio, tablaNodos.bloqueslibres); //carga la info del archivo
 	while(count <= cantNodos){
-	//	fscanf(fp, "Nodo%d", nodos[count]);
-		if (count<= cantNodos-1)fscanf(fp, ",");
-		count++;
+			fprintf(fp, "Nodo%d", list_get(tablaNodos.listaNodos,count));
+			count++;
+			if (count<=cantNodos)fprintf(fp, ",");
 	}
-	fscanf(fp,"]");
+	fprintf(fp,"]\n");
 
-	int count2=0;
-	int nodoTot = 0;
-	int nodoLibre = 0;
-
-	while (count2 < cantNodos){
-		while(index <= 1){
-	//		nodoTot = nodosPtr[index].bloquestotales;
-	//		nodoLibre = nodosPtr[index].bloqueslibres;
-
-			fscanf(fp, "Nodo%dTotal=%d\n Nodo%dLibre=%d\n", index, nodoTot, index, nodoLibre);
-		//	index++;
-		}
-		count2++;
+	count = 0;
+	bloques_nodo* bloque;
+	while(count <= cantNodos){
+		bloque = list_get(tablaNodos.listaCapacidadNodos,count);
+		fprintf("Nodo%dTotal=%d\nNodo%dLibre=%d\n",bloque->nodo,bloque->bloquestotales,bloque->nodo,bloque->bloqueslibres);
 	}
+
 	close(fp);
 
-	return(1);
+	return 0;;
 
 }
 
