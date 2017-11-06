@@ -21,10 +21,9 @@
 #define MD5 "md5"
 #define INFO "info"
 #define HELP "help"
-#define FILE "-a"
+#define ARCH "-a"
 #define BLOQ "-b"
 #define DIRE "-d"
-
 
 void consolaFileSystem();
 char** getComandos();

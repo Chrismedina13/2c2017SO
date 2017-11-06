@@ -7,7 +7,7 @@
 
 #ifndef HEADERS_FILESYSTEM_H_
 #define HEADERS_FILESYSTEM_H_
-#define MAX 100
+#define MAX 1000
 #include "configuracion.h"
 #include <stddef.h>
 #include <string.h>
@@ -59,7 +59,7 @@ int moverDirectorio(int index, int padreNew);
 
 typedef struct tabla_archivos {
 	int tamanio; //en bytes
-	char tipo;
+	char* tipo;
 	int directorio; //index del directorio
 	UbicacionBloquesArchivo* bloques;
 }tabla_archivos;
@@ -72,11 +72,15 @@ extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 
-int crearRegistroArchivo(char* ruta, char* nombre, char tipo, int directorio);
+int crearRegistroArchivo(char* ruta, char* nombre, char* tipo, int directorio);
 
-char* generarRutaLocal(char* nombre, int directorio);
+int cambiarNombreArchivo(char* rutaLocal, char* nombreNew);
 
-int tamanioArchivo(int fp);
+int moverArchivo(char* rutaLocal, char* newRutaLocal);
+
+int mostrarArchivo(char* rutaLocal);
+
+int eliminarArchivo(char* rutaLocal);
 
 int cantDir;
 
