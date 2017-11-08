@@ -12,16 +12,11 @@
 #include "commons/collections/list.h"
 #include "FileSystem.h"
 
-typedef struct Nodo{
-	int bitmap[20];
-	int id_nodo;
-}Nodo;
-
-static Nodo* inicializarEstructuras(int id);
+static bitMap* inicializarEstructuras(int id);
 
 int elegirNodo(t_list* nodos);
-int bloquesLibres(Nodo* nodo);
-int actualizarBitmapDelNodo(Nodo* nodo);
+int bloquesLibres(bitMap* nodo);
+int actualizarBitmapDelNodo(bitMap* nodo);
 t_list* distribuirBloques(t_list* bloques, t_list* nodos);
 
 

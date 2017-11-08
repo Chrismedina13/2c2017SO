@@ -106,10 +106,10 @@ struct tabla_nodos tabla_de_nodos;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
-typedef struct nodos{
+typedef struct bitMap{
 	int bitmap[20];
 	int id_nodo;
-}nodos;
+}bitMap;
 
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 

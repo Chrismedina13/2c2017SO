@@ -10,45 +10,62 @@
 
 int main(int argc, char *argv[]) {
 
-	tabla_de_nodos.tamanio=40;
-	tabla_de_nodos.bloqueslibres=15;
-	tabla_de_nodos.listaNodos = list_create();
-	tabla_de_nodos.listaCapacidadNodos = list_create();
+	//recibir datos de nodos (dataNode)
 
-	int* numero1 = 1;
-	int* numero2 = 2;
-	list_add(tabla_de_nodos.listaNodos,numero1);
-	list_add(tabla_de_nodos.listaNodos,numero2);
+		tabla_de_nodos.tamanio=40;
+		tabla_de_nodos.bloqueslibres=15;
+		tabla_de_nodos.listaNodos = list_create();
+		tabla_de_nodos.listaCapacidadNodos = list_create();
 
-	bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
-	nodo1->nodo=1;
-	nodo1->bloquestotales=20;
-	nodo1->bloqueslibres=10;
+		int* numero1 = 1;
+		int* numero2 = 2;
+		list_add(tabla_de_nodos.listaNodos,numero1);
+		list_add(tabla_de_nodos.listaNodos,numero2);
 
-	list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
+		bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
+		nodo1->nodo=1;
+		nodo1->bloquestotales=20;
+		nodo1->bloqueslibres=10;
 
-	bloques_nodo* nodo2 = malloc(sizeof(bloques_nodo));;
-	nodo2->nodo=2;
-	nodo2->bloquestotales=20;
-	nodo2->bloqueslibres=5;
+		list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
 
-	list_add(tabla_de_nodos.listaCapacidadNodos,nodo2);
+		bloques_nodo* nodo2 = malloc(sizeof(bloques_nodo));;
+		nodo2->nodo=2;
+		nodo2->bloquestotales=20;
+		nodo2->bloqueslibres=5;
 
-	int resp = crearRegistroArchivoNodos(tabla_de_nodos);
-	if(resp==0) printf("\narchivo creado correctamente\n");
-	else printf("\narchivo no creado.\n");
+		list_add(tabla_de_nodos.listaCapacidadNodos,nodo2);
 
-	/*EJEMPLO DE DIVISION DE ARCHIVO DE TEXTO EN BLOQUES DE 1KB*/
-	t_list* bloques = obtenerBloquesTexto("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
-	int cantidadDeBloques = list_size(bloques);
-	int i = 0;
-	while(i<cantidadDeBloques){
-		printf("%s\n\n",list_get(bloques,i));
-		i++;
-	}
-	/*FIN EJEMPLO*/
+		int resp = crearRegistroArchivoNodos(tabla_de_nodos);
+		if(resp==0) printf("\narchivo creado correctamente\n");
+		else printf("\narchivo no creado.\n");
+
+		int cantNodos = list_size(tabla_de_nodos.listaNodos);
+		t_list* lista_nodos;
+
+		lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
+
+	//recibe un archivo (yama) (path)
+
+		const char* path;
+		strcpy(path,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
 
 
+	//parte el archivo en bloques
+
+		t_list* bloques = obtenerBloquesTexto(path); //quedan cargados en bloques
+
+
+	//le pasa los bloques a los nodos
+
+		t_list* ubicaciones; //tipo ubicacionBloquesArchivo
+		ubicaciones = distribuirBloques(bloques, lista_nodos);
+
+	//cargar el archivo en el yamafs
+
+
+
+	//deja que se conecte yama, y se queda esperando
 
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
