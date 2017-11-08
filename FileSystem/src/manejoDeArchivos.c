@@ -14,10 +14,10 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 		char* p = obtenerPuntero(rutaDelArchivo);
 		int tamanio = tamanioArchivoCerrado(rutaDelArchivo);
 
-        //OBTENEMOS LA CANTIDAD DE BLOQUES DE 1KB QUE NECESITA
+        //OBTENEMOS LA CANTIDAD DE BLOQUES DE 1MB QUE NECESITA
         int cantidadBloques = cantidadDeBloques(tamanio);
 
-        //divido el archivo en archivos de 1 KB
+        //divido el archivo en archivos de 1MB
         t_list* lista = dividirArchivoBinario(p,cantidadBloques);
 
         //LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
@@ -55,10 +55,9 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
 }
 
 int cantidadDeBloques(int tamanio){
-	int KB = 1024;
 	int cantidad;
-	if(tamanio%KB == 0) cantidad = tamanio/KB;
-	else cantidad = (tamanio/KB)+1;
+	if(tamanio%MB == 0) cantidad = tamanio/MB;
+	else cantidad = (tamanio/MB)+1;
 	return cantidad;
 }
 
@@ -103,7 +102,7 @@ char* obtenerPuntero(const char* rutaArchivo){
 
 int tamanioArchivoCerrado(const char* rutaArchivo){
 	FILE* fd;
-	fd = fopen(rutaArchivo,"w");
+	fd = fopen(rutaArchivo,"r");
 	fseek(fd, 0L, SEEK_END);
 	int tamanio = ftell(fd);
 	fclose(fd);
@@ -112,7 +111,7 @@ int tamanioArchivoCerrado(const char* rutaArchivo){
 }
 
 t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
-	int i = 0,KB = 1024;
+	int i =0;
 	t_list* lista = list_create();
 	for(i=0;i<cantidadDeBloques;i++){
 		char *nombreArchivo = string_new();
@@ -126,7 +125,7 @@ t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
 			printf("Error al abrir el archivo.");
 
 		}
-		char* bloque = string_substring(puntero, i*KB, KB);
+		char* bloque = string_substring(puntero, i*MB, MB);
 		fputs( bloque, fd );
 		list_add(lista,nombreArchivo);
 		fclose(fd);
@@ -141,7 +140,6 @@ t_list* dividirArchivoTxt(char* p){
 	int numeroDeArchivo = 0; //A LA HORA DE GUARDAR EN UN ARCHIVO SE INCREMENTA PARA EL SIGUIENTE ARCHIVO
 	int i = 0; //NUMERO DE PARRAFO
 	int k; // NUMERO DE PARRAFO SIGUIENTE (k = i+1);
-	int KB = 1024; //TAMAÑO MAXIMO DEL BLOQUE
 	int longitudParrafo; //PARA VER EL TAMAÑO DEL PARRAFO
 	int totalEspacioLlenado = 0; //PARA VERIFICAR QUE AL AGREGAR LOS PARRAFOS NO SUPEREN EL ESPACIO REQUERIDO
 	t_list* lista = list_create();
@@ -150,8 +148,8 @@ t_list* dividirArchivoTxt(char* p){
 		k=i+1;
 		parrafo = parrafos[i];
 		longitudParrafo = string_length(parrafo);
-		totalEspacioLlenado += longitudParrafo; //sirve para verificar que no sobrepase el KB
-		if(totalEspacioLlenado<=KB && parrafos[k]!='\0'){ //verifico que no sobrepase el KB y que no sea el fin del archivo.
+		totalEspacioLlenado += longitudParrafo; //sirve para verificar que no sobrepase el MB
+		if(totalEspacioLlenado<=MB && parrafos[k]!='\0'){ //verifico que no sobrepase el MB y que no sea el fin del archivo.
 			string_append(&contenidoDelBloque, parrafo);//agrego el parrafo al bloque
 			string_append(&contenidoDelBloque,"\n");
 			i++;
@@ -164,7 +162,7 @@ t_list* dividirArchivoTxt(char* p){
 			FILE* fd;
 			char *nombreArchivo = string_new();
 			char* numeroArchivo = string_itoa(numeroDeArchivo); //paso el numero de archivo de int a char*
-			string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/bloque");
+			string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/bloque");
 			string_append(&nombreArchivo, numeroArchivo); //Le agrego el numero de archivo al nombre
 			string_append(&nombreArchivo, ".txt"); //le agrego la extencion de archivo al nombre
 			fd = fopen(nombreArchivo,"w");

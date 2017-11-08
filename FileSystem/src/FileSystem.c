@@ -38,16 +38,29 @@ int main(int argc, char *argv[]) {
 	if(resp==0) printf("\narchivo creado correctamente\n");
 	else printf("\narchivo no creado.\n");
 */
+
+	/*EJEMPLO DE DIVISION DE ARCHIVO DE TEXTO EN BLOQUES DE 1KB*/
+	t_list* bloques = obtenerBloquesTexto("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
+	int cantidadDeBloques = list_size(bloques);
+	int i = 0;
+	while(i<cantidadDeBloques){
+		printf("%s\n\n",list_get(bloques,i));
+		i++;
+	}
+	/*FIN EJEMPLO*/
+
+
+
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
 	//probando probando
 
-	crearRegistroArchivo("/home/utnso/ejemplo.txt", "ejemplo.txt", "TEXTO", 3);
+	/*crearRegistroArchivo("/home/utnso/ejemplo.txt", "ejemplo.txt", "TEXTO", 3);
 
 	int resultado = pathToIndex("yamafs/metadata/archivos/3/ejemplo.txt");
 	printf("%d", resultado);
-
+*/
 	//eliminarArchivo("yamafs/metadata/archivos/3/ejemplo.txt");
 
 	//rename("yamafs/metadata/archivos/3/ejemplo.txt","yamafs/metadata/archivos/3/ejemplo2.txt");
