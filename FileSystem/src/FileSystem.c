@@ -9,9 +9,9 @@
 #include "Headers/nodos.h"
 
 int main(int argc, char *argv[]) {
-/*
+
 	tabla_de_nodos.tamanio=40;
-	tabla_de_nodos.bloqueslibres=10;
+	tabla_de_nodos.bloqueslibres=15;
 	tabla_de_nodos.listaNodos = list_create();
 	tabla_de_nodos.listaCapacidadNodos = list_create();
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
 	nodo1->nodo=1;
 	nodo1->bloquestotales=20;
-	nodo1->bloqueslibres=5;
+	nodo1->bloqueslibres=10;
 
 	list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
 
@@ -32,12 +32,11 @@ int main(int argc, char *argv[]) {
 	nodo2->bloquestotales=20;
 	nodo2->bloqueslibres=5;
 
-	list_add(&(tabla_de_nodos.listaCapacidadNodos),nodo2);
+	list_add(tabla_de_nodos.listaCapacidadNodos,nodo2);
 
 	int resp = crearRegistroArchivoNodos(tabla_de_nodos);
 	if(resp==0) printf("\narchivo creado correctamente\n");
 	else printf("\narchivo no creado.\n");
-*/
 
 	/*EJEMPLO DE DIVISION DE ARCHIVO DE TEXTO EN BLOQUES DE 1KB*/
 	t_list* bloques = obtenerBloquesTexto("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");

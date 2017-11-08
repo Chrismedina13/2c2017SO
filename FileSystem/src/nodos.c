@@ -32,23 +32,24 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 	int cantNodos= list_size(tablaNodos.listaNodos);
 
 	fprintf(fp, "TAMANIO=%d\n LIBRE=%d\n NODOS=[", tablaNodos.tamanio, tablaNodos.bloqueslibres); //carga la info del archivo
-	while(count <= cantNodos){
+	while(count < cantNodos){
 			fprintf(fp, "Nodo%d", list_get(tablaNodos.listaNodos,count));
 			count++;
-			if (count<=cantNodos)fprintf(fp, ",");
+			if (count<cantNodos)fprintf(fp, ",");
 	}
 	fprintf(fp,"]\n");
 
 	count = 0;
 	bloques_nodo* bloque;
-	while(count <= cantNodos){
+	while(count < cantNodos){
 		bloque = list_get(tablaNodos.listaCapacidadNodos,count);
-		fprintf("Nodo%dTotal=%d\nNodo%dLibre=%d\n",bloque->nodo,bloque->bloquestotales,bloque->nodo,bloque->bloqueslibres);
+		fprintf(fp,"Nodo%dTotal=%d\nNodo%dLibre=%d\n",bloque->nodo,bloque->bloquestotales,bloque->nodo,bloque->bloqueslibres);
+		count++;
 	}
 
-	close(fp);
+	fclose(fp);
 
-	return 0;;
+	return 0;
 
 }
 
