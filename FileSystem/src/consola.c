@@ -273,7 +273,33 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], CPFROM)){
 					compararComando=false;
-					//hacer el comando
+
+					int status;
+
+					t_list* lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
+
+					//comandos[1] ruta local
+					//comandos[2] ruta yamafs
+
+					//parte el archivo en bloques
+
+					t_list* bloques = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
+
+					//le pasa los bloques a los nodos
+
+					t_list* ubicaciones; //tipo ubicacionBloquesArchivo
+					ubicaciones = distribuirBloques(bloques, lista_nodos);
+
+					//crea registro del archivo en YAMAFS
+
+					status = crearRegistroArchivo(comandos[1],comandos[2]);
+					if(status==1){
+						logInfo("Registro de archivo creado correctamente.");
+					}
+					if(status==1){
+						logInfo("Registro de archivo no pudo ser creado.");
+					}
+
 
 				}
 			}

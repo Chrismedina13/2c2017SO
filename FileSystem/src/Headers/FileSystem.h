@@ -72,7 +72,7 @@ extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 
-int crearRegistroArchivo(char* ruta, char* nombre, char* tipo, int directorio);
+int crearRegistroArchivo(char* ruta, char* rutaLocal);
 
 int cambiarNombreArchivo(char* rutaLocal, char* nombreNew);
 
@@ -113,6 +113,7 @@ typedef struct bitMap{
 
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 
+char* pathToType(char* path);
 
 #endif /* HEADERS_FILESYSTEM_H_ */
 

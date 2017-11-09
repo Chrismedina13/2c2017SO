@@ -10,77 +10,9 @@
 
 int main(int argc, char *argv[]) {
 
-	//recibir datos de nodos (dataNode)
-
-		tabla_de_nodos.tamanio=40;
-		tabla_de_nodos.bloqueslibres=15;
-		tabla_de_nodos.listaNodos = list_create();
-		tabla_de_nodos.listaCapacidadNodos = list_create();
-
-		int* numero1 = 1;
-		int* numero2 = 2;
-		list_add(tabla_de_nodos.listaNodos,numero1);
-		list_add(tabla_de_nodos.listaNodos,numero2);
-
-		bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
-		nodo1->nodo=1;
-		nodo1->bloquestotales=20;
-		nodo1->bloqueslibres=10;
-
-		list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
-
-		bloques_nodo* nodo2 = malloc(sizeof(bloques_nodo));;
-		nodo2->nodo=2;
-		nodo2->bloquestotales=20;
-		nodo2->bloqueslibres=5;
-
-		list_add(tabla_de_nodos.listaCapacidadNodos,nodo2);
-
-		int resp = crearRegistroArchivoNodos(tabla_de_nodos);
-		if(resp==0) printf("\narchivo creado correctamente\n");
-		else printf("\narchivo no creado.\n");
-
-		int cantNodos = list_size(tabla_de_nodos.listaNodos);
-		t_list* lista_nodos;
-
-		lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
-
-	//recibe un archivo (yama) (path)
-
-		const char* path;
-		strcpy(path,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
-
-
-	//parte el archivo en bloques
-
-		t_list* bloques = obtenerBloquesTexto(path); //quedan cargados en bloques
-
-
-	//le pasa los bloques a los nodos
-
-		t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-		ubicaciones = distribuirBloques(bloques, lista_nodos);
-
-	//cargar el archivo en el yamafs
-
-
-
-	//deja que se conecte yama, y se queda esperando
-
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
-	//probando probando
-
-	/*crearRegistroArchivo("/home/utnso/ejemplo.txt", "ejemplo.txt", "TEXTO", 3);
-
-	int resultado = pathToIndex("yamafs/metadata/archivos/3/ejemplo.txt");
-	printf("%d", resultado);
-*/
-	//eliminarArchivo("yamafs/metadata/archivos/3/ejemplo.txt");
-
-	//rename("yamafs/metadata/archivos/3/ejemplo.txt","yamafs/metadata/archivos/3/ejemplo2.txt");
-	//cambiarNombreArchivo("yamafs/metadata/archivos/3/ejemplo.txt", "otroejemplo.txt");
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
@@ -94,42 +26,19 @@ int main(int argc, char *argv[]) {
 
 
 	if(config->estado_recuperacion==0){
-		logInfo( "FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
+		logInfo("FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
 		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
+	}
 
-
-
-
-	}else{
+	else{
 		logInfo("FILE SYSTEM SE ENCUENTRA EN ESTADO DE RECUPERACION");
 		logInfo("LEVANTANDO ESTRUCTURAS DEL ESTADO ANTERIOR...");
 
-		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS.
+		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS. --> me parece que levanto las estructuras cuando en la consola se pone format
 		//HAY QUE VER SI ME FALTA INFO LE PREGUNTO A YAMA (?)
 	}
 
-
-/*
- * Crear las esctructuras
- * Se conectan los Datanode
- *Romper el archivo
- *Divide los bloques en los distintos nodos que se hayan conectado
- *FS esta en estado seguro, deja conectar a YAMA
- *Queda esperando los pedidos del YAMA
- *
- *
- *
- *
- *Se conecta un dataNode
- *Le pido su id
- *Lo guardo en tabla de no
- */
-
-
-
-
 	logInfo("Creando el hilo para comunicarme con Data Node");
-
 	logInfo("Creando el hilo para comunicarme con YAMA");
 	logInfo("Creando el hilo para comunicarme con WORKER");
 
@@ -149,9 +58,14 @@ int main(int argc, char *argv[]) {
 	pthread_join(hiloConsola, NULL);
 	pthread_join(hiloDN, NULL);
 
+	//recibir datos de nodos (dataNode)
+
+	//recibirNodos();
+	cargarNodos();//ejemplo hardcodeado de 2 nodos, para probar las funciones de consola
+
+	//deja que se conecte yama, y se queda esperando
 
 
-
-		free(config);
+	free(config);
 	return EXIT_SUCCESS;
 }

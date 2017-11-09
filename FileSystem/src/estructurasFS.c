@@ -355,13 +355,12 @@ int make_directory(const char* ruta) {
 //funciones
 
 
-int crearRegistroArchivo(char* ruta, char* nombre, char* tipo, int directorio){
+int crearRegistroArchivo(char* ruta, char* rutaLocal){
 
 	int tamanioBloque = 1024*1024;
 	int indiceArchivo = 0;
 	int tamArchivo;
 	int maxArchivos = MAX;
-	char* rutaLocal;
 	UbicacionBloquesArchivo* bloquesPtr;
 	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
 
@@ -375,14 +374,14 @@ int crearRegistroArchivo(char* ruta, char* nombre, char* tipo, int directorio){
 
 	tamArchivo = tamanioArchivo(fp);
 
+	char* tipo = pathToType(rutaLocal);
+
 	archivosPtr[indiceArchivo].tamanio = tamArchivo;
-	archivosPtr[indiceArchivo].tipo = tipo;
-	archivosPtr[indiceArchivo].directorio = directorio;
+	strcpy(archivosPtr[indiceArchivo].tipo , tipo);
+	archivosPtr[indiceArchivo].directorio = pathToIndex(rutaLocal);
 	archivosPtr[indiceArchivo].bloques = bloquesPtr;
 
 	//creo mi registro de archivo local
-
-	rutaLocal = string_from_format("yamafs/metadata/archivos/%d/%s", directorio, nombre);
 
 	FILE * fp2 = fopen(rutaLocal, "w+");
 	if (!fp2){
@@ -444,6 +443,26 @@ char* generarRutaLocal(char* nombre, int directorio){
 	strcpy(rutaLocal, string_from_format("yamafs/metadata/archivos/%d/%s", directorio, nombre));
 	return(rutaLocal);
 
+}
+
+char* pathToType(char* path){
+
+	/*Recibe un path y te devuelve el tipo del archivo.
+	 *Devuleve el index del directorio, -1 si el directorio no existe.
+	 */
+
+	char* ruta;
+
+	if(string_ends_with(path, "1") || string_ends_with(path, "2") || string_ends_with(path, "3") || string_ends_with(path, "4") || string_ends_with(path, "5") ||
+			string_ends_with(path, "6") || string_ends_with(path, "7") || string_ends_with(path, "8") || string_ends_with(path, "9") || string_ends_with(path, "0")){
+
+		strcpy(ruta,"directorio");
+	}
+
+	if(string_ends_with(path, ".txt"))	strcpy(ruta,"texto");
+	if(string_ends_with(path, ".bin"))	strcpy(ruta,"binario");
+
+	return(ruta);
 }
 
 int tamanioArchivo(int fp){
