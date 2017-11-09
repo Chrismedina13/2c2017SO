@@ -61,7 +61,8 @@ typedef struct tabla_archivos {
 	int tamanio; //en bytes
 	char* tipo;
 	int directorio; //index del directorio
-	UbicacionBloquesArchivo* bloques;
+	//UbicacionBloquesArchivo* bloques;
+	t_list* bloques;
 }tabla_archivos;
 
 //zona declaracion estructuras tabla de archivos
@@ -72,7 +73,7 @@ extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal);
+int crearRegistroArchivo(char* ruta, char* rutaLocal, t_list* ubicacion);
 
 int cambiarNombreArchivo(char* rutaLocal, char* nombreNew);
 
@@ -81,6 +82,8 @@ int moverArchivo(char* rutaLocal, char* newRutaLocal);
 int mostrarArchivo(char* rutaLocal);
 
 int eliminarArchivo(char* rutaLocal);
+
+int tamanioArchivo(int fp);
 
 int cantDir;
 

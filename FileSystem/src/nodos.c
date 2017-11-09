@@ -60,9 +60,10 @@ t_list* distribuirBloques(t_list* bloques, t_list* nodos){
 	t_list* listaUbicacionesBloquesArchivos = list_create();
 
 	while(indiceBloque<tamanioListaBloques){
-	char* bloque = list_get(bloques,indiceBloque);
-	int indiceConOriginal = elegirNodo(nodos);
-		bitMap* nodoConOriginal = list_remove(nodos,indiceConOriginal);
+
+		char* bloque = list_get(bloques,indiceBloque);
+		int indiceOriginal = elegirNodo(nodos);
+		bitMap* nodoConOriginal = list_remove(nodos,indiceOriginal);
 		int indiceConCopia = elegirNodo(nodos);
 		bitMap* nodoConCopia = list_remove(nodos,indiceConCopia);
 		int parteDelNodoDelOriginal = actualizarBitmapDelNodo(&nodoConOriginal);
@@ -94,9 +95,10 @@ int elegirNodo(t_list* nodos){
 	bitMap* nodoMasVacio = list_get(nodos,0);
 	while(i<list_size(nodos)){
 		if(bloquesLibres(list_get(nodos,i))>bloquesLibres(nodoMasVacio)){
+			nodoMasVacio = list_get(nodos,i);
 			indice = i;
-			i=list_size(nodos);
 		}
+		i++;
 	}
 	return indice;
 }
@@ -111,23 +113,13 @@ int bloquesLibres(bitMap* nodo){
 
 int actualizarBitmapDelNodo(bitMap* nodo){
 	int i;
-	int indiceBloqueAGuardar;
 	for(i=0;i<20;i++){
 		if(nodo->bitmap[i] == 0){
-			indiceBloqueAGuardar = i;
 			nodo->bitmap[i] = 1;
-			i=20;
+			return i;
 		}
 	}
-	return indiceBloqueAGuardar;
-}
-
-static bitMap* inicializarEstructuras(int id){
-	bitMap* nuevoNodo = malloc(sizeof(bitMap));
-	int i;
-	for(i=0; i<20; i++) nuevoNodo->bitmap[i] = 0;
-	nuevoNodo->id_nodo = id;
-    return nuevoNodo;
+	return(-1);
 }
 
 t_list* tablaNodosToNodos(t_list* listaNodos){
@@ -135,16 +127,18 @@ t_list* tablaNodosToNodos(t_list* listaNodos){
 	int count = 0;
 	t_list* nodos = list_create();
 	int tamLista = list_size(listaNodos);
+	bitMap* mapa = malloc(sizeof(bitMap)*tamLista);
 
 	while(count<tamLista){
 
 		int id = list_get(listaNodos,count);
-		bitMap* mapa;
-		int i;
+		int i = 0;
 
 		mapa->id_nodo = id;
-		for( i=0; i<20;i++)mapa->bitmap[i]=0;
-
+		for( i; i<20;i++){
+			mapa->bitmap[i]=0;
+			printf("nodo:%d desplazamiento:%d, empty:%d\n",mapa->id_nodo,i, mapa->bitmap[i]);
+		}
 		list_add(nodos,mapa);
 		count++;
 	}
@@ -183,10 +177,30 @@ t_list* cargarNodos(){
 		if(resp==0) printf("\narchivo creado correctamente\n");
 		else printf("\narchivo no creado.\n");
 
-		int cantNodos = list_size(tabla_de_nodos.listaNodos);
-		t_list* lista_nodos;
+	//	int cantNodos = list_size(tabla_de_nodos.listaNodos);
+	//	t_list* lista_nodos;
 
-		lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
+		//lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
 		//FIN EJEMPLO NODOS CARGADOS
 
+}
+
+int showBitMap(t_list* Mapa_de_bits){
+
+	int cuenta = 0,count = 0;
+	printf("\n\n");
+	bitMap* mapa;
+	while(cuenta<list_size(Mapa_de_bits)){
+
+		mapa = list_get(Mapa_de_bits,cuenta);
+		int id = mapa->id_nodo;
+		printf("%d\n",id);
+		while(count<20){
+			printf("nodo:%d desplazamiento:%d, empty:%d\n",mapa->id_nodo,count, mapa->bitmap[count]);
+			count++;
+		}
+		count=0;
+		cuenta++;
+	}
+	return(1);
 }

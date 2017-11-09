@@ -355,13 +355,13 @@ int make_directory(const char* ruta) {
 //funciones
 
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal){
+int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 
 	int tamanioBloque = 1024*1024;
 	int indiceArchivo = 0;
 	int tamArchivo;
 	int maxArchivos = MAX;
-	UbicacionBloquesArchivo* bloquesPtr;
+	//UbicacionBloquesArchivo* bloquesPtr;
 	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
 
 	//abro mi archivo y cargo la info que necesito en el puntero a archivos
@@ -377,9 +377,9 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal){
 	char* tipo = pathToType(rutaLocal);
 
 	archivosPtr[indiceArchivo].tamanio = tamArchivo;
-	strcpy(archivosPtr[indiceArchivo].tipo , tipo);
+	archivosPtr[indiceArchivo].tipo = tipo;
 	archivosPtr[indiceArchivo].directorio = pathToIndex(rutaLocal);
-	archivosPtr[indiceArchivo].bloques = bloquesPtr;
+	archivosPtr[indiceArchivo].bloques = ubicaciones;
 
 	//creo mi registro de archivo local
 
@@ -393,9 +393,8 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal){
 
 	int cantBloques;
 	int count = 0;
-	int copia = 0;
-	int infoNodoCopia;
-	int infoBloqueCopia;
+	int infoNodoCopia, infoNodoCopiaCopia;
+	int infoBloqueCopia, infoBloqueCopiaCopia;
 	int infoBytesOcupados;
 	//UbicacionBloquesArchivo* bloques;
 
@@ -406,30 +405,29 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal){
 	else cantBloques =  abs(tamArchivo/tamanioBloque)+1;
 
 	while (count < cantBloques){
-		while(copia <= 1){
-		//	infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
-		//	infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-			//probando
+		//infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
+		//infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-			infoNodoCopia = 1;
-			infoBloqueCopia = 13;
+		UbicacionBloquesArchivo* bloquesPtr = list_get(ubicaciones,count);
 
-			fprintf(fp2, "BLOQUE%dCOPIA%d=[Nodo%d, %d]\n", count, copia, infoNodoCopia, infoBloqueCopia);
-			copia++;
-		}
+		infoNodoCopia = bloquesPtr->ubicacionCopia1.nodo;
+		infoBloqueCopia = bloquesPtr->ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-		//infoBytesOcupados = archivosPtr[indiceArchivo].bloques[count].bytesOcupados;
+		infoNodoCopiaCopia = bloquesPtr->ubicacionCopia2.nodo;
+		infoBloqueCopiaCopia = bloquesPtr->ubicacionCopia2.bloqueDelNodoDeLaCopia;
 
-		//probando
+		fprintf(fp2, "BLOQUE%dCOPIA0=[Nodo%d, %d]\n", count, infoNodoCopia, infoBloqueCopia);
+		fprintf(fp2, "BLOQUE%dCOPIA1=[Nodo%d, %d]\n", count, infoNodoCopiaCopia, infoBloqueCopiaCopia);
 
-		infoBytesOcupados = 600;
+		infoBytesOcupados = bloquesPtr->bytesOcupados;
 
 		fprintf(fp2, "BLOQUE%dBYTES=%d\n", count, infoBytesOcupados);
 
-		copia = 0;
 		count++;
 	}
+
+	free(archivosPtr);
 	fclose(fp);
 	fclose(fp2);
 	return(1);
@@ -451,18 +449,16 @@ char* pathToType(char* path){
 	 *Devuleve el index del directorio, -1 si el directorio no existe.
 	 */
 
-	char* ruta;
-
 	if(string_ends_with(path, "1") || string_ends_with(path, "2") || string_ends_with(path, "3") || string_ends_with(path, "4") || string_ends_with(path, "5") ||
 			string_ends_with(path, "6") || string_ends_with(path, "7") || string_ends_with(path, "8") || string_ends_with(path, "9") || string_ends_with(path, "0")){
 
-		strcpy(ruta,"directorio");
+		return("directorio");
 	}
 
-	if(string_ends_with(path, ".txt"))	strcpy(ruta,"texto");
-	if(string_ends_with(path, ".bin"))	strcpy(ruta,"binario");
+	if(string_ends_with(path, ".txt"))	return("texto");
+	if(string_ends_with(path, ".bin"))	return("binario");
+	return("error");
 
-	return(ruta);
 }
 
 int tamanioArchivo(int fp){

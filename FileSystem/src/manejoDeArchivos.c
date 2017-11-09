@@ -37,7 +37,16 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
 
 
 		char* p = obtenerPuntero(rutaDelArchivo);
-		int tamanio = tamanioArchivoCerrado(rutaDelArchivo);
+
+		FILE * fp = fopen(rutaDelArchivo, "r");
+		if (!fp) {
+		  perror("Error al abrir el Archivo");
+
+		}
+
+		int tamanio = tamanioArchivo(fp);
+
+		fclose(fp);
 
 		t_list* lista = dividirArchivoTxt(p);
 

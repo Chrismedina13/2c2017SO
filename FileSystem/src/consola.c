@@ -292,7 +292,7 @@ void consolaFileSystem(){
 
 					//crea registro del archivo en YAMAFS
 
-					status = crearRegistroArchivo(comandos[1],comandos[2]);
+					status = crearRegistroArchivo(comandos[1],comandos[2],ubicaciones);
 					if(status==1){
 						logInfo("Registro de archivo creado correctamente.");
 					}

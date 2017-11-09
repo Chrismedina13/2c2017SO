@@ -18,7 +18,7 @@
 #include "commons/string.h"
 
 
-const int MB = 1024;
+const int MB = 1024*1024;
 
 /*
  * t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
