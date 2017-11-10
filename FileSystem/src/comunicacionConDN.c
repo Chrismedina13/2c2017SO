@@ -81,7 +81,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 
 						SetBloque *bloque2 = malloc(sizeof(SetBloque));
-						bloque2->nrobloque=1;
+						bloque2->nrobloque=6;
 						bloque2->contenidoBloque="bloque del archivo";
 
 						logInfo("Llego aca");

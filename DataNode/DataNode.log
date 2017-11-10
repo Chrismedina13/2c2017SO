@@ -238,3 +238,241 @@
 [INFO] 23:42:42:590 DATANODE/(5871:5871): Recibi de FS el codigo : 10
 [INFO] 23:42:42:590 DATANODE/(5871:5871): DataNode Recibe la instruccion 'SetBloque' de FileSystem
 [INFO] 23:42:42:590 DATANODE/(5871:5871): tamanio de lo que recibo 22
+[INFO] 23:50:49:12 DATANODE/(6372:6372): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:50:49:22 DATANODE/(6372:6372): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:50:49:25 DATANODE/(6372:6372): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 23:50:49:25 DATANODE/(6372:6372): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:50:49:25 DATANODE/(6372:6372): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 23:50:49:25 DATANODE/(6372:6372): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:50:49:26 DATANODE/(6372:6372): SocketCliente = 4 
+
+[INFO] 23:50:49:26 DATANODE/(6372:6372): Se mando mensaje a FS correctamente
+[INFO] 23:50:49:26 DATANODE/(6372:6372): Recibi de FS el codigo : 10
+[INFO] 23:50:49:32 DATANODE/(6372:6372): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 23:50:49:35 DATANODE/(6372:6372): tamanio de lo que recibo 22
+[INFO] 23:50:49:35 DATANODE/(6372:6372): Recibi el nro de bloque 1
+[INFO] 23:52:06:875 DATANODE/(6557:6557): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:52:06:877 DATANODE/(6557:6557): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:52:06:877 DATANODE/(6557:6557): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 23:52:06:877 DATANODE/(6557:6557): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:52:06:879 DATANODE/(6557:6557): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 23:52:06:879 DATANODE/(6557:6557): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:52:06:880 DATANODE/(6557:6557): SocketCliente = 4 
+
+[INFO] 23:52:06:881 DATANODE/(6557:6557): Se mando mensaje a FS correctamente
+[INFO] 23:52:06:881 DATANODE/(6557:6557): Recibi de FS el codigo : 10
+[INFO] 23:52:06:882 DATANODE/(6557:6557): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 23:52:06:882 DATANODE/(6557:6557): tamanio de lo que recibo 22
+[INFO] 23:52:06:882 DATANODE/(6557:6557): Recibi el nro de bloque 1
+[INFO] 23:52:06:883 DATANODE/(6557:6557): Contenido del bloque х
+[INFO] 23:52:45:651 DATANODE/(6789:6789): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:52:45:665 DATANODE/(6789:6789): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:52:45:665 DATANODE/(6789:6789): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 23:52:45:665 DATANODE/(6789:6789): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:52:45:665 DATANODE/(6789:6789): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 23:52:45:666 DATANODE/(6789:6789): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:52:45:666 DATANODE/(6789:6789): SocketCliente = 4 
+
+[INFO] 23:52:45:666 DATANODE/(6789:6789): Se mando mensaje a FS correctamente
+[INFO] 23:52:45:666 DATANODE/(6789:6789): Recibi de FS el codigo : 10
+[INFO] 23:52:45:666 DATANODE/(6789:6789): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 23:52:45:666 DATANODE/(6789:6789): tamanio de lo que recibo 22
+[INFO] 23:52:45:667 DATANODE/(6789:6789): Recibi el nro de bloque 1
+[INFO] 23:52:45:667 DATANODE/(6789:6789): Contenido del bloque мс:666
+[INFO] 23:56:08:214 DATANODE/(7292:7292): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:56:08:221 DATANODE/(7292:7292): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:56:08:221 DATANODE/(7292:7292): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 23:56:08:221 DATANODE/(7292:7292): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:56:08:221 DATANODE/(7292:7292): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 23:56:08:221 DATANODE/(7292:7292): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:56:08:222 DATANODE/(7292:7292): SocketCliente = 4 
+
+[INFO] 23:56:08:222 DATANODE/(7292:7292): Se mando mensaje a FS correctamente
+[INFO] 23:56:08:222 DATANODE/(7292:7292): Recibi de FS el codigo : 10
+[INFO] 23:56:08:222 DATANODE/(7292:7292): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 23:56:08:222 DATANODE/(7292:7292): tamanio de lo que recibo 22
+[INFO] 23:56:08:223 DATANODE/(7292:7292): Recibi el nro de bloque 1
+[INFO] 23:56:08:223 DATANODE/(7292:7292): Contenido del bloque мс:222
+[INFO] 23:57:25:480 DATANODE/(7518:7518): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 23:57:25:492 DATANODE/(7518:7518): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 23:57:25:492 DATANODE/(7518:7518): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 23:57:25:493 DATANODE/(7518:7518): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 23:57:25:493 DATANODE/(7518:7518): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 23:57:25:493 DATANODE/(7518:7518): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 23:57:25:493 DATANODE/(7518:7518): SocketCliente = 4 
+
+[INFO] 23:57:25:493 DATANODE/(7518:7518): Se mando mensaje a FS correctamente
+[INFO] 23:57:25:494 DATANODE/(7518:7518): Recibi de FS el codigo : 10
+[INFO] 23:57:25:494 DATANODE/(7518:7518): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 23:57:25:494 DATANODE/(7518:7518): tamanio de lo que recibo 22
+[INFO] 23:57:25:494 DATANODE/(7518:7518): Recibi el nro de bloque 1
+[INFO] 23:57:25:494 DATANODE/(7518:7518): Contenido del bloque bloque del archivo
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:02:24:150 DATANODE/(7753:7753): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:02:24:153 DATANODE/(7753:7753): SocketCliente = 4 
+
+[INFO] 00:02:24:153 DATANODE/(7753:7753): Se mando mensaje a FS correctamente
+[INFO] 00:02:24:153 DATANODE/(7753:7753): Recibi de FS el codigo : 10
+[INFO] 00:02:24:154 DATANODE/(7753:7753): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:02:24:154 DATANODE/(7753:7753): tamanio de lo que recibo 22
+[INFO] 00:02:24:154 DATANODE/(7753:7753): Recibi el nro de bloque 1
+[INFO] 00:02:24:154 DATANODE/(7753:7753): Contenido del bloque bloque del archivo
+[INFO] 00:05:03:45 DATANODE/(7992:7992): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:05:03:46 DATANODE/(7992:7992): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:05:03:46 DATANODE/(7992:7992): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:05:03:46 DATANODE/(7992:7992): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:05:03:46 DATANODE/(7992:7992): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:05:03:47 DATANODE/(7992:7992): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:05:03:47 DATANODE/(7992:7992): SocketCliente = 4 
+
+[INFO] 00:05:03:47 DATANODE/(7992:7992): Se mando mensaje a FS correctamente
+[INFO] 00:05:03:47 DATANODE/(7992:7992): Recibi de FS el codigo : 10
+[INFO] 00:05:03:47 DATANODE/(7992:7992): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:05:03:47 DATANODE/(7992:7992): tamanio de lo que recibo 22
+[INFO] 00:05:03:47 DATANODE/(7992:7992): Recibi el nro de bloque 1
+[INFO] 00:05:03:47 DATANODE/(7992:7992): Contenido del bloque bloque del archivo
+[INFO] 00:05:31:752 DATANODE/(8222:8222): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:05:31:765 DATANODE/(8222:8222): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:05:31:765 DATANODE/(8222:8222): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:05:31:765 DATANODE/(8222:8222): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:05:31:765 DATANODE/(8222:8222): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:05:31:765 DATANODE/(8222:8222): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:05:31:766 DATANODE/(8222:8222): SocketCliente = 4 
+
+[INFO] 00:05:31:766 DATANODE/(8222:8222): Se mando mensaje a FS correctamente
+[INFO] 00:05:31:766 DATANODE/(8222:8222): Recibi de FS el codigo : 10
+[INFO] 00:05:31:766 DATANODE/(8222:8222): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:05:31:766 DATANODE/(8222:8222): tamanio de lo que recibo 22
+[INFO] 00:05:31:766 DATANODE/(8222:8222): Recibi el nro de bloque 1
+[INFO] 00:06:19:800 DATANODE/(8399:8399): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:06:19:811 DATANODE/(8399:8399): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:06:19:811 DATANODE/(8399:8399): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:06:19:811 DATANODE/(8399:8399): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:06:19:811 DATANODE/(8399:8399): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:06:19:812 DATANODE/(8399:8399): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:06:19:813 DATANODE/(8399:8399): SocketCliente = 4 
+
+[INFO] 00:06:19:814 DATANODE/(8399:8399): Se mando mensaje a FS correctamente
+[INFO] 00:06:19:814 DATANODE/(8399:8399): Recibi de FS el codigo : 10
+[INFO] 00:06:19:814 DATANODE/(8399:8399): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:06:19:815 DATANODE/(8399:8399): tamanio de lo que recibo 22
+[INFO] 00:06:19:815 DATANODE/(8399:8399): Recibi el nro de bloque 6
+[INFO] 00:06:19:815 DATANODE/(8399:8399): Contenido del bloque х
+[INFO] 00:07:03:186 DATANODE/(8633:8633): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:07:03:188 DATANODE/(8633:8633): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:07:03:188 DATANODE/(8633:8633): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:07:03:188 DATANODE/(8633:8633): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:07:03:188 DATANODE/(8633:8633): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:07:03:188 DATANODE/(8633:8633): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:07:03:189 DATANODE/(8633:8633): SocketCliente = 4 
+
+[INFO] 00:07:03:189 DATANODE/(8633:8633): Se mando mensaje a FS correctamente
+[INFO] 00:07:03:189 DATANODE/(8633:8633): Recibi de FS el codigo : 10
+[INFO] 00:07:03:189 DATANODE/(8633:8633): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:07:03:189 DATANODE/(8633:8633): tamanio de lo que recibo 22
+[INFO] 00:07:03:189 DATANODE/(8633:8633): Recibi el nro de bloque 6
+[INFO] 00:07:03:189 DATANODE/(8633:8633): Contenido del bloque х
+[INFO] 00:08:20:946 DATANODE/(8934:8934): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:08:20:949 DATANODE/(8934:8934): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:08:20:949 DATANODE/(8934:8934): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:08:20:949 DATANODE/(8934:8934): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:08:20:949 DATANODE/(8934:8934): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:08:20:949 DATANODE/(8934:8934): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:08:20:950 DATANODE/(8934:8934): SocketCliente = 4 
+
+[INFO] 00:08:20:950 DATANODE/(8934:8934): Se mando mensaje a FS correctamente
+[INFO] 00:08:20:950 DATANODE/(8934:8934): Recibi de FS el codigo : 10
+[INFO] 00:08:20:953 DATANODE/(8934:8934): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:08:20:954 DATANODE/(8934:8934): tamanio de lo que recibo 22
+[INFO] 00:08:20:954 DATANODE/(8934:8934): Recibi el nro de bloque 6
+[INFO] 00:08:20:954 DATANODE/(8934:8934): Contenido del bloque х
+[INFO] 00:08:55:491 DATANODE/(9165:9165): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 00:08:55:493 DATANODE/(9165:9165): SocketCliente = 4 
+
+[INFO] 00:08:55:494 DATANODE/(9165:9165): Se mando mensaje a FS correctamente
+[INFO] 00:08:55:497 DATANODE/(9165:9165): Recibi de FS el codigo : 10
+[INFO] 00:08:55:497 DATANODE/(9165:9165): DataNode Recibe la instruccion 'SetBloque' de FileSystem
+[INFO] 00:08:55:497 DATANODE/(9165:9165): tamanio de lo que recibo 22
+[INFO] 00:08:55:497 DATANODE/(9165:9165): Recibi el nro de bloque 6
+[INFO] 00:08:55:497 DATANODE/(9165:9165): Contenido del bloque мс:493

@@ -97,6 +97,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		recv(FD_FileSystem,mensaje, tamanio,0 );
     	bloque=deserilizarBloque(mensaje);
 	   logInfo("Recibi el nro de bloque %i", bloque->nrobloque);
+	   logInfo("Contenido del bloque %s",bloque->contenidoBloque);
 
 
 	//DESERIALIZAR SET BLOQUE
