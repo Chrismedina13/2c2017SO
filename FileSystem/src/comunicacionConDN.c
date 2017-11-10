@@ -6,6 +6,8 @@
  */
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
+#include "SO_lib/estructuras.h"
+
 
 
 
@@ -20,7 +22,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	int i;
 	int FD_Cliente;
 	int bytesRecibidos;
-	char buffer[5];
+	char buffer[20];
 
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
@@ -48,7 +50,10 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							fd_max = FD_Cliente;
 						}
 						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
-					//aca creo la lisat de nodos y lo meto
+					//lista ari =	list_create();//aca creo la lisat de nodos y lo meto
+					//listadd(i);
+
+
 
 					}
 				}else{
@@ -56,7 +61,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 					//Recibo datos de algun cliente
 
 
-					if((bytesRecibidos = recv(i,buffer,4,0)) <= 0){
+					if((bytesRecibidos = recv(i,buffer,20,0)) <= 0){
 
 						if(bytesRecibidos == 0){
 							logInfo("Conexion cerrada del FD : %i",i);
@@ -66,10 +71,28 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						FD_CLR(i,&master);
 
 					}else{
-						int codigo = deserializarINT(buffer);
-						//mensajesRecibidosDeDN(codigo,i);
+						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje "hola soy data node"
+                 // char * nrobloque = malloc(sizeof(int));
+                //  int bloque=5;
+                // nrobloque = serialize_int(bloque);
+                //  int tamanio=strlen(nrobloque);
 
-						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje
+                 // mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
+
+
+						SetBloque * bloque2;
+						bloque2->nrobloque=1;
+						bloque2->contenidoBloque="bloque del archivo";
+						char* mensaje= malloc(sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque)));
+                        mensaje = serializarBloque(bloque2);
+						int tamanioSetBloque= sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque));
+						mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
+
+
+					//free(nrobloque);
+						free(mensaje);
+
+
 					}
 				}
 
@@ -79,10 +102,14 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 		}
 }
 
-/*void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
+void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
+	Paquete * paqueteEnvioDeBloque;
+	Paquete* paqueteGetBloque;
+
 	switch (codigo) {
+
 	case SET_BLOQUE:
-		Paquete* paqueteEnvioDeBloque = crearPaquete(SET_BLOQUE, tamanio,mensaje);
+		paqueteEnvioDeBloque = crearPaquete(codigo, tamanio,mensaje);
 
 		if (enviarPaquete(FD_DataNode, paqueteEnvioDeBloque) == -1) {
 			logInfo("Error en envio del Bloque");
@@ -94,12 +121,14 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	case GET_BLOQUE:
 		logInfo(
 				"FILESYSTEM SOLICITA UN BLOQUE");
-		Paquete* paqueteGetBloque= crearPaquete(GET_BLOQUE, tamanio,
+		paqueteGetBloque= crearPaquete(GET_BLOQUE, tamanio,
 				mensaje);
 
 		if (enviarPaquete(FD_DataNode, paqueteGetBloque) == -1) {
-			logInfo("Error en envio de respuesta de Transformacion.");
+			logInfo("Error en envio de GET BLOQUE.");
 		}
+
+
 
 		destruirPaquete(paqueteGetBloque);
 
@@ -112,36 +141,46 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 }
 
 void mensajesRecibidosDeDN(int codigo, int FD_DN) {
+
+	char pesoMensaje[8];
+	int tamanio;
+	char * mensaje;
+
 	switch (codigo) {
 	case SET_BLOQUE:
-	//	char* buffer = malloc(4);
 
+						recv(FD_DN, pesoMensaje, 8, 0);
+						tamanio = deserializarINT(pesoMensaje);
 
-		//recv(FD_DN,buffer,4,0);
-		//int tamanio= deserializarINT(buffer);
-		//char* codigo = malloc(tamanio);
-		//recv(FD_DN,codigo, tamanio);
-
-
-
-
-
-		//PLANIFICA
-		logInfo("Master recibe de Yama solicitud de transformación.");
+						logInfo("tamanio de lo que recibo %i", tamanio);
+						//mensaje = malloc(tamanio + 1);
+						//mensaje[tamanio] = '\0';
+						logInfo("RECIBI OK DE GUARDADO DE BLOQUE POR PARTE DE DATA NODE");
 
 
 
 		break;
-	case GET_BLOQUE:
-		logInfo("Master recibe de Yama solicitud de Reducción Local.");
+	case GET_BLOQUE: //RECIBE EL BLOQUE DE DATOS.
 
-		break;
 
+						recv(FD_DN,pesoMensaje,8,0);
+						tamanio= deserializarINT(pesoMensaje);
+						logInfo("tamanio de lo que recibo %i", tamanio);
+						logInfo("RECIBO DE DATA NODE CONTENIDO DE UN BLOQUE");
+						mensaje = malloc(1024*1024);
+				        recv(FD_DN, mensaje,8,0);//chequiar linea
+   //no hay que deseralizar por que el contenido es un *char
+   //ver como seguir planificando con el bloque recibido
+				        free(mensaje);
+				        break;
 	}
 }
 
-//PRUEBA DE MMAP FUNCIONANDO!!!!
+
 /*
+
+
+//PRUEBA DE MMAP FUNCIONANDO!!!!
 
 	const char* nombreDelArchivoTxt = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
 	const char* nombreDelArchivoBin = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.bin";
@@ -160,4 +199,10 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 */
 
+char *serialize_int(int value){
+	size_t size = sizeof(int);
+	char *stream = calloc(1, size);
+	memcpy(stream, &value, size);
+	return stream;
+}
 

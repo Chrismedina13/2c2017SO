@@ -28,7 +28,12 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	int codigo = deserializarINT(buffer);
 	logInfo("Recibi de Yama: %i", codigo);
 	mensajesRecibidosDeYama(codigo, FDServidorYAMA);
+
+
+
+
 }
+
 
 ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA,
 		int puertoWorker) {
@@ -44,6 +49,9 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
+	char pesoMensaje2[8];
+
+	char* ubicacionBloques;
 
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
@@ -55,8 +63,62 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 		recv(FDYama, mensaje, tamanio, 0);
 		logInfo("Se recibio el nombre del archivo: %s de tamanio %i", mensaje,
 				tamanio);
+		//recorro la lista de archivos, y mando la siguiente estructura:
+
+	//ubicacionBloques =setearUbicacionBloqueYSerealizar(1,12, 2, 4, 3,1024);
+	//mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,strlen(ubicacionBloques) );
+
 		break;
+
+
+
 	default:
 		break;
 	}
 }
+
+
+
+void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
+	Paquete* paqueteEnvioUbicacionBloque;
+	switch (codigo) {
+		case UBICACION_BLOQUES:
+
+			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);
+
+					if (enviarPaquete(FD_YAMA, paqueteEnvioUbicacionBloque) == -1) {
+						logInfo("Error en envio de la ubicacion de los bloques");
+					}
+
+					destruirPaquete(paqueteEnvioUbicacionBloque);
+
+			break;
+		default:
+			break;
+	}
+}
+
+/*char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados){
+
+          char* ubicacion=malloc(sizeof(int)*6);
+
+	UbicacionBloque ubicacionbloque1;
+	ubicacionbloque1.nodo=nodo1;
+	ubicacionbloque1.bloqueDelNodoDeLaCopia= bloquenodo1;
+	UbicacionBloque ubicacionbloque2;
+	ubicacionbloque2.nodo=nodo2;
+	ubicacionbloque2.bloqueDelNodoDeLaCopia=bloquenodo2;
+	UbicacionBloquesArchivo * ubicacionbloquesarchivo;
+	ubicacionbloquesarchivo->parteDelArchivo=parteDelArchivo;
+	ubicacionbloquesarchivo->bytesOcupados=bytesOcupados;
+	ubicacionbloquesarchivo->ubicacionCopia1=ubicacionbloque1;
+	ubicacionbloquesarchivo->ubicacionCopia1=ubicacionbloque2;
+
+	ubicacion = serializarUblicacionBloqueArchivo(ubicacionbloquesarchivo);
+
+	free(ubicacion);
+	return(ubicacion);
+
+
+}
+*/

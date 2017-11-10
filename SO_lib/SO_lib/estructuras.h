@@ -61,6 +61,8 @@ typedef struct SetBloque{
 	char* contenidoBloque;
 }SetBloque;
 
+
+
 //funciones
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 		int carga,int bloque);

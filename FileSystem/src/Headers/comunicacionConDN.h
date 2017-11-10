@@ -16,6 +16,7 @@
 #include "SO_lib/sockets.h"
 #include "SO_lib/estructuras.h"
 #include "SO_lib/Protocolo.h"
+#include <string.h>
 
 typedef struct ParametrosComunicacion{
 	int puertoFS_dn;
@@ -26,8 +27,11 @@ typedef struct ParametrosComunicacion{
 void comunicacionDN(ParametrosComunicacion* parametros);
 ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA, int puertoWorker);
 
-void mensajesEnviadosADN(char* codigo, int FD_DN);
+
 void mensajesRecibidosDeDN(int codigo, int FD_DN);
+void mensajesRecibidosDeDataNode(int codigo, int FD_DN);
+void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio);
+char *serialize_int(int value);
 
 
 #endif /* HEADERS_COMUNICACIONCONDN_H_ */
