@@ -17,5 +17,5 @@ void mensajesRecibidosDeYama(int codigo, int FDYama);
 
 void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio);
 
-char* setearUbicacionBloque(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados);
+char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados);
 #endif /* HEADERS_COMUNICACIONCONYAMA_H_ */
