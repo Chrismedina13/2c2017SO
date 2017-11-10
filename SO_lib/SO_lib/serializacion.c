@@ -23,12 +23,12 @@ int deserializarINT(char* stream){
 
 
 
-char* serializarBloque(SetBloque * setbloque){
+char* serializarBloque(int numeroBloque,char* contenidoBloque){
 
-		char *bloqueSerializado= malloc(strlen(setbloque->contenidoBloque)+sizeof(char) + sizeof(setbloque->nrobloque));
+		char *bloqueSerializado= malloc(strlen(contenidoBloque)+sizeof(char) + sizeof(int));
 		int desplazamiento = 0;
-		serializarDato(bloqueSerializado,&(setbloque->nrobloque),sizeof(int),&desplazamiento);
-		serializarDato(bloqueSerializado,&(setbloque->contenidoBloque),strlen(setbloque->contenidoBloque)+sizeof(char),&desplazamiento);
+		serializarDato(bloqueSerializado,&(numeroBloque),sizeof(int),&desplazamiento);
+		serializarDato(bloqueSerializado,contenidoBloque,strlen(contenidoBloque)+sizeof(char),&desplazamiento);
 
 		return bloqueSerializado;
 }

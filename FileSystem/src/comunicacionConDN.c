@@ -83,11 +83,9 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						SetBloque *bloque2 = malloc(sizeof(SetBloque));
 						bloque2->nrobloque=6;
 						bloque2->contenidoBloque="bloque del archivo";
-
-						logInfo("Llego aca");
-						char* mensaje= malloc(sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque)));
-                        mensaje = serializarBloque(bloque2);
-						int tamanioSetBloque= sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque));
+						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
+                        mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
+						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
 						mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
 
 

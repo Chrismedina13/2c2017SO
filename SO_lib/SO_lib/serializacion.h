@@ -19,7 +19,7 @@ void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
 
 int deserializarINT(char* stream);
 
-char* serializarBloque(SetBloque * setbloque);
+char* serializarBloque(int numeroBloque,char* contenidoBloque);
 
 SetBloque* deserilizarBloque(char* bloqueSerializado);
 
