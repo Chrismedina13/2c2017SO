@@ -106,6 +106,7 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,in
 	}
 }
 void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
+char pesoMsj[4];
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("Master recibe de Yama solicitud de transformación.");
