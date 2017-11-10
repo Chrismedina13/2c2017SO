@@ -127,15 +127,14 @@ t_list* tablaNodosToNodos(t_list* listaNodos){
 	int count = 0;
 	t_list* nodos = list_create();
 	int tamLista = list_size(listaNodos);
-	bitMap* mapa = malloc(sizeof(bitMap)*tamLista);
-
+	int id;
+	int i;
 	while(count<tamLista){
-
-		int id = list_get(listaNodos,count);
-		int i = 0;
+		bitMap* mapa = malloc(sizeof(bitMap)*tamLista);
+		id = list_get(listaNodos,count);
 
 		mapa->id_nodo = id;
-		for( i; i<20;i++){
+		for( i=0; i<20;i++){
 			mapa->bitmap[i]=0;
 			printf("nodo:%d desplazamiento:%d, empty:%d\n",mapa->id_nodo,i, mapa->bitmap[i]);
 		}
