@@ -30,4 +30,8 @@ UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
 
 char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
 UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
+
+RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaSerializada);
+char* serializarRespuestaTransformacionYAMA(RespuestaTransformacionYAMA rtaTransformacionYAMA);
+
 #endif

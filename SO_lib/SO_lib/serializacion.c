@@ -88,3 +88,33 @@ ubicacionbloquesarchivos->ubicacionCopia2=deserializarUbicacionBloque(UbicacionS
 
 return ubicacionbloquesarchivos;
 }
+
+char* serializarRespuestaTransformacionYAMA(RespuestaTransformacionYAMA rtaTransformacionYAMA){
+	char* rtaSerializada =  malloc((sizeof(int)*3 + sizeof(char*)*3));
+	int desplazamiento =0;
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.nodo), sizeof(char*), &desplazamiento);
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.puertoWorker), sizeof(int), &desplazamiento);
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.ipWorkwer), sizeof(char*), &desplazamiento);
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.bloque), sizeof(int), &desplazamiento);
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.bytesOcupados), sizeof(int), &desplazamiento);
+	serializarDato(rtaSerializada, &(rtaTransformacionYAMA.archivoTemporal), sizeof(char*), &desplazamiento);
+
+return(rtaSerializada);
+
+
+}
+
+/*RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaSerializada){
+	RespuestaTransformacionYAMA * respuestaTransformacionYAMA =  malloc((sizeof(int)*3 + sizeof(char*)*3));
+	int desplazamiento = 0;
+	deserializarDato(&(respuestaTransformacionYAMA.nodo), rtaSerializada, sizeof(char*), &desplazamiento);
+	deserializarDato(&(respuestaTransformacionYAMA.puertoWorker), rtaSerializada, sizeof(int), &desplazamiento);
+	deserializarDato(&(respuestaTransformacionYAMA.ipWorkwer), rtaSerializada, sizeof(char*), &desplazamiento);
+	deserializarDato(&(respuestaTransformacionYAMA.bloque), rtaSerializada, sizeof(int), &desplazamiento);
+	deserializarDato(&(respuestaTransformacionYAMA.bytesOcupados), rtaSerializada, sizeof(int), &desplazamiento);
+	deserializarDato(&(respuestaTransformacionYAMA.archivoTemporal), rtaSerializada, sizeof(char*), &desplazamiento);
+
+	return(respuestaTransformacionYAMA);
+
+}
+*/
