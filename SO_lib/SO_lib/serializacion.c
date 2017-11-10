@@ -45,6 +45,7 @@ return setbloque;
 }
 
 
+
 char* serializarUbicacionBloque( UbicacionBloque  ubicacionbloque){
 	char* ubicacionBloqueSerializado = malloc(sizeof(int)*2);
 	int desplazamiento =0 ;
@@ -120,7 +121,79 @@ RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaS
 
 }
 
+char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones){
+	int i;
+	char* listaSerializada;
+	UbicacionBloquesArchivo * nodo;
+
+for(i=0;list_size(listaUbicaciones);i++){
+   nodo =  list_get((listaUbicaciones),i);
+   listaSerializada = strcat(listaSerializada,serializarUblicacionBloqueArchivo(nodo));
+
+}
+ return listaSerializada;
+
+}
+
+t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada){
+int i;
+t_list * Lista;
+UbicacionBloquesArchivo * ubicacionbloquearchivo;
+char * despl;
+
+for(i=0; sizeof(ListaUbicacionesSerializada); (i+ sizeof(UbicacionBloquesArchivo))){
+	despl = string_substring(ListaUbicacionesSerializada, i,sizeof(UbicacionBloquesArchivo));
+	ubicacionbloquearchivo = deserializarUbicacionArchivo(despl);
+	list_add(Lista, ubicacionbloquearchivo);
+}
+return(Lista);
+}
 
 
+char * serializarLista_info_workers(t_list * listaWorkers){
+	int i;
+	char* ListaSerializada;
+	Info_Workers * nodo;
 
+	for(i=0; list_size(listaWorkers);i++){
+	nodo=list_get(ListaSerializada, i);
+	ListaSerializada= strcat(ListaSerializada, serializarInfoWorker(nodo->puerto, nodo->ipWorker));
+	}
+	return(ListaSerializada);
+	}
+
+
+t_list * deserializarLista_info_workers(char * listaWorkersSerializada ){
+	int i;
+	t_list * Lista;
+	Info_Workers * infoworkers;
+	char * despl;
+	for(i=0;sizeof(listaWorkersSerializada);(i+sizeof(Info_Workers))){
+		despl = string_substring(listaWorkersSerializada, i,sizeof(Info_Workers));
+		infoworkers = deserializarInfoWorker(despl);
+			list_add(Lista,infoworkers);
+	}
+
+return(Lista);
+}
+
+char* serializarInfoWorker(int puerto, char* ipWorker){
+	char* infoWorkerSerializado = malloc(strlen(ipWorker)+sizeof(char) + sizeof(int));
+	int desplazamiento=0;
+	serializarDato(infoWorkerSerializado, &(puerto), sizeof(int), &desplazamiento);
+	seriaizarDato(infoWorkerSerializado, ipWorker, strlen(ipWorker)+sizeof(char), &desplazamiento);
+
+	return infoWorkerSerializado;
+
+}
+
+Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado){
+Info_Workers *infoworker = malloc(11+sizeof(char)+sizeof(int));
+int desplazamiento = 0;
+deserializarDato(&(infoworker->puerto), infoWorkerSerializado, sizeof(int), &desplazamiento);
+infoworker->ipWorker = strdup(infoWorkerSerializado + desplazamiento);
+
+return infoworker;
+
+}
 

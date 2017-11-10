@@ -31,10 +31,18 @@ UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
 char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
 UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
 
+char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
+t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
+
 RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaSerializada);
 char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,char* ipWorker,int bloque, int bytesOcupados, char* archivoTemporal);
 
 char * serializarLista_info_workers(t_list * listaWorkers);
 t_list * deserializarLista_info_workers(char * listaWorkersSerializada );
 
+char* serializarInfoWorker(int puerto, char* ipWorker);
+Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
+
 #endif
+
+

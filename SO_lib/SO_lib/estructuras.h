@@ -67,7 +67,7 @@ typedef struct Info_Workers{
 }Info_Workers;
 
 t_list * list_info_workers;
-
+t_list * listaUbicaciones;
 
 //funciones
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,

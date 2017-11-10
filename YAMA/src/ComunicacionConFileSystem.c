@@ -90,3 +90,4 @@ ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 	parametros->disponibilidadBase = disponiblidadBase;
 	return parametros;
 }
+
