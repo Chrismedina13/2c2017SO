@@ -32,8 +32,9 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 }
 void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio) {
 	switch (codigo) {
+	Paquete* paqueteDeEnvioDeJOB;
 	case NOMBRE_ARCHIVO:
-		Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanio,mensaje);
+		 paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanio,mensaje);
 
 		if (enviarPaquete(FDsocketClienteYAMA, paqueteDeEnvioDeJOB) == -1) {
 			logInfo("Error en envio de job");
@@ -105,6 +106,7 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,in
 	}
 }
 void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
+char pesoMsj[4];
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("Master recibe de Yama solicitud de transformación.");

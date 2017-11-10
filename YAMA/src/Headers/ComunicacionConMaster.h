@@ -17,7 +17,7 @@ typedef struct ParametrosComunicacionConMaster{
 
 ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
 void comunicacionConMasters(ParametrosComunicacionConMaster* parametro);
-void mensajesEnviadosAMaster(int codigo, int FDMaster);
+void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio);
 void mensajesRecibidosDeMaster(int codigo, int FDMaster);
 
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

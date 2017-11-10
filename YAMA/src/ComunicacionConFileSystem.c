@@ -41,6 +41,8 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 */
 	int tamanioEstructura, tamanio;
 	char* estructura;
+	char* mensaje;
+
 
 	recv(FDsocketClienteFileSystem, estructura, tamanioEstructura, 0);
 	tamanio = deserializarINT(tamanioEstructura);
@@ -73,8 +75,8 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
-	planificar(listaDeWorkersAPlanificar, param->algoritmo,
-			param->disponibilidadBase, jobAEjecutar);
+	//planificar(listaDeWorkersAPlanificar, param->algoritmo,
+		//	param->disponibilidadBase, jobAEjecutar);
 
 }
 

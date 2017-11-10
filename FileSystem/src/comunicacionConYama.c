@@ -65,8 +65,8 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 				tamanio);
 		//recorro la lista de archivos, y mando la siguiente estructura:
 
-	//ubicacionBloques =setearUbicacionBloqueYSerealizar(1,12, 2, 4, 3,1024);
-	//mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,strlen(ubicacionBloques) );
+	ubicacionBloques =setearUbicacionBloqueYSerealizar(1,12, 2, 4, 3,1024);// hardcodeo
+	mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,strlen(ubicacionBloques) );
 
 		break;
 
@@ -98,7 +98,7 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	}
 }
 
-/*char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados){
+char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados){
 
           char* ubicacion=malloc(sizeof(int)*6);
 
@@ -116,9 +116,10 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 
 	ubicacion = serializarUblicacionBloqueArchivo(ubicacionbloquesarchivo);
 
-	free(ubicacion);
-	return(ubicacion);
+
+	return(&ubicacion);
+
 
 
 }
-*/
+

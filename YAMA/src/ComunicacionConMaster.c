@@ -83,13 +83,13 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 	return parametros;
 }
 
-void mensajesEnviadosAMaster(int codigo, int FDMaster) {
+void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio) {
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("YAMA envia a Master solicitud de transformación.");
 		// FALTA serializar paquete
 
-		Paquete* paqueteSolicitudTransf = crearPaquete(SOL_TRANSFORMACION,
+		Paquete* paqueteSolicitudTransf = crearPaquete(codigo,
 				tamanio, mensaje);
 
 		if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
