@@ -15,10 +15,10 @@ int main(int argc, char *argv[]) {
 	//Archivo de Lo
 
 
-	char* buffer = malloc(4);
+	//char* buffer = malloc(4);
 
 	char bufferBloque[4];
-
+	char buffer[4];
 
 	crearLog("DataNode.log", "DATANODE", 1, log_level_from_string("INFO"));
 

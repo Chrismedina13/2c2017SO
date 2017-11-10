@@ -61,6 +61,12 @@ typedef struct SetBloque{
 	char* contenidoBloque;
 }SetBloque;
 
+typedef struct Info_Workers{
+	int puerto;
+	char * ipWorker;
+}Info_Workers;
+
+t_list * list_info_workers;
 
 
 //funciones

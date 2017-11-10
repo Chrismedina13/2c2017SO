@@ -31,6 +31,8 @@
 
 //FS - YAMA
 #define UBICACION_BLOQUES 11
+#define INFO_WORKER 13
+
 
 
 

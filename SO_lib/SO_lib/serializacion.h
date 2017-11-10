@@ -32,6 +32,9 @@ char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
 UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
 
 RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaSerializada);
-char* serializarRespuestaTransformacionYAMA(RespuestaTransformacionYAMA rtaTransformacionYAMA);
+char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,char* ipWorker,int bloque, int bytesOcupados, char* archivoTemporal);
+
+char * serializarLista_info_workers(t_list * listaWorkers);
+t_list * deserializarLista_info_workers(char * listaWorkersSerializada );
 
 #endif
