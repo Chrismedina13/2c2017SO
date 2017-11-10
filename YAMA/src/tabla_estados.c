@@ -2,15 +2,38 @@
 /*voy a tener que saber cuantos nodos hay en fs, tabla de nodos del fs*/
 #include "Headers/tabla_estados.h"
 
-void crear_tabla_estados(int master, int mensaje) {
-	/*Recibirá del Filesystem la lista de bloques que lo componen,
-	con la correspondiente ubicación de sus dos copias y espacio ocupado en el bloque
-	e iniciará la etapa de Transformación.*/
+void agregarReguistroATablaDeEstados(t_reg* reg){
 
-	tabla_estados = list_create();
-	t_reg *registro = malloc(sizeof(t_reg));
-	registro->job = rand(); //cm:genero un numero aleatorio. es necesario si solo tengo un job or master?
-	registro->master = master;
-	registro->arch_temp = mensaje;
+	list_add(tabla_estados,reg);
 
+}
+
+// si es 1 aModificar es la etapa, si es 2 aModificar es el estado
+
+void actualizarTablaDeEstados(int job,int master,int nodo,int bloque,int aModificar,char* modificado){
+
+	int a = 0;
+	while( a < list_size(tabla_estados)){
+
+		t_reg* registro = list_remove(tabla_estados,a);
+		if(registro->job == job && registro->master == master && registro->nodo == nodo && registro->bloque == bloque){
+
+			if(aModificar == 1){
+
+				registro->etapa = modificado;
+				list_add_in_index(tabla_estados,a,registro);
+
+			}else{
+
+				registro->estado = modificado;
+				list_add_in_index(tabla_estados,a,registro);
+
+			}
+			if(aModificar != 1 || aModificar != 2){
+
+				logInfo("Flag no valido, no se actualizo la tabla de estados");
+			}
+		}
+		a++;
+	}
 }

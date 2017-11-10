@@ -25,20 +25,20 @@ int deserializarINT(char* stream){
 
 char* serializarBloque(SetBloque * setbloque){
 
-		char *bloqueSerializado= malloc(sizeof(setbloque->contenidoBloque) + sizeof(setbloque->nrobloque));
+		char *bloqueSerializado= malloc(strlen(setbloque->contenidoBloque)*sizeof(char) + sizeof(setbloque->nrobloque));
 		int desplazamiento = 0;
 		serializarDato(bloqueSerializado,&(setbloque->nrobloque),sizeof(int),&desplazamiento);
-		serializarDato(bloqueSerializado,&(setbloque->contenidoBloque),sizeof(setbloque->nrobloque),&desplazamiento);
+		serializarDato(bloqueSerializado,&(setbloque->contenidoBloque),strlen(setbloque->contenidoBloque)*sizeof(char),&desplazamiento);
 
 		return bloqueSerializado;
 }
 
 
-SetBloque  deserilizarBloque(char* bloqueSerializado){
-	SetBloque  setbloque;
+SetBloque*  deserilizarBloque(char* bloqueSerializado){
+	SetBloque* setbloque = malloc(1024*1024 + 4);
 	int desplazamiento = 0;
-	deserializarDato(&(setbloque.nrobloque),bloqueSerializado,sizeof(int),&desplazamiento);
-	deserializarDato(&(setbloque.contenidoBloque),bloqueSerializado,1024*1024,&desplazamiento);
+	deserializarDato(&(setbloque->nrobloque),bloqueSerializado,sizeof(int),&desplazamiento);
+	deserializarDato(&(setbloque->contenidoBloque),bloqueSerializado,1024*1024,&desplazamiento);
 
 return setbloque;
 }

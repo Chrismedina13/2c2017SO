@@ -80,9 +80,11 @@ void comunicacionDN(ParametrosComunicacion* parametros){
                  // mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
 
 
-						SetBloque * bloque2;
+						SetBloque *bloque2 = malloc(sizeof(SetBloque));
 						bloque2->nrobloque=1;
 						bloque2->contenidoBloque="bloque del archivo";
+
+						logInfo("Llego aca");
 						char* mensaje= malloc(sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque)));
                         mensaje = serializarBloque(bloque2);
 						int tamanioSetBloque= sizeof(int)+(sizeof(char)*strlen(bloque2->contenidoBloque));
@@ -109,7 +111,7 @@ void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int ta
 	switch (codigo) {
 
 	case SET_BLOQUE:
-		paqueteEnvioDeBloque = crearPaquete(codigo, tamanio,mensaje);
+		paqueteEnvioDeBloque = crearPaquete(SET_BLOQUE, tamanio,mensaje);
 
 		if (enviarPaquete(FD_DataNode, paqueteEnvioDeBloque) == -1) {
 			logInfo("Error en envio del Bloque");

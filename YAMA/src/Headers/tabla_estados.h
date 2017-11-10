@@ -14,4 +14,7 @@ typedef struct {
 /*  Definicion de variables */
 t_list *tabla_estados;
 /*  Definicion de funciones */
-void crear_tabla_estados(int master ,int mensaje);
+void agregarReguistroATablaDeEstados(t_reg* reg);
+void actualizarTablaDeEstados(int job,int master,int nodo,int bloque,int aModificar,char* modificado);
+
+

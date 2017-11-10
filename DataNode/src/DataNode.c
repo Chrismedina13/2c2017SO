@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	//Archivo de Lo
 
 
-	char buffer[4];
+	char* buffer = malloc(4);
 
 	char bufferBloque[4];
 
@@ -79,7 +79,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	int intRecibido;
 	char* bufferBloque[4];
 
-	SetBloque bloque;
+	SetBloque* bloque;
 
 	switch (codigo) {
 	case SET_BLOQUE:
@@ -96,7 +96,9 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		mensaje[tamanio] = '\0';
 		recv(FD_FileSystem,mensaje, tamanio,0 );
     	bloque=deserilizarBloque(mensaje);
-	   logInfo("Recibi el nro de bloque %i", bloque.nrobloque);
+	   logInfo("Recibi el nro de bloque %i", bloque->nrobloque);
+
+
 	//DESERIALIZAR SET BLOQUE
 
 free(mensaje);

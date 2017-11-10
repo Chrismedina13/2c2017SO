@@ -27,23 +27,23 @@ int main(int argc, char *argv[]) {
 
 	//parte el archivo en bloques
 
-	t_list* bloques = obtenerBloquesTexto("/home/utnso/ejemplo.txt"); //quedan cargados en bloques
+	//t_list* bloques = obtenerBloquesTexto("/home/utnso/ejemplo.txt"); //quedan cargados en bloques
 
 	//le pasa los bloques a los nodos
 
 	t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-	ubicaciones = distribuirBloques(bloques, Mapa_de_bits);
+	//ubicaciones = distribuirBloques(bloques, Mapa_de_bits);
 
 	//crea registro del archivo en YAMAFS
 
-	status = crearRegistroArchivo("/home/utnso/ejemplo.txt","/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/4/ejemplo.txt", ubicaciones);
+/*	status = crearRegistroArchivo("/home/utnso/ejemplo.txt","/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/4/ejemplo.txt", ubicaciones);
 	if(status==1){
 		logInfo("Registro de archivo creado correctamente.");
 	}
 	if(status==1){
 		logInfo("Registro de archivo no pudo ser creado.");
 	}
-
+*/
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
