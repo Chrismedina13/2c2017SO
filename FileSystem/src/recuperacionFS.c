@@ -65,9 +65,9 @@ int recuperarTablaDeNodos(){
 			nodolibreS = string_substring(nodolibreS, 11, sizeof(nodolibreS));
 
 			bloques_nodo* nodo;
-			nodo->nodo = atoi(idNodoS);
-			nodo->bloquestotales = atoi(nodototalS);
-			nodo->bloqueslibres = atoi(nodolibreS);
+			nodo->idNodo = atoi(idNodoS);
+			nodo->bloquesTotales = atoi(nodototalS);
+			nodo->bloquesLibres = atoi(nodolibreS);
 
 			list_add(&(tabla_de_nodos.listaCapacidadNodos),nodo);
 

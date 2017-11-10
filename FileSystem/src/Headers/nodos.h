@@ -12,11 +12,11 @@
 #include "commons/collections/list.h"
 #include "FileSystem.h"
 
-static bitMap* inicializarEstructuras(int id);
+static bloques_nodo* inicializarEstructuras(int id);
 
 int elegirNodo(t_list* nodos);
-int bloquesLibres(bitMap* nodo);
-int actualizarBitmapDelNodo(bitMap* nodo);
+int bloquesLibres(bloques_nodo* nodo);
+int actualizarBitmapDelNodo(bloques_nodo* nodo);
 t_list* distribuirBloques(t_list* bloques, t_list* nodos);
 
 

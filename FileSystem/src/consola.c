@@ -275,32 +275,24 @@ void consolaFileSystem(){
 					compararComando=false;
 
 					int status;
-
-					t_list* lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
-
-					//comandos[1] ruta local
-					//comandos[2] ruta yamafs
-
 					//parte el archivo en bloques
 
-					t_list* bloques = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
+					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
 
 					//le pasa los bloques a los nodos
 
 					t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-					ubicaciones = distribuirBloques(bloques, lista_nodos);
+					ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos);
 
 					//crea registro del archivo en YAMAFS
 
-					status = crearRegistroArchivo(comandos[1],comandos[2],ubicaciones);
+					status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones);
 					if(status==1){
 						logInfo("Registro de archivo creado correctamente.");
 					}
 					if(status==1){
 						logInfo("Registro de archivo no pudo ser creado.");
 					}
-
-
 				}
 			}
 

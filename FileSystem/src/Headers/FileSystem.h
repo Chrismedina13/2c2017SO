@@ -91,9 +91,10 @@ int cantDir;
 //tabla de nodos
 
 typedef struct bloques_nodo{
-	int nodo;
-	int bloqueslibres;
-	int bloquestotales;
+	int idNodo;
+	int bloquesTotales;
+	int bloquesLibres;
+	int bitmap[20];
 }bloques_nodo;
 
 typedef struct tabla_nodos {
@@ -109,10 +110,12 @@ struct tabla_nodos tabla_de_nodos;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
+/*
 typedef struct bitMap{
-	int bitmap[20];
 	int id_nodo;
+	int bitmap[20];
 }bitMap;
+*/
 
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 

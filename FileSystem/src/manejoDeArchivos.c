@@ -8,6 +8,7 @@
 
 
 /*FUNCION PRINCIPAL*/
+
 t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 
 
@@ -32,9 +33,14 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
         return bloques;
 
 }
+
 /*FUNCION PRINCIPAL*/
+
 t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
 
+		/*Recibe la ruta de un archivo en fs
+		 *Devuleve una lista de char* con bloques de texto que partio
+		 */
 
 		char* p = obtenerPuntero(rutaDelArchivo);
 
@@ -78,6 +84,7 @@ char* obtenerPuntero(const char* rutaArchivo){
 	int fd;
 
 	fd = open (rutaArchivo, O_RDONLY);
+	//fd = fopen(rutaArchivo,"r");
 	if (fd == -1) {
 			printf("Error al abrir archivo\n");
 			exit(-1);
@@ -107,7 +114,6 @@ char* obtenerPuntero(const char* rutaArchivo){
 
 	return p;
 }
-
 
 int tamanioArchivoCerrado(const char* rutaArchivo){
 	FILE* fd;
@@ -144,6 +150,10 @@ t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
 
 t_list* dividirArchivoTxt(char* p){
 
+	/*la lista que devuleve es una lista con las rutas de los archivos en los que lo divide
+	 * del estilio .../FileSystem/ArchivosADividir/Bloque(numeroArchivo).(tipoDeDato)
+	 */
+
 	char** parrafos =  string_split(p, "\n");
 	char* contenidoDelBloque = string_new(); //SE VA A IR GUARDANDO LOS PARRAFOS EN EL BLOQUE HASTA QUE PASE EL ESPACIO REQUERIDO
 	int numeroDeArchivo = 0; //A LA HORA DE GUARDAR EN UN ARCHIVO SE INCREMENTA PARA EL SIGUIENTE ARCHIVO
@@ -169,7 +179,7 @@ t_list* dividirArchivoTxt(char* p){
 				i++; //PARA QUE EL WHILE TERMINE
 			}
 			FILE* fd;
-			char *nombreArchivo = string_new();
+			char* nombreArchivo = string_new();
 			char* numeroArchivo = string_itoa(numeroDeArchivo); //paso el numero de archivo de int a char*
 			string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/bloque");
 			string_append(&nombreArchivo, numeroArchivo); //Le agrego el numero de archivo al nombre
@@ -191,8 +201,12 @@ t_list* dividirArchivoTxt(char* p){
     return lista;
 }
 
-//Obtengo el contenido de un archivo, pasandolo a memoria y retornando un puntero a esa direccion
 char* obtenerContenidoDelArchivo(const char* rutaArchivo){
+
+	/*Obtengo el contenido de un archivo, pasandolo a memoria y retornando un puntero a esa direccion
+	 *Devuelve un puntero a el contenido del bloque
+	 */
+
 	char* contenido = obtenerPuntero(rutaArchivo);
 	return contenido;
 }

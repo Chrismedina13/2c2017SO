@@ -1,7 +1,7 @@
 TAMANIO=40
- LIBRE=15
+ LIBRE=40
  NODOS=[Nodo1,Nodo2]
-Nodo1Total=20
-Nodo1Libre=10
+Nodo1Total=25
+Nodo1Libre=25
 Nodo2Total=20
-Nodo2Libre=5
+Nodo2Libre=20

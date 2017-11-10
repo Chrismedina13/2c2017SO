@@ -404,12 +404,14 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 	}
 	else cantBloques =  abs(tamArchivo/tamanioBloque)+1;
 
+	UbicacionBloquesArchivo* bloquesPtr = malloc(sizeof(UbicacionBloquesArchivo));
+
 	while (count < cantBloques){
 
 		//infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
 		//infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-		UbicacionBloquesArchivo* bloquesPtr = list_get(ubicaciones,count);
+		bloquesPtr = list_get(ubicaciones,count);
 
 		infoNodoCopia = bloquesPtr->ubicacionCopia1.nodo;
 		infoBloqueCopia = bloquesPtr->ubicacionCopia1.bloqueDelNodoDeLaCopia;
