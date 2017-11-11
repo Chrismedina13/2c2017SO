@@ -97,14 +97,14 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits){
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
 		list_remove(mapa_de_bits,indexList1);
-		printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
+		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
 
 		indexList2 = elegirNodo(mapa_de_bits);
 		bitMapNodo2 = list_get(mapa_de_bits,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2);
 
-		printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
+		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
 		list_add(mapa_de_bits,bitMapNodo1);
 
@@ -117,9 +117,9 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits){
 		ubicacionBloquesArchivo->ubicacionCopia1.nodo = index1;
 		ubicacionBloquesArchivo->ubicacionCopia2.bloqueDelNodoDeLaCopia = desplazamiento2;
 		ubicacionBloquesArchivo->ubicacionCopia2.nodo = index2;
-		printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
-				desplazamiento1,index2, desplazamiento2);
-		list_add(listaUbicacionesBloquesArchivos,ubicacionBloquesArchivo);
+		//printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
+		//		desplazamiento1,index2, desplazamiento2);
+		list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
 
 	//	free(ubicacionBloquesArchivo);
 	//	free(bitMapNodo1);
@@ -134,7 +134,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits){
 int elegirNodo(t_list* nodos){
 
 	int count = 0;
-	int indice;
+	//int indice;
 	int extraCount = 0;
 
 	bloques_nodo* nodoMasVacio = list_get(nodos,0);
@@ -281,4 +281,26 @@ int showBitMap(t_list* Mapa_de_bits){
 		cuenta++;
 	}
 	return(1);
+}
+
+int actualizarBitMap(char* path){
+	/*
+	int actualizarBitmapDelNodo(bloques_nodo* nodo){
+		int i;
+		for(i=0;i<20;i++){
+			if(nodo->bitmap[i] == 0){
+				nodo->bitmap[i] = 1;
+				return i;
+			}
+		}
+		return(-1);
+	}
+	*/
+
+	int index;
+	char* fileName = pathToFile(path);
+	bloques_nodo* mapaDeBits;
+
+
+
 }
