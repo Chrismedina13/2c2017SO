@@ -120,6 +120,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits){
 		//printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
 		//		desplazamiento1,index2, desplazamiento2);
 		list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
+		list_add(tabla_de_archivos.ubicaciones,ubicacionBloquesArchivo);
 
 	//	free(ubicacionBloquesArchivo);
 	//	free(bitMapNodo1);
