@@ -34,6 +34,10 @@ bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo);
 void asignarFuncionDeDisponibilidadW_ClockANodos(int disponibilidadBase);
 void asignarFuncionDeDisponibilidadClockANodos(int disponibilidadBase);
 void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanificar);
+t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list* listaDeWorkerAPlanificar);
+int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar);
+int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAPlanificar);
+
 
 
 

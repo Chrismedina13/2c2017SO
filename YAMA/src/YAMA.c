@@ -16,6 +16,8 @@ int main(int argc, char *argv[]) {
 	jobsAPlanificar = queue_create();
 	listaDeWorkerTotales = list_create();
 	listaDeJobs = list_create();
+	ipYPuertoWoerkers = list_create();
+
 	sem_init(&semaforoYAMA,0,0);
 	tabla_estados = list_create();
 

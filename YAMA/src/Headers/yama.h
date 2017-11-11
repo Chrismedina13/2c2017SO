@@ -33,6 +33,7 @@ t_queue* jobsAPlanificar; // VARIABLE GLOBAL TIPO LISTA DONDE SE GUARDAN LOS JOB
 sem_t semaforoYAMA; //Espera que llegue el job de MASTER para ejecutar la pate de comunicacion con FS
 t_list* listaDeWorkerTotales;
 t_list* listaDeJobs;
+t_list* ipYPuertoWoerkers;
 Job* crearJOB(int FDMAster,char* nombreDelJob);
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/YAMA/yama.conf"
