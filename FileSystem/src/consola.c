@@ -25,6 +25,20 @@ void liberarComandos(char** array) {
 	free(array);
 }
 
+int checkInput(char* input){
+
+	/*checkea si input esta vacio o no
+	 * devuelve 1 si esta vacio, -1 si tiene algo.
+	 */
+
+	if(string_is_empty(input)==true){
+		printf("Ingrese un parametro.\n");
+		return(1);
+	}
+	return(-1);
+
+}
+
 char* getStdinString() {
 
 	unsigned int maxlen = 16, size = 16;
@@ -59,6 +73,13 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], LS)){
 					compararComando=false;
+
+					/*
+					int status = checkInput(comandos[0]);
+					if (status==1){
+						printf("No fue especificado ningun directorio para mostrar archivos. Se van a mostrar los directorios disponibles");
+					}
+					*/
 
 					if (string_length(comandos[1])>0){
 
@@ -124,17 +145,34 @@ void consolaFileSystem(){
 
 					//archivo
 
-					if(string_equals_ignore_case(comandos[1], ARCH)){
+					if(string_equals_ignore_case(comandos[1], ARCH)){ //falta borrar los bloques de los dataNode, que no los guarden.
 
 						int status;
+						int indice;
+						t_list* listaUbicacionesBloquesArchivos = list_create();
+
+						UbicacionBloquesArchivo* ubicacionBloquesArchivo = malloc(sizeof(UbicacionBloquesArchivo));
+
+
+
+						list_remove(tabla_de_nodos.listaCapacidadNodos,indice);
+
 
 						status = eliminarArchivo(comandos[2]);
 						if (status == 1){
-							logInfo("Archivo eliminado correctamente.");
-						}
-						if (status == -1){
+							logInfo("Registro de archivo eliminado correctamente.");
+							status = actualizarBitMap(comandos[2]);
+							if(status ==1){
+								logInfo("BitMap actualizado correctamente.");
+								}
+							if(status ==-1){
+								logInfo("BitMap no pudo ser actualizado.");
+							}
+							}
+						else{
 							logInfo("Archivo no existe. No pudo ser eliminado");
 						}
+
 
 					}
 

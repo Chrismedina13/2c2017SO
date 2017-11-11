@@ -463,6 +463,22 @@ char* pathToType(char* path){
 
 }
 
+char* pathToFile(char* path){
+
+	/*Recibe un path de yamafs (/yamafs/metadata/archivos/3/ejemplo.txt)
+	 * Devuelve el filename y su tipo (ejemplo)
+	 */
+
+	int direcotiro = pathToIndex(path);
+	char* fileName;
+	int tamanioDir;
+
+	tamanioDir = string_length(direcotiro);
+
+	fileName = string_substring_from(path,27+tamanioDir);
+	return(fileName);
+}
+
 int tamanioArchivo(int fp){
 
 	int tam;

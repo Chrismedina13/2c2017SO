@@ -338,6 +338,9 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
 	logInfo("Armar estructura para mandar a Master");
+	armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+
+
 
 
 	logInfo("Actualizar tabla global de Yama");
@@ -593,6 +596,99 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 	}
 }
 
+t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list* listaDeWorkersAPlanificar){
+
+	t_list* listaDeRespuestaTransformacionYAMA = list_create();
+
+	int a = 0;
+	int b = 0;
+	int parte;
+	int nodoDeLaParte;
+	int bloqueDeLaParte;
+	int bytesOcupadosDeLaParte;
+	char* ip;
+	int puerto;
+	char* archivoTemporal;
+
+	while(a < list_size(nodosFinalesAPLanificar)){
+
+		nodoParaPlanificar* nodo = list_get(nodosFinalesAPLanificar,a);
+
+		while(b< list_size(nodo->partesAplanificar)){
+
+			char* archivoTemporal;
+			parte = list_get(nodo->partesAplanificar,b);
+			nodoDeLaParte = nodo->nodo;
+			bloqueDeLaParte = bloqueOcupadoPorLaParteEnElNodo(parte,nodoDeLaParte,listaDeWorkersAPlanificar);
+			bytesOcupadosDeLaParte = bytesocupadosPorLaParte(parte,listaDeWorkersAPlanificar);
+			Info_Workers* worker = list_get(ipYPuertoWoerkers,nodo);
+			ip =worker->ipWorker;
+			puerto = worker->puerto;
+			string_append(&archivoTemporal,"/temp/Master-");
+			string_append(&archivoTemporal,string_itoa(generarNumeroAleatorioNoRepetido()));
+
+			RespuestaTransformacionYAMA* respuesta = setRespuestaTransformacionYAMA(nodoDeLaParte,puerto,
+					ip,bloqueDeLaParte,bytesOcupadosDeLaParte,archivoTemporal);
+
+			list_add(listaDeRespuestaTransformacionYAMA,respuesta);
+
+			b++;
+
+		}
+
+		a++;
+
+	}
+	return listaDeRespuestaTransformacionYAMA;
+}
+
+
+
+int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar){
+
+	int a = 0;
+	while(a < list_size(listaDeWorkersAPlanificar)){
+
+		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPlanificar,a);
+
+		if(bloque->parteDelArchivo == parte){
+
+			return bloque->bytesOcupados;
+		}else{
+
+			a++;
+
+		}
+	}
+
+	logInfo("no se encontro bytes ocupados del archivo");
+	return -1;
+
+}
+
+int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAPlanificar){
+
+	int a = 0;
+	while(a < list_size(listaDeWorkersAPlanificar)){
+		UbicacionBloquesArchivo* ubi = list_get(listaDeWorkersAPlanificar,a);
+		if(ubi->parteDelArchivo == parte){
+			if(ubi->ubicacionCopia1.nodo == nodo){
+
+				return ubi->ubicacionCopia1.bloqueDelNodoDeLaCopia;
+			}
+			if(ubi->ubicacionCopia2.nodo == nodo){
+
+				return ubi->ubicacionCopia2.bloqueDelNodoDeLaCopia;
+			}
+		}
+
+		a++;
+	}
+
+	logInfo("No se encontro el bloque donde se encuentra la parte %i", parte);
+	return -1;
+
+}
 
 
 
