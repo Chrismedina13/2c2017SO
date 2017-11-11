@@ -16,6 +16,8 @@
 #include "sockets.h"
 //YAMA armara una lista con esta estructura , la serializara y mandara a Master que deserealizara
 
+int DISTRIBUCION_NODOS=0;
+
 typedef struct RespuestaTransformacionYAMA {
 	char* nodo;
 	int puertoWorker;
