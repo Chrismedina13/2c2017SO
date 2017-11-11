@@ -22,6 +22,7 @@
 #define PUERTO_WORKER "PUERTO_WORKER"
 #define PUERTO_DATANODE "PUERTO_DATANODE"
 #define RUTA_DATABIN "RUTA_DATABIN"
+#define IP_NODO "IP_NODO"
 
 
 typedef struct Configuracion {
@@ -31,6 +32,7 @@ typedef struct Configuracion {
 	int puertoWorker;
 	int puertoDataNode;
 	char* rutaDataBin;
+	char* ipNodo;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);

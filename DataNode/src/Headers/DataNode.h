@@ -21,5 +21,5 @@
 
 
 void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem);
-void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem);
+void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, int tamanio);
 #endif /* HEADERS_DATANODE_H_ */

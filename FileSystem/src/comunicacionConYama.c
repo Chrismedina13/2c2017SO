@@ -30,8 +30,8 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	logInfo("Recibi de Yama: %i", codigo);
 	mensajesRecibidosDeYama(codigo, FDServidorYAMA);
 
-//manda struct info_workers
-	list_info_workers=list_create();
+//manda struct info_workers NO SE SI AL FINAL SE HACE ESTO
+	//list_info_workers=list_create();
 
 
 	//list_add(list_info_workers,

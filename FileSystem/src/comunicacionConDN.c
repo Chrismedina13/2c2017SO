@@ -7,7 +7,7 @@
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
 #include "SO_lib/estructuras.h"
-
+#include "Headers/FileSystem.h"
 
 
 
@@ -23,6 +23,8 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	int FD_Cliente;
 	int bytesRecibidos;
 	char buffer[20];
+
+	int cantBloques=20;
 
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
@@ -50,8 +52,26 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							fd_max = FD_Cliente;
 						}
 						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
-					//lista ari =	list_create();//aca creo la lisat de nodos y lo meto
-					//listadd(i);
+
+
+						tabla_de_nodos.listaNodos = list_create();
+						tabla_de_nodos.listaCapacidadNodos = list_create();
+						cargarNodos2(FD_Cliente);
+
+                      //esto seria un while por cada archivo
+						t_list* listaBloques=list_create();
+						listaBloques=obtenerBloquesTexto("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
+
+
+
+                     //   SetBloque *bloque2 = malloc(sizeof(SetBloque));
+                       // 						bloque2->nrobloque=buscarBloqueVacio(list_get(tabla_de_nodos.listaCapacidadNodos,nodo));
+                        //						bloque2->contenidoBloque=contenido;
+                        	//					char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
+                              //                  mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
+                        		//				int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
+                        			//			mensajesEnviadosADataNode(SET_BLOQUE, nodo, mensaje,tamanioSetBloque);
+
 
 
 
@@ -72,6 +92,9 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 					}else{
 						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje "hola soy data node"
+
+
+
                  // char * nrobloque = malloc(sizeof(int));
                 //  int bloque=5;
                 // nrobloque = serialize_int(bloque);
@@ -177,28 +200,6 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 }
 
 
-/*
-
-
-//PRUEBA DE MMAP FUNCIONANDO!!!!
-
-	const char* nombreDelArchivoTxt = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt";
-	const char* nombreDelArchivoBin = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.bin";
-
- //¡BINARIO!
-	int pasoAMemoriaBinario = pasarAMemoriaBinario(nombreDelArchivoBin);
-	if(pasoAMemoriaBinario == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN BINARIO
-
-//¡TXT!
-	int pasoAMemoriaTxt = pasarAMemoriaTxt(nombreDelArchivoTxt);
-	if(pasoAMemoriaTxt == 0) printf("\nPaso a memoria y division de archivo correcto\n\n");
-	else printf("\nError al pasar a memoria\n\n");
-//FIN TXT.
-
-*/
-
 char *serialize_int(int value){
 	size_t size = sizeof(int);
 	char *stream = calloc(1, size);
@@ -206,3 +207,38 @@ char *serialize_int(int value){
 	return stream;
 }
 
+void cargarNodos2(int idNodo){
+
+		tabla_de_nodos.tamanio=tabla_de_nodos.tamanio+20;
+		tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+20;	//FALTA EL CASO DONDE SE DECONECTA EL NODO
+
+		//int* numero = idNodo;
+
+		list_add(tabla_de_nodos.listaNodos,idNodo);
+
+		bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
+		nodo1->idNodo=idNodo;
+		nodo1->bloquesTotales=20;
+		nodo1->bloquesLibres=20; // falta ver q pasa con un nodo viejo
+		int i=0;
+		while(i<20){
+		nodo1->bitmap[i]=0;
+		i++;
+		}
+
+		list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
+
+
+
+		int resp = crearRegistroArchivoNodos(tabla_de_nodos);
+		if(resp==0) printf("\nRegistro de Nodo cargado correctamente.\n");
+		else printf("\nRegistro de Nodo no pudo ser cargado.\n");
+
+
+	//	int cantNodos = list_size(tabla_de_nodos.listaNodos);
+	//	t_list* lista_nodos;
+
+		//lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
+		//FIN EJEMPLO NODOS CARGADOS
+
+}

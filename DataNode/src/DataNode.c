@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
 	char bufferBloque[4];
 	char buffer[4];
 
+
 	crearLog("DataNode.log", "DATANODE", 1, log_level_from_string("INFO"));
 
 	//Configuracion
@@ -31,6 +32,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
 	logInfo("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
 	logInfo("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
+	logInfo("Archivo de configuracion ruta data.bin : %s \n", config->ipNodo);
 
 	//socketClienteParaFileSystem
 
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
 		logInfo("Se mando mensaje a FS correctamente");
 	}
 
-
+//	mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
 
 	recv(FDsocketClienteFileSystem, buffer,4,0);
 	int codigo = deserializarINT(buffer);
@@ -56,7 +58,6 @@ int main(int argc, char *argv[]) {
 	//int codigo2 =deserializarINT(bufferBloque);
 	//logInfo("Recibi de FS el codigo : %i", codigo2);
 	//mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
-
 
 
 
@@ -136,41 +137,47 @@ free(mensaje);
 }
 
 
-void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem) {
+void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, int tamanio) {
+	Paquete * paqueteEnvio;
 	switch (codigo) {
 
-	char*rta;
-	int tamanio;
+	case IP_NODO:
+
+			paqueteEnvio = crearPaquete(IP_NODO, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
+
+			if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
+				logInfo("Error en envio de respuesta del Set Bloque");
+			}
+
+			destruirPaquete(paqueteEnvio);
+			free(mensaje);
+			break;
 
 	case SET_BLOQUE:
-		rta = malloc(8);
-		tamanio= strlen(rta);
 
-		Paquete * paqueteRtaEnvioDeBloque = crearPaquete(SET_BLOQUE, tamanio,rta); //cuando envia set bloque es porque lo guardo OK
+		paqueteEnvio = crearPaquete(SET_BLOQUE, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
 
-		if (enviarPaquete(FD_FileSystem, paqueteRtaEnvioDeBloque) == -1) {
+		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
 			logInfo("Error en envio de respuesta del Set Bloque");
 		}
 
-		destruirPaquete(paqueteRtaEnvioDeBloque);
-		free(rta);
+		destruirPaquete(paqueteEnvio);
+		free(mensaje);
 		break;
 
 	case GET_BLOQUE:
-		rta=malloc(8);
-		tamanio=strlen(rta);
+
 
 		logInfo(
 				"DATA NODE ENVIA EL CONTENIDO DE UN BLOQUE A FILESYSTEM");
-		Paquete* paqueteGetBloque= crearPaquete(GET_BLOQUE, tamanio,
-				rta);
+		paqueteEnvio= crearPaquete(GET_BLOQUE, tamanio,mensaje);
 
-		if (enviarPaquete(FD_FileSystem, paqueteGetBloque) == -1) {
+		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
 			logInfo("Error en envio de respuesta de Transformacion.");
 		}
 
-		destruirPaquete(paqueteGetBloque);
-		free(rta);
+		destruirPaquete(paqueteEnvio);
+		free(mensaje);
 		break;
 
 
