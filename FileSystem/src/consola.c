@@ -145,7 +145,7 @@ void consolaFileSystem(){
 
 					//archivo
 
-					if(string_equals_ignore_case(comandos[1], ARCH)){ //falta borrar los bloques de los dataNode, que no los guarden.
+					if(string_equals_ignore_case(comandos[1], ARCH)){ //falta borrar los bloques de los dataNode
 
 						int status;
 						int indice;

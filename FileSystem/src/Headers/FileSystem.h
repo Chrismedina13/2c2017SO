@@ -62,10 +62,13 @@ typedef struct tabla_archivos {
 	char* tipo;
 	int directorio; //index del directorio
 	//UbicacionBloquesArchivo* bloques;
-	t_list* bloques;
+	t_list* bloques;//char *
+	t_list* ubicaciones;//ubicacionBloquesArchivo
 }tabla_archivos;
 
 //zona declaracion estructuras tabla de archivos
+
+struct tabla_archivos tabla_de_archivos;
 
 //int maxArchivos = MAX;
 
