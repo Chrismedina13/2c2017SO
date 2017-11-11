@@ -7,6 +7,7 @@
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
 
+
 void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 	int FDServidorYAMA = socketServidor(parametros->puertoFS_yama);
@@ -29,8 +30,12 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	logInfo("Recibi de Yama: %i", codigo);
 	mensajesRecibidosDeYama(codigo, FDServidorYAMA);
 
+//manda struct info_workers
+	list_info_workers=list_create();
 
 
+	//list_add(list_info_workers,
+//mensajesEnviadosAYama(INFO_WORKERS, )
 
 }
 
@@ -81,6 +86,7 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 
 void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	Paquete* paqueteEnvioUbicacionBloque;
+
 	switch (codigo) {
 		case UBICACION_BLOQUES:
 
@@ -93,6 +99,17 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 					destruirPaquete(paqueteEnvioUbicacionBloque);
 
 			break;
+		case INFO_WORKER:
+			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);
+
+			if (enviarPaquete(FD_YAMA, paqueteEnvioUbicacionBloque) == -1) {
+				logInfo("Error en envio de la ubicacion de los bloques");
+			}
+
+			destruirPaquete(paqueteEnvioUbicacionBloque);
+
+	break;
+
 		default:
 			break;
 	}

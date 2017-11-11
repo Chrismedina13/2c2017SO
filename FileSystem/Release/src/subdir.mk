@@ -10,7 +10,11 @@ C_SRCS += \
 ../src/comunicacionConYama.c \
 ../src/configuracion.c \
 ../src/consola.c \
+../src/estructurasFS.c \
 ../src/logFileSystem.c \
+../src/manejoDeArchivos.c \
+../src/nodos.c \
+../src/recuperacionFS.c \
 ../src/socketsFileSystem.c 
 
 OBJS += \
@@ -20,7 +24,11 @@ OBJS += \
 ./src/comunicacionConYama.o \
 ./src/configuracion.o \
 ./src/consola.o \
+./src/estructurasFS.o \
 ./src/logFileSystem.o \
+./src/manejoDeArchivos.o \
+./src/nodos.o \
+./src/recuperacionFS.o \
 ./src/socketsFileSystem.o 
 
 C_DEPS += \
@@ -30,7 +38,11 @@ C_DEPS += \
 ./src/comunicacionConYama.d \
 ./src/configuracion.d \
 ./src/consola.d \
+./src/estructurasFS.d \
 ./src/logFileSystem.d \
+./src/manejoDeArchivos.d \
+./src/nodos.d \
+./src/recuperacionFS.d \
 ./src/socketsFileSystem.d 
 
 

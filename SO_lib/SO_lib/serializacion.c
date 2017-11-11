@@ -181,7 +181,7 @@ char* serializarInfoWorker(int puerto, char* ipWorker){
 	char* infoWorkerSerializado = malloc(strlen(ipWorker)+sizeof(char) + sizeof(int));
 	int desplazamiento=0;
 	serializarDato(infoWorkerSerializado, &(puerto), sizeof(int), &desplazamiento);
-	seriaizarDato(infoWorkerSerializado, ipWorker, strlen(ipWorker)+sizeof(char), &desplazamiento);
+	serializarDato(infoWorkerSerializado, ipWorker, strlen(ipWorker)+sizeof(char), &desplazamiento);
 
 	return infoWorkerSerializado;
 

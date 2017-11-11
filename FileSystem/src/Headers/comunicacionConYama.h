@@ -9,6 +9,7 @@
 #define HEADERS_COMUNICACIONCONYAMA_H_
 #include "SO_lib/Protocolo.h"
 #include "SO_lib/serializacion.h"
+#include "SO_lib/estructuras.h"
 
 void comunicacionYAMA(ParametrosComunicacion* parametros);
 ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA,
