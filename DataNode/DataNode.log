@@ -755,3 +755,21 @@
 [INFO] 16:16:36:238 DATANODE/(2699:2699): Recibi el nro de bloque 6
 [INFO] 16:16:36:238 DATANODE/(2699:2699): Contenido del bloque : bloque del archivo
 >>>>>>> 05fd7511ef24b2c49219cf72dd5a06fff73bcfbd
+[INFO] 08:29:10:399 DATANODE/(8592:8592): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Archivo de configuracion ruta data.bin : 124.0.0.1 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): SocketCliente = -1 
+
+[INFO] 08:29:10:401 DATANODE/(8592:8592): Recibi de FS el codigo : 134518027
+[INFO] 08:29:10:401 DATANODE/(8592:8592): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR

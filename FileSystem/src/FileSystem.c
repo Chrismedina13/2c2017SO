@@ -14,7 +14,17 @@ int main(int argc, char *argv[]) {
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
 	//Recibir Nodos
-	//cargarNodos();
+	cargarNodos();
+
+	//probando
+
+	int status;
+
+	int indiceArchivo = newArchivo();
+
+	//parte el archivo en bloques
+
+	//probando
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);

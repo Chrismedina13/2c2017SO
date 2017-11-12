@@ -4,7 +4,7 @@
 
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
-	char* jobAEjecutar;
+	Job* jobAEjecutar;
 
 	int FDsocketClienteFileSystem;
 	FDsocketClienteFileSystem = lib_SocketCliente(param->ip, param->puerto);
@@ -17,9 +17,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	sem_wait(&semaforoYAMA);
 	jobAEjecutar = retirarJobDeLista();
-	logInfo("el job a ejecutar es: %s", jobAEjecutar);
+	logInfo("el job a ejecutar es: %s", jobAEjecutar->nombreDelArchivo);
 	// Pediria a FS los bloques del job y ejecutaria la planificacion
-	int tamanioJOB = strlen(jobAEjecutar);
+	int tamanioJOB = strlen(jobAEjecutar->nombreDelArchivo);
 
 	logInfo("%i", tamanioJOB);
 
@@ -77,6 +77,8 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	//planificar(listaDeWorkersAPlanificar, param->algoritmo,
 		//	param->disponibilidadBase, jobAEjecutar);
+
+	logInfo("Actualizar Tabla Global");
 
 }
 

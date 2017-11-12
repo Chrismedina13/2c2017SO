@@ -7,6 +7,7 @@
 
 #include "Headers/consola.h"
 #include "Headers/FileSystem.h"
+#include "SO_lib/estructuras.h"
 #include <stdio.h>
 
 char** getComandos(){
@@ -147,28 +148,33 @@ void consolaFileSystem(){
 
 					if(string_equals_ignore_case(comandos[1], ARCH)){ //falta borrar los bloques de los dataNode
 
+
+
+						//indicar al dataNode que borre tal bloque
+
+						//list_remove(tabla_de_nodos.listaCapacidadNodos,indice);
+
 						int status;
-						int indice;
-						t_list* listaUbicacionesBloquesArchivos = list_create();
-
-						UbicacionBloquesArchivo* ubicacionBloquesArchivo = malloc(sizeof(UbicacionBloquesArchivo));
-
-
-
-						list_remove(tabla_de_nodos.listaCapacidadNodos,indice);
-
-
 						status = eliminarArchivo(comandos[2]);
 						if (status == 1){
 							logInfo("Registro de archivo eliminado correctamente.");
-							status = actualizarBitMap(comandos[2]);
-							if(status ==1){
-								logInfo("BitMap actualizado correctamente.");
-								}
-							if(status ==-1){
-								logInfo("BitMap no pudo ser actualizado.");
+
+							char* nombre = pathToFile(comandos[2]);
+							int indice = pathToIndiceArchivo(comandos[2]);
+							int count = 0;
+							int cantidadBloques = list_size(tabla_de_archivos[indice].bloques);
+
+							while(count<cantidadBloques){
+
+								UbicacionBloquesArchivo* ubicacion = list_get(tabla_de_archivos[indice].ubicaciones,0);
+
+								actualizarBitMap(ubicacion->ubicacionCopia1.nodo,ubicacion->ubicacionCopia1.desplazamiento);
+								actualizarBitMap(ubicacion->ubicacionCopia2.nodo,ubicacion->ubicacionCopia2.desplazamiento);
+
+								list_remove(tabla_de_archivos[indice].ubicaciones,0);
+								count++;
 							}
-							}
+						}
 						else{
 							logInfo("Archivo no existe. No pudo ser eliminado");
 						}
@@ -313,6 +319,9 @@ void consolaFileSystem(){
 					compararComando=false;
 
 					int status;
+
+					int indiceArchivo = newArchivo();
+
 					//parte el archivo en bloques
 
 					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
@@ -320,11 +329,11 @@ void consolaFileSystem(){
 					//le pasa los bloques a los nodos
 
 					t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-					ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos);
+					ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
 
 					//crea registro del archivo en YAMAFS
 
-					status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones);
+					status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones, indiceArchivo);
 					if(status==1){
 						logInfo("Registro de archivo creado correctamente.");
 					}

@@ -50,7 +50,7 @@ char* serializarUbicacionBloque( UbicacionBloque  ubicacionbloque){
 	char* ubicacionBloqueSerializado = malloc(sizeof(int)*2);
 	int desplazamiento =0 ;
 	serializarDato(ubicacionBloqueSerializado, &(ubicacionbloque.nodo), sizeof(int), &desplazamiento);
-	serializarDato(ubicacionBloqueSerializado,&(ubicacionbloque.bloqueDelNodoDeLaCopia), sizeof(int), &desplazamiento);
+	serializarDato(ubicacionBloqueSerializado,&(ubicacionbloque.desplazamiento), sizeof(int), &desplazamiento);
 	return ubicacionBloqueSerializado;
 }
 
@@ -71,7 +71,7 @@ UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado){
 	UbicacionBloque ubicacionbloque;
 	int desplazamiento=0;
 	deserializarDato(&(ubicacionbloque.nodo), ubicacionbloqueserializado,sizeof(int), &desplazamiento);
-	deserializarDato(&(ubicacionbloque.bloqueDelNodoDeLaCopia), ubicacionbloqueserializado, sizeof(int), &desplazamiento);
+	deserializarDato(&(ubicacionbloque.desplazamiento), ubicacionbloqueserializado, sizeof(int), &desplazamiento);
 
 	return ubicacionbloque;
 
