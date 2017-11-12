@@ -8,6 +8,8 @@
 #include "Headers/comunicacionConDN.h"
 #include "SO_lib/estructuras.h"
 #include "Headers/FileSystem.h"
+#include "Headers/configuracion.h"
+
 
 
 
@@ -23,8 +25,15 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	int FD_Cliente;
 	int bytesRecibidos;
 	char buffer[20];
-
+    char buffer_ipWorker[4];
 	int cantBloques=20;
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+	int cantNodos= config->cant_nodos;
+	int cantArchivos = config->cant_archivos;
+	int h=0;
+
+
+
 
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
@@ -53,6 +62,16 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						}
 						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
 
+						t_list* list_info_workers = list_create();
+						while(h< cantNodos){
+						 recv(FD_Cliente, buffer_ipWorker,4,0);
+						 int codigo = deserializarINT(buffer_ipWorker);
+						 logInfo("Recibi de DATA NODE el codigo : %i", codigo);
+						 mensajesRecibidosDeDN(codigo,FD_Cliente);
+					   	 h++;
+						}
+
+						 //
 
 						tabla_de_nodos.listaNodos = list_create();
 						tabla_de_nodos.listaCapacidadNodos = list_create();
@@ -61,15 +80,14 @@ void comunicacionDN(ParametrosComunicacion* parametros){
                       //esto seria un while por cada archivo
 
 
-						//int index_archivo=pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
-						int index_arhivo=0;
+					int index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
 
 
 					t_list *	listaBloques=list_create();
 					t_list *    listaUbicacionesDelBloque=list_create();
 
-				//	listaUbicacionesDelBloque=	tabla_de_archivos[index_archivo].ubicaciones; //lista de ubicacionbloquesArchivo
-				//	listaBloques=	tabla_de_archivos[index_archivo].bloques; // lista de bloques de char *
+				listaUbicacionesDelBloque=	tabla_de_archivos[index_archivo].ubicaciones; //lista de ubicacionbloquesArchivo
+				listaBloques=	tabla_de_archivos[index_archivo].bloques; // lista de bloques de char *
 
 						i=0;
 						while(i<list_size(listaBloques)){
@@ -79,12 +97,13 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						   int idNodoCopia1=ubicacionbloquesarchivo->ubicacionCopia1.nodo;
 						   int idNodoCopia2=ubicacionbloquesarchivo->ubicacionCopia2.nodo;
 
-						   int nroBloqueNodo1=ubicacionbloquesarchivo->ubicacionCopia1.bloqueDelNodoDeLaCopia;
-						   int nroBloqueNodo2=ubicacionbloquesarchivo->ubicacionCopia2.bloqueDelNodoDeLaCopia;
+						int nroBloqueNodo1= ubicacionbloquesarchivo->ubicacionCopia1.desplazamiento;
+					    int nroBloqueNodo2= ubicacionbloquesarchivo->ubicacionCopia2.desplazamiento;
+
 						   char * contenido = list_get(listaBloques, i);
 
 							SetBloque *setbloque1= malloc(sizeof(SetBloque));
-							setbloque1->nrobloque= nroBloqueNodo1;
+						    setbloque1->nrobloque= nroBloqueNodo1;
 							setbloque1->contenidoBloque=contenido;
 							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
 							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
@@ -92,7 +111,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia1, mensaje,tamanioSetBloque);
 
 							SetBloque *setbloque2= malloc(sizeof(SetBloque));
-							setbloque2->nrobloque= nroBloqueNodo2;
+						 	setbloque2->nrobloque= nroBloqueNodo2;
 							setbloque2->contenidoBloque=contenido;
 							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
 							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
@@ -200,6 +219,10 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 	char pesoMensaje[8];
 	int tamanio;
 	char * mensaje;
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+    int puerto_worker =  config->puerto_worker;
+    Info_Workers * infoworker;
+
 
 	switch (codigo) {
 	case SET_BLOQUE:
@@ -215,6 +238,27 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 
 		break;
+		case IP_NODO:
+
+			logInfo("FILE SYSTEM RECICE EL IP DEL WORKER");
+
+			recv(FD_DN, pesoMensaje,4,0);
+				tamanio = deserializarINT(pesoMensaje);
+				logInfo("tamanio de lo que recibo %i", tamanio);
+				mensaje = malloc(tamanio + 1);
+				mensaje[tamanio] = '\0';
+				recv(FD_DN,mensaje, tamanio,0 );
+
+			   logInfo("Recibi el ip del worker %s", mensaje);
+
+			   infoworker->ipWorker=mensaje;
+
+			   infoworker->puerto=puerto_worker;
+			   list_add_in_index(list_info_workers, FD_DN, infoworker);
+
+
+
+				break;
 	case GET_BLOQUE: //RECIBE EL BLOQUE DE DATOS.
 
 

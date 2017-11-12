@@ -23,6 +23,14 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 		logInfo("Error en la comunicacion con YAMA ");
 
 	}
+
+	//fs manda la lista de workers
+	char * lista_workers = malloc((11+sizeof(char) + sizeof(int))*list_size(list_info_workers));
+	       lista_workers=serializarLista_info_workers(list_info_workers);
+		   int tamanio_lista_workers = (11+sizeof(char) + sizeof(int))*list_size(list_info_workers);
+	mensajesEnviadosAYama(INFO_WORKER, FDServidorYAMA, lista_workers, tamanio_lista_workers);
+
+
 	//cm:recibe de yama el nombre del archivo
 	char buffer[4];
 	recv(FDServidorYAMA,buffer,4,0);
@@ -30,12 +38,9 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	logInfo("Recibi de Yama: %i", codigo);
 	mensajesRecibidosDeYama(codigo, FDServidorYAMA);
 
-//manda struct info_workers NO SE SI AL FINAL SE HACE ESTO
-	//list_info_workers=list_create();
 
 
-	//list_add(list_info_workers,
-//mensajesEnviadosAYama(INFO_WORKERS, )
+
 
 }
 
@@ -56,7 +61,11 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 	char* mensaje;
 	char pesoMensaje2[8];
 
-	char* ubicacionBloques;
+	t_list* ubicacionBloques;
+	t_list * lista_ubicaciones;
+	char* lista_serializada;
+	int tamanio_lista_serializada;
+
 
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
@@ -68,10 +77,13 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 		recv(FDYama, mensaje, tamanio, 0);
 		logInfo("Se recibio el nombre del archivo: %s de tamanio %i", mensaje,
 				tamanio);
-		//recorro la lista de archivos, y mando la siguiente estructura:
 
-	ubicacionBloques =setearUbicacionBloqueYSerealizar(1,12, 2, 4, 3,1024);// hardcodeo
-	mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,strlen(ubicacionBloques) );
+
+         	//ubicacionBloques = nombreToUbicaciones(mensaje);
+			lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(ubicacionBloques));
+			lista_serializada=serializarListaUbicacionBloquesArchivos(ubicacionBloques);
+			tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(ubicacionBloques);
+			mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,tamanio_lista_serializada);
 
 		break;
 
@@ -115,28 +127,9 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	}
 }
 
-char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados){
-
-          char* ubicacion=malloc(sizeof(int)*6);
-
-	UbicacionBloque ubicacionbloque1;
-	ubicacionbloque1.nodo=nodo1;
-	ubicacionbloque1.desplazamiento= bloquenodo1;
-	UbicacionBloque ubicacionbloque2;
-	ubicacionbloque2.nodo=nodo2;
-	ubicacionbloque2.desplazamiento=bloquenodo2;
-	UbicacionBloquesArchivo * ubicacionbloquesarchivo;
-	ubicacionbloquesarchivo->parteDelArchivo=parteDelArchivo;
-	ubicacionbloquesarchivo->bytesOcupados=bytesOcupados;
-	ubicacionbloquesarchivo->ubicacionCopia1=ubicacionbloque1;
-	ubicacionbloquesarchivo->ubicacionCopia1=ubicacionbloque2;
-
-	ubicacion = serializarUblicacionBloqueArchivo(ubicacionbloquesarchivo);
-
-
-	return(&ubicacion);
 
 
 
-}
+
+
 

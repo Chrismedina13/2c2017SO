@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
 		logInfo("Se mando mensaje a FS correctamente");
 	}
 
-//	mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
+	mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
+
 
 	recv(FDsocketClienteFileSystem, buffer,4,0);
 	int codigo = deserializarINT(buffer);
