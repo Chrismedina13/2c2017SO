@@ -59,9 +59,9 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
-	char pesoMensaje2[8];
 
-	t_list* ubicacionBloques;
+
+
 	t_list * lista_ubicaciones;
 	char* lista_serializada;
 	int tamanio_lista_serializada;
@@ -79,11 +79,11 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 				tamanio);
 
 
-         	//ubicacionBloques = nombreToUbicaciones(mensaje);
-			lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(ubicacionBloques));
-			lista_serializada=serializarListaUbicacionBloquesArchivos(ubicacionBloques);
-			tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(ubicacionBloques);
-			mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,ubicacionBloques,tamanio_lista_serializada);
+         	lista_ubicaciones = nombreToUbicaciones(mensaje);
+			lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones));
+			lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
+			tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones);
+			mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,lista_serializada,tamanio_lista_serializada);
 
 		break;
 
