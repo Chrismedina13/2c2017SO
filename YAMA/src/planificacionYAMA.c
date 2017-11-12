@@ -15,7 +15,7 @@ void agregarWorkerALista(nodoParaPlanificar* worker) {
 
 }
 
-void agregarJObACola(char* job) {
+void agregarJObACola(Job* job) {
 
 	pthread_mutex_lock(&mutexJobsAPlanificar);
 	queue_push(jobsAPlanificar, job);
@@ -23,10 +23,10 @@ void agregarJObACola(char* job) {
 
 }
 
-char* retirarJobDeLista() {
+Job* retirarJobDeLista() {
 
 	pthread_mutex_lock(&mutexJobsAPlanificar);
-	char* job = queue_pop(jobsAPlanificar);
+	Job* job = queue_pop(jobsAPlanificar);
 	pthread_mutex_unlock(&mutexJobsAPlanificar);
 	return job;
 }
@@ -40,8 +40,8 @@ t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
 
 		logInfo("PLanificando con W-CLOCK");
 
-		t_list* listaConLaPlanificacion = planificarConW_Clock(listaDeWorkersAPlanificar,
-				disponibilidadBase);
+		return planificarConW_Clock(listaDeWorkersAPlanificar,disponibilidadBase);
+
 	} else {
 
 		logInfo("PLanificando con CLOCK");
@@ -103,8 +103,6 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 
 	//busco de la lista de nodos a planificar aquellos que tienen partes de archivo
 	t_list* nodosFinalesAPLanificar = dev_nodos_a_planificar();
-
-	//cm falta liberar nodosFinalesAPLanificar
 
 	nodoParaPlanificar* punteroClock;
 	nodoParaPlanificar* punteroClockAuxiliar;
@@ -204,8 +202,16 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
-	list_destroy(partesDelArchivo);
+	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales");
+	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
+	logInfo("Armar estructura para mandar a Master");
+	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+
+	list_destroy(partesDelArchivo);
+	list_destroy(nodosFinalesAPLanificar);
+
+	return respuestaAMaster;
 }
 
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
@@ -337,19 +343,17 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
-	logInfo("Armar estructura para mandar a Master");
-	armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
-
-
-
-
-	logInfo("Actualizar tabla global de Yama");
-
-
 	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales");
+	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
+
+
+	logInfo("Armar estructura para mandar a Master");
+	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
+
+	return respuestaAMaster;
 
 }
 
