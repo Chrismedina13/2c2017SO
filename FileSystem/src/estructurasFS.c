@@ -455,6 +455,8 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int in
 	//free(archivosPtr);
 	fclose(fp);
 	fclose(fp2);
+
+	cantArchivos++;
 	return(1);
 
 }
@@ -641,8 +643,20 @@ int mostrarArchivo(char* rutaLocal){
 
 }
 
-//int archivosDirectorio(int directorio){
+t_list* nombreToUbicaciones(char* nombre){
 
+	int count = 0;
+
+	while(count<100){
+
+			if( strcmp(tabla_de_archivos[count].nombre,nombre)){
+				return(tabla_de_archivos[count].ubicaciones);
+
+			}
+			count++;
+		}
+	perror("error");
+}
 
 
 

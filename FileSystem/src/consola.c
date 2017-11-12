@@ -115,6 +115,7 @@ void consolaFileSystem(){
 					compararComando=false;
 					printf(" \n");
 
+					cantArchivos = 0;
 					cargarDirectorios();
 
 				}
@@ -123,6 +124,11 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], RM)){
 					compararComando=false;
+
+					/*rm [path_archivo] ó rm -d [path_directorio] ó rm -b [path_archivo] [nro_bloque] [nro_copia] -
+					  Eliminar un Archivo/Directorio/Bloque. Si un directorio a eliminar no se encuentra vacío, la operación debe fallar.
+					  Además, si el bloque a eliminar fuera la última copia del mismo, se deberá abortar la operación informando lo sucedido.
+					 */
 
 					//empieza comando
 
@@ -157,7 +163,6 @@ void consolaFileSystem(){
 						int status;
 						status = eliminarArchivo(comandos[2]);
 						if (status == 1){
-							logInfo("Registro de archivo eliminado correctamente.");
 
 							char* nombre = pathToFile(comandos[2]);
 							int indice = pathToIndiceArchivo(comandos[2]);
@@ -174,6 +179,10 @@ void consolaFileSystem(){
 								list_remove(tabla_de_archivos[indice].ubicaciones,0);
 								count++;
 							}
+
+							cantArchivos--;
+
+							logInfo("Registro de archivo eliminado correctamente.");
 						}
 						else{
 							logInfo("Archivo no existe. No pudo ser eliminado");
@@ -182,9 +191,46 @@ void consolaFileSystem(){
 
 					}
 
-					//nodo
+					//bloque
 
 					if(string_equals_ignore_case(comandos[1], BLOQ)){
+
+						int count = 0;
+						int status;
+						int bloqueArchivo = atoi(comandos[3]);
+						int numeroCopia = atoi(comandos[4]);
+						int indice = pathToIndiceArchivo(comandos[2]);
+						int cantBloques = list_size(tabla_de_archivos[indice].bloques);
+						UbicacionBloquesArchivo* bloques;
+
+						while(count<cantBloques){
+							bloques = list_get(tabla_de_archivos[indice].ubicaciones,count);
+							if(bloques->parteDelArchivo == bloqueArchivo){
+								break;
+							}
+							count++;
+						}
+
+						status = ultimaCopia(indice,bloqueArchivo);
+						if(status==1){
+							if(numeroCopia == 1){
+								actualizarBitMap(bloques->ubicacionCopia1.nodo,bloques->ubicacionCopia1.desplazamiento);
+								bloques->ubicacionCopia1.nodo = -1;
+								bloques->ubicacionCopia1.desplazamiento = -1;
+							}
+							if(numeroCopia == 2){
+								actualizarBitMap(bloques->ubicacionCopia2.nodo,bloques->ubicacionCopia2.desplazamiento);
+								bloques->ubicacionCopia2.nodo = -1;
+								bloques->ubicacionCopia2.desplazamiento = -1;
+							}
+							logInfo("El bloque fue eliminado correctamente.");
+						}
+						if(status==-1){
+							logInfo("El bloque no puede ser eliminado. No existe una copia en otro dataNode conectado.");
+						}
+
+
+						//eliminarBloque(nodo, bloque);
 
 					}
 
@@ -285,7 +331,7 @@ void consolaFileSystem(){
 					status = 0;
 					FILE * fp = fopen(comandos[1],"r");
 					if (!fp) {
-					  perror("Error al abrir el Archivo de directorios");
+					  perror("Error al abrir el Archivo");
 					  status = -1;
 					}
 					if (status == 0) {

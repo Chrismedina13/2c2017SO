@@ -56,6 +56,8 @@ int cambiarNombreDirectorio(int index, char* nombre);
 
 int moverDirectorio(int index, int padreNew);
 
+int cantDir;
+
 //tabla de archivos
 
 typedef struct tabla_archivos {
@@ -90,8 +92,7 @@ int eliminarArchivo(char* rutaLocal);
 
 int tamanioArchivo(int fp);
 
-int cantDir;
-
+int cantArchivos;
 
 //tabla de nodos
 
@@ -127,6 +128,8 @@ t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 char* pathToType(char* path);
 
 char* pathToFile(char* path);
+
+t_list* nombreToUbicaciones(char* nombre);
 
 #endif /* HEADERS_FILESYSTEM_H_ */
 

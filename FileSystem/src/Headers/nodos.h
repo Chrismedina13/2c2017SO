@@ -20,5 +20,6 @@ t_list* distribuirBloques(t_list* bloques, t_list* nodos, int indiceArchivo);
 
 int crearRegistroArchivoNodos(tabla_nodos tablaNodos);
 int actualizarBitMap(int idNodo, int desplazamiento);
+int ultimaCopia(int indiceArchivo,int parteArchivo);
 
 #endif /* HEADERS_NODOS_H_ */

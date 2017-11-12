@@ -312,3 +312,35 @@ int actualizarBitMap(nodo, desplazamiento){
 return(-1);
 }
 
+int ultimaCopia(int indiceArchivo,int parteArchivo){
+
+	/*recibe indice del archivo en tabla de archivos y la partde del archivo
+	 * devuelve 1 si tiene mas de 1 copia, -1 si no.
+	 */
+
+	int count = 0;
+	int status;
+	int cantPartes;
+	UbicacionBloquesArchivo* ubicaciones;
+
+	cantPartes = list_size(tabla_de_archivos[indiceArchivo].bloques);
+
+	while(count<cantPartes){
+
+		ubicaciones = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+
+		if(ubicaciones->parteDelArchivo == parteArchivo){
+			break;
+		}
+
+		count++;
+	}
+
+	if(ubicaciones->ubicacionCopia1.nodo == -1 || ubicaciones->ubicacionCopia2.nodo == -1){
+		return(-1);
+	}
+
+	return(1);
+}
+
+
