@@ -45,7 +45,7 @@ typedef struct nodo {
 typedef struct ubicacionBloque {
 
 	int nodo;  //Nodo donde se encuentra la copia
-	int bloqueDelNodoDeLaCopia; // Bloque adentro del nodo donde se encuentra. Desplazamiento
+	int desplazamiento; // Bloque adentro del nodo donde se encuentra. Desplazamiento
 } UbicacionBloque;
 
 typedef struct ubiacionBloquesArchivo {

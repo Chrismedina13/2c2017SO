@@ -121,10 +121,10 @@ char* setearUbicacionBloqueYSerealizar(int nodo1, int bloquenodo1, int nodo2, in
 
 	UbicacionBloque ubicacionbloque1;
 	ubicacionbloque1.nodo=nodo1;
-	ubicacionbloque1.bloqueDelNodoDeLaCopia= bloquenodo1;
+	ubicacionbloque1.desplazamiento= bloquenodo1;
 	UbicacionBloque ubicacionbloque2;
 	ubicacionbloque2.nodo=nodo2;
-	ubicacionbloque2.bloqueDelNodoDeLaCopia=bloquenodo2;
+	ubicacionbloque2.desplazamiento=bloquenodo2;
 	UbicacionBloquesArchivo * ubicacionbloquesarchivo;
 	ubicacionbloquesarchivo->parteDelArchivo=parteDelArchivo;
 	ubicacionbloquesarchivo->bytesOcupados=bytesOcupados;

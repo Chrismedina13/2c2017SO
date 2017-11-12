@@ -26,6 +26,7 @@
 #include "commons/bitarray.h"
 #include "commons/string.h"
 #include <dirent.h>
+#include "commons/collections/list.h"
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
 
@@ -58,6 +59,7 @@ int moverDirectorio(int index, int padreNew);
 //tabla de archivos
 
 typedef struct tabla_archivos {
+	char* nombre;
 	int tamanio; //en bytes
 	char* tipo;
 	int directorio; //index del directorio
@@ -68,7 +70,7 @@ typedef struct tabla_archivos {
 
 //zona declaracion estructuras tabla de archivos
 
-struct tabla_archivos tabla_de_archivos;
+struct tabla_archivos tabla_de_archivos[100];
 
 //int maxArchivos = MAX;
 
@@ -76,7 +78,7 @@ extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal, t_list* ubicacion);
+int crearRegistroArchivo(char* ruta, char* rutaLocal, t_list* ubicacion, int indiceArchivo);
 
 int cambiarNombreArchivo(char* rutaLocal, char* nombreNew);
 
@@ -104,7 +106,7 @@ typedef struct tabla_nodos {
 	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
 	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
 	t_list* listaNodos; //nodo1, nodo2, nodo3
-	t_list* listaCapacidadNodos; //total por nodo, y libre t_list* bloques_nodos;
+	t_list* listaCapacidadNodos; //bloques_nodo
 }tabla_nodos;
 
 struct tabla_nodos tabla_de_nodos;
@@ -123,6 +125,8 @@ typedef struct bitMap{
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 
 char* pathToType(char* path);
+
+char* pathToFile(char* path);
 
 #endif /* HEADERS_FILESYSTEM_H_ */
 

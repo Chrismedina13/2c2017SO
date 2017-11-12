@@ -35,7 +35,7 @@ int pathToIndex(char* path){
 	if(string_ends_with(path, ".txt") || string_ends_with(path, ".bin")){
 
 		char** secciones = string_split(path, "/");
-		directorio = atoi(secciones[3]);
+		directorio = atoi(secciones[7]);
 
 	}
 	return(directorio);
@@ -354,15 +354,32 @@ int make_directory(const char* ruta) {
 
 //funciones
 
+int newArchivo(){
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
+	/*Devuelve el index del primer elemento vacio del vector
+	 *
+	 */
+
+	int count = 0;
+	char* texto = "texto";
+	while(count<100){
+	if(tabla_de_archivos[count].directorio>2 && tabla_de_archivos[count].directorio<100){
+		count++;
+		}
+	else return(count);
+	}
+
+	return(count);
+
+}
+
+int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int indiceArchivo){
 
 	int tamanioBloque = 1024*1024;
-	int indiceArchivo = 0;
 	int tamArchivo;
-	int maxArchivos = MAX;
+	//int maxArchivos = MAX;
 	//UbicacionBloquesArchivo* bloquesPtr;
-	tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
+	//tabla_archivos *archivosPtr = malloc (maxArchivos * (sizeof (tabla_archivos)));
 
 	//abro mi archivo y cargo la info que necesito en el puntero a archivos
 
@@ -376,10 +393,16 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 
 	char* tipo = pathToType(rutaLocal);
 
-	archivosPtr[indiceArchivo].tamanio = tamArchivo;
-	archivosPtr[indiceArchivo].tipo = tipo;
-	archivosPtr[indiceArchivo].directorio = pathToIndex(rutaLocal);
-	archivosPtr[indiceArchivo].bloques = ubicaciones;
+	//termina de cargar el vector de archivos
+
+	char* nombre = pathToFile(rutaLocal);
+
+	tabla_de_archivos[indiceArchivo].nombre = nombre;
+	tabla_de_archivos[indiceArchivo].tamanio = tamArchivo;
+	tabla_de_archivos[indiceArchivo].tipo = tipo;
+	tabla_de_archivos[indiceArchivo].directorio = pathToIndex(rutaLocal);
+	tabla_de_archivos[indiceArchivo].bloques = ubicaciones;
+	//tabla_de_archivos[indiceArchivo].ubicaciones =
 
 	//creo mi registro de archivo local
 
@@ -389,7 +412,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 	  return (-1);
 	}
 
-	fprintf(fp2, "TAMANIO=%d\nTIPO=%s\n", archivosPtr[indiceArchivo].tamanio, archivosPtr[indiceArchivo].tipo); //carga la info del archivo
+	fprintf(fp2, "TAMANIO=%d\nTIPO=%s\n", tabla_de_archivos[indiceArchivo].tamanio, tabla_de_archivos[indiceArchivo].tipo); //carga la info del archivo
 
 	int cantBloques;
 	int count = 0;
@@ -414,10 +437,10 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 		bloquesPtr = list_get(ubicaciones,count);
 
 		infoNodoCopia = bloquesPtr->ubicacionCopia1.nodo;
-		infoBloqueCopia = bloquesPtr->ubicacionCopia1.bloqueDelNodoDeLaCopia;
+		infoBloqueCopia = bloquesPtr->ubicacionCopia1.desplazamiento;
 
 		infoNodoCopiaCopia = bloquesPtr->ubicacionCopia2.nodo;
-		infoBloqueCopiaCopia = bloquesPtr->ubicacionCopia2.bloqueDelNodoDeLaCopia;
+		infoBloqueCopiaCopia = bloquesPtr->ubicacionCopia2.desplazamiento;
 
 		fprintf(fp2, "BLOQUE%dCOPIA0=[Nodo%d, %d]\n", count, infoNodoCopia, infoBloqueCopia);
 		fprintf(fp2, "BLOQUE%dCOPIA1=[Nodo%d, %d]\n", count, infoNodoCopiaCopia, infoBloqueCopiaCopia);
@@ -429,7 +452,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones){
 		count++;
 	}
 
-	free(archivosPtr);
+	//free(archivosPtr);
 	fclose(fp);
 	fclose(fp2);
 	return(1);
@@ -466,17 +489,36 @@ char* pathToType(char* path){
 char* pathToFile(char* path){
 
 	/*Recibe un path de yamafs (/yamafs/metadata/archivos/3/ejemplo.txt)
-	 * Devuelve el filename y su tipo (ejemplo)
+	 * Devuelve el filename y su tipo (ejemplo.txt)
 	 */
 
-	int direcotiro = pathToIndex(path);
-	char* fileName;
+	int directorio = pathToIndex(path);
 	int tamanioDir;
 
-	tamanioDir = string_length(direcotiro);
+	char** secciones = string_split(path, "/");
+	return(secciones[8]);
+}
 
-	fileName = string_substring_from(path,27+tamanioDir);
-	return(fileName);
+int pathToIndiceArchivo(char* path){
+
+	/*recibe el path a un archivo
+	 * devuelve su indice en el vector de archivos
+	 * si no lo encuentra, devuelve -1
+	 */
+
+	int count = 0;
+	char* nombre = pathToFile(path);
+	int directorio = pathToIndex(path);
+
+	while(count<100){
+
+		if(strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio == directorio){
+			return(count);
+		}
+		count++;
+	}
+
+	return(-1);
 }
 
 int tamanioArchivo(int fp){
@@ -500,9 +542,24 @@ int cambiarNombreArchivo(char* rutaLocal, char* nombreNew){
 	directorio = pathToIndex(rutaLocal);
 	newRutaLocal = generarRutaLocal(nombreNew, directorio);
 
+
+	int count = 0;
+	char* nombre = pathToFile(rutaLocal);
+
 	if(strcmp(newRutaLocal,"error") == 0)return(-1);
 	rename(rutaLocal, newRutaLocal);
-	return(1);
+
+	while(count<100){
+
+		if( strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio ==directorio){
+			strcpy(tabla_de_archivos[count].nombre,nombreNew);
+			return(1);
+		}
+		count++;
+	}
+
+
+	return(-1);
 
 }
 
@@ -544,6 +601,20 @@ int moverArchivo(char* rutaLocal, char* newRutaLocal){
 	fclose(newfp);
 
 	eliminarArchivo(rutaLocal);
+
+	int count = 0;
+	char* nombre = pathToFile(rutaLocal);
+	int directorio = pathToIndex(rutaLocal);
+
+	while(count<100){
+
+		if( strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio==directorio){
+			strcpy(tabla_de_archivos[count].nombre,"deleted");
+			strcpy(tabla_de_archivos[count].tipo,"deleted");
+			return(1);
+		}
+		count++;
+	}
 
 	return(1);
 

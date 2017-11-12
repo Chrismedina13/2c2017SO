@@ -32,9 +32,9 @@ UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int b
 	ubi->bytesOcupados = bytesOcupados;
 	ubi->parteDelArchivo = parteDelArchivo;
 	ubi->ubicacionCopia1.nodo = copia1Nodo;
-	ubi->ubicacionCopia1.bloqueDelNodoDeLaCopia = copia1Bloque;
+	ubi->ubicacionCopia1.desplazamiento = copia1Bloque;
 	ubi->ubicacionCopia2.nodo = copia2Nodo;
-	ubi->ubicacionCopia2.bloqueDelNodoDeLaCopia =copia2Bloque;
+	ubi->ubicacionCopia2.desplazamiento =copia2Bloque;
 	return ubi;
 
 }

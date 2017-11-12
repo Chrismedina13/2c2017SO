@@ -674,11 +674,11 @@ int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAP
 		if(ubi->parteDelArchivo == parte){
 			if(ubi->ubicacionCopia1.nodo == nodo){
 
-				return ubi->ubicacionCopia1.bloqueDelNodoDeLaCopia;
+				return ubi->ubicacionCopia1.desplazamiento;
 			}
 			if(ubi->ubicacionCopia2.nodo == nodo){
 
-				return ubi->ubicacionCopia2.bloqueDelNodoDeLaCopia;
+				return ubi->ubicacionCopia2.desplazamiento;
 			}
 		}
 
