@@ -59,20 +59,52 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						cargarNodos2(FD_Cliente);
 
                       //esto seria un while por cada archivo
-						t_list* listaBloques=list_create();
-						listaBloques=obtenerBloquesTexto("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
 
 
-
-                     //   SetBloque *bloque2 = malloc(sizeof(SetBloque));
-                       // 						bloque2->nrobloque=buscarBloqueVacio(list_get(tabla_de_nodos.listaCapacidadNodos,nodo));
-                        //						bloque2->contenidoBloque=contenido;
-                        	//					char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
-                              //                  mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
-                        		//				int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
-                        			//			mensajesEnviadosADataNode(SET_BLOQUE, nodo, mensaje,tamanioSetBloque);
+						//int index_archivo=pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
+						int index_arhivo=0;
 
 
+					t_list *	listaBloques=list_create();
+					t_list *    listaUbicacionesDelBloque=list_create();
+
+				//	listaUbicacionesDelBloque=	tabla_de_archivos[index_archivo].ubicaciones; //lista de ubicacionbloquesArchivo
+				//	listaBloques=	tabla_de_archivos[index_archivo].bloques; // lista de bloques de char *
+
+						i=0;
+						while(i<list_size(listaBloques)){
+
+							UbicacionBloquesArchivo * ubicacionbloquesarchivo;
+						   ubicacionbloquesarchivo= list_get(listaUbicacionesDelBloque,i);
+						   int idNodoCopia1=ubicacionbloquesarchivo->ubicacionCopia1.nodo;
+						   int idNodoCopia2=ubicacionbloquesarchivo->ubicacionCopia2.nodo;
+
+						   int nroBloqueNodo1=ubicacionbloquesarchivo->ubicacionCopia1.bloqueDelNodoDeLaCopia;
+						   int nroBloqueNodo2=ubicacionbloquesarchivo->ubicacionCopia2.bloqueDelNodoDeLaCopia;
+						   char * contenido = list_get(listaBloques, i);
+
+							SetBloque *setbloque1= malloc(sizeof(SetBloque));
+							setbloque1->nrobloque= nroBloqueNodo1;
+							setbloque1->contenidoBloque=contenido;
+							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
+							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
+							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia1, mensaje,tamanioSetBloque);
+
+							SetBloque *setbloque2= malloc(sizeof(SetBloque));
+							setbloque2->nrobloque= nroBloqueNodo2;
+							setbloque2->contenidoBloque=contenido;
+							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
+							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
+							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia2, mensaje2,tamanioSetBloque2);
+
+                             i++;
+
+                            free(mensaje);
+                            free(mensaje2);
+						}
+					}
 
 
 					}
@@ -123,7 +155,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 			}
 
 		}
-}
+
 
 void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
 	Paquete * paqueteEnvioDeBloque;
