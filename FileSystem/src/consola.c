@@ -115,6 +115,7 @@ void consolaFileSystem(){
 					compararComando=false;
 					printf(" \n");
 
+					//cargarArchivos();
 					cantArchivos = 0;
 					cargarDirectorios();
 
@@ -179,6 +180,10 @@ void consolaFileSystem(){
 								list_remove(tabla_de_archivos[indice].ubicaciones,0);
 								count++;
 							}
+
+							strcpy(tabla_de_archivos[indice].nombre,"deleted");
+							strcpy(tabla_de_archivos[indice].tipo,"deleted");
+
 
 							cantArchivos--;
 
@@ -399,7 +404,35 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], CPBLOCK)){
 					compararComando=false;
-					//hacer el comando
+
+					//empieza el comando
+
+					/*
+					int count = 0;
+					int status;
+					int indice = pathToIndiceArchivo(comandos[1]);
+					int bloqueArchivo = atoi(comandos[2]); //parte del archivo que voy a copiar
+					int nodo = atoi(comandos[3]); //nodo donde lo voy a copiar
+					int cantBloques = list_size(tabla_de_archivos[indice].bloques);
+					UbicacionBloquesArchivo* bloques;
+
+					while(count<cantBloques){
+						bloques = list_get(tabla_de_archivos[indice].ubicaciones,count);
+						if(bloques->parteDelArchivo == bloqueArchivo){
+							break;
+						}
+						count++;
+					}
+
+					int cantNodos = list_size(tabla_de_nodos.listaNodos);
+
+					count = 0;
+
+					while(count){
+
+					}
+					*/
+
 				}
 			}
 

@@ -361,12 +361,15 @@ int newArchivo(){
 	 */
 
 	int count = 0;
-	char* texto = "texto";
 	while(count<100){
-	if(tabla_de_archivos[count].directorio>2 && tabla_de_archivos[count].directorio<100){
-		count++;
+
+		if(strcmp(tabla_de_archivos[count].nombre,"deleted")==0){
+			return(count);
 		}
-	else return(count);
+		if(tabla_de_archivos[count].directorio>2 && tabla_de_archivos[count].directorio<99){
+			count++;
+		}
+		else return(count);
 	}
 
 	return(count);
@@ -514,7 +517,7 @@ int pathToIndiceArchivo(char* path){
 
 	while(count<100){
 
-		if(strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio == directorio){
+		if(strcmp(tabla_de_archivos[count].nombre,nombre)==0){
 			return(count);
 		}
 		count++;
@@ -553,7 +556,7 @@ int cambiarNombreArchivo(char* rutaLocal, char* nombreNew){
 
 	while(count<100){
 
-		if( strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio ==directorio){
+		if( strcmp(tabla_de_archivos[count].nombre,nombre)==0){
 			strcpy(tabla_de_archivos[count].nombre,nombreNew);
 			return(1);
 		}
@@ -610,9 +613,8 @@ int moverArchivo(char* rutaLocal, char* newRutaLocal){
 
 	while(count<100){
 
-		if( strcmp(tabla_de_archivos[count].nombre,nombre) && tabla_de_archivos[count].directorio==directorio){
-			strcpy(tabla_de_archivos[count].nombre,"deleted");
-			strcpy(tabla_de_archivos[count].tipo,"deleted");
+		if( strcmp(tabla_de_archivos[count].nombre,nombre)==0){
+			tabla_de_archivos[count].directorio = directorio;
 			return(1);
 		}
 		count++;

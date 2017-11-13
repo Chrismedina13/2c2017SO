@@ -16,16 +16,6 @@ int main(int argc, char *argv[]) {
 	//Recibir Nodos
 	cargarNodos();
 
-	//probando
-
-	int status;
-
-	int indiceArchivo = newArchivo();
-
-	//parte el archivo en bloques
-
-	//probando
-
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
