@@ -84,14 +84,16 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 					}else{
 						logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje "hola soy data node"
 
+
+/*
 						t_list* list_info_workers = list_create();
-												while(h< cantNodos){
+												while(h< cantNodos)
 												 recv(FD_Cliente, buffer_ipWorker,4,0);
 												 int codigo = deserializarINT(buffer_ipWorker);
 												 logInfo("Recibi de DATA NODE el codigo : %i", codigo);
 												 mensajesRecibidosDeDN(codigo,FD_Cliente);
 											   	 h++;
-												}
+
 
 												 //
 
@@ -146,28 +148,36 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 						                            free(mensaje);
 						                            free(mensaje2);
+
+
 												}
-}
+									}
+
+									*/
+
+					}
+
+
                        //getbloque
-                 // char * nrobloque = malloc(sizeof(int));
-                //  int bloque=5;
-                // nrobloque = serialize_int(bloque);
-                //  int tamanio=strlen(nrobloque);
+                  char * nrobloque = malloc(sizeof(int));
+                  int bloque=5;
+                nrobloque = serialize_int(bloque);
+                 int tamanio=strlen(nrobloque);
 
-                 // mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
-
-
-					//	SetBloque *bloque2 = malloc(sizeof(SetBloque));
-					//	bloque2->nrobloque=6;
-					//	bloque2->contenidoBloque="bloque del archivo";
-					//	char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
-                     //   mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
-					//	int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
-					//	mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
+                  mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
 
 
-					//free(nrobloque);
-					//	free(mensaje);
+						SetBloque *bloque2 = malloc(sizeof(SetBloque));
+						bloque2->nrobloque=6;
+						bloque2->contenidoBloque="bloque del archivo";
+						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
+                        mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
+						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
+						mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
+
+
+					free(nrobloque);
+						free(mensaje);
 
 
 					}
@@ -176,7 +186,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 				}
 			}
 
-		}
+
 
 
 void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
