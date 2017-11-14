@@ -160,7 +160,7 @@ int bloquesLibres(bloques_nodo* nodo){
 	return libres;
 }
 
-int actualizarBitmapDelNodo(bloques_nodo* nodo){
+int ocuparBloqueBitMap(bloques_nodo* nodo){ // en desuso, reemplazada por buscarBloqueVacio
 	int i;
 	for(i=0;i<20;i++){
 		if(nodo->bitmap[i] == 0){
@@ -289,7 +289,7 @@ int showBitMap(t_list* Mapa_de_bits){
 	return(1);
 }
 
-int actualizarBitMap(nodo, desplazamiento){
+int liberarBloqueBitMap(nodo, desplazamiento){
 
 	/*Recibe un nodo y un bloque dentro del nodo
 	* devuleve 1 si lo pone en 0

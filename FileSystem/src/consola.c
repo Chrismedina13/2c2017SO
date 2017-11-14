@@ -174,8 +174,8 @@ void consolaFileSystem(){
 
 								UbicacionBloquesArchivo* ubicacion = list_get(tabla_de_archivos[indice].ubicaciones,0);
 
-								actualizarBitMap(ubicacion->ubicacionCopia1.nodo,ubicacion->ubicacionCopia1.desplazamiento);
-								actualizarBitMap(ubicacion->ubicacionCopia2.nodo,ubicacion->ubicacionCopia2.desplazamiento);
+								liberarBloqueBitMap(ubicacion->ubicacionCopia1.nodo,ubicacion->ubicacionCopia1.desplazamiento);
+								liberarBloqueBitMap(ubicacion->ubicacionCopia2.nodo,ubicacion->ubicacionCopia2.desplazamiento);
 
 								list_remove(tabla_de_archivos[indice].ubicaciones,0);
 								count++;
@@ -219,12 +219,12 @@ void consolaFileSystem(){
 						status = ultimaCopia(indice,bloqueArchivo);
 						if(status==1){
 							if(numeroCopia == 1){
-								actualizarBitMap(bloques->ubicacionCopia1.nodo,bloques->ubicacionCopia1.desplazamiento);
+								liberarBloqueBitMap(bloques->ubicacionCopia1.nodo,bloques->ubicacionCopia1.desplazamiento);
 								bloques->ubicacionCopia1.nodo = -1;
 								bloques->ubicacionCopia1.desplazamiento = -1;
 							}
 							if(numeroCopia == 2){
-								actualizarBitMap(bloques->ubicacionCopia2.nodo,bloques->ubicacionCopia2.desplazamiento);
+								liberarBloqueBitMap(bloques->ubicacionCopia2.nodo,bloques->ubicacionCopia2.desplazamiento);
 								bloques->ubicacionCopia2.nodo = -1;
 								bloques->ubicacionCopia2.desplazamiento = -1;
 							}
@@ -398,6 +398,17 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], CPTO)){
 					compararComando=false;
 					//hacer el comando
+
+					//cpto [path_archivo_yamafs] [directorio_filesystem] - Copiar un archivo local desde el yamafs
+
+					//buscar todas las partes
+
+					//va pidiendo a los DN los bloques
+
+					//va poniendo los char* por orden en un buffer
+
+					//une todos los char*
+
 				}
 			}
 
@@ -407,32 +418,60 @@ void consolaFileSystem(){
 
 					//empieza el comando
 
-					/*
 					int count = 0;
 					int status;
-					int indice = pathToIndiceArchivo(comandos[1]);
-					int bloqueArchivo = atoi(comandos[2]); //parte del archivo que voy a copiar
-					int nodo = atoi(comandos[3]); //nodo donde lo voy a copiar
-					int cantBloques = list_size(tabla_de_archivos[indice].bloques);
+					int indiceArchivo = pathToIndiceArchivo(comandos[1]);
+					int parteArchivo = atoi(comandos[2]); //parte del archivo que voy a copiar
+					int nodoACopiar = atoi(comandos[3]); //nodo donde lo voy a copiar
+					int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
 					UbicacionBloquesArchivo* bloques;
+					bloques_nodo* nodos;
 
-					while(count<cantBloques){
-						bloques = list_get(tabla_de_archivos[indice].ubicaciones,count);
-						if(bloques->parteDelArchivo == bloqueArchivo){
-							break;
+					if(ultimaCopia(indiceArchivo, parteArchivo)==-1){
+
+						while(count<cantBloques){
+							bloques = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+							if(bloques->parteDelArchivo == parteArchivo){
+								break;
+							}
+							count++;
 						}
-						count++;
+
+
+						int cantNodos = list_size(tabla_de_nodos.listaNodos);
+						int desplazamiento;
+
+						count = 0;
+
+						while(count<cantNodos){
+							nodos = list_get(tabla_de_nodos.listaCapacidadNodos,count);
+							if(nodos->idNodo == nodoACopiar){
+								desplazamiento = buscarBloqueVacio(nodos);
+								break;
+							}
+							count++;
+						}
+
+						if(bloques->ubicacionCopia1.nodo==-1){
+							bloques->ubicacionCopia1.nodo = nodoACopiar;
+							bloques->ubicacionCopia1.desplazamiento = desplazamiento;
+						}
+						if(bloques->ubicacionCopia2.nodo==-1){
+							bloques->ubicacionCopia2.nodo = nodoACopiar;
+							bloques->ubicacionCopia2.desplazamiento = desplazamiento;
+						}
+
+						//mandar bloque al dataNode
+
+						logInfo("El bloque fue copiado con exito.");
+
 					}
-
-					int cantNodos = list_size(tabla_de_nodos.listaNodos);
-
-					count = 0;
-
-					while(count){
-
+					if(ultimaCopia(indiceArchivo, parteArchivo)==1){
+						logInfo("El bloque ya tiene 2 copias en dataNode distintos.");
 					}
-					*/
-
+					else{
+						logInfo("El bloque no pudo ser encontrado.");
+					}
 				}
 			}
 
