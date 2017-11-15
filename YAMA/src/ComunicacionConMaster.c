@@ -132,12 +132,9 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		logInfo("Se recibio el nombre del archivo: %s de tamanio %i", mensaje,
 				tamanio);
 
-		//creo una tabla  de estados para el master
-		//crear_tabla_estados(FDMaster, mensaje);
 		Job* job = crearJOB(FDMaster,mensaje);
-		list_add(listaDeJobs, job);
 
-		agregarJObACola(mensaje);
+		agregarJObACola(job);
 		sem_post(&semaforoYAMA);
 		break;
 

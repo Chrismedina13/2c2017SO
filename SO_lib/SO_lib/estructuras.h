@@ -23,8 +23,14 @@ typedef struct job{
 	int master; //FD del master que me mando el job
 	char* nombreDelArchivo; //nombre del archivo del job
 	int identificadorJob; //numero que se le asigno al job
-
 }Job;
+
+typedef struct jobCompleto{
+
+	Job* job; //Puntero a una estructura JOB
+	t_list* ubicacionDeLasPartesDelJOB;
+	t_list* respuestaDePlanificacion;
+}JOBCompleto;
 
 
 typedef struct RespuestaTransformacionYAMA {
@@ -84,7 +90,7 @@ t_list * listaUbicaciones;
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 		int carga,int bloque);
 void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo);
-RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
+RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(int nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal);
 Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje);
@@ -97,6 +103,10 @@ UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int b
 		,int copia2Nodo,int copia2Bloque);
 
 void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
+JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes, t_list* listaDePlanificacion);
+int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
+int tamanioJOB(Job* job);
+
 
 
 

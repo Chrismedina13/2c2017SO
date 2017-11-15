@@ -45,12 +45,11 @@ void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi){
 }
 
 
-RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(char* nodo,
+RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(int nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal) {
 
-	RespuestaTransformacionYAMA* respuesta = malloc(
-			sizeof(RespuestaTransformacionYAMA));
+	RespuestaTransformacionYAMA* respuesta = malloc((sizeof(int)*4) + strlen(ipWorker) + strlen(archivoTemporal));
 	respuesta->archivoTemporal = archivoTemporal;
 	respuesta->nodo = nodo;
 	respuesta->puertoWorker = puertoWorker;
@@ -119,3 +118,39 @@ int enviarPaquete(int fileDescriptor, Paquete *package) {
 		return 1;
 	} //SI ESTA OK
 }
+
+int tamanioJOB(Job* job){
+
+	return 8 + strlen(job->nombreDelArchivo);
+}
+
+int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta){
+
+	int a = 0;
+	int tamanio = 0;
+	while(a < list_size(listaDeRespuesta)){
+
+		RespuestaTransformacionYAMA* respuesta = list_get(listaDeRespuesta,a);
+		tamanio += strlen(respuesta->archivoTemporal) + (sizeof(int)*4) + strlen(respuesta->ipWorkwer) ;
+		a++;
+	}
+
+	return tamanio;
+
+}
+
+
+
+JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes, t_list* listaDePlanificacion){
+
+	JOBCompleto* jobCompleto = malloc(tamanioJOB(job)
+			+ 24*list_size(listaDeUbicacionPartes)
+			+ tamanioRespuestaTransformacionYAMA(listaDePlanificacion));
+
+	jobCompleto->job = job; // Ya reserve memoria antes en crear job fijarse al probar
+	jobCompleto->ubicacionDeLasPartesDelJOB = listaDeUbicacionPartes;
+	jobCompleto->respuestaDePlanificacion = listaDePlanificacion;
+	return jobCompleto;
+}
+
+

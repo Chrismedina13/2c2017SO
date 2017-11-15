@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
 Job* crearJOB(int FDMAster,char* nombreDelJob){
 
-    	Job* job = malloc((sizeof(int)*2)+(sizeof(char)*strlen(nombreDelJob)));
+    	Job* job = malloc((sizeof(int)*2)+strlen(nombreDelJob));
     	job->master = FDMAster;
     	job->nombreDelArchivo = nombreDelJob;
     	job->identificadorJob = generarNumeroAleatorioNoRepetido();

@@ -62,7 +62,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	logInfo("Creando Planificacion de prueba");
 
-	/*t_list* listaDeWorkersAPlanificar = list_create();
+	t_list* listaDeWorkersAPlanificar = list_create();
 	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(0, 12, 1, 12,
 			2, 13);
 	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1, 100, 3, 20,
@@ -71,16 +71,26 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 			3, 19);
 	list_add(listaDeWorkersAPlanificar, ubi1);
 	list_add(listaDeWorkersAPlanificar, ubi2);
-	list_add(listaDeWorkersAPlanificar, ubi3);*/
+	list_add(listaDeWorkersAPlanificar, ubi3);
 
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
-	//planificar(listaDeWorkersAPlanificar, param->algoritmo,
-		//	param->disponibilidadBase, jobAEjecutar);
+	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,
+			param->algoritmo,param->disponibilidadBase, jobAEjecutar);
+
+
+
+	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar,planificacionDelJOb);
+	list_add(listaDeJobs,jobCompleto);
 
 	logInfo("Actualizar Tabla Global");
 
+
 }
+
+
+
+
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip, char* algoritmo, int disponiblidadBase) {
