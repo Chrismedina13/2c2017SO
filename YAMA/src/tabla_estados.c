@@ -37,3 +37,36 @@ void actualizarTablaDeEstados(int job,int master,int nodo,int bloque,int aModifi
 		a++;
 	}
 }
+
+t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* etapa,char* arch_temp,char* estado){
+
+	t_reg* registro = malloc((sizeof(int)*4)+strlen(etapa)+strlen(arch_temp)+strlen(estado));
+	registro->job= job;
+	registro->master = master;
+	registro->job = nodo;
+	registro->bloque = bloque;
+	registro->etapa = arch_temp;
+	registro->estado = estado;
+
+	return registro;
+
+}
+
+
+void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
+
+	int i = 0;
+	while(i<list_size(jobCompleto->respuestaDePlanificacion)){
+
+		RespuestaTransformacionYAMA* respuesta = list_get(jobCompleto->respuestaDePlanificacion,i);
+
+		t_reg* registro = crearRegistroTablaGlobal(jobCompleto->job->identificadorJob,jobCompleto->job->master,
+				respuesta->nodo,respuesta->bloque,"TRANSFORMACION",respuesta->archivoTemporal,"EN PROCESO");
+
+		list_add(tabla_estados,registro);
+
+		i++;
+
+	}
+
+}

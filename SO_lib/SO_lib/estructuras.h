@@ -34,7 +34,7 @@ typedef struct jobCompleto{
 
 
 typedef struct RespuestaTransformacionYAMA {
-	char* nodo;
+	int nodo;
 	int puertoWorker;
 	char* ipWorkwer;
 	int bloque;

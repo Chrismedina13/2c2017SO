@@ -11,6 +11,7 @@
 #include <commons/collections/queue.h>
 #include "planificacionYAMA.h"
 #include "SO_lib/Protocolo.h"
+#include "ComunicacionConMaster.h"
 
 typedef struct ParametrosComunicacionConFileSystem {
 	int puerto;

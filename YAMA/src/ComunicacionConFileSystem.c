@@ -39,7 +39,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 Recibiria
 	 BLOQUE | copia  | copia 2 | bytes ocupados
 	 */
-	int tamanioEstructura, tamanio;
+	/*int tamanioEstructura, tamanio;
 	char* estructura;
 	char* mensaje;
 
@@ -58,7 +58,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 		t_list* listaDeWorkersAPlanificar = list_create();
 		//t_list* listaDeWorkersAPlanificar = deserializarLISTA(estructura);//FALTA HACER
 
-	}
+	}*/
 
 	logInfo("Creando Planificacion de prueba");
 
@@ -78,12 +78,23 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,
 			param->algoritmo,param->disponibilidadBase, jobAEjecutar);
 
+	/*en esta parte se serializaria el mensaje y se mandaria al master
+	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
 
 
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar,planificacionDelJOb);
-	list_add(listaDeJobs,jobCompleto);
+
 
 	logInfo("Actualizar Tabla Global");
+	ingresarDatosATablaGlobal(jobCompleto);
+
+	/* //Se serializaria la lista
+	serializarRespuestaTransformacionYAMA();
+*/
+
+	mensajesEnviadosAMaster(SOL_TRANSFORMACION,jobCompleto->job->master,"Aca va la estructura serializazada","Tamanio");
+
+	list_add(listaDeJobs,jobCompleto);
 
 
 }
