@@ -27,10 +27,13 @@
 #include "commons/string.h"
 #include <dirent.h>
 #include "commons/collections/list.h"
+#include <semaphore.h>
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
 
+//semaforos
 
+sem_t SEMAFORODATANODE;
 
 //tabla de directorios
 

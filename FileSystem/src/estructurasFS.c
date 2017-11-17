@@ -590,7 +590,7 @@ int moverArchivo(char* rutaLocal, char* newRutaLocal){
 		}
 
 	FILE * newfp = fopen(newRutaLocal, "w");
-		if (!fp) {
+		if (!newfp) {
 			  perror("Error al crear el Archivo");
 			  return (-1);
 			}

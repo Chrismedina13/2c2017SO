@@ -62,6 +62,9 @@ char* getStdinString() {
 }
 
 void consolaFileSystem(){
+
+		sem_wait(SEMAFORODATANODE);
+
 		bool compararComando;
 
 		while(true){
@@ -377,10 +380,26 @@ void consolaFileSystem(){
 
 					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
 
+					int cantBloques = list_size(bloquesDeTexto);
+
 					//le pasa los bloques a los nodos
 
 					t_list* ubicaciones; //tipo ubicacionBloquesArchivo
 					ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
+
+					int count = 0;
+
+					while(count<cantBloques){
+
+						char* bloque = list_get(bloquesDeTexto,count);
+						UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
+
+						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, bloque, 1024*1024);
+						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, bloque, 1024*1024);
+
+						count++;
+
+					}
 
 					//crea registro del archivo en YAMAFS
 
@@ -408,6 +427,31 @@ void consolaFileSystem(){
 					//va poniendo los char* por orden en un buffer
 
 					//une todos los char*
+
+					char* rutaYAMA = comandos[1];
+					char* rutaLocal = comandos[2];
+					int indexArchivo = pathToIndiceArchivo(rutaYAMA);
+
+					char* bloque = malloc(1024*1024);
+					UbicacionBloquesArchivo* ubicacion;
+
+					int count = 0;
+					int cantBloques = list_size(tabla_de_archivos[indexArchivo].bloques);
+
+					FILE * fp = fopen(rutaLocal, "w+");
+					if (!fp) {
+					  perror("Error al crear el Archivo");
+					}
+
+					while(count<cantBloques){
+
+						bloque = list_get(tabla_de_archivos[indexArchivo].bloques,count);
+						fputs("%s", bloque);
+						count++;
+					}
+
+					free(bloque);
+
 
 				}
 			}
@@ -460,10 +504,16 @@ void consolaFileSystem(){
 							bloques->ubicacionCopia2.nodo = nodoACopiar;
 							bloques->ubicacionCopia2.desplazamiento = desplazamiento;
 						}
+						else{
+							logInfo("La parte del Archivo ya posee 2 copias en distintos DN.");
+						}
 
-						//mandar bloque al dataNode
+						char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,count);
+
+						mensajesEnviadosADataNode(SET_BLOQUE, nodoACopiar, bloque, 1024*1024);
 
 						logInfo("El bloque fue copiado con exito.");
+
 
 					}
 					if(ultimaCopia(indiceArchivo, parteArchivo)==1){
