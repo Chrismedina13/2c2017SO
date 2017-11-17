@@ -15,6 +15,7 @@ nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 	nodoAPlanificar->disponibilidad = disponibilidad;
 	nodoAPlanificar->carga = carga;
 	nodoAPlanificar->partesDelArchivo = list_create();
+	nodoAPlanificar->partesAplanificar = list_create();
 	list_add(nodoAPlanificar->partesDelArchivo,parteDeArchivo);
 	return nodoAPlanificar;
 // Hacer un destruir de esto

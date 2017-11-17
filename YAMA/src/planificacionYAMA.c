@@ -109,8 +109,8 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 
 	nodoConMayorDisponibilidadClock(nodosFinalesAPLanificar); //me devulve la lista ordenada segun la dispo y la carga
 
-
-	int t,desplazamientoPuntero = 0;
+	int t = 0;
+	int desplazamientoPuntero = 0;
 	int indexParaActualizar;// me devuelve donde tengo que actualizar segun el punteroauxiliar
 
 
@@ -243,8 +243,23 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 
 	nodosFinalesAPLanificar = dev_nodos_a_planificar();
 
-	logInfo("La lista de workers a planificar son %i",
-			list_size(nodosFinalesAPLanificar));
+	int l = 0;
+	int m = 0;
+	while(l < list_size(nodosFinalesAPLanificar)){
+
+		nodoParaPlanificar* nodin = list_get(nodosFinalesAPLanificar,l);
+		while(m < list_size(nodin->partesDelArchivo)){
+
+			int parte = list_get(nodin->partesDelArchivo,m);
+
+			logInfo("El nodo %i tiene a la parte %i", nodin->nodo,parte);
+
+			m++;
+		}
+		m=0;
+
+		l++;
+	}
 
 	nodoParaPlanificar* punteroClock;
 	nodoParaPlanificar* punteroClockAuxiliar;
@@ -252,12 +267,21 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	nodoConMayorDisponibilidadClock(nodosFinalesAPLanificar); //me devulve la lista ordenada segun la dispo y la carga
 	//Con los punteros ,Nodos finales a planificar y partes del archivo
 
-	int t,desplazamientoPuntero = 0;
+	int j = 0;
+	while( j< list_size(nodosFinalesAPLanificar)){
+		nodoParaPlanificar* nodos = list_get(nodosFinalesAPLanificar,j);
+		logInfo("Ordenamiento : %i",nodos->nodo);
+		j++;
+	}
+
+	int t = 0;
+	int desplazamientoPuntero = 0;
 	int indexParaActualizar;// me devuelve donde tengo que actualizar segun el punteroauxiliar
 
 	logInfo("Asignando partes a planificar a los nodos");
+	logInfo("%i",list_size(partesDelArchivo));
 
-	while (t < list_size(partesDelArchivo)) {
+	while(t < list_size(partesDelArchivo)){
 
 		int parte = list_get(partesDelArchivo, t);
 		punteroClock = list_get(nodosFinalesAPLanificar, desplazamientoPuntero);
@@ -285,7 +309,6 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodoAActualizar->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
 					t ++;
-					desplazamientoPuntero ++;
 
 				}else{
 					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
@@ -293,7 +316,6 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodo->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
 					t ++;
-					desplazamientoPuntero ++;
 
 				}
 			}
@@ -324,20 +346,36 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodoAActualizar->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
 					t ++;
-					desplazamientoPuntero ++;
-
 				}else{
 					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
 					nodo->disponibilidad --;
 					list_add(nodo->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
 					t ++;
-					desplazamientoPuntero ++;
 
 				}
 			}
 
 		}
+	}
+
+
+	int o = 0;
+	int p = 0;
+	while(o < list_size(nodosFinalesAPLanificar)){
+
+		nodoParaPlanificar* nodin = list_get(nodosFinalesAPLanificar,o);
+		while(p < list_size(nodin->partesAplanificar)){
+
+			int parte = list_get(nodin->partesAplanificar,p);
+
+			logInfo("El nodo %i tiene que planificar la parte %i", nodin->nodo,parte);
+
+			p++;
+		}
+		p=0;
+
+		o++;
 	}
 
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
@@ -400,7 +438,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 					list_size(listaDeWorkerTotales));
 		} else {
 			//si ya esta el nodo en la lista, agrega una parte de archivo
-			agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
+			agregarPartedeArchivoANodo(nodo2, bloque->parteDelArchivo);
 		}
 
 		a++;
@@ -476,6 +514,8 @@ int nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
 }
 
 bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
+
+	logInfo("%i",nodo->nodo);
 
 	int posicionPartesDelArchivo = 0;
 	while(posicionPartesDelArchivo < list_size(nodo->partesDelArchivo)){
@@ -592,7 +632,10 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 	int a = 0;
 	while(a < list_size(nodosFinalesAPLanificar)){
 
+
+
 		nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,a);
+		logInfo("%i",list_size(nodo->partesAplanificar));
 		nodo->carga += list_size(nodo->partesAplanificar);
 		list_add_in_index(nodosFinalesAPLanificar,a,nodo);
 
