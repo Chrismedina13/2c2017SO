@@ -5,6 +5,7 @@
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
 	Job* jobAEjecutar;
+	char pesoCodigo[4];
 
 	int FDsocketClienteFileSystem;
 	FDsocketClienteFileSystem = lib_SocketCliente(param->ip, param->puerto);
@@ -18,7 +19,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	sem_wait(&semaforoYAMA);
 	jobAEjecutar = retirarJobDeLista();
 	logInfo("el job a ejecutar es: %s", jobAEjecutar->nombreDelArchivo);
+
 	// Pediria a FS los bloques del job y ejecutaria la planificacion
+
 	int tamanioJOB = strlen(jobAEjecutar->nombreDelArchivo);
 
 	logInfo("%i", tamanioJOB);
@@ -39,26 +42,33 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 Recibiria
 	 BLOQUE | copia  | copia 2 | bytes ocupados
 	 */
+	recv(FDsocketClienteFileSystem, pesoCodigo, 4, 0);
+	int codigo = deserializarINT(pesoCodigo);
+
+	logInfo("Recibi de FS: %i", codigo);
+
+	mensajesRecibidosDeFS(codigo, FDsocketClienteFileSystem);
+
 	/*int tamanioEstructura, tamanio;
-	char* estructura;
-	char* mensaje;
+	 char* estructura;
+	 char* mensaje;
 
 
-	recv(FDsocketClienteFileSystem, estructura, tamanioEstructura, 0);
-	tamanio = deserializarINT(tamanioEstructura);
+	 recv(FDsocketClienteFileSystem, estructura, tamanioEstructura, 0);
+	 tamanio = deserializarINT(tamanioEstructura);
 
-	logInfo("Tamanio de lo que recibo %i", tamanio);
+	 logInfo("Tamanio de lo que recibo %i", tamanio);
 
-	mensaje = malloc(tamanio + 1);
+	 mensaje = malloc(tamanio + 1);
 
-	if (recv(FDsocketClienteFileSystem, estructura, tamanio, 0) == -1) {
-		logInfo(
-				"Error en la recepcion de la lista de Bloques que componen el archivo.");
-	} else {
-		t_list* listaDeWorkersAPlanificar = list_create();
-		//t_list* listaDeWorkersAPlanificar = deserializarLISTA(estructura);//FALTA HACER
+	 if (recv(FDsocketClienteFileSystem, estructura, tamanio, 0) == -1) {
+	 logInfo(
+	 "Error en la recepcion de la lista de Bloques que componen el archivo.");
+	 } else {
+	 t_list* listaDeWorkersAPlanificar = list_create();
+	 //t_list* listaDeWorkersAPlanificar = deserializarLISTA(estructura);//FALTA HACER
 
-	}*/
+	 }*/
 
 	logInfo("Creando Planificacion de prueba");
 
@@ -76,32 +86,27 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
 	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,
-			param->algoritmo,param->disponibilidadBase, jobAEjecutar);
+			param->algoritmo, param->disponibilidadBase, jobAEjecutar);
 
 	/*en esta parte se serializaria el mensaje y se mandaria al master
 	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
 
-
-	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar,planificacionDelJOb);
-
+	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
+			listaDeWorkersAPlanificar, planificacionDelJOb);
 
 	logInfo("Actualizar Tabla Global");
 	ingresarDatosATablaGlobal(jobCompleto);
 
 	/* //Se serializaria la lista
-	serializarRespuestaTransformacionYAMA();
-*/
+	 serializarRespuestaTransformacionYAMA();
+	 */
 
-	mensajesEnviadosAMaster(SOL_TRANSFORMACION,jobCompleto->job->master,"Aca va la estructura serializazada","Tamanio");
+	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
+			"Aca va la estructura serializazada", "Tamanio");
 
-	list_add(listaDeJobs,jobCompleto);
-
+	list_add(listaDeJobs, jobCompleto);
 
 }
-
-
-
-
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip, char* algoritmo, int disponiblidadBase) {
@@ -114,3 +119,33 @@ ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 	return parametros;
 }
 
+void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
+//Yama recibe de FILESYSTEM
+	int tamanioEstructura, tamanio;
+	char* mensaje; //en este caso el mensaje es la lista de bloques del archivo
+
+	switch (codigo) {
+	case UBICACION_BLOQUES:
+
+		recv(FDsocketClienteFileSystem, mensaje, tamanioEstructura, 0);
+		tamanio = deserializarINT(tamanioEstructura);
+
+		logInfo("Tamanio de lo que recibo %i", tamanio);
+
+		mensaje = malloc(tamanio + 1);
+
+		if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
+			logInfo(
+					"Error en la recepcion de la lista de Bloques que componen el archivo.");
+		} else {
+			//t_list* listaDeWorkersAPlanificar = list_create();
+			t_list* listaDeWorkersAPlanificar =
+					deserializarUbicacionBloquesArchivos(mensaje);
+			logInfo(
+					"Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
+					tamanio);
+
+		}
+
+	}
+}
