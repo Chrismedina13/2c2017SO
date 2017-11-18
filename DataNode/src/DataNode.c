@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
 	logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
 
 
-	if(send(FDsocketClienteFileSystem,"Hola soy DATANODE",17,0) != -1){
+	if(send(FDsocketClienteFileSystem,"Hola soy DATANODE",20,0) != -1){
 		logInfo("Se mando mensaje a FS correctamente");
 	}
 

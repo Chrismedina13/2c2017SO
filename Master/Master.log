@@ -18,3 +18,13 @@
 [INFO] 23:55:35:174 MASTER/(15417:15421): Ingrese JOB a Ejecutar
 [INFO] 23:55:42:477 MASTER/(15417:15421): Se va a ejecutar holacamila.txt
 [INFO] 23:55:42:477 MASTER/(15417:15421): 14
+[INFO] 16:37:17:415 MASTER/(8193:8193): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:37:17:419 MASTER/(8193:8193): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:37:17:419 MASTER/(8193:8193): Creando el hilo para comunicarme con Yama
+[INFO] 16:37:17:419 MASTER/(8193:8193): SocketCliente Worker= -1 
+
+[INFO] 16:37:17:422 MASTER/(8193:8197): Ingrese JOB a Ejecutar
+[INFO] 16:37:28:417 MASTER/(8193:8197): Se va a ejecutar ere
+[INFO] 16:37:28:418 MASTER/(8193:8197): 3

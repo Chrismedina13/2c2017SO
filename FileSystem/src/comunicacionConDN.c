@@ -13,6 +13,7 @@
 
 
 
+
 void comunicacionDN(ParametrosComunicacion* parametros){
 
 	int socketWorkerServidor;
@@ -24,17 +25,18 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	int i;
 	int FD_Cliente;
 	int bytesRecibidos;
-	char buffer[20];
+	char* buffer = malloc(20);
     char buffer_ipWorker[4];
 	int cantBloques=20;
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 	int cantNodos= config->cant_nodos;
+	//sem_init(&cantNodosAux,0,cantNodos);
 	int cantArchivos = config->cant_archivos;
 	int h=0;
 	int index_archivo;
 
 
-
+	logInfo("Probando");
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
 
@@ -70,14 +72,16 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 			else{
 
 				//Recibo datos de algun cliente
+				bytesRecibidos = recv(i,buffer,20,0);
 
-
-				if((bytesRecibidos = recv(i,buffer,20,0)) <= 0){
+				if( bytesRecibidos <= 0){
 
 					if(bytesRecibidos == 0){
 						logInfo("Conexion cerrada del FD : %i",i);
 
 					}
+
+
 					close(i);
 					FD_CLR(i,&master);
 
@@ -85,23 +89,23 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 				else{
 					logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje "hola soy data node"
 
-/*
 
-					t_list* list_info_workers = list_create();
+
+/*					t_list* list_info_workers = list_create();
 					while(h< cantNodos)recv(FD_Cliente, buffer_ipWorker,4,0);
 					int codigo = deserializarINT(buffer_ipWorker);
 					logInfo("Recibi de DATA NODE el codigo : %i", codigo);
 					mensajesRecibidosDeDN(codigo,FD_Cliente);
 					h++;
 
-
+*/
 					//
 
 					tabla_de_nodos.listaNodos = list_create();
 					tabla_de_nodos.listaCapacidadNodos = list_create();
 					cargarNodos2(FD_Cliente);
 
-					//sem_post(SEMAFORODATANODE);
+//					sem_post(&cantNodosAux);
 
 					//esto seria un while por cada archivo
 
@@ -132,7 +136,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 							char * contenido = list_get(listaBloques, i);
 
-							SetBloque *setbloque1= malloc(sizeof(SetBloque));
+							SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
 							setbloque1->nrobloque= nroBloqueNodo1;
 							setbloque1->contenidoBloque=contenido;
 							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
@@ -140,7 +144,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
 							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia1, mensaje,tamanioSetBloque);
 
-							SetBloque *setbloque2= malloc(sizeof(SetBloque));
+							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
 							setbloque2->nrobloque= nroBloqueNodo2;
 							setbloque2->contenidoBloque=contenido;
 							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
@@ -157,10 +161,10 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						}
 					}
 
-*/
+
 				}
 
-
+/*
 				//getbloque
 				char * nrobloque = malloc(sizeof(int));
 				int bloque=5;
@@ -181,7 +185,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 				free(nrobloque);
 				free(mensaje);
-
+*/
 
 			}
 		}
@@ -306,7 +310,16 @@ void cargarNodos2(int idNodo){
 
 		list_add(tabla_de_nodos.listaNodos,idNodo);
 
-		bloques_nodo* nodo1 = malloc(sizeof(bloques_nodo));
+		int* nodos;
+		int cantidad = list_size(tabla_de_nodos.listaNodos);
+		int count = 0;
+
+		while(count<cantidad){
+			nodos = list_get(tabla_de_nodos.listaNodos, count);
+			logInfo("%d", nodos);
+		}
+
+		bloques_nodo* nodo1 = malloc(sizeof(int)*23);
 		nodo1->idNodo=idNodo;
 		nodo1->bloquesTotales=20;
 		nodo1->bloquesLibres=20; // falta ver q pasa con un nodo viejo
