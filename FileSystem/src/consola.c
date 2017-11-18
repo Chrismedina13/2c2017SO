@@ -63,7 +63,7 @@ char* getStdinString() {
 
 void consolaFileSystem(){
 
-		sem_wait(SEMAFORODATANODE);
+		sem_wait(&cantNodosAux);
 
 		bool compararComando;
 

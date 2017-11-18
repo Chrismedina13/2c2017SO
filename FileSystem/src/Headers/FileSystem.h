@@ -34,6 +34,7 @@
 //semaforos
 
 sem_t SEMAFORODATANODE;
+sem_t cantNodosAux;
 
 //tabla de directorios
 
