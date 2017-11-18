@@ -23,5 +23,6 @@ typedef struct ParametrosComunicacionConFileSystem {
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* parametros);
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip,char* algoritmo,int disponiblidadBase);
+void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem);
 
 #endif /* HEADERS_COMUNICACIONCONFILESYSTEM_H_ */
