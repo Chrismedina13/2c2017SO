@@ -10,13 +10,13 @@ void agregarReguistroATablaDeEstados(t_reg* reg){
 
 // si es 1 aModificar es la etapa, si es 2 aModificar es el estado
 
-void actualizarTablaDeEstados(int job,int master,int nodo,int bloque,int aModificar,char* modificado){
+void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* modificado){
 
 	int a = 0;
 	while( a < list_size(tabla_estados)){
 
 		t_reg* registro = list_remove(tabla_estados,a);
-		if(registro->job == job && registro->master == master && registro->nodo == nodo && registro->bloque == bloque){
+		if(registro->job == job && registro->master == master && registro->nodo == nodo){
 
 			if(aModificar == 1){
 

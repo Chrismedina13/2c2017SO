@@ -130,6 +130,8 @@ void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo);
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(int nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal);
+RespuestaReduccionLocal* crearRespuestaReduccionLocal(int nodo,int puertoWorker,
+		char* ipWorker,t_list* archivosDeTransformacion, char* archivoReduccionLocal);
 Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje);
 void destruirPaquete(Paquete* package);
 size_t sizePackage(Paquete *package);

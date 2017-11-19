@@ -30,6 +30,10 @@ t_list* listaDeWorkerTotales;
 t_list* listaDeJobs;
 t_list* ipYPuertoWoerkers;
 int variableGlobalIdentificador;
+int variableNombreTransformacion;
+int VariableReduccionLocal;
+int variableReduciionGlobal;
+
 
 Job* crearJOB(int FDMAster,char* nombreDelJob);
 

@@ -121,7 +121,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
-	int nodoQueTerminoReduccionGlobal;
+    RespuestaReduccionLocal* RRL;
+
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
 		recv(FDMaster, pesoMensaje, 4, 0);
@@ -152,6 +153,17 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		recv(FDMaster, mensaje, tamanio, 0);
 
 		finTransformacion* finTransformacion = deserializarFinTransformacion(mensaje);
+
+		actualizarTablaDeEstados(finTransformacion->numeroDeJob,FDMaster,finTransformacion->nodo,2,"OK");
+
+		// armar Respuesta de reduccion local
+		RRL = repuestaTransformacionLocal(finTransformacion,FDMaster);
+
+		//serializarRespuestaReduccionLocal(RRL);
+		//mensajesEnviadosAMaster();
+
+
+
 
 
 		break;
@@ -189,6 +201,42 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	default:
 		logInfo("YAMA recibe un señal que no sabe traducir.");
 		break;
+	}
+}
+
+
+RespuestaReduccionLocal* repuestaTransformacionLocal(finTransformacion* fin,int master){
+
+	int i = 0;
+	int j = 0;
+	t_list* archivosTransformacion = list_create();
+	int puerto;
+	char* ip;
+	char* ArchivoreduccionLocal;
+
+	while(i < list_size(listaDeJobs)){
+
+		JOBCompleto* jobCompleto = list_get(listaDeJobs,i);
+		if(fin->numeroDeJob == jobCompleto->job->identificadorJob && master == jobCompleto->job->master){
+			while(j < list_size(jobCompleto->respuestaDePlanificacion)){
+				RespuestaTransformacionYAMA * respuestaTransformacion = list_get(jobCompleto->respuestaDePlanificacion,j);
+
+				if(respuestaTransformacion->nodo == fin->nodo){
+
+					ip = respuestaTransformacion->ipWorkwer;
+					puerto = respuestaTransformacion->puertoWorker;
+					list_add(archivosTransformacion,respuestaTransformacion->archivoTemporal);
+
+				}
+				j++;
+			}
+
+			VariableReduccionLocal++;
+			ArchivoreduccionLocal = generarNombreArchivoReduccionLocal(VariableReduccionLocal);
+			return crearRespuestaReduccionLocal(fin->nodo,puerto,ip,archivosTransformacion,ArchivoreduccionLocal);
+
+		}
+
 	}
 }
 

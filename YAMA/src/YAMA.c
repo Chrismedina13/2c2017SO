@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
 	listaDeJobs = list_create();
 	ipYPuertoWoerkers = list_create();
 	variableGlobalIdentificador = 0;
+	variableNombreTransformacion = 0;
+	variableReduciionGlobal = 0;
+	VariableReduccionLocal = 0;
 
 	sem_init(&semaforoYAMA,0,0);
 	tabla_estados = list_create();

@@ -7,6 +7,33 @@
 
 #include "estructuras.h"
 
+RespuestaReduccionLocal* crearRespuestaReduccionLocal(int nodo,int puertoWorker,
+		char* ipWorker,t_list* archivosDeTransformacion, char* archivoReduccionLocal){
+	int i = 0;
+	int tamanioArchivosTransformacion = 0;
+	while(i < list_size(archivosDeTransformacion)){
+
+		char* archivo = list_get(archivosDeTransformacion,i);
+		tamanioArchivosTransformacion += strlen(archivo);
+
+		i++;
+	}
+
+	RespuestaReduccionLocal* respuesta = malloc((sizeof(int)*2)+strlen(ipWorker)+ strlen(archivoReduccionLocal) + tamanioArchivosTransformacion);
+
+	respuesta->nodo = nodo;
+	respuesta->puertoWorker = puertoWorker;
+	respuesta->ipWorker = ipWorker;
+	respuesta->archivosDeTransformacion = archivosDeTransformacion;
+	respuesta->archivoReduccionLocal = archivoReduccionLocal;
+
+	return respuesta;
+
+}
+
+
+
+
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 		int carga, int parteDeArchivo) {
 
