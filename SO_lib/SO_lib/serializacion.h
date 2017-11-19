@@ -52,5 +52,11 @@ char * serializarListaRespuestaTransf(t_list * lista);
 
 t_list * deserializarListaRespuestaTransf(char * listaSerializada);
 
+char* serializarFinTransformacion(finTransformacion* fin);
+
+finTransformacion * deserializarFinTransformacion(char* FT);
+
+
+
 #endif
 

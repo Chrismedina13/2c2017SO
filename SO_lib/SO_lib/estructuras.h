@@ -18,6 +18,13 @@
 
 //int DISTRIBUCION_NODOS=0;
 
+typedef struct finTransformacion{
+
+	int nodo;
+	int numeroDeJob;
+
+}finTransformacion;
+
 typedef struct job{
 
 	int master; //FD del master que me mando el job
@@ -42,6 +49,36 @@ typedef struct RespuestaTransformacionYAMA {
 	char* archivoTemporal;
 
 } RespuestaTransformacionYAMA;
+
+typedef struct respuestaReduccionLocal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	t_list* archivosDeTransformacion;
+	char* archivoReduccionLocal;
+}RespuestaReduccionLocal;
+
+typedef struct respuestaReduccionGlobal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	char* archivoReduccionLocal;
+	char* archivoReduccionGlobal;
+	bool encargado;
+}RespuestaReduccionGlobal;
+
+
+typedef struct repuestaAlmacenadoFinal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	char* archivoDeReduccionGlobal;
+
+}respuestaAlmacenadoFinal;
+
 
 //paquete para mandar y recibir mensajes
 typedef struct Paquete {

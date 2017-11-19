@@ -108,6 +108,7 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 	case SOL_REDUCCION_GLOBAL:
 		logInfo("YAMA envia a Master solicitud de Reducción Global");
 
+
 		break;
 	case SOL_ALMACENADO_FINAL:
 		logInfo("YAMA envia a Master solicitud de Almacenado Final");
@@ -120,7 +121,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
-
+	int nodoQueTerminoReduccionGlobal;
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
 		recv(FDMaster, pesoMensaje, 4, 0);
@@ -134,6 +135,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		Job* job = crearJOB(FDMaster,mensaje);
 
+		//enviarAMasterElnumeroDejob
+
 		agregarJObACola(job);
 		sem_post(&semaforoYAMA);
 		break;
@@ -145,7 +148,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		logInfo("tamanio de lo que recibo %i", tamanio);
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
+
 		recv(FDMaster, mensaje, tamanio, 0);
+
+		finTransformacion* finTransformacion = deserializarFinTransformacion(mensaje);
+
 
 		break;
 

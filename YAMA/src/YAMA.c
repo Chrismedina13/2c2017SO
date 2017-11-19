@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
 	listaDeWorkerTotales = list_create();
 	listaDeJobs = list_create();
 	ipYPuertoWoerkers = list_create();
+	variableGlobalIdentificador = 0;
 
 	sem_init(&semaforoYAMA,0,0);
 	tabla_estados = list_create();
@@ -58,7 +59,7 @@ Job* crearJOB(int FDMAster,char* nombreDelJob){
     	Job* job = malloc((sizeof(int)*2)+strlen(nombreDelJob));
     	job->master = FDMAster;
     	job->nombreDelArchivo = nombreDelJob;
-    	job->identificadorJob = generarNumeroAleatorioNoRepetido();
+    	job->identificadorJob = variableGlobalIdentificador++;
     	return job;
 
 

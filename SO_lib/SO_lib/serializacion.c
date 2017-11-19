@@ -250,3 +250,22 @@ t_list * deserializarListaRespuestaTransf(char * listaSerializada) {
 
 	return (Lista);
 }
+
+char* serializarFinTransformacion(finTransformacion* fin){
+
+	int desplazamiento = 0;
+	char* finTransformcaionSerializado = malloc(sizeof(int) * 2);
+	serializarDato(finTransformcaionSerializado,&(fin->nodo),sizeof(int),&desplazamiento);
+	serializarDato(finTransformcaionSerializado,&(fin->numeroDeJob),sizeof(int),&desplazamiento);
+	return(finTransformcaionSerializado);
+}
+
+finTransformacion * deserializarFinTransformacion(char* FT){
+
+	int desplazamiento;
+	finTransformacion* fin = malloc(sizeof(int)*2);
+	deserializarDato(&(FT),fin->nodo,sizeof(int),&desplazamiento);
+	deserializarDato(&(FT),fin->numeroDeJob,sizeof(int),&desplazamiento);
+	return fin;
+
+}

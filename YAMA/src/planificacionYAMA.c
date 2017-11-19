@@ -635,7 +635,6 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 
 
 		nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,a);
-		logInfo("%i",list_size(nodo->partesAplanificar));
 		nodo->carga += list_size(nodo->partesAplanificar);
 		list_add_in_index(nodosFinalesAPLanificar,a,nodo);
 
@@ -706,6 +705,7 @@ int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar){
 			a++;
 
 		}
+
 	}
 
 	logInfo("no se encontro bytes ocupados del archivo");
