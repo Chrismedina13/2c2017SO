@@ -173,12 +173,36 @@ JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes, t_list* 
 
 	JOBCompleto* jobCompleto = malloc(tamanioJOB(job)
 			+ 24*list_size(listaDeUbicacionPartes)
-			+ tamanioRespuestaTransformacionYAMA(listaDePlanificacion));
+			+ tamanioRespuestaTransformacionYAMA(listaDePlanificacion) + (sizeof(t_list)*2));
 
 	jobCompleto->job = job; // Ya reserve memoria antes en crear job fijarse al probar
 	jobCompleto->ubicacionDeLasPartesDelJOB = listaDeUbicacionPartes;
 	jobCompleto->respuestaDePlanificacion = listaDePlanificacion;
+	jobCompleto->respuestaReduccionLocal = list_create();
+	jobCompleto->respuesReduciionGlobal = list_create();
 	return jobCompleto;
 }
 
+
+RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
+		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado){
+
+	RespuestaReduccionGlobal* RRG = malloc((sizeof(int)*2) + strlen(ipWorker + strlen(archivoReduccionLocal) +
+		strlen(archivoReduccionGlobal) + sizeof(bool)));
+
+	RRG->nodo = nodo;
+	RRG->puertoWorker = puertoWorker;
+	RRG->ipWorker = ipWorker;
+	RRG->archivoReduccionLocal = archivoReduccionLocal;
+	if(encargado == true){
+
+		RRG->archivoReduccionGlobal = archivoReduccionGlobal;
+		RRG->encargado = true;
+	}else{
+		RRG->archivoReduccionGlobal = NULL;
+		RRG->encargado = false;
+		}
+
+	return RRG;
+}
 

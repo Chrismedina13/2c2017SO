@@ -19,5 +19,6 @@ void agregarReguistroATablaDeEstados(t_reg* reg);
 void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* modificado);
 t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* etapa,char* arch_temp,char* estado);
 void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto);
+void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal* RRL,int numeroMaster);
 
 

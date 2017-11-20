@@ -63,10 +63,18 @@ void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
 		t_reg* registro = crearRegistroTablaGlobal(jobCompleto->job->identificadorJob,jobCompleto->job->master,
 				respuesta->nodo,respuesta->bloque,"TRANSFORMACION",respuesta->archivoTemporal,"EN PROCESO");
 
-		list_add(tabla_estados,registro);
-
+		agregarReguistroATablaDeEstados(registro);
 		i++;
 
 	}
 
+}
+
+// si bloque es 0, Para la entradas de Reduccion Local no tiene bloque
+void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal* RRL,int numeroMaster){
+
+	t_reg* registro = crearRegistroTablaGlobal(ft->numeroDeJob,numeroMaster,
+			ft->nodo,0,"REDUCCION LOCAL",RRL->archivoReduccionLocal,"EN  PROCESO");
+
+	agregarReguistroATablaDeEstados(registro);
 }
