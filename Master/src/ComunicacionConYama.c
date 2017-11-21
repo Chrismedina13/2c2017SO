@@ -1,4 +1,5 @@
 #include "Headers/ComunicacionConYama.h"
+#include "Headers/ComunicacionConWorker.h"
 #include "SO_lib/estructuras.h"
 
 void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
@@ -30,6 +31,7 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 	parametros->puertoYAMA = puerto;
 	return parametros;
 }
+
 void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,
 		int tamanio) {
 	switch (codigo) {
@@ -129,14 +131,30 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 		} else {
 
-			t_list* listaDeWorkersAPlanificar =
+			t_list* listaDeWorkers =
 					deserializarListaRespuestaTransf(mensaje);
 			logInfo(
 					"Se recibió de forma correcta la a Estructura Respuesta Transf .",
 					tamanio);
+			/*una vez que MASTER recibe los workers a planificar crea un hilo
+			por cada nodo de la lista, es decir por cada woker */
+			int i;
+			RespuestaTransformacionYAMA* respuesta;
+			for (i = 0; list_size(listaDeWorkers); i++) {
+				logInfo("Creando hilos para comunicacion con WORKERS.");
 
+					pthread_t hiloWorker;
+
+					ParametrosComunicacionWoker* parametrosWorker = setParametrosComunicacionConWoker(respuesta->puertoWorker,respuesta->ipWorkwer);
+
+					pthread_create(&hiloWorker,NULL,(void*) comunicacionConWoker, parametrosWorker);
+
+					pthread_join(hiloWorker,NULL);
+
+
+			}
 		}
-		//deserealizar
+
 
 		break;
 	case SOL_REDUCCION_LOCAL:
