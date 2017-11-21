@@ -123,6 +123,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	char* mensaje;
     RespuestaReduccionLocal* RRL;
     int numeroDeJobFinalReduccionLocal;
+    t_list* RRG;
 
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
@@ -155,11 +156,9 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		finTransformacion* finTransformacion = deserializarFinTransformacion(mensaje);
 
-		//actualizar tabla estados
 		actualizarTablaDeEstados(finTransformacion->numeroDeJob,FDMaster,finTransformacion->nodo,2,"OK");
 
-		// armar Respuesta de reduccion local
-		RRL = repuestaTransformacionLocal(finTransformacion,FDMaster);
+		RRL = respuestaReduccionLocal(finTransformacion,FDMaster);
 
 		//serializarRespuestaReduccionLocal(RRL);
 		//mensajesEnviadosAMaster();
@@ -180,11 +179,15 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		recv(FDMaster, mensaje, tamanio, 0);
 		numeroDeJobFinalReduccionLocal = deserializarINT(mensaje);
 
-		//respuestaDeTransformacionGlobal(numeroDeJobFinalReduccionLocal,FDMaster);
+		actualizarTablaDeEstadosFinReduccionLocal(FDMaster,numeroDeJobFinalReduccionLocal);
 
+		RRG = respuestaReduccionGlobal(numeroDeJobFinalReduccionLocal,FDMaster);
 
+		//serializarRespuestaReduccionLocal(RRL);
 
+		//mensajesEnviadosAMaster();
 
+		crearEntradasReduccionGlobal(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 
 		break;
 
@@ -214,7 +217,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 }
 
 
-RespuestaReduccionLocal* repuestaTransformacionLocal(finTransformacion* fin,int master){
+RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int master){
 
 	int i = 0;
 	int j = 0;
@@ -252,20 +255,16 @@ RespuestaReduccionLocal* repuestaTransformacionLocal(finTransformacion* fin,int 
 
 		i++;
 	}
-
 	return NULL;
 }
 
-
 //devuelve una lista de respuestas de trnasformaciones globales
-
-
 t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 	int i = 0;
 	int j = 0;
 	int nodoConMenorCarga;
-	t_list* respuestaReduccionGlobal;
+	t_list* respuestaReduccionGlobal = list_create();
 	char* nombreArchivoReduccionGlobal;
 
 	while(i<list_size(listaDeJobs)){
@@ -284,19 +283,18 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 				variableReduciionGlobal++;
 				nombreArchivoReduccionGlobal = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
 
-				RespuestaReduccionGlobal* reduccionGlobal = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
+				RespuestaReduccionGlobal* respuestaRGEncargado = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
 				reduccionLocal->puertoWorker,reduccionLocal->ipWorker,reduccionLocal->archivoReduccionLocal,nombreArchivoReduccionGlobal,true);
 
-				list_add(respuestaReduccionGlobal,reduccionGlobal);
+				list_add(respuestaReduccionGlobal,respuestaRGEncargado);
 
 				}else{
 
-				RespuestaReduccionGlobal* reduccionGlobal = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
+				RespuestaReduccionGlobal* respuestaRGNoencargado = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
 				reduccionLocal->puertoWorker,reduccionLocal->ipWorker,reduccionLocal->archivoReduccionLocal,"No es encargado",false);
 
-				list_add(respuestaReduccionGlobal,reduccionGlobal);
-
-				}
+				list_add(respuestaReduccionGlobal,respuestaRGNoencargado);
+			}
 			jobAModificar->respuesReduciionGlobal = respuestaReduccionGlobal;
 			list_add_in_index(listaDeJobs,i,jobAModificar);
 
@@ -306,27 +304,39 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 		}
 		i++;
 	}
-
 	return NULL;
 }
 
-
-/*
 int nodoConMenorCargaDeTrabajo(JOBCompleto* jobC){
 
 	int i= 0;
 	int nodoConMenorTrabajo = 0;
 
-	while(i < list_size(jobC->respuestaReduccionLocal)){
-		RespuestaReduccionLocal* RRL = list_get(jobC->respuestaReduccionLocal,i);
+	while(i < (list_size(jobC->respuestaReduccionLocal) -1)){
+		RespuestaReduccionLocal* RRL1 = list_get(jobC->respuestaReduccionLocal,i);
+		RespuestaReduccionLocal* RRL2 = list_get(jobC->respuestaReduccionLocal,(i+1));
+		if(cargaDeTrabajoDelNodo(RRL1->nodo) <= cargaDeTrabajoDelNodo(RRL2->nodo)){
 
-
-
+			nodoConMenorTrabajo = RRL1->nodo;
+		}else{
+			nodoConMenorTrabajo = RRL2->nodo;
+		}
 	}
-
-
-
-
+	return nodoConMenorTrabajo;
 }
 
-*/
+int cargaDeTrabajoDelNodo(int nodo){
+
+	int i = 0;
+	while(i < list_size(listaDeWorkerTotales)){
+		nodoParaPlanificar* n = list_get(listaDeWorkerTotales,i);
+		if(n->nodo == nodo){
+
+			return n->carga;
+		}else{
+
+			i++;
+		}
+	}
+	return NULL;
+}

@@ -67,7 +67,6 @@ void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
 		i++;
 
 	}
-
 }
 
 // si bloque es 0, Para la entradas de Reduccion Local no tiene bloque
@@ -77,4 +76,36 @@ void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal
 			ft->nodo,0,"REDUCCION LOCAL",RRL->archivoReduccionLocal,"EN  PROCESO");
 
 	agregarReguistroATablaDeEstados(registro);
+}
+
+
+void actualizarTablaDeEstadosFinReduccionLocal(int master,int job){
+
+	int i = 0;
+	while(i < list_size(tabla_estados)){
+		t_reg* registroACosultar = list_get(tabla_estados,i);
+		if(registroACosultar->master == master && registroACosultar->job == job && registroACosultar->etapa == "REDUCCION LOCAL"){
+			t_reg* registroAModificar  = list_remove(tabla_estados,i);
+			registroAModificar->estado = "OK";
+			list_add_in_index(tabla_estados,i,registroAModificar);
+		}else{
+
+			i++;
+		}
+	}
+}
+
+void crearEntradasReduccionGlobal(t_list* RRG,int master,int job){
+
+	int i = 0;
+	while(i<list_size(RRG)){
+		RespuestaReduccionGlobal* respuesta = list_get(RRG,i);
+
+		t_reg* registro = crearRegistroTablaGlobal(job,master,
+				respuesta->nodo,0,"REDUCCION GLOBAL",respuesta->archivoReduccionGlobal,"EN  PROCESO");
+
+		agregarReguistroATablaDeEstados(registro);
+
+		i++;
+	}
 }
