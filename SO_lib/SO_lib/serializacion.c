@@ -176,8 +176,8 @@ char * serializarLista_info_workers(t_list * listaWorkers) {
 	Info_Workers * nodo;
 
 	for (i = 0; list_size(listaWorkers); i++) {
-		nodo = list_get(ListaSerializada, i);
-		ListaSerializada = strcat(ListaSerializada,
+		nodo = list_get(listaWorkers, i);
+		strcat(ListaSerializada,
 				serializarInfoWorker(nodo->puerto, nodo->ipWorker));
 	}
 	return (ListaSerializada);
@@ -251,21 +251,80 @@ t_list * deserializarListaRespuestaTransf(char * listaSerializada) {
 	return (Lista);
 }
 
-char* serializarFinTransformacion(finTransformacion* fin){
+char* serializarFinTransformacion(finTransformacion* fin) {
 
 	int desplazamiento = 0;
 	char* finTransformcaionSerializado = malloc(sizeof(int) * 2);
-	serializarDato(finTransformcaionSerializado,&(fin->nodo),sizeof(int),&desplazamiento);
-	serializarDato(finTransformcaionSerializado,&(fin->numeroDeJob),sizeof(int),&desplazamiento);
-	return(finTransformcaionSerializado);
+	serializarDato(finTransformcaionSerializado, &(fin->nodo), sizeof(int),
+			&desplazamiento);
+	serializarDato(finTransformcaionSerializado, &(fin->numeroDeJob),
+			sizeof(int), &desplazamiento);
+	return (finTransformcaionSerializado);
 }
 
-finTransformacion * deserializarFinTransformacion(char* FT){
+finTransformacion * deserializarFinTransformacion(char* FT) {
 
 	int desplazamiento;
-	finTransformacion* fin = malloc(sizeof(int)*2);
-	deserializarDato(&(FT),fin->nodo,sizeof(int),&desplazamiento);
-	deserializarDato(&(FT),fin->numeroDeJob,sizeof(int),&desplazamiento);
+	finTransformacion* fin = malloc(sizeof(int) * 2);
+	deserializarDato(&(FT), fin->nodo, sizeof(int), &desplazamiento);
+	deserializarDato(&(FT), fin->numeroDeJob, sizeof(int), &desplazamiento);
 	return fin;
 
 }
+//serializacion para la estructura datos_transformacion
+char* serializarDatosTransf(int bloque, int bytesOcupados,
+		char* archivoTemporal) {
+	char* rtaSerializada = malloc((sizeof(int) * 2 + sizeof(char*)));
+	int desplazamiento = 0;
+	serializarDato(rtaSerializada, &(bloque), sizeof(int), &desplazamiento);
+	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
+			&desplazamiento);
+	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
+			&desplazamiento);
+
+	return (rtaSerializada);
+
+}
+
+datos_transformacion *deserializarDatosTransf(char* rtaSerializada) {
+	datos_transformacion * datos = malloc(sizeof(int) * 2 + sizeof(char*));
+	int desplazamiento = 0;
+
+	deserializarDato(&(datos->bloque), rtaSerializada, sizeof(int),
+			&desplazamiento);
+	deserializarDato(&(datos->bytesOcupados), rtaSerializada, sizeof(int),
+			&desplazamiento);
+	datos->archivoTemporal = strdup(rtaSerializada + desplazamiento);
+
+	return (datos);
+
+}
+
+char * serializarListaTemp(t_list * lista) {
+	int i;
+	char* ListaSerializada;
+	char * contenido;
+
+	for (i = 0; list_size(lista); i++) {
+
+		contenido = list_get(lista, i);
+
+		strcat(ListaSerializada,contenido);
+	}
+	return (ListaSerializada);
+}
+//falta hacer la deserrealizar de la lista de char*
+/*t_list * deserializarListaTemp(char * lista) {
+	int i;
+	t_list * Lista;
+
+	char * despl;
+	for (i = 0; i<sizeof(lista); (i + sizeof(datos_Reduccion))) {
+		despl = string_substring(lista, i,
+				sizeof(Info_Workers));
+		datos_Reduccion = deserializarInfoWorker(despl);
+		list_add(Lista, infoworkers);
+	}
+
+	return (Lista);
+}*/

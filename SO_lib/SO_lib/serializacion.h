@@ -56,7 +56,12 @@ char* serializarFinTransformacion(finTransformacion* fin);
 
 finTransformacion * deserializarFinTransformacion(char* FT);
 
+char* serializarDatosTransf(int bloque, int bytesOcupados,
+		char* archivoTemporal);
 
+datos_transformacion *deserializarDatosTransf(char* rtaSerializada);
+
+char * serializarListaTemp(t_list * lista);
 
 #endif
 

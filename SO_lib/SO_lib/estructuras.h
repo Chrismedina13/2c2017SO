@@ -122,6 +122,17 @@ typedef struct Info_Workers{
 	char * ipWorker;
 }Info_Workers;
 
+typedef struct datos_transformacion{
+	int bloque;
+	int bytesOcupados;
+	char* archivoTemporal;
+}datos_transformacion;//estructura que se manda entre Master y los Workers
+
+typedef struct datos_Reduccion{
+	t_list* listaDeTemporales;
+	char* archivoTemporal;
+}datos_Reduccion;//estructura que se manda entre Master y los Workers
+
 t_list * list_info_workers;
 t_list * listaUbicaciones;
 

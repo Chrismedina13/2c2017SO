@@ -9,6 +9,9 @@
 #include "logWorker.h"
 #include "commons/collections/list.h"
 #include "SO_lib/sockets.h"
+#include "SO_lib/Protocolo.h"
+#include "SO_lib/estructuras.h"
+#include "SO_lib/serializacion.h"
 
 //#define  CONEXIONES_MAXIMAS 100 //PUDE MODIFICARSE SEGUN LO QUE PIDAN
 
