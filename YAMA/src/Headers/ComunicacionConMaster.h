@@ -27,6 +27,7 @@ RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int mast
 t_list* respuestaReduccionGlobal(int numeroDeJob,int master);
 int nodoConMenorCargaDeTrabajo(JOBCompleto* jobC);
 int cargaDeTrabajoDelNodo(int nodo);
+respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master);
 
 
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

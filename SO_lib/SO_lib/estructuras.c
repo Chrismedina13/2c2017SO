@@ -206,7 +206,7 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 	return RRG;
 }
 
-respuestaAlmacenadoFinal* crearRespuestaAlmacenamientoGlobal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal){
+respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal){
 
 	respuestaAlmacenadoFinal* RAF = malloc((sizeof(int)*2)+ strlen(ip) + strlen(archivoReduccionGlobal));
 

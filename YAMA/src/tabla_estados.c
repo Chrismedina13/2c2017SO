@@ -127,3 +127,12 @@ void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master){
 
 	}
 }
+
+
+void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransformacion* ft,int master){
+
+
+	t_reg* registro = crearRegistroTablaGlobal(ft->numeroDeJob,master,
+			RAF->nodo,0,"ALMACENADO FINAL",RAF->archivoDeReduccionGlobal,"EN  PROCESO");
+
+}
