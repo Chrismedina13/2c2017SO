@@ -40,25 +40,27 @@ int main(int argc, char *argv[]) {
 	FDsocketClienteFileSystem = lib_SocketCliente(config->ipFileSystem,config->puertoFileSystem);
 
 	logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
+     char* saludo = "HOLA, SOY DATA NODE";
+     int tamanioSaludo = strlen(saludo);
+     mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludo,tamanioSaludo);
 
-
-	if(send(FDsocketClienteFileSystem,"Hola soy DATANODE",20,0) != -1){
-		logInfo("Se mando mensaje a FS correctamente");
-	}
+	//if(send(FDsocketClienteFileSystem,"Hola soy DATANODE",20,0) != -1){
+		//logInfo("Se mando mensaje a FS correctamente");
+//	}
 
 	//mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
 
 
-	recv(FDsocketClienteFileSystem, buffer,4,0);
-	int codigo = deserializarINT(buffer);
-	logInfo("Recibi de FS el codigo : %i", codigo);
-	mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
+	//recv(FDsocketClienteFileSystem, buffer,4,0);
+	//int codigo = deserializarINT(buffer);
+	//logInfo("Recibi de FS el codigo : %i", codigo);
+	//mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
 
 
-	recv(FDsocketClienteFileSystem, bufferBloque,4, 0);
-	int codigo2 =deserializarINT(bufferBloque);
-	logInfo("Recibi de FS el codigo : %i", codigo2);
-	mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
+	//recv(FDsocketClienteFileSystem, bufferBloque,4, 0);
+	//int codigo2 =deserializarINT(bufferBloque);
+	//logInfo("Recibi de FS el codigo : %i", codigo2);
+//	mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
 
 
 
@@ -142,6 +144,16 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 	Paquete * paqueteEnvio;
 	switch (codigo) {
 
+	case SALUDO:
+      logInfo("se manda a file system el saludo");
+		paqueteEnvio = crearPaquete(SALUDO, tamanio,mensaje);
+				if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
+					logInfo("ERROR EN EL ENVIO DE SALUDO");
+				}
+
+				destruirPaquete(paqueteEnvio);
+				free(mensaje);
+				break;
 	case IP_NODO:
 
 			paqueteEnvio = crearPaquete(IP_NODO, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
@@ -174,7 +186,7 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 		paqueteEnvio= crearPaquete(GET_BLOQUE, tamanio,mensaje);
 
 		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
-			logInfo("Error en envio de respuesta de Transformacion.");
+			logInfo("Error en envio de contenido del bloque.");
 		}
 
 		destruirPaquete(paqueteEnvio);

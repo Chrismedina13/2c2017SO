@@ -15,16 +15,15 @@
 
 
 void comunicacionDN(ParametrosComunicacion* parametros){
+	tabla_de_nodos.listaNodos = list_create();
+	tabla_de_nodos.listaCapacidadNodos = list_create();
 
-	int socketWorkerServidor;
-	socketWorkerServidor = lib_socketServidor(parametros->puertoFS_dn);
+	int socketFSServidor;
+	socketFSServidor = lib_socketServidor(parametros->puertoFS_dn);
 
-	fd_set master;
-	fd_set read_fds;
-	int fd_max;
-	int i;
-	int FD_Cliente;
-	int bytesRecibidos;
+
+
+
 	char* buffer = malloc(20);
     char buffer_ipWorker[4];
 	int cantBloques=20;
@@ -36,162 +35,71 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	int index_archivo;
 
 
-	logInfo("Probando");
-	FD_SET(socketWorkerServidor,&master);
-	fd_max = socketWorkerServidor;
+	//Creo Servidor Principal
 
-	for(;;){
+	fd_set master;
+	fd_set read_fds;
+	int fd_max;
+	int i;
+	int FD_Cliente;
+	int bytesRecibidos;
+	char buffer2[4];
+
+	FD_SET(socketFSServidor, &master);
+	fd_max = socketFSServidor;
+
+	for (;;) {
 
 		read_fds = master;
-		if(select(fd_max+1, &read_fds,NULL,NULL,NULL) == -1){
+		if (select(fd_max + 1, &read_fds, NULL, NULL, NULL) == -1) {
 
 			logInfo("Error en el select");
 		}
-		for(i = 0;i <= fd_max; i++){
+		for (i = 0; i <= fd_max; i++) {
 
-			if(FD_ISSET(i,&read_fds)){
+			if (FD_ISSET(i, &read_fds)) {
 
-				if(i == socketWorkerServidor){
+				if (i == socketFSServidor) {
 
-					if((FD_Cliente = lib_aceptarYRegistrarSocket(socketWorkerServidor)) == -1){
+					if ((FD_Cliente = lib_aceptarYRegistrarSocket(
+							socketFSServidor)) == -1) {
 
 						logInfo("Error en el aceept despues del select");
 
-					}
-					else{
-						FD_SET(FD_Cliente,&master);
-						if(FD_Cliente > fd_max){
+					} else {
+						FD_SET(FD_Cliente, &master);
+						if (FD_Cliente > fd_max) {
 							fd_max = FD_Cliente;
 						}
-						logInfo("Nueva conexion del socket cliente DataNode de FD: %i",FD_Cliente); //FD_cliente es mi id_nodo
+						logInfo(
+								"Nueva conexion del socket cliente Master de FD: %i",
+								FD_Cliente);
 					}
-				}
+				} else {
 
-			}
-
-			else{
-
-				//Recibo datos de algun cliente
-				bytesRecibidos = recv(i,buffer,20,0);
-
-				if( bytesRecibidos <= 0){
-
-					if(bytesRecibidos == 0){
-						logInfo("Conexion cerrada del FD : %i",i);
-
-					}
-
-
-					close(i);
-					FD_CLR(i,&master);
-
-				}
-				else{
-					logInfo("Recibi de DATANODE: %s",buffer); // buffer es el mensaje "hola soy data node"
-
-
-
-/*					t_list* list_info_workers = list_create();
-					while(h< cantNodos)recv(FD_Cliente, buffer_ipWorker,4,0);
-					int codigo = deserializarINT(buffer_ipWorker);
-					logInfo("Recibi de DATA NODE el codigo : %i", codigo);
-					mensajesRecibidosDeDN(codigo,FD_Cliente);
-					h++;
-
-*/
-					//
-
-					tabla_de_nodos.listaNodos = list_create();
-					tabla_de_nodos.listaCapacidadNodos = list_create();
-					cargarNodos2(FD_Cliente);
-
-//					sem_post(&cantNodosAux);
-
-					//esto seria un while por cada archivo
-
-
-					index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
-					if(index_archivo==-1){
-						logInfo("RUTA DE ARCHIVO INVALIDA");
-					}
-
-					else{
-						logInfo("PARTIENDO ARCHIVO ....");
-						t_list *	listaBloques=list_create();
-						t_list *    listaUbicacionesDelBloque=list_create();
-
-						listaUbicacionesDelBloque=	tabla_de_archivos[index_archivo].ubicaciones; //lista de ubicacionbloquesArchivo
-						listaBloques=	tabla_de_archivos[index_archivo].bloques; // lista de bloques de char *
-
-						i=0;
-						while(i<list_size(listaBloques)){
-
-							UbicacionBloquesArchivo * ubicacionbloquesarchivo;
-							ubicacionbloquesarchivo= list_get(listaUbicacionesDelBloque,i);
-							int idNodoCopia1=ubicacionbloquesarchivo->ubicacionCopia1.nodo;
-							int idNodoCopia2=ubicacionbloquesarchivo->ubicacionCopia2.nodo;
-
-							int nroBloqueNodo1= ubicacionbloquesarchivo->ubicacionCopia1.desplazamiento;
-							int nroBloqueNodo2= ubicacionbloquesarchivo->ubicacionCopia2.desplazamiento;
-
-							char * contenido = list_get(listaBloques, i);
-
-							SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
-							setbloque1->nrobloque= nroBloqueNodo1;
-							setbloque1->contenidoBloque=contenido;
-							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
-							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
-							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
-							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia1, mensaje,tamanioSetBloque);
-
-							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
-							setbloque2->nrobloque= nroBloqueNodo2;
-							setbloque2->contenidoBloque=contenido;
-							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
-							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
-							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
-							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia2, mensaje2,tamanioSetBloque2);
-
-							i++;
-
-							free(mensaje);
-							free(mensaje2);
-
-
+					//Recibo datos de algun cliente
+					if ((bytesRecibidos = recv(i, buffer2, 4, 0)) <= 0) {
+						if (bytesRecibidos == 0) {
+							logInfo("Conexion cerrada del FD : %i", i);
 						}
+						close(i);
+						FD_CLR(i, &master);
+
+					} else {
+
+						int codigo = deserializarINT(buffer2);
+						logInfo("Recibi de DATA NODE: %i", codigo);
+						mensajesRecibidosDeDN(codigo, i);
 					}
-
-
 				}
-
-/*
-				//getbloque
-				char * nrobloque = malloc(sizeof(int));
-				int bloque=5;
-				nrobloque = serialize_int(bloque);
-				int tamanio=strlen(nrobloque);
-
-				mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
-
-
-				SetBloque *bloque2 = malloc(sizeof(SetBloque));
-				bloque2->nrobloque=6;
-				bloque2->contenidoBloque="bloque del archivo";
-				char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
-				mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
-				int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
-				mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
-
-
-				free(nrobloque);
-				free(mensaje);
-*/
 
 			}
 		}
 
 	}
 }
+
+
 
 
 void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
@@ -258,7 +166,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 		break;
 		case IP_NODO:
 
-			logInfo("FILE SYSTEM RECICE EL IP DEL WORKER");
+			logInfo("FILE SYSTEM RECIBE EL IP DEL WORKER");
 
 			recv(FD_DN, pesoMensaje,4,0);
 				tamanio = deserializarINT(pesoMensaje);
@@ -280,16 +188,41 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 	case GET_BLOQUE: //RECIBE EL BLOQUE DE DATOS.
 
 
-						recv(FD_DN,pesoMensaje,8,0);
+						recv(FD_DN,pesoMensaje,4,0);
 						tamanio= deserializarINT(pesoMensaje);
 						logInfo("tamanio de lo que recibo %i", tamanio);
-						logInfo("RECIBO DE DATA NODE CONTENIDO DE UN BLOQUE");
-						mensaje = malloc(1024*1024);
-				        recv(FD_DN, mensaje,8,0);//chequiar linea
+						mensaje = malloc(tamanio + 1);
+						mensaje[tamanio] = '\0';
+						recv(FD_DN, mensaje,tamanio,0);
+						logInfo("Se reibio el contenido de bloque: %s",  mensaje);
+
+
    //no hay que deseralizar por que el contenido es un *char
    //ver como seguir planificando con el bloque recibido
+
+
+
 				        free(mensaje);
 				        break;
+	case SALUDO: //ANDA BIEN!!!!!!!!!!!!!!!!!!!!!
+
+
+						recv(FD_DN,pesoMensaje,4,0);
+						tamanio= deserializarINT(pesoMensaje);
+						logInfo("tamanio de lo que recibo %i", tamanio);
+						mensaje = malloc(tamanio + 1);
+				        mensaje[tamanio] = '\0';
+				        recv(FD_DN, mensaje,tamanio,0);
+				    	logInfo("Se reibio el saludo:  %s ", mensaje);
+				        free(mensaje);
+
+				        cargarNodos2(FD_DN);
+
+
+				        break;
+
+	    default:
+		break;
 	}
 }
 
@@ -314,10 +247,11 @@ void cargarNodos2(int idNodo){
 		int cantidad = list_size(tabla_de_nodos.listaNodos);
 		int count = 0;
 
-		while(count<cantidad){
-			nodos = list_get(tabla_de_nodos.listaNodos, count);
-			logInfo("%d", nodos);
-		}
+	//	while(count<cantidad){
+	//		nodos = list_get(tabla_de_nodos.listaNodos, count);
+	//		logInfo("%d", nodos);
+	//		count++;
+	//	}
 
 		bloques_nodo* nodo1 = malloc(sizeof(int)*23);
 		nodo1->idNodo=idNodo;
@@ -345,3 +279,100 @@ void cargarNodos2(int idNodo){
 		//FIN EJEMPLO NODOS CARGADOS
 
 }
+
+
+
+
+/*					t_list* list_info_workers = list_create();
+					while(h< cantNodos)recv(FD_Cliente, buffer_ipWorker,4,0);
+					int codigo = deserializarINT(buffer_ipWorker);
+					logInfo("Recibi de DATA NODE el codigo : %i", codigo);
+					mensajesRecibidosDeDN(codigo,FD_Cliente);
+					h++;
+
+*/
+
+/*
+					tabla_de_nodos.listaNodos = list_create();
+					tabla_de_nodos.listaCapacidadNodos = list_create();
+					cargarNodos2(FD_Cliente);
+//
+				sem_post(&cantNodosAux);
+
+					//esto seria un while por cada archivo
+
+
+					index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
+					if(index_archivo==-1){
+						logInfo("RUTA DE ARCHIVO INVALIDA");
+					}
+
+					else{
+						logInfo("PARTIENDO ARCHIVO ....");
+						t_list *	listaBloques=list_create();
+						t_list *    listaUbicacionesDelBloque=list_create();
+
+						listaUbicacionesDelBloque=	tabla_de_archivos[index_archivo].ubicaciones; //lista de ubicacionbloquesArchivo
+						listaBloques=	tabla_de_archivos[index_archivo].bloques; // lista de bloques de char *
+
+						i=0;
+						while(i<list_size(listaBloques)){
+
+							UbicacionBloquesArchivo * ubicacionbloquesarchivo;
+							ubicacionbloquesarchivo= list_get(listaUbicacionesDelBloque,i);
+							int idNodoCopia1=ubicacionbloquesarchivo->ubicacionCopia1.nodo;
+							int idNodoCopia2=ubicacionbloquesarchivo->ubicacionCopia2.nodo;
+
+							int nroBloqueNodo1= ubicacionbloquesarchivo->ubicacionCopia1.desplazamiento;
+							int nroBloqueNodo2= ubicacionbloquesarchivo->ubicacionCopia2.desplazamiento;
+
+							char * contenido = list_get(listaBloques, i);
+
+							SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
+							setbloque1->nrobloque= nroBloqueNodo1;
+							setbloque1->contenidoBloque=contenido;
+							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
+							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
+							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia1, mensaje,tamanioSetBloque);
+
+							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
+							setbloque2->nrobloque= nroBloqueNodo2;
+							setbloque2->contenidoBloque=contenido;
+							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
+							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
+							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, idNodoCopia2, mensaje2,tamanioSetBloque2);
+
+							i++;
+
+							free(mensaje);
+							free(mensaje2);
+*/
+
+
+
+
+
+/*
+				//getbloque
+				char * nrobloque = malloc(sizeof(int));
+				int bloque=5;
+				nrobloque = serialize_int(bloque);
+				int tamanio=strlen(nrobloque);
+
+				mensajesEnviadosADataNode(GET_BLOQUE,FD_Cliente,nrobloque,sizeof(tamanio));
+
+
+				SetBloque *bloque2 = malloc(sizeof(SetBloque));
+				bloque2->nrobloque=6;
+				bloque2->contenidoBloque="bloque del archivo";
+				char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque)));
+				mensaje = serializarBloque(bloque2->nrobloque,bloque2->contenidoBloque);
+				int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(bloque2->contenidoBloque));
+				mensajesEnviadosADataNode(SET_BLOQUE, FD_Cliente, mensaje,tamanioSetBloque);
+
+
+				free(nrobloque);
+				free(mensaje);
+*/

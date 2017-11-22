@@ -27,6 +27,7 @@
 #define GET_BLOQUE 12
 #define SET_BLOQUE 10
 #define IP_NODO 14
+#define SALUDO 15
 
 
 
