@@ -1,11 +1,13 @@
 #include "Headers/ComunicacionConWorker.h"
 #include "SO_lib/estructuras.h"
 
-void comunicacionWorker(ParametrosComunicacionWoker* parametros) {
-	int FDServidorWORKER = socketServidor(parametros->puertoWoker,parametros->ipWoker);
+void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
+	int FDServidorWORKER;
+	FDServidorWORKER = lib_SocketCliente(parametros->ipWoker,parametros->puertoWoker);
 
 		printf("Se conecto un Worker su FD es el  = %d\n", FDServidorWORKER);
-	    logInfo("FD del Worker : %i \n", FDServidorWORKER);
+
+		logInfo("FD del Worker : %i \n", FDServidorWORKER);
 
 		if (send(FDServidorWORKER, "Hola WORKER", 13, 0) != -1) {
 

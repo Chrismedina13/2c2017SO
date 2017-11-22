@@ -147,7 +147,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 					ParametrosComunicacionWoker* parametrosWorker = setParametrosComunicacionConWoker(respuesta->puertoWorker,respuesta->ipWorkwer);
 
-					pthread_create(&hiloWorker,NULL,(void*) comunicacionConWoker, parametrosWorker);
+					pthread_create(&hiloWorker,NULL,comunicacionWorkers, parametrosWorker);
 
 					pthread_join(hiloWorker,NULL);
 
