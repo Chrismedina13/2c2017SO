@@ -216,7 +216,8 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 				        cargarNodos2(FD_DN);
 
-                        sem_post(cantNodosAux);
+                        sem_post(&cantNodosAux);
+
 				        break;
 
 	    default:
