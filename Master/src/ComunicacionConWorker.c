@@ -20,7 +20,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 			}
 
 }
-ParametrosComunicacionWoker* setParametrosComunicacionWoker(int puerto, char* ip) {
+ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip) {
 
 	ParametrosComunicacionWoker* parametros = malloc(
 			sizeof(ParametrosComunicacionWoker));
