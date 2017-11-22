@@ -57,10 +57,10 @@ int main(int argc, char *argv[]) {
 	//mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
 
 
-	//recv(FDsocketClienteFileSystem, bufferBloque,4, 0);
-	//int codigo2 =deserializarINT(bufferBloque);
-	//logInfo("Recibi de FS el codigo : %i", codigo2);
-//	mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
+	recv(FDsocketClienteFileSystem, bufferBloque,4, 0);
+	int codigo2 =deserializarINT(bufferBloque);
+	logInfo("Recibi de FS el codigo : %i", codigo2);
+    mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
 
 
 
