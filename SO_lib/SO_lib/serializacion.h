@@ -19,30 +19,44 @@ void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
 
 int deserializarINT(char* stream);
 
-char* serializarBloque(int numeroBloque,char* contenidoBloque);
+char* serializarBloque(int numeroBloque, char* contenidoBloque);
 
 SetBloque* deserilizarBloque(char* bloqueSerializado);
 
-
-char * serializarUbicacionBloque(UbicacionBloque  ubicacionbloque);
+char * serializarUbicacionBloque(UbicacionBloque ubicacionbloque);
 UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
 
-
 char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
-UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
+UbicacionBloquesArchivo * deserializarUbicacionArchivo(
+		char* UbicacionSerializado);
 
 char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
+
 t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
-RespuestaTransformacionYAMA  *deserializarRespuestaTransformacionYAMA(char* rtaSerializada);
-char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,char* ipWorker,int bloque, int bytesOcupados, char* archivoTemporal);
+RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
+		char* rtaSerializada);
+
+char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
+		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal);
 
 char * serializarLista_info_workers(t_list * listaWorkers);
-t_list * deserializarLista_info_workers(char * listaWorkersSerializada );
+
+t_list * deserializarLista_info_workers(char * listaWorkersSerializada);
 
 char* serializarInfoWorker(int puerto, char* ipWorker);
+
 Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
 
-#endif
+char * serializarListaRespuestaTransf(t_list * lista);
 
+t_list * deserializarListaRespuestaTransf(char * listaSerializada);
+
+char* serializarFinTransformacion(finTransformacion* fin);
+
+finTransformacion * deserializarFinTransformacion(char* FT);
+
+
+
+#endif
 

@@ -635,7 +635,6 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 
 
 		nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,a);
-		logInfo("%i",list_size(nodo->partesAplanificar));
 		nodo->carga += list_size(nodo->partesAplanificar);
 		list_add_in_index(nodosFinalesAPLanificar,a,nodo);
 
@@ -671,8 +670,8 @@ t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list*
 			Info_Workers* worker = list_get(ipYPuertoWoerkers,nodo);
 			ip =worker->ipWorker;
 			puerto = worker->puerto;
-			string_append(&archivoTemporal,"/temp/Master-");
-			string_append(&archivoTemporal,string_itoa(generarNumeroAleatorioNoRepetido()));
+			variableNombreTransformacion++;
+			archivoTemporal = generarNombreArchivoTransformacion(variableNombreTransformacion);
 
 			RespuestaTransformacionYAMA* respuesta = setRespuestaTransformacionYAMA(nodoDeLaParte,puerto,
 					ip,bloqueDeLaParte,bytesOcupadosDeLaParte,archivoTemporal);
@@ -706,6 +705,7 @@ int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar){
 			a++;
 
 		}
+
 	}
 
 	logInfo("no se encontro bytes ocupados del archivo");

@@ -31,12 +31,12 @@ int main(int argc, char *argv[]) {
 	logInfo("Comunicacion con los Masters");
 	logInfo("Comunicacion con los FILESYSTEM");
 
-	pthread_t hiloMaster;
+	///pthread_t hiloMaster;
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
-	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
+	//ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
 
-	pthread_create(&hiloMaster, NULL, (void*) comunicacionConMaster, parametrosMaster);
+	//pthread_create(&hiloMaster, NULL, (void*) comunicacionConMaster, parametrosMaster);
 
 
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
 
 	}
 
-   pthread_join(hiloMaster, NULL);
+   //pthread_join(hiloMaster, NULL);
 
 	free(config); // no estoy seguro si se libera asi
 	return EXIT_SUCCESS;

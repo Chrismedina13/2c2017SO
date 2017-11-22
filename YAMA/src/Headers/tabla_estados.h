@@ -16,8 +16,10 @@ typedef struct {
 t_list *tabla_estados;
 /*  Definicion de funciones */
 void agregarReguistroATablaDeEstados(t_reg* reg);
-void actualizarTablaDeEstados(int job,int master,int nodo,int bloque,int aModificar,char* modificado);
+void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* modificado);
 t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* etapa,char* arch_temp,char* estado);
 void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto);
-
+void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal* RRL,int numeroMaster);
+void actualizarTablaDeEstadosFinReduccionLocal(int master,int job);
+void crearEntradasReduccionGlobal(t_list* RRG,int master,int job);
 

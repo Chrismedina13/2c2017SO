@@ -108,6 +108,7 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 	case SOL_REDUCCION_GLOBAL:
 		logInfo("YAMA envia a Master solicitud de Reducción Global");
 
+
 		break;
 	case SOL_ALMACENADO_FINAL:
 		logInfo("YAMA envia a Master solicitud de Almacenado Final");
@@ -120,6 +121,9 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
+    RespuestaReduccionLocal* RRL;
+    int numeroDeJobFinalReduccionLocal;
+    t_list* RRG;
 
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
@@ -134,6 +138,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		Job* job = crearJOB(FDMaster,mensaje);
 
+		//enviarAMasterElnumeroDejob
+
 		agregarJObACola(job);
 		sem_post(&semaforoYAMA);
 		break;
@@ -145,11 +151,25 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		logInfo("tamanio de lo que recibo %i", tamanio);
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
+
 		recv(FDMaster, mensaje, tamanio, 0);
+
+		finTransformacion* finTransformacion = deserializarFinTransformacion(mensaje);
+
+		actualizarTablaDeEstados(finTransformacion->numeroDeJob,FDMaster,finTransformacion->nodo,2,"OK");
+
+		RRL = respuestaReduccionLocal(finTransformacion,FDMaster);
+
+		//serializarRespuestaReduccionLocal(RRL);
+		//mensajesEnviadosAMaster();
+
+		agregarEntradasReduccionLocal(finTransformacion,RRL,FDMaster);
 
 		break;
 
 	case FIN_REDUCCION_LOCAL:
+
+		//recibe numero de job
 		logInfo("YAMA recibe señal de finalización de Reducción Local");
 		recv(FDMaster, pesoMensaje, 4, 0);
 		tamanio = deserializarINT(pesoMensaje);
@@ -157,6 +177,17 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
 		recv(FDMaster, mensaje, tamanio, 0);
+		numeroDeJobFinalReduccionLocal = deserializarINT(mensaje);
+
+		actualizarTablaDeEstadosFinReduccionLocal(FDMaster,numeroDeJobFinalReduccionLocal);
+
+		RRG = respuestaReduccionGlobal(numeroDeJobFinalReduccionLocal,FDMaster);
+
+		//serializarRespuestaReduccionLocal(RRL);
+
+		//mensajesEnviadosAMaster();
+
+		crearEntradasReduccionGlobal(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 
 		break;
 
@@ -185,3 +216,127 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	}
 }
 
+
+RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int master){
+
+	int i = 0;
+	int j = 0;
+	t_list* archivosTransformacion = list_create();
+	int puerto;
+	char* ip;
+	char* ArchivoreduccionLocal;
+	RespuestaReduccionLocal* RRL;
+	while(i < list_size(listaDeJobs)){
+
+		JOBCompleto* jobAAnalizar = list_get(listaDeJobs,i);
+		if(fin->numeroDeJob == jobAAnalizar->job->identificadorJob && master == jobAAnalizar->job->master){
+
+			JOBCompleto* jobAModificar = list_remove(listaDeJobs,i);
+
+			while(j < list_size(jobAModificar->respuestaDePlanificacion)){
+				RespuestaTransformacionYAMA * respuestaTransformacion = list_get(jobAAnalizar->respuestaDePlanificacion,j);
+
+				if(respuestaTransformacion->nodo == fin->nodo){
+
+					ip = respuestaTransformacion->ipWorkwer;
+					puerto = respuestaTransformacion->puertoWorker;
+					list_add(archivosTransformacion,respuestaTransformacion->archivoTemporal);
+				}
+				j++;
+			}
+
+			VariableReduccionLocal++;
+			ArchivoreduccionLocal = generarNombreArchivoReduccionLocal(VariableReduccionLocal);
+			RRL = crearRespuestaReduccionLocal(fin->nodo,puerto,ip,archivosTransformacion,ArchivoreduccionLocal);
+			list_add(jobAModificar->respuestaReduccionLocal,RRL);
+			list_add_in_index(listaDeJobs,i,jobAModificar);
+			return RRL;
+		}
+
+		i++;
+	}
+	return NULL;
+}
+
+//devuelve una lista de respuestas de trnasformaciones globales
+t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
+
+	int i = 0;
+	int j = 0;
+	int nodoConMenorCarga;
+	t_list* respuestaReduccionGlobal = list_create();
+	char* nombreArchivoReduccionGlobal;
+
+	while(i<list_size(listaDeJobs)){
+		JOBCompleto* jobAAnalizar = list_get(listaDeJobs,i);
+
+		if(jobAAnalizar->job->master == master && jobAAnalizar->job->identificadorJob == numeroDeJob){
+
+			JOBCompleto* jobAModificar = list_remove(listaDeJobs,i);
+			nodoConMenorCarga = 0;//nodoConMenorCargaDeTrabajo(jobAModificar);
+
+			while(j<list_size(jobAModificar->respuestaReduccionLocal)){
+
+				RespuestaReduccionLocal* reduccionLocal = list_get(jobAModificar->respuestaReduccionLocal,j);
+				if(nodoConMenorCarga == reduccionLocal->nodo){
+
+				variableReduciionGlobal++;
+				nombreArchivoReduccionGlobal = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
+
+				RespuestaReduccionGlobal* respuestaRGEncargado = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
+				reduccionLocal->puertoWorker,reduccionLocal->ipWorker,reduccionLocal->archivoReduccionLocal,nombreArchivoReduccionGlobal,true);
+
+				list_add(respuestaReduccionGlobal,respuestaRGEncargado);
+
+				}else{
+
+				RespuestaReduccionGlobal* respuestaRGNoencargado = crearRespuestaReduccionGlobal(reduccionLocal->nodo,
+				reduccionLocal->puertoWorker,reduccionLocal->ipWorker,reduccionLocal->archivoReduccionLocal,"No es encargado",false);
+
+				list_add(respuestaReduccionGlobal,respuestaRGNoencargado);
+			}
+			jobAModificar->respuesReduciionGlobal = respuestaReduccionGlobal;
+			list_add_in_index(listaDeJobs,i,jobAModificar);
+
+			j++;
+			}
+			return respuestaReduccionGlobal;
+		}
+		i++;
+	}
+	return NULL;
+}
+
+int nodoConMenorCargaDeTrabajo(JOBCompleto* jobC){
+
+	int i= 0;
+	int nodoConMenorTrabajo = 0;
+
+	while(i < (list_size(jobC->respuestaReduccionLocal) -1)){
+		RespuestaReduccionLocal* RRL1 = list_get(jobC->respuestaReduccionLocal,i);
+		RespuestaReduccionLocal* RRL2 = list_get(jobC->respuestaReduccionLocal,(i+1));
+		if(cargaDeTrabajoDelNodo(RRL1->nodo) <= cargaDeTrabajoDelNodo(RRL2->nodo)){
+
+			nodoConMenorTrabajo = RRL1->nodo;
+		}else{
+			nodoConMenorTrabajo = RRL2->nodo;
+		}
+	}
+	return nodoConMenorTrabajo;
+}
+
+int cargaDeTrabajoDelNodo(int nodo){
+
+	int i = 0;
+	while(i < list_size(listaDeWorkerTotales)){
+		nodoParaPlanificar* n = list_get(listaDeWorkerTotales,i);
+		if(n->nodo == nodo){
+
+			return n->carga;
+		}else{
+
+			i++;
+		}
+	}
+	return NULL;
+}

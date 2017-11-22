@@ -18,6 +18,13 @@
 
 //int DISTRIBUCION_NODOS=0;
 
+typedef struct finTransformacion{
+
+	int nodo;
+	int numeroDeJob;
+
+}finTransformacion;
+
 typedef struct job{
 
 	int master; //FD del master que me mando el job
@@ -30,6 +37,8 @@ typedef struct jobCompleto{
 	Job* job; //Puntero a una estructura JOB
 	t_list* ubicacionDeLasPartesDelJOB;
 	t_list* respuestaDePlanificacion;
+	t_list* respuestaReduccionLocal;
+	t_list* respuesReduciionGlobal;
 }JOBCompleto;
 
 
@@ -42,6 +51,36 @@ typedef struct RespuestaTransformacionYAMA {
 	char* archivoTemporal;
 
 } RespuestaTransformacionYAMA;
+
+typedef struct respuestaReduccionLocal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	t_list* archivosDeTransformacion;
+	char* archivoReduccionLocal;
+}RespuestaReduccionLocal;
+
+typedef struct respuestaReduccionGlobal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	char* archivoReduccionLocal;
+	char* archivoReduccionGlobal;
+	bool encargado;
+}RespuestaReduccionGlobal;
+
+
+typedef struct repuestaAlmacenadoFinal{
+
+	int nodo;
+	int puertoWorker;
+	char* ipWorker;
+	char* archivoDeReduccionGlobal;
+
+}respuestaAlmacenadoFinal;
+
 
 //paquete para mandar y recibir mensajes
 typedef struct Paquete {
@@ -93,6 +132,8 @@ void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo);
 RespuestaTransformacionYAMA* setRespuestaTransformacionYAMA(int nodo,
 		int puertoWorker, char* ipWorker, int bloque, int bytesOcupados,
 		char* archivoTemporal);
+RespuestaReduccionLocal* crearRespuestaReduccionLocal(int nodo,int puertoWorker,
+		char* ipWorker,t_list* archivosDeTransformacion, char* archivoReduccionLocal);
 Paquete* crearPaquete(uint32_t codigo, uint32_t tamanio, char* mensaje);
 void destruirPaquete(Paquete* package);
 size_t sizePackage(Paquete *package);
@@ -106,7 +147,8 @@ void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
 JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes, t_list* listaDePlanificacion);
 int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
 int tamanioJOB(Job* job);
-
+RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
+		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
 
 
 
