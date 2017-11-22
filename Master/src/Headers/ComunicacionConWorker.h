@@ -16,7 +16,7 @@ typedef struct ParametrosComunicacionWorker{
 
 }ParametrosComunicacionWoker;
 
-void comunicacionConWoker(ParametrosComunicacionWoker* parametros);
+void comunicacionWorkers(ParametrosComunicacionWoker* parametros) ;
 
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,char* ip);
 
