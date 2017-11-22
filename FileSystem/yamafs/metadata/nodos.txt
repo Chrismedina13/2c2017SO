@@ -1,7 +1,5 @@
-TAMANIO=40
- LIBRE=40
- NODOS=[Nodo9,Nodo9]
-Nodo9Total=20
-Nodo9Libre=20
+TAMANIO=20
+ LIBRE=20
+ NODOS=[Nodo9]
 Nodo9Total=20
 Nodo9Libre=20
