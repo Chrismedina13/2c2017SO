@@ -207,7 +207,13 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		actualizarTablaDeEstadosFinReduccionGlobal(finRG->numeroDeJob,FDMaster);
 
-		//RAF = respuestaAlmacenadoFinal(finRG,FDMaster);
+		RAF = RespuestaAlmacenadoFinal(finRG,FDMaster);
+
+		//serializarRespuestaAlmacenadoFinal(RAF);
+		//mensajesEnviadosAMaster
+		crearEntradasAlmacenamientoFinal(RAF,finRG,FDMaster);
+
+
 
 
 		break;
@@ -352,11 +358,10 @@ int cargaDeTrabajoDelNodo(int nodo){
 	return NULL;
 }
 
-
-/*
-respuestaAlmacenadoFinal* respuestaAlmacenadoFinal(finTransformacion* finRG,int master){
+respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master){
 
 	int i = 0;
+	respuestaAlmacenadoFinal* respuestaAF;
 
 	while(i < list_size(tabla_estados)){
 		t_reg* registroAAnalizar = list_get(tabla_estados,i);
@@ -364,14 +369,20 @@ respuestaAlmacenadoFinal* respuestaAlmacenadoFinal(finTransformacion* finRG,int 
 		if(registroAAnalizar->job == finRG->numeroDeJob && registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->master == master
 			&& registroAAnalizar->nodo == finRG->nodo){
 
-			respuestaAlmacenadoFinal* respuestaAF = crearR
+			Info_Workers* info = list_get(list_info_workers,finRG->nodo);
 
+			respuestaAF = crearRespuestaAlmacenadoFinal(registroAAnalizar->nodo,info->puerto,
+					info->ipWorker,registroAAnalizar->arch_temp);
 
+			return respuestaAF;
 		}
-
 	}
 
+	return NULL;
 }
 
 
-*/
+
+
+
+

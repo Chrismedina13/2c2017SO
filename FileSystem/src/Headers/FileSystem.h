@@ -36,6 +36,7 @@
 sem_t SEMAFORODATANODE;
 sem_t cantNodosAux;
 
+
 //tabla de directorios
 
 struct tabla_directorios {

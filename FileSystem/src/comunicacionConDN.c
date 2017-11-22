@@ -28,8 +28,6 @@ void comunicacionDN(ParametrosComunicacion* parametros){
     char buffer_ipWorker[4];
 	int cantBloques=20;
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
-	int cantNodos= config->cant_nodos;
-	//sem_init(&cantNodosAux,0,cantNodos);
 	int cantArchivos = config->cant_archivos;
 	int h=0;
 	int index_archivo;
@@ -218,7 +216,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 				        cargarNodos2(FD_DN);
 
-
+                        sem_post(cantNodosAux);
 				        break;
 
 	    default:

@@ -10,6 +10,8 @@
 
 int main(int argc, char *argv[]) {
 
+
+
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
@@ -18,6 +20,11 @@ int main(int argc, char *argv[]) {
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+
+	//semaforos
+	int cantNodos= config->cant_nodos;
+	sem_init(&cantNodosAux,0,cantNodos);
+
 
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
@@ -67,7 +74,7 @@ int main(int argc, char *argv[]) {
 
 	//deja que se conecte yama, y se queda esperando
 
-
+	sem_destroy(&cantNodosAux);
 	free(config);
 	return EXIT_SUCCESS;
 }

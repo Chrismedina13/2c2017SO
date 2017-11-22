@@ -23,5 +23,6 @@ void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal
 void actualizarTablaDeEstadosFinReduccionLocal(int master,int job);
 void crearEntradasReduccionGlobal(t_list* RRG,int master,int job);
 void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master);
+void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransformacion* ft,int master);
 
 

@@ -394,8 +394,23 @@ void consolaFileSystem(){
 						char* bloque = list_get(bloquesDeTexto,count);
 						UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
 
-						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, bloque, 1024*1024);
-						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, bloque, 1024*1024);
+						SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
+						setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
+						setbloque1->contenidoBloque=bloque;
+
+
+						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
+						mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
+						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
+						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, mensaje, tamanioSetBloque);
+
+						SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
+						setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
+						setbloque2->contenidoBloque=bloque;
+						char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
+					    mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
+						int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
+						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, mensaje2, tamanioSetBloque2);
 
 						count++;
 
