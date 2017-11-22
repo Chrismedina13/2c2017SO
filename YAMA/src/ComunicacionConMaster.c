@@ -124,6 +124,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
     RespuestaReduccionLocal* RRL;
     int numeroDeJobFinalReduccionLocal;
     t_list* RRG;
+    int jobDeFinalizacionReduccionGlobal;
+    respuestaAlmacenadoFinal* RAF;
 
 	switch (codigo) {
 	case NOMBRE_ARCHIVO:
@@ -154,16 +156,16 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		recv(FDMaster, mensaje, tamanio, 0);
 
-		finTransformacion* finTransformacion = deserializarFinTransformacion(mensaje);
+		finTransformacion* finTrans = deserializarFinTransformacion(mensaje);
 
-		actualizarTablaDeEstados(finTransformacion->numeroDeJob,FDMaster,finTransformacion->nodo,2,"OK");
+		actualizarTablaDeEstados(finTrans->numeroDeJob,FDMaster,finTrans->nodo,2,"OK");
 
-		RRL = respuestaReduccionLocal(finTransformacion,FDMaster);
+		RRL = respuestaReduccionLocal(finTrans,FDMaster);
 
 		//serializarRespuestaReduccionLocal(RRL);
 		//mensajesEnviadosAMaster();
 
-		agregarEntradasReduccionLocal(finTransformacion,RRL,FDMaster);
+		agregarEntradasReduccionLocal(finTrans,RRL,FDMaster);
 
 		break;
 
@@ -192,6 +194,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		break;
 
 	case FIN_REDUCCION_GLOBAL:
+
 		logInfo("YAMA recibe señal de finalización de Reducción Global");
 		recv(FDMaster, pesoMensaje, 4, 0);
 		tamanio = deserializarINT(pesoMensaje);
@@ -199,6 +202,14 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
 		recv(FDMaster, mensaje, tamanio, 0);
+
+		finTransformacion* finRG = deserializarFinTransformacion(mensaje);
+
+		actualizarTablaDeEstadosFinReduccionGlobal(finRG->numeroDeJob,FDMaster);
+
+		//RAF = respuestaAlmacenadoFinal(finRG,FDMaster);
+
+
 		break;
 	case ALMACENADO_FINAL:
 		logInfo("Yama recibe señal de finalización de Almacenamiento Final.");
@@ -340,3 +351,27 @@ int cargaDeTrabajoDelNodo(int nodo){
 	}
 	return NULL;
 }
+
+
+/*
+respuestaAlmacenadoFinal* respuestaAlmacenadoFinal(finTransformacion* finRG,int master){
+
+	int i = 0;
+
+	while(i < list_size(tabla_estados)){
+		t_reg* registroAAnalizar = list_get(tabla_estados,i);
+
+		if(registroAAnalizar->job == finRG->numeroDeJob && registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->master == master
+			&& registroAAnalizar->nodo == finRG->nodo){
+
+			respuestaAlmacenadoFinal* respuestaAF = crearR
+
+
+		}
+
+	}
+
+}
+
+
+*/

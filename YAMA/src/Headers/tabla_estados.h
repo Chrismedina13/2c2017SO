@@ -22,4 +22,6 @@ void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto);
 void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal* RRL,int numeroMaster);
 void actualizarTablaDeEstadosFinReduccionLocal(int master,int job);
 void crearEntradasReduccionGlobal(t_list* RRG,int master,int job);
+void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master);
+
 

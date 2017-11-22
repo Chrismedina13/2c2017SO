@@ -13,6 +13,7 @@
 #include "SO_lib/Protocolo.h"
 #include "yama.h"
 #include "SO_lib/estructuras.h"
+#include "SO_lib/serializacion.h"
 
 typedef struct ParametrosComunicacionConMaster{
 	int puerto;

@@ -109,3 +109,21 @@ void crearEntradasReduccionGlobal(t_list* RRG,int master,int job){
 		i++;
 	}
 }
+
+void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master){
+
+	int i = 0;
+	while(i< list_size(tabla_estados)){
+
+		t_reg* registroAAnalizar = list_get(tabla_estados,i);
+
+		if(registroAAnalizar->master == master && registroAAnalizar->job == job &&
+				registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->estado == "EN PROCESO"){
+
+			t_reg* registroAmodificar = list_remove(tabla_estados,i);
+			registroAmodificar->estado = "OK";
+			list_add_in_index(tabla_estados,i,registroAmodificar);
+		}
+
+	}
+}
