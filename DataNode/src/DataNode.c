@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 	logInfo("Archivo de configuracion puerto worker : %i \n", config->puertoWorker);
 	logInfo("Archivo de configuracion puerto fileSystem : %i \n", config->puertoFileSystem);
 	logInfo("Archivo de configuracion ip fileSystem : %s \n", config->ipFileSystem);
-	logInfo("Archivo de configuracion nombre nodo : %s \n", config->nombreNodo);
+	logInfo("Archivo de configuracion nombre nodo : %i \n", config->nombreNodo);
 	logInfo("Archivo de configuracion ruta data.bin : %s \n", config->rutaDataBin);
 	logInfo("Archivo de configuracion ip Worker : %s \n", config->ipNodo);
 	logInfo("Archivo de configuracion capacidad del nodo : %i \n", config->capacidadNodo);
@@ -41,20 +41,18 @@ int main(int argc, char *argv[]) {
 	FDsocketClienteFileSystem = lib_SocketCliente(config->ipFileSystem,config->puertoFileSystem);
 
 	logInfo("SocketCliente = %d \n",FDsocketClienteFileSystem);
-	saludo_datanode * saludo_dn = malloc(sizeof(saludo_datanode));
-			//malloc(sizeof(int)*2+ strlen(config->ipNodo)+ sizeof(char)*2 + 20);
+	saludo_datanode * saludo_dn = malloc(sizeof(int)*2+ strlen(config->ipNodo)+ sizeof(char)*2 + 20);
 
 	saludo_dn->capacidad_nodo=config->capacidadNodo;
 	saludo_dn->nombre_nodo=config->nombreNodo;
 	saludo_dn->ip_worker=config->ipNodo;
 	saludo_dn->saludo="HOLA, SOY DATA NODE";
 
-
 	char *saludoSerializado;// malloc(( strlen(saludo_dn->saludo)+strlen(saludo_dn->ip_worker) + sizeof(int)*2+ sizeof(char)*2 ));
 			saludoSerializado = serializar_saludo(saludo_dn->saludo,saludo_dn->nombre_nodo ,saludo_dn->capacidad_nodo, saludo_dn->ip_worker);
    //  char* saludo = "HOLA, SOY DATA NODE";
-     int tamanioSaludo = sizeof(saludo_datanode);
-//( (sizeof(char)+strlen(saludo_dn->saludo) ) + (sizeof(char)+strlen(saludo_dn->ip_worker)) + sizeof(int)*2) ;
+     int tamanioSaludo = ( (sizeof(char)+strlen(saludo_dn->saludo) ) + (sizeof(char)+strlen(saludo_dn->ip_worker)) + sizeof(int)*2) ;
+
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 
 	//mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
