@@ -133,6 +133,14 @@ typedef struct datos_Reduccion{
 	char* archivoTemporal;
 }datos_Reduccion;//estructura que se manda entre Master y los Workers
 
+
+typedef struct saludo_datanode{
+	char* saludo;
+	int nombre_nodo;
+	int capacidad_nodo;
+	char* ip_worker;
+}saludo_datanode;
+
 t_list * list_info_workers;
 t_list * listaUbicaciones;
 

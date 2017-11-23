@@ -32,6 +32,7 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
     configuracion->puertoDataNode = config_get_int_value(configTemporal,PUERTO_DATANODE);
     configuracion->rutaDataBin = strdup(config_get_string_value(configTemporal,RUTA_DATABIN));
     configuracion->ipNodo = strdup(config_get_string_value(configTemporal,IP_NODO));
+	configuracion->capacidadNodo = strdup(config_get_string_value(configTemporal, CAPACIDAD_NODO));
     config_destroy(configTemporal);
 
     return configuracion;
