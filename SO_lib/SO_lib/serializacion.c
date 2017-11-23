@@ -103,7 +103,7 @@ UbicacionBloquesArchivo *deserializarUbicacionArchivo(
 
 char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal) {
-	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*) * 3));
+	char* rtaSerializada = malloc((sizeof(int) * 4 + sizeof(char*) * 2));
 	int desplazamiento = 0;
 	serializarDato(rtaSerializada, &(nodo), sizeof(char*), &desplazamiento);
 	serializarDato(rtaSerializada, &(puertoWorker), sizeof(int),
@@ -122,7 +122,7 @@ char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
 RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 		char* rtaSerializada) {
 	RespuestaTransformacionYAMA * respuestaTransformacionYAMA = malloc(
-			(sizeof(int) * 3 + sizeof(char*) * 3));
+			(sizeof(int) * 4 + sizeof(char*) * 2));
 	int desplazamiento = 0;
 	respuestaTransformacionYAMA->nodo = strdup(rtaSerializada + desplazamiento);
 	deserializarDato(&(respuestaTransformacionYAMA->puertoWorker),

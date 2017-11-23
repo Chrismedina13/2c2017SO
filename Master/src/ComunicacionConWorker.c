@@ -5,7 +5,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;
 	FDServidorWORKER = lib_SocketCliente(parametros->ipWoker,parametros->puertoWoker);
 
-		printf("Se conecto un Worker su FD es el  = %d\n", FDServidorWORKER);
+		/*printf("Se conecto un Worker su FD es el  = %d\n", FDServidorWORKER);
 
 		logInfo("FD del Worker : %i \n", FDServidorWORKER);
 
@@ -13,19 +13,47 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 
 				logInfo("Comunicacion con WORKER establecida, Mensaje enviado correctamente");
+
+
 			} else {
 
 				logInfo("Error en la comunicacion con WORKER ");
 
-			}
+			}*/
+	/* //Se serializaria la lista serializarRespuestaTransformacionYAMA()solo los 4 parametros; */
+
+	infoParaWorker* mensaje;
+
+	mensaje -> nodo = parametros ->nodo;
+	mensaje -> bloque = parametros->bloque;
+	mensaje -> bytesOcupados = parametros->bytesOcupados;
+	mensaje -> archivoTemporal = parametros ->archivoTemporal;
+
+		char* respuesta = serializarListaRespuestaTransf(mensaje);
+
+		int tamanioRespuesta = (sizeof(int) * 3+ sizeof(char*));
+
+	mensajesEnviadosAWorker(TAREA_WORKER,FDServidorWORKER,respuesta, tamanioRespuesta);
 
 }
-ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip) {
+ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados) {
 
 	ParametrosComunicacionWoker* parametros = malloc(
 			sizeof(ParametrosComunicacionWoker));
+
 	parametros->ipWoker = ip;
 	parametros->puertoWoker = puerto;
+	parametros->nodo = nodo;
+	parametros->bytesOcupados = bytesOcupados;
+	parametros -> archivoTemporal = archivo;
+
+
 	return parametros;
 }
 
+void mensajesEnviadosAWorker(int codigo, int FDServidorWORKER, char* mensaje,int tamanio) {
+	switch (codigo) {
+case TAREA_WORKER:
+		break;
+	}
+}

@@ -133,19 +133,22 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 			t_list* listaDeWorkers =
 					deserializarListaRespuestaTransf(mensaje);
-			logInfo(
+			/*logInfo(
 					"Se recibió de forma correcta la a Estructura Respuesta Transf .",
-					tamanio);
+					tamanio);*7
 			/*una vez que MASTER recibe los workers a planificar crea un hilo
 			por cada nodo de la lista, es decir por cada woker */
 			int i;
 			RespuestaTransformacionYAMA* respuesta;
+
 			for (i = 0; list_size(listaDeWorkers); i++) {
-				logInfo("Creando hilos para comunicacion con WORKERS.");
+					respuesta = list_get(listaDeWorkers,i);
+
+					logInfo("Creando hilos para comunicacion con WORKERS.");
 
 					pthread_t hiloWorker;
 
-					ParametrosComunicacionWoker* parametrosWorker = setParametrosComunicacionConWoker(respuesta->puertoWorker,respuesta->ipWorkwer);
+					ParametrosComunicacionWoker* parametrosWorker = setParametrosComunicacionConWoker(respuesta->ipWorkwer,respuesta->puertoWorker,respuesta->nodo,respuesta->bloque,respuesta, respuesta->bytesOcupados,respuesta->archivoTemporal);
 
 					pthread_create(&hiloWorker,NULL,(void*) comunicacionWorkers, parametrosWorker);
 

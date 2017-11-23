@@ -141,6 +141,15 @@ typedef struct saludo_datanode{
 	char* ip_worker;
 }saludo_datanode;
 
+//Info que le manda el Master a Worker
+typedef struct infoParaWorker{
+	int nodo;
+	int bloque;
+	int bytesOcupados;
+	char* archivoTemporal;
+
+} infoParaWorker;
+
 t_list * list_info_workers;
 t_list * listaUbicaciones;
 
