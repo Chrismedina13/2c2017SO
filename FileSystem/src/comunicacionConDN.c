@@ -213,7 +213,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        mensaje[tamanio] = '\0';
 				        recv(FD_DN, mensaje,tamanio,0);
 				        saludo = deserializar_saludo_datanode(mensaje);
-				        logInfo("SE RECIBIO EL SALUDO:  %s ", saludo->saludo);
+				        logInfo("SE RECIBIO EL SALUDO: %s ", saludo->saludo);
 				        logInfo("ID NODO: %i " , saludo->nombre_nodo);
 				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);

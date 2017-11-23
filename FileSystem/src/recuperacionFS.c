@@ -75,5 +75,132 @@ int recuperarTablaDeNodos(){
 		return 0;
 }
 
+int cargarEstructurasRecuperacion(){
+
+    DIR* FD;
+    struct dirent* in_file;
+    FILE    *entry_file;
+    char    buffer[BUFSIZ];
+
+    /* Scanning the in directory */
+    int cantDir =  cargarDirectorios();
+    char* directorio;
+    char* directorioBase;
+    int indice;
+
+    strcpy(directorioBase,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/");
+
+    int count = 3;
+
+    while(count<cantDir){
+
+    	indice = tabla_de_directorios[count].index;
+    	directorio = string_append_with_format(&directorioBase, "%s", indice);
+    	if(NULL == (FD = opendir(directorio))) {
+            fprintf(stderr, "Error : Failed to open input directory - %s\n", strerror(errno));
+
+            return -1;
+        }
+
+    	}
+
+		while ((in_file = readdir(FD))){
+
+			/* On linux/Unix we don't want current and parent directories
+			 * On windows machine too, thanks Greg Hewgill
+			 *
+			 * dato
+			 */
+
+			if (!strcmp (in_file->d_name, "."))
+				continue;
+			if (!strcmp (in_file->d_name, ".."))
+				continue;
+
+			entry_file = fopen(in_file->d_name, "r");
+			if (entry_file == NULL)
+			{
+				fprintf(stderr, "Error : Failed to open entry file - %s\n", strerror(errno));
+
+				return -1;
+			}
+
+			/* Doing some struf with entry_file : */
+			/* 	TAMANIO=2056360 ok
+				TIPO=texto ok
+				BLOQUE0COPIA0=[Nodo1, 0]
+				BLOQUE0COPIA1=[Nodo2, 0]
+				BLOQUE0BYTES=1079829
+				BLOQUE1COPIA0=[Nodo2, 1]
+				BLOQUE1COPIA1=[Nodo1, 1]
+				BLOQUE1BYTES=953658 */
+
+			//tamanio
+
+			char* linea = fgets(buffer, BUFSIZ, entry_file);
+			int tamanio =  atoi(string_substring_from(linea,8));
+
+			tabla_de_archivos[count].tamanio = tamanio;
+
+			//tipo
+
+			linea = fgets(buffer, BUFSIZ, entry_file);
+			char* tipo;
+			strcpy(tipo,string_substring_from(linea,5));
+
+			strcpy(tabla_de_archivos[count].tipo,tipo);
+
+			//partes del archivo y ubicaciones
+
+			t_list* ubicaciones;
+			list_create(ubicaciones);
+
+			UbicacionBloquesArchivo* ubicacion;
+
+			while ((linea =fgets(buffer, BUFSIZ, entry_file)) != NULL){
+
+				int copia = obtenerCopia(linea); //si es linea de bytes, pone a copia en 3
+
+				while(copia<2){
+
+					//parte del archivo
+
+					int bloque = obtenerBloque(linea);
+
+					ubicacion->parteDelArchivo=bloque;
+
+					//ubicacion copia 1
+
+
+					int nodo = obtenerNodo(linea);
+					int desplazamiento = obtenerDesplazamiento(linea);
+
+					if(copia == 0){
+						ubicacion->ubicacionCopia1.nodo= nodo;
+						ubicacion->ubicacionCopia1.desplazamiento= desplazamiento;
+					}
+					if(copia ==1){
+						ubicacion->ubicacionCopia2.nodo= nodo;
+						ubicacion->ubicacionCopia2.desplazamiento= desplazamiento;
+					}
+
+					linea=fgets(buffer, BUFSIZ, entry_file);
+
+				}
+
+				//seteo tamanio en bytes
+
+				int bytes = obtenerBytes(linea);
+
+				ubicacion->bytesOcupados= bytes;
+
+			}
+
+			/* When you finish with the file, close it */
+			fclose(entry_file);
+		}
+
+	return 0;
+}
 
 
