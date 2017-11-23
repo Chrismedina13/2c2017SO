@@ -37,6 +37,14 @@ int main(int argc, char *argv[]) {
 	if(config->estado_recuperacion==0){
 		logInfo("FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
 		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
+
+		int status =  recuperacionFileSystem();
+		if(status==-1){
+			logInfo("FILE SYSTEM NO PUEDE RECUPERARSE");
+		}
+		if(status==1){
+			logInfo("FILE SYSTEM SE RECUPERO CORRECTAMENTE");
+		}
 	}
 
 	else{

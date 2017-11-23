@@ -7,6 +7,19 @@
 #include "Headers/recuperacionFS.h"
 #include "Headers/FileSystem.h"
 
+/*
+ * 1 cargo los directorios desde directorios.dat (cargarDirectorios)
+ * 2 recupero la Tabla de Nodos (recuperarTablaDeNodos)
+ * 3 recupero la Tabla de Archivos (recuperarTablaDeArchivos)
+ * 4 me fijo si tengo una copia completa de cada archivo en mis nodos existentes
+ * 5a tengo todos los archivos con 2 copias, estado estable (fin)
+ * 5b tengo todos los archivos pero no tienen 2 copias (en los nodos existentes)
+ * 6 hago las copias que me falten, estado estable (fin)
+ */
+
+int recuperacionFileSystem(){
+
+}
 
 int recuperarTablaDeNodos(){
 
@@ -75,7 +88,15 @@ int recuperarTablaDeNodos(){
 		return 0;
 }
 
-int cargarEstructurasRecuperacion(){
+int recuperarTablaDeArchivos(){
+
+	/*Usa los registros de archivos en /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/indice
+	 * para cargar la tabla de archivos
+	 *
+	 * si puede abrir todos los direcotiros y cargar los datos de los archivos en la tabla, devuelve 1.
+	 * si no puede abrir alguno de los directorios, devuelve -1.
+	 * si no puede abrir alguno de los registros de archivo, devuelve -1.
+	 */
 
     DIR* FD;
     struct dirent* in_file;
@@ -83,19 +104,20 @@ int cargarEstructurasRecuperacion(){
     char    buffer[BUFSIZ];
 
     /* Scanning the in directory */
-    int cantDir =  cargarDirectorios();
+    int cantDir =  cantidadDirectorios();
     char* directorio;
-    char* directorioBase;
     int indice;
-
-    strcpy(directorioBase,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/");
-
+    strcpy(directorio,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/");
     int count = 3;
+    t_list* ubicaciones;
+	list_create(ubicaciones);
+
+	UbicacionBloquesArchivo* ubicacion;
 
     while(count<cantDir){
 
     	indice = tabla_de_directorios[count].index;
-    	directorio = string_append_with_format(&directorioBase, "%s", indice);
+    	string_append_with_format(&directorio, "%s", indice);
     	if(NULL == (FD = opendir(directorio))) {
             fprintf(stderr, "Error : Failed to open input directory - %s\n", strerror(errno));
 
@@ -135,6 +157,14 @@ int cargarEstructurasRecuperacion(){
 				BLOQUE1COPIA1=[Nodo1, 1]
 				BLOQUE1BYTES=953658 */
 
+			//nombre
+
+			tabla_de_archivos[count].nombre = pathToFile(directorio);
+
+			//directorio
+
+			tabla_de_archivos[count].directorio = indice;
+
 			//tamanio
 
 			char* linea = fgets(buffer, BUFSIZ, entry_file);
@@ -146,16 +176,11 @@ int cargarEstructurasRecuperacion(){
 
 			linea = fgets(buffer, BUFSIZ, entry_file);
 			char* tipo;
-			strcpy(tipo,string_substring_from(linea,5));
+			tipo = string_substring_from(linea,5);
 
 			strcpy(tabla_de_archivos[count].tipo,tipo);
 
 			//partes del archivo y ubicaciones
-
-			t_list* ubicaciones;
-			list_create(ubicaciones);
-
-			UbicacionBloquesArchivo* ubicacion;
 
 			while ((linea =fgets(buffer, BUFSIZ, entry_file)) != NULL){
 
@@ -186,6 +211,7 @@ int cargarEstructurasRecuperacion(){
 
 					linea=fgets(buffer, BUFSIZ, entry_file);
 
+
 				}
 
 				//seteo tamanio en bytes
@@ -196,6 +222,8 @@ int cargarEstructurasRecuperacion(){
 
 			}
 
+			list_add(ubicaciones,ubicacion);
+
 			/* When you finish with the file, close it */
 			fclose(entry_file);
 		}
@@ -203,4 +231,22 @@ int cargarEstructurasRecuperacion(){
 	return 0;
 }
 
+int obtenerCopia(char* linea){
 
+}
+
+int obtenerBloque(char* linea){
+
+}
+
+int obtenerNodo(char* linea){
+
+}
+
+int obtenerDesplazamiento(char* linea){
+
+}
+
+int obtenerBytes(char* linea){
+
+}
