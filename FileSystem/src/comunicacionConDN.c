@@ -62,7 +62,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 					if ((FD_Cliente = lib_aceptarYRegistrarSocket(
 							socketFSServidor)) == -1) {
 
-						logInfo("Error en el aceept despues del select");
+						logInfo("Error en el acept despues del select");
 
 					} else {
 						FD_SET(FD_Cliente, &master);
@@ -70,7 +70,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 							fd_max = FD_Cliente;
 						}
 						logInfo(
-								"Nueva conexion del socket cliente Master de FD: %i",
+								"Nueva conexion del socket cliente Data Node de FD: %i",
 								FD_Cliente);
 					}
 				} else {
@@ -146,6 +146,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
     int puerto_worker =  config->puerto_worker;
     Info_Workers * infoworker;
+    saludo_datanode * saludo;
 
 
 	switch (codigo) {
@@ -211,12 +212,19 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 						mensaje = malloc(tamanio + 1);
 				        mensaje[tamanio] = '\0';
 				        recv(FD_DN, mensaje,tamanio,0);
-				    	logInfo("Se reibio el saludo:  %s ", mensaje);
+				        saludo = deserializar_saludo_datanode(mensaje);
+				        logInfo("SE RECIBIO EL SALUDO: %s ", saludo->saludo);
+				        logInfo("ID NODO: %i " , saludo->nombre_nodo);
+				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
+				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
 				        free(mensaje);
 
-				        cargarNodos2(FD_DN);
+				        //cargarNodos2(saludo->nombre_nodo);
+				        //infoworker->ipWorker=saludo->ip_worker;
+				        //infoworker->puerto=puerto_worker;
+				        //list_add_in_index(list_info_workers,saludo->nombre_nodo, infoworker);
+                        sem_post(&cantNodosAux);
 
-                        sem_post(cantNodosAux);
 				        break;
 
 	    default:

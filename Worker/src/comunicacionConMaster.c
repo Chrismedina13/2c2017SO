@@ -24,7 +24,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster){
 	int i;
 	int FD_Cliente;
 	int bytesRecibidos;
-	char buffer[5];
+	char buffer[4];
 
 	FD_SET(socketWorkerServidor,&master);
 	fd_max = socketWorkerServidor;
@@ -65,8 +65,10 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster){
 						FD_CLR(i,&master);
 
 					}else{
-
+						int codigo = deserializarINT(buffer);
 						logInfo("Recibi de Master: %s",buffer);
+						mensajesRecibidosDeMaster(codigo, i);
+						//hay que hacer forkkkkkk
 					}
 				}
 
@@ -86,3 +88,31 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto){
 	return parametros;
 }
 
+void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
+//Worker recibe de master
+	char pesoMensaje[4];
+	int tamanio;
+	char* mensaje;
+
+	switch (codigo) {
+	case TAREA_WORKER:
+		//logInfo("Worker recibe");
+				recv(FDMaster, pesoMensaje, 4, 0);
+				tamanio = deserializarINT(pesoMensaje);
+				logInfo("Tamanio de lo que recibo %i", tamanio);
+				mensaje = malloc(tamanio + 1);
+				mensaje[tamanio] = '\0';
+
+				recv(FDMaster, mensaje, tamanio, 0);
+//falta desereaalizar
+
+		break;
+	case REDUCCION_TEMPORALES:
+		break;
+	case SOL_REDUCCION_GLOBAL:
+	break;
+	case SOL_ALMACENADO_FINAL:
+	break;
+
+	}
+}
