@@ -135,7 +135,6 @@ typedef struct datos_Reduccion{
 
 
 typedef struct saludo_datanode{
-	char* saludo;
 	int nombre_nodo;
 	int capacidad_nodo;
 	char* ip_worker;
