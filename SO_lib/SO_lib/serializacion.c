@@ -101,20 +101,24 @@ UbicacionBloquesArchivo *deserializarUbicacionArchivo(
 	return ubicacionbloquesarchivos;
 }
 
-char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
+char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal) {
-	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*) * 3));
+	char* rtaSerializada = malloc((sizeof(int) * 4 + sizeof(char*) * 2));
 	int desplazamiento = 0;
-	serializarDato(rtaSerializada, &(nodo), sizeof(char*), &desplazamiento);
+	serializarDato(rtaSerializada, &(nodo), sizeof(int), &desplazamiento);
+
 	serializarDato(rtaSerializada, &(puertoWorker), sizeof(int),
+
 			&desplazamiento);
-	serializarDato(rtaSerializada, &(ipWorker), sizeof(char*), &desplazamiento);
 	serializarDato(rtaSerializada, &(bloque), sizeof(int), &desplazamiento);
+
 	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
 			&desplazamiento);
+
+	serializarDato(rtaSerializada, &(ipWorker), sizeof(char*), &desplazamiento);
+
 	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
 			&desplazamiento);
-
 	return (rtaSerializada);
 
 }
@@ -122,17 +126,23 @@ char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
 RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 		char* rtaSerializada) {
 	RespuestaTransformacionYAMA * respuestaTransformacionYAMA = malloc(
-			(sizeof(int) * 3 + sizeof(char*) * 3));
+			(sizeof(int) * 4 + sizeof(char*) * 2));
 	int desplazamiento = 0;
 	respuestaTransformacionYAMA->nodo = strdup(rtaSerializada + desplazamiento);
+
 	deserializarDato(&(respuestaTransformacionYAMA->puertoWorker),
 			rtaSerializada, sizeof(int), &desplazamiento);
+
+	deserializarDato(&(respuestaTransformacionYAMA->bloque), rtaSerializada,
+				sizeof(int), &desplazamiento);
+
+
+	deserializarDato(&(respuestaTransformacionYAMA->bytesOcupados),
+				rtaSerializada, sizeof(int), &desplazamiento);
+
 	respuestaTransformacionYAMA->ipWorkwer = strdup(
 			rtaSerializada + desplazamiento);
-	deserializarDato(&(respuestaTransformacionYAMA->bloque), rtaSerializada,
-			sizeof(int), &desplazamiento);
-	deserializarDato(&(respuestaTransformacionYAMA->bytesOcupados),
-			rtaSerializada, sizeof(int), &desplazamiento);
+
 	respuestaTransformacionYAMA->archivoTemporal = strdup(
 			rtaSerializada + desplazamiento);
 
@@ -370,3 +380,45 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado){
 
 }
 
+char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados, char* archivoTemporal) {
+	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*)));
+	int desplazamiento = 0;
+
+	serializarDato(rtaSerializada, &(nodo), sizeof(int), &desplazamiento);
+
+	serializarDato(rtaSerializada, &(bloque), sizeof(int), &desplazamiento);
+
+	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
+			&desplazamiento);
+
+	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
+			&desplazamiento);
+
+	return (rtaSerializada);
+
+}
+
+infoParaWorker *deserializarInfoParaWorker(
+		char* rtaSerializada) {
+
+	infoParaWorker * respuesta = malloc(sizeof(int) * 3 + sizeof(char*));
+
+	int desplazamiento = 0;
+
+	respuesta->nodo = strdup(rtaSerializada + desplazamiento);
+
+
+	deserializarDato(&(respuesta->bloque), rtaSerializada,
+				sizeof(int), &desplazamiento);
+
+
+	deserializarDato(&(respuesta->bytesOcupados),
+				rtaSerializada, sizeof(int), &desplazamiento);
+
+
+	respuesta->archivoTemporal = strdup(
+			rtaSerializada + desplazamiento);
+
+	return (respuesta);
+
+}

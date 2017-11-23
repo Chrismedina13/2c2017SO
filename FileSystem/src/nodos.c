@@ -21,7 +21,7 @@ typedef struct tabla_nodos {
  */
 int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 
-	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/nodos.txt", "w");
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/nodos.bin", "w");
 	if (!fp) {
 	  perror("Error al abrir el Archivo");
 	  return (-1);
@@ -30,7 +30,7 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 	int count = 0;
 	int cantNodos= list_size(tablaNodos.listaNodos);
 
-	fprintf(fp, "TAMANIO=%d\n LIBRE=%d\n NODOS=[", tablaNodos.tamanio, tablaNodos.bloqueslibres); //carga la info del archivo
+	fprintf(fp, "TAMANIO=%d\nLIBRE=%d\nNODOS=[", tablaNodos.tamanio, tablaNodos.bloqueslibres); //carga la info del archivo
 	while(count < cantNodos){
 			fprintf(fp, "Nodo%d", list_get(tablaNodos.listaNodos,count));
 			count++;

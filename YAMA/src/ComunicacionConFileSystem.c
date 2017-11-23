@@ -101,7 +101,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	char* respuesta = serializarListaRespuestaTransf(planificacionDelJOb);
 
-	int tamanioRespuesta = sizeof(respuesta);
+	int tamanioRespuesta = list_size(planificacionDelJOb) * (sizeof(int) * 4 + sizeof(char*) * 2);
 
 	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
 			respuesta, tamanioRespuesta);
