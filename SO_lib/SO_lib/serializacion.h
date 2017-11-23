@@ -37,7 +37,7 @@ t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada)
 RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 		char* rtaSerializada);
 
-char* serializarRespuestaTransformacionYAMA(char* nodo, int puertoWorker,
+char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal);
 
 char * serializarLista_info_workers(t_list * listaWorkers);
