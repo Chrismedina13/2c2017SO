@@ -96,16 +96,25 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 	switch (codigo) {
 	case TAREA_WORKER:
-		//logInfo("Worker recibe");
-				recv(FDMaster, pesoMensaje, 4, 0);
-				tamanio = deserializarINT(pesoMensaje);
-				logInfo("Tamanio de lo que recibo %i", tamanio);
-				mensaje = malloc(tamanio + 1);
-				mensaje[tamanio] = '\0';
+		recv(FDMaster, pesoMensaje, 4, 0);
 
-				recv(FDMaster, mensaje, tamanio, 0);
+		tamanio = deserializarINT(pesoMensaje);
+
+		logInfo("Tamanio de lo que recibo %i", tamanio);
+
+		mensaje = malloc(tamanio + 1);
+
+		mensaje[tamanio] = '\0';
+
+		if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+			logInfo("Error en la recepcion de Info de Master.");
+
+		} else {
 //falta desereaalizar
 
+			infoParaWorker * info = deserializarInfoParaWorker(mensaje);
+		}
 		break;
 	case REDUCCION_TEMPORALES:
 		break;

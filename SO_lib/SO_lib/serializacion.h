@@ -66,7 +66,7 @@ char * serializarListaTemp(t_list * lista);
 
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
-char * serializar_saludo(char* saludo,int nombre_nodo, int capacidad_nodo, char* ipWorker );
+char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
 
 #endif
 

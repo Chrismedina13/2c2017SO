@@ -49,12 +49,12 @@ int main(int argc, char *argv[]) {
 
 	char *saludoSerializado;// malloc(( strlen(saludo_dn->saludo)+strlen(saludo_dn->ip_worker) + sizeof(int)*2+ sizeof(char)*2 ));
 			saludoSerializado = serializar_saludo(saludo_dn->nombre_nodo ,saludo_dn->capacidad_nodo, saludo_dn->ip_worker);
-   //  char* saludo = "HOLA, SOY DATA NODE";
+
      int tamanioSaludo = ((sizeof(char)+strlen(saludo_dn->ip_worker)) + sizeof(int)*2) ;
 
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 
-	//mensajesEnviadosAFileSystem(IP_NODO,FDsocketClienteFileSystem,config->ipNodo, (sizeof(char)+strlen(config->ipNodo)));
+
 
 
 	//recv(FDsocketClienteFileSystem, buffer,4,0);
@@ -88,6 +88,10 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	char* bufferBloque[4];
 
 	SetBloque* bloque;
+	char * contenido_bloque;
+	int tamanio_contenido;
+	char * rta_set_bloque;
+	int tamanio_rta_set_bloque;
 
 	switch (codigo) {
 	case SET_BLOQUE:
@@ -108,12 +112,14 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	   logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
 
-	//DESERIALIZAR SET BLOQUE
 
-free(mensaje);
+      free(mensaje);
 // ir a nodos.bin y guardarlo
 
-		//sem_post(&semaforoYAMA);
+    //  rta_set_bloque = "Guarde el ok el contenido en el bloque";
+    //  tamanio_rta_set_bloque= strlen(rta_set_bloque);
+ //mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, rta_set_bloque, tamanio_rta_set_bloque);
+
 		break;
 
 	case GET_BLOQUE: //ESTARIA TERMINADO
@@ -129,11 +135,15 @@ free(mensaje);
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
 		recv(FD_FileSystem,mensaje, tamanio,0);
-
 		intRecibido = deserializarINT(mensaje);
 		logInfo("Instruccion 'Get Bloque' en el bloque %i", intRecibido);
 
 //IR A NODOS.BIN Y AGARRAR ESE BLOQUE Y MANDARLO
+	//contenido_bloque = funcion que recorra el data.bin y me traiga el mega
+		//tamanio_contenido= sizeof(char) + strlen(contenido_bloque);
+      //mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FD_FileSystem,contenido_bloque, tamanio_contenido );
+
+
 free(mensaje);
 		break;
 
@@ -158,21 +168,10 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 				destruirPaquete(paqueteEnvio);
 				free(mensaje);
 				break;
-	case IP_NODO:
 
-			paqueteEnvio = crearPaquete(IP_NODO, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
+	case RTA_SET_BLOQUE:
 
-			if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
-				logInfo("Error en envio de respuesta del Set Bloque");
-			}
-
-			destruirPaquete(paqueteEnvio);
-			free(mensaje);
-			break;
-
-	case SET_BLOQUE:
-
-		paqueteEnvio = crearPaquete(SET_BLOQUE, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
+		paqueteEnvio = crearPaquete(RTA_SET_BLOQUE, tamanio,mensaje); //cuando envia set bloque es porque lo guardo OK
 
 		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
 			logInfo("Error en envio de respuesta del Set Bloque");
@@ -182,12 +181,12 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 		free(mensaje);
 		break;
 
-	case GET_BLOQUE:
+	case RTA_GET_BLOQUE:
 
 
 		logInfo(
 				"DATA NODE ENVIA EL CONTENIDO DE UN BLOQUE A FILESYSTEM");
-		paqueteEnvio= crearPaquete(GET_BLOQUE, tamanio,mensaje);
+		paqueteEnvio= crearPaquete(RTA_GET_BLOQUE, tamanio,mensaje);
 
 		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
 			logInfo("Error en envio de contenido del bloque.");

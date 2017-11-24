@@ -28,6 +28,8 @@
 #define SET_BLOQUE 10
 #define IP_NODO 14
 #define SALUDO 15
+#define RTA_GET_BLOQUE 18
+#define RTA_SET_BLOQUE 19
 
 
 
