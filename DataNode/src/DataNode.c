@@ -46,12 +46,11 @@ int main(int argc, char *argv[]) {
 	saludo_dn->capacidad_nodo=config->capacidadNodo;
 	saludo_dn->nombre_nodo=config->nombreNodo;
 	saludo_dn->ip_worker=config->ipNodo;
-	saludo_dn->saludo="HOLA, SOY DATA NODE";
 
 	char *saludoSerializado;// malloc(( strlen(saludo_dn->saludo)+strlen(saludo_dn->ip_worker) + sizeof(int)*2+ sizeof(char)*2 ));
-			saludoSerializado = serializar_saludo(saludo_dn->saludo,saludo_dn->nombre_nodo ,saludo_dn->capacidad_nodo, saludo_dn->ip_worker);
+			saludoSerializado = serializar_saludo(saludo_dn->nombre_nodo ,saludo_dn->capacidad_nodo, saludo_dn->ip_worker);
    //  char* saludo = "HOLA, SOY DATA NODE";
-     int tamanioSaludo = ( (sizeof(char)+strlen(saludo_dn->saludo) ) + (sizeof(char)+strlen(saludo_dn->ip_worker)) + sizeof(int)*2) ;
+     int tamanioSaludo = ((sizeof(char)+strlen(saludo_dn->ip_worker)) + sizeof(int)*2) ;
 
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 

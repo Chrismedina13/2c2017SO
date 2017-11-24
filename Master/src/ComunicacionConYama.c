@@ -131,33 +131,37 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 		} else {
 
-			t_list* listaDeWorkers =
-					deserializarListaRespuestaTransf(mensaje);
+			t_list* listaDeWorkers = deserializarListaRespuestaTransf(mensaje);
 			/*logInfo(
-					"Se recibió de forma correcta la a Estructura Respuesta Transf .",
-					tamanio);*7
-			/*una vez que MASTER recibe los workers a planificar crea un hilo
-			por cada nodo de la lista, es decir por cada woker */
+			 "Se recibió de forma correcta la a Estructura Respuesta Transf .",
+			 tamanio);*7
+			 /*una vez que MASTER recibe los workers a planificar crea un hilo
+			 por cada nodo de la lista, es decir por cada woker */
 			int i;
 			RespuestaTransformacionYAMA* respuesta;
 
 			for (i = 0; list_size(listaDeWorkers); i++) {
-					respuesta = list_get(listaDeWorkers,i);
+				respuesta = list_get(listaDeWorkers, i);
 
-					logInfo("Creando hilos para comunicacion con WORKERS.");
+				logInfo("Creando hilos para comunicacion con WORKERS.");
 
-					pthread_t hiloWorker;
+				pthread_t hiloWorker;
 
-					ParametrosComunicacionWoker* parametrosWorker = setParametrosComunicacionConWoker(respuesta->ipWorkwer,respuesta->puertoWorker,respuesta->nodo,respuesta->bloque,respuesta, respuesta->bytesOcupados,respuesta->archivoTemporal);
+				ParametrosComunicacionWoker* parametrosWorker =
+						setParametrosComunicacionConWoker(respuesta->ipWorkwer,
+								respuesta->puertoWorker,
+								respuesta->nodo,
+								respuesta->bloque,
+								respuesta->bytesOcupados,
+								respuesta->archivoTemporal);
 
-					pthread_create(&hiloWorker,NULL,(void*) comunicacionWorkers, parametrosWorker);
+				pthread_create(&hiloWorker, NULL, (void*) comunicacionWorkers,
+						parametrosWorker);
 
-					pthread_join(hiloWorker,NULL);
-
+				pthread_join(hiloWorker, NULL);
 
 			}
 		}
-
 
 		break;
 	case SOL_REDUCCION_LOCAL:

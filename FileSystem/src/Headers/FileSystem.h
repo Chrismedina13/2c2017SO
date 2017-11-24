@@ -105,7 +105,7 @@ typedef struct bloques_nodo{
 	int idNodo;
 	int bloquesTotales;
 	int bloquesLibres;
-	int bitmap[20];
+	int bitmap[160];
 }bloques_nodo;
 
 typedef struct tabla_nodos {
@@ -118,6 +118,13 @@ typedef struct tabla_nodos {
 struct tabla_nodos tabla_de_nodos;
 
 
+
+typedef struct nodos_id_fd{
+	int nodo_fd;
+	int id_nodo;
+}nodos_id_fd;
+
+t_list* list_nodos_id_fd;
 
 t_list* bloquesNodos(); // en cada pos un registro bloques_nodos
 
@@ -135,6 +142,7 @@ char* pathToType(char* path);
 char* pathToFile(char* path);
 
 t_list* nombreToUbicaciones(char* nombre);
+
 
 #endif /* HEADERS_FILESYSTEM_H_ */
 

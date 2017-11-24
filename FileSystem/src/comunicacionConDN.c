@@ -17,6 +17,7 @@
 void comunicacionDN(ParametrosComunicacion* parametros){
 	tabla_de_nodos.listaNodos = list_create();
 	tabla_de_nodos.listaCapacidadNodos = list_create();
+	list_nodos_id_fd = list_create();
 
 	int socketFSServidor;
 	socketFSServidor = lib_socketServidor(parametros->puertoFS_dn);
@@ -78,7 +79,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 					//Recibo datos de algun cliente
 					if ((bytesRecibidos = recv(i, buffer2, 4, 0)) <= 0) {
 						if (bytesRecibidos == 0) {
-							logInfo("Conexion cerrada del FD : %i", i);
+							logInfo("Conexion cerrada del FD : %i", i);//VER QUE HACER ACA
 						}
 						close(i);
 						FD_CLR(i, &master);
@@ -147,6 +148,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     int puerto_worker =  config->puerto_worker;
     Info_Workers * infoworker;
     saludo_datanode * saludo;
+    nodos_id_fd * nodos;
 
 
 	switch (codigo) {
@@ -213,16 +215,23 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        mensaje[tamanio] = '\0';
 				        recv(FD_DN, mensaje,tamanio,0);
 				        saludo = deserializar_saludo_datanode(mensaje);
-				        logInfo("SE RECIBIO EL SALUDO: %s ", saludo->saludo);
 				        logInfo("ID NODO: %i " , saludo->nombre_nodo);
 				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
 				        free(mensaje);
 
-				        //cargarNodos2(saludo->nombre_nodo);
-				        //infoworker->ipWorker=saludo->ip_worker;
-				        //infoworker->puerto=puerto_worker;
-				        //list_add_in_index(list_info_workers,saludo->nombre_nodo, infoworker);
+				        cargarNodos2(saludo->nombre_nodo);
+				        infoworker->ipWorker=saludo->ip_worker;
+				        infoworker->puerto=puerto_worker;
+				        list_add_in_index(list_info_workers,(saludo->nombre_nodo - 1), infoworker);
+
+
+				        nodos->id_nodo=saludo->nombre_nodo;
+						nodos->nodo_fd=FD_DN;
+				        list_add_in_index(list_nodos_id_fd, (saludo->nombre_nodo - 1), nodos);
+
+
+
                         sem_post(&cantNodosAux);
 
 				        break;

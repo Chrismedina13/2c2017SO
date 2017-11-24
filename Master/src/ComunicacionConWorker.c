@@ -29,14 +29,14 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensaje -> bytesOcupados = parametros->bytesOcupados;
 	mensaje -> archivoTemporal = parametros ->archivoTemporal;
 
-		char* respuesta = serializarListaRespuestaTransf(mensaje);
+		char* respuesta = serializarInfoParaWorker(mensaje);
 
 		int tamanioRespuesta = (sizeof(int) * 3+ sizeof(char*));
 
 	mensajesEnviadosAWorker(TAREA_WORKER,FDServidorWORKER,respuesta, tamanioRespuesta);
 
 }
-ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados) {
+ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados ,int bloque) {
 
 	ParametrosComunicacionWoker* parametros = malloc(
 			sizeof(ParametrosComunicacionWoker));
@@ -46,14 +46,23 @@ ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char*
 	parametros->nodo = nodo;
 	parametros->bytesOcupados = bytesOcupados;
 	parametros -> archivoTemporal = archivo;
+	parametros -> bloque = bloque;
 
 
 	return parametros;
 }
 
 void mensajesEnviadosAWorker(int codigo, int FDServidorWORKER, char* mensaje,int tamanio) {
+	Paquete* paqueteDeEnvio;
 	switch (codigo) {
 case TAREA_WORKER:
+	paqueteDeEnvio = crearPaquete(TAREA_WORKER, tamanio, mensaje);
+
+		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+			logInfo("Error en envio de  INfoParaWorkers");
+		}
+
+		destruirPaquete(paqueteDeEnvio);
 		break;
 	}
 }
