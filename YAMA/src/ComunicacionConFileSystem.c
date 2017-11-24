@@ -41,9 +41,12 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	 Recibiria
 	 BLOQUE | copia  | copia 2 | bytes ocupados
+
 	 */
-	recv(FDsocketClienteFileSystem, pesoCodigo, 4, 0);
-	int codigo = deserializarINT(pesoCodigo);
+
+	char buffer[4];
+	recv(FDsocketClienteFileSystem,buffer, 4, 0);
+	int codigo = deserializarINT(buffer);;
 
 	logInfo("Recibi de FS: %i", codigo);
 
@@ -123,30 +126,34 @@ ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 
 void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 //Yama recibe de FILESYSTEM
-	int tamanioEstructura, tamanio;
+	int tamanioEstructura;
 	char* mensaje; //en este caso el mensaje es la lista de bloques del archivo
+	char tamanio[4];
 
 	switch (codigo) {
 	case UBICACION_BLOQUES:
 
-		recv(FDsocketClienteFileSystem, mensaje, tamanioEstructura, 0);
-		tamanio = deserializarINT(tamanioEstructura);
+		recv(FDsocketClienteFileSystem, tamanio, 4, 0);
+		tamanioEstructura = deserializarINT(tamanio);
 
-		logInfo("Tamanio de lo que recibo %i", tamanio);
+		logInfo("Tamanio de lo que recibo %i", tamanioEstructura);
 
 		mensaje = malloc(tamanio + 1);
 
 		if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
-			logInfo(
-					"Error en la recepcion de la lista de Bloques que componen el archivo.");
-		} else {
-			//t_list* listaDeWorkersAPlanificar = list_create();
-			t_list* listaDeWorkersAPlanificar =
-					deserializarUbicacionBloquesArchivos(mensaje);
-			logInfo(
-					"Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
-					tamanio);
 
+			logInfo("Error en la recepcion de la lista de Bloques que componen el archivo.");
+
+		} else {
+
+			t_list* listaDeWorkersAPlanificar = deserializarUbicacionBloquesArchivos(mensaje);
+
+
+			logInfo("Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",tamanio);
+
+			UbicacionBloquesArchivo* ubi = list_get(listaDeWorkersAPlanificar,0);
+
+			logInfo("ubicacion recibida parte %i", ubi->parteDelArchivo);
 		}
 
 	}
