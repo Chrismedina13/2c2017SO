@@ -128,7 +128,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	char pesoMensaje[4];
 	t_list * lista_ubicaciones;
 	int i;
-		UbicacionBloquesArchivo * ubicacionb;
+	UbicacionBloquesArchivo * ubicacionb;
 
 
 	switch (codigo) {
@@ -152,18 +152,9 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	    	  logInfo("Se recibio la parte del archivo: %s", ubicacionb->parteDelArchivo);
 	    	  logInfo("Se recibio q hay que guardar el nodo %i en el bloque %i", ubicacionb->ubicacionCopia1.nodo,
 	    			  ubicacionb->ubicacionCopia1.desplazamiento);
-
-
-
 	      }
 
-
-
-
-
-
-			logInfo(
-					"Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
+			logInfo("Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
 					tamanio);
                break;
 	case INFO_WORKER:
