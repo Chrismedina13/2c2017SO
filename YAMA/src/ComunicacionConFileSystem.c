@@ -125,27 +125,60 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 //Yama recibe de FILESYSTEM
 	int tamanioEstructura, tamanio;
 	char* mensaje; //en este caso el mensaje es la lista de bloques del archivo
+	char pesoMensaje[4];
+	t_list * lista_ubicaciones;
+	int i;
+		UbicacionBloquesArchivo * ubicacionb;
+
 
 	switch (codigo) {
 	case UBICACION_BLOQUES:
 
-		recv(FDsocketClienteFileSystem, mensaje, tamanioEstructura, 0);
-		tamanio = deserializarINT(tamanioEstructura);
-
-		logInfo("Tamanio de lo que recibo %i", tamanio);
-
-		mensaje = malloc(tamanio + 1);
+		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
+					tamanio = deserializarINT(pesoMensaje);
+					logInfo("tamanio de lo que recibo %i", tamanio);
+					mensaje = malloc(tamanio + 1);
+					mensaje[tamanio] = '\0';
 
 		if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
 			logInfo(
 					"Error en la recepcion de la lista de Bloques que componen el archivo.");
 		} else {
-			//t_list* listaDeWorkersAPlanificar = list_create();
-			t_list* listaDeWorkersAPlanificar =
-					deserializarUbicacionBloquesArchivos(mensaje);
+	            lista_ubicaciones=list_create();
+	            lista_ubicaciones= deserializarUbicacionBloquesArchivos(mensaje);
+	            //prueba para ver si llego bien la lista
+	      for(i=0;list_size(lista_ubicaciones);i++){
+	    	  ubicacionb = list_get(lista_ubicaciones,i);
+	    	  logInfo("Se recibio la parte del archivo: %s", ubicacionb->parteDelArchivo);
+	    	  logInfo("Se recibio q hay que guardar el nodo %i en el bloque %i", ubicacionb->ubicacionCopia1.nodo,
+	    			  ubicacionb->ubicacionCopia1.desplazamiento);
+
+
+
+	      }
+
+
+
+
+
+
 			logInfo(
 					"Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
 					tamanio);
+               break;
+	case INFO_WORKER:
+			recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
+			tamanio = deserializarINT(pesoMensaje);
+			logInfo("tamanio de lo que recibo %i", tamanio);
+			mensaje = malloc(tamanio + 1);
+			mensaje[tamanio] = '\0';
+			recv(FDsocketClienteFileSystem, mensaje, tamanio, 0);
+			logInfo("Se recibio la lista de workers: %s ", mensaje);
+
+
+
+			break;
+
 
 		}
 

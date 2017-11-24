@@ -79,11 +79,19 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 				tamanio);
 
 
-         	lista_ubicaciones = nombreToUbicaciones(mensaje);
-			lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones));
-			lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
-			tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones);
-			mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,lista_serializada,tamanio_lista_serializada);
+      //	lista_ubicaciones = nombreToUbicaciones(mensaje);
+
+		UbicacionBloquesArchivo * ubicaciones1 =setearUbicacionBloque(1,2,2,3,1025, 1024);
+		list_add(lista_ubicaciones, ubicaciones1);
+		UbicacionBloquesArchivo * ubicaciones2 =setearUbicacionBloque(4,5,2,1,1026, 1022);
+		list_add(lista_ubicaciones, ubicaciones2);
+		UbicacionBloquesArchivo * ubicaciones3 =setearUbicacionBloque(1,2,2,3,1025, 1024);
+		list_add(lista_ubicaciones, ubicaciones3);
+
+		lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones));
+		lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
+		tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones);
+	    mensajesEnviadosAYama(UBICACION_BLOQUES,FDYama,lista_serializada,tamanio_lista_serializada);
 
 		break;
 
@@ -127,6 +135,17 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	}
 }
 
+
+UbicacionBloquesArchivo * setearUbicacionBloque(int nodo1, int bloquenodo1, int nodo2, int bloquenodo2, int parteDelArchivo,int bytesOcupados){
+	UbicacionBloquesArchivo * ubicaciones;
+	ubicaciones->bytesOcupados= bytesOcupados;
+	ubicaciones->parteDelArchivo=parteDelArchivo;
+	ubicaciones->ubicacionCopia1.desplazamiento=bloquenodo1;
+    ubicaciones->ubicacionCopia1.nodo=nodo1;
+    ubicaciones->ubicacionCopia2.desplazamiento=bloquenodo2;
+    ubicaciones->ubicacionCopia2.nodo=nodo2;
+    return ubicaciones;
+}
 
 
 

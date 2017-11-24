@@ -340,17 +340,18 @@ char * serializarListaTemp(t_list * lista) {
 	return (Lista);
 }*/
 
-char * serializar_saludo(char* saludo,int nombre_nodo, int capacidad_nodo, char* ipWorker ){
-	char *saludo_serializado= malloc(
-				strlen(saludo) + sizeof(char)*2 + sizeof(int)*2 + strlen(ipWorker));
+
+char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker ){
+	char *saludo_serializado= malloc(sizeof(char) + sizeof(int)*2 + strlen(ipWorker));
 		int desplazamiento = 0;
 
 		serializarDato(saludo_serializado, &(nombre_nodo), sizeof(int),
 				&desplazamiento);
-		serializarDato(saludo_serializado, saludo,
-				strlen(saludo) + sizeof(char), &desplazamiento);
+
 		serializarDato(saludo_serializado, &(capacidad_nodo), sizeof(int),
 					&desplazamiento);
+
+
 			serializarDato(saludo_serializado, ipWorker,
 				strlen(ipWorker) + sizeof(char), &desplazamiento);
 
@@ -368,11 +369,10 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado){
 	deserializarDato(&(saludo->nombre_nodo),saludoSerializado, sizeof(int),
 			&desplazamiento);
 
-	saludo->saludo = strdup(saludoSerializado + desplazamiento);
-
-
 	deserializarDato(&(saludo->capacidad_nodo), saludoSerializado, sizeof(int),
-				&desplazamiento);
+					&desplazamiento);
+
+
 
 		saludo->ip_worker = strdup(saludoSerializado + desplazamiento);
 

@@ -149,44 +149,24 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     Info_Workers * infoworker;
     saludo_datanode * saludo;
     nodos_id_fd * nodos;
+    char* get_bloque;
 
 
 	switch (codigo) {
-	case SET_BLOQUE:
+	case RTA_SET_BLOQUE:
 
-						recv(FD_DN, pesoMensaje, 8, 0);
-						tamanio = deserializarINT(pesoMensaje);
-
-						logInfo("tamanio de lo que recibo %i", tamanio);
-						//mensaje = malloc(tamanio + 1);
-						//mensaje[tamanio] = '\0';
-						logInfo("RECIBI OK DE GUARDADO DE BLOQUE POR PARTE DE DATA NODE");
-
-
+		                        recv(FD_DN,pesoMensaje,4,0);
+								tamanio= deserializarINT(pesoMensaje);
+								logInfo("tamanio de lo que recibo %i", tamanio);
+								mensaje = malloc(tamanio + 1);
+								mensaje[tamanio] = '\0';
+								recv(FD_DN, mensaje,tamanio,0);
+								logInfo("Se reibio la respuesta de Set Bloque de Data Node: %s",  mensaje);
+                                free(mensaje);
 
 		break;
-		case IP_NODO:
 
-			logInfo("FILE SYSTEM RECIBE EL IP DEL WORKER");
-
-			recv(FD_DN, pesoMensaje,4,0);
-				tamanio = deserializarINT(pesoMensaje);
-				logInfo("tamanio de lo que recibo %i", tamanio);
-				mensaje = malloc(tamanio + 1);
-				mensaje[tamanio] = '\0';
-				recv(FD_DN,mensaje, tamanio,0 );
-
-			   logInfo("Recibi el ip del worker %s", mensaje);
-
-			   infoworker->ipWorker=mensaje;
-
-			   infoworker->puerto=puerto_worker;
-			   list_add_in_index(list_info_workers, FD_DN, infoworker);
-
-
-
-				break;
-	case GET_BLOQUE: //RECIBE EL BLOQUE DE DATOS.
+	case RTA_GET_BLOQUE: //RECIBE EL BLOQUE DE DATOS.
 
 
 						recv(FD_DN,pesoMensaje,4,0);
@@ -205,8 +185,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 				        free(mensaje);
 				        break;
-	case SALUDO: //ANDA BIEN!!!!!!!!!!!!!!!!!!!!!
-
+	case SALUDO:
 
 						recv(FD_DN,pesoMensaje,4,0);
 						tamanio= deserializarINT(pesoMensaje);
@@ -298,25 +277,8 @@ void cargarNodos2(int idNodo){
 
 
 
-/*					t_list* list_info_workers = list_create();
-					while(h< cantNodos)recv(FD_Cliente, buffer_ipWorker,4,0);
-					int codigo = deserializarINT(buffer_ipWorker);
-					logInfo("Recibi de DATA NODE el codigo : %i", codigo);
-					mensajesRecibidosDeDN(codigo,FD_Cliente);
-					h++;
-
-*/
 
 /*
-					tabla_de_nodos.listaNodos = list_create();
-					tabla_de_nodos.listaCapacidadNodos = list_create();
-					cargarNodos2(FD_Cliente);
-//
-				sem_post(&cantNodosAux);
-
-					//esto seria un while por cada archivo
-
-
 					index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
 					if(index_archivo==-1){
 						logInfo("RUTA DE ARCHIVO INVALIDA");
