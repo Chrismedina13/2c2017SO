@@ -112,7 +112,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		} else {
 //falta desereaalizar
-			info = deserializarInfoParaWorker(mensaje);
+
+			infoParaWorker * info = deserializarInfoParaWorker(mensaje);
 		}
 		break;
 	case REDUCCION_TEMPORALES:
