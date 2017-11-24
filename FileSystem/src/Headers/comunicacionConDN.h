@@ -32,6 +32,6 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN);
 void mensajesRecibidosDeDataNode(int codigo, int FD_DN);
 void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio);
 char *serialize_int(int value);
-void cargarNodos2(int idNodo);
+void cargarNodos2(int idNodo, int capacidad);
 
 #endif /* HEADERS_COMUNICACIONCONDN_H_ */

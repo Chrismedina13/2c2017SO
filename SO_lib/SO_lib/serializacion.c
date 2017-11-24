@@ -380,6 +380,7 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado){
 
 }
 
+
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados, char* archivoTemporal) {
 	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*)));
 	int desplazamiento = 0;
@@ -422,3 +423,26 @@ infoParaWorker *deserializarInfoParaWorker(
 	return (respuesta);
 
 }
+
+
+char* serializarScript(char* nombre, int tamanio, char* contenido){
+	char* scriptSerializado = malloc(strlen(nombre) + strlen(nombre) + sizeof(char) + sizeof(int));
+	int desplazamiento = 0;
+	serializarDato(scriptSerializado, &(tamanio), sizeof(int),&desplazamiento);
+	serializarDato(scriptSerializado, nombre,strlen(nombre) + sizeof(char), &desplazamiento);
+	serializarDato(scriptSerializado, contenido,strlen(contenido) + sizeof(char), &desplazamiento);
+	return scriptSerializado;
+}
+
+script* deserilizarBloque(char* bloqueSerializado) {
+	SetBloque* setbloque = malloc(1024 * 1024 + 4);
+	int desplazamiento = 0;
+	deserializarDato(&(setbloque->nrobloque), bloqueSerializado, sizeof(int),
+			&desplazamiento);
+	setbloque->contenidoBloque = strdup(bloqueSerializado + desplazamiento);
+
+	return setbloque;
+}
+
+
+
