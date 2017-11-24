@@ -199,7 +199,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
 				        free(mensaje);
 
-				        cargarNodos2(saludo->nombre_nodo);
+				        cargarNodos2(saludo->nombre_nodo, saludo->capacidad_nodo);
 				        infoworker->ipWorker=saludo->ip_worker;
 				        infoworker->puerto=puerto_worker;
 				        list_add_in_index(list_info_workers,(saludo->nombre_nodo - 1), infoworker);
@@ -228,14 +228,35 @@ char *serialize_int(int value){
 	return stream;
 }
 
-void cargarNodos2(int idNodo){
+void cargarNodos2(int idNodo, int capacidad){
 
-		tabla_de_nodos.tamanio=tabla_de_nodos.tamanio+20;
+
+
+
+
+
+	/*
+		 * int nodo
+		nodos_id_fd * nodo;
+		list_any_satisfy()
+
+		for(int i=0;list_size(list_nodos_id_fd); i++){
+		nodo=list_get(list_nodos_id_fd, i);
+	      if(idNodo==nodo->id_nodo){
+	    	  logInfo("Se volvio a conectar el nodo %s", idNodo);
+	      }else{
+	    	  logInfo("");
+	      }*/
+
+
+
+
+		tabla_de_nodos.tamanio=tabla_de_nodos.tamanio+capacidad;
 		tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+20;	//FALTA EL CASO DONDE SE DECONECTA EL NODO
 
 		//int* numero = idNodo;
 
-		list_add(tabla_de_nodos.listaNodos,idNodo);
+		list_add_in_index(tabla_de_nodos.listaNodos,idNodo - 1, idNodo);
 
 		int* nodos;
 		int cantidad = list_size(tabla_de_nodos.listaNodos);
