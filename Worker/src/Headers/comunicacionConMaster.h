@@ -27,7 +27,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametros);
 
 ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
 
-void mensajesRecibidosDeMaster(int codigo, int FDMaster);
+infoParaWorker* mensajesRecibidosDeMaster(int codigo, int FDMaster);
+
+void mensajesEnviadosAMaster(int codigo, int FDMaster);
 
 #endif /* SOCKETSWORKER_H_ */
 

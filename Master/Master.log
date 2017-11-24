@@ -28,3 +28,11 @@
 [INFO] 16:37:17:422 MASTER/(8193:8197): Ingrese JOB a Ejecutar
 [INFO] 16:37:28:417 MASTER/(8193:8197): Se va a ejecutar ere
 [INFO] 16:37:28:418 MASTER/(8193:8197): 3
+[INFO] 18:25:23:571 MASTER/(3456:3456): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 18:25:23:571 MASTER/(3456:3456): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 18:25:23:571 MASTER/(3456:3456): Creando el hilo para comunicarme con Yama
+[INFO] 18:25:23:576 MASTER/(3456:3461): Ingrese JOB a Ejecutar
+[INFO] 18:25:34:412 MASTER/(3456:3461): Se va a ejecutar camila
+[INFO] 18:25:34:412 MASTER/(3456:3461): 6
