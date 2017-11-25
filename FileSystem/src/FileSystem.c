@@ -17,12 +17,16 @@ int main(int argc, char *argv[]) {
 	//Recibir Nodos
 	//cargarNodos();
 
+	//proban2
+
+	recuperarTablaDeArchivos();
+
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	//semaforos
 	int cantNodos= config->cant_nodos;
-	sem_init(&cantNodosAux,0,cantNodos);
+	sem_init(&cantNodosAux,0,0);
 
 
 	logInfo(

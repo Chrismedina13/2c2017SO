@@ -60,3 +60,135 @@
 [INFO] 23:12:14:49 MASTER/(3592:3598): Ingrese JOB a Ejecutar
 [INFO] 23:12:23:359 MASTER/(3592:3598): Se va a ejecutar holaaa
 [INFO] 23:12:23:359 MASTER/(3592:3598): 6
+[INFO] 16:14:27:899 MASTER/(5440:5440): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:14:27:912 MASTER/(5440:5440): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:14:27:916 MASTER/(5440:5440): Creando el hilo para comunicarme con Yama
+[INFO] 16:14:27:930 MASTER/(5440:5446): Ingrese JOB a Ejecutar
+[INFO] 16:14:50:870 MASTER/(5440:5446): Se va a ejecutar algo
+[INFO] 16:14:50:872 MASTER/(5440:5446): 4
+[INFO] 17:00:41:416 MASTER/(3161:3161): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:00:41:416 MASTER/(3161:3161): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:00:41:416 MASTER/(3161:3161): Creando el hilo para comunicarme con Yama
+[INFO] 17:00:41:421 MASTER/(3161:3166): Ingrese JOB a Ejecutar
+[INFO] 17:01:07:394 MASTER/(3161:3166): Se va a ejecutar CAMILA
+[INFO] 17:01:07:394 MASTER/(3161:3166): 6
+[INFO] 17:04:07:635 MASTER/(3330:3330): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:04:07:637 MASTER/(3330:3330): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:04:07:637 MASTER/(3330:3330): Creando el hilo para comunicarme con Yama
+[INFO] 17:04:07:639 MASTER/(3330:3331): Ingrese JOB a Ejecutar
+[INFO] 17:04:12:442 MASTER/(3330:3331): Se va a ejecutar camila
+[INFO] 17:04:12:442 MASTER/(3330:3331): 6
+[INFO] 17:08:33:639 MASTER/(3519:3519): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:08:33:645 MASTER/(3519:3519): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:08:33:645 MASTER/(3519:3519): Creando el hilo para comunicarme con Yama
+[INFO] 17:08:33:646 MASTER/(3519:3522): Ingrese JOB a Ejecutar
+[INFO] 17:08:43:758 MASTER/(3519:3522): Se va a ejecutar camila
+[INFO] 17:08:43:759 MASTER/(3519:3522): 6
+[INFO] 17:13:26:2 MASTER/(3700:3700): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:13:26:2 MASTER/(3700:3700): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:13:26:2 MASTER/(3700:3700): Creando el hilo para comunicarme con Yama
+[INFO] 17:13:26:3 MASTER/(3700:3703): Ingrese JOB a Ejecutar
+[INFO] 17:13:36:545 MASTER/(3700:3703): Se va a ejecutar camila
+[INFO] 17:13:36:545 MASTER/(3700:3703): 6
+[INFO] 17:21:10:658 MASTER/(3924:3924): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:21:10:658 MASTER/(3924:3924): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:21:10:658 MASTER/(3924:3924): Creando el hilo para comunicarme con Yama
+[INFO] 17:21:10:659 MASTER/(3924:3925): Ingrese JOB a Ejecutar
+[INFO] 17:21:16:342 MASTER/(3924:3925): Se va a ejecutar camila
+[INFO] 17:21:16:342 MASTER/(3924:3925): 6
+[INFO] 17:24:31:372 MASTER/(4219:4219): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:24:31:375 MASTER/(4219:4219): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:24:31:375 MASTER/(4219:4219): Creando el hilo para comunicarme con Yama
+[INFO] 17:24:31:382 MASTER/(4219:4222): Ingrese JOB a Ejecutar
+[INFO] 17:24:38:739 MASTER/(4219:4222): Se va a ejecutar hola
+[INFO] 17:24:38:739 MASTER/(4219:4222): 4
+[INFO] 17:26:34:718 MASTER/(4362:4362): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:26:34:718 MASTER/(4362:4362): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:26:34:718 MASTER/(4362:4362): Creando el hilo para comunicarme con Yama
+[INFO] 17:26:34:719 MASTER/(4362:4366): Ingrese JOB a Ejecutar
+[INFO] 17:26:45:808 MASTER/(4362:4366): Se va a ejecutar cam
+[INFO] 17:26:45:808 MASTER/(4362:4366): 3
+[INFO] 17:30:05:944 MASTER/(4552:4552): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:30:05:945 MASTER/(4552:4552): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:30:05:945 MASTER/(4552:4552): Creando el hilo para comunicarme con Yama
+[INFO] 17:30:05:952 MASTER/(4552:4554): Ingrese JOB a Ejecutar
+[INFO] 17:30:19:429 MASTER/(4552:4554): Se va a ejecutar camiamciamc
+[INFO] 17:30:19:429 MASTER/(4552:4554): 11
+[INFO] 17:31:56:696 MASTER/(4808:4808): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:31:56:697 MASTER/(4808:4808): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:31:56:697 MASTER/(4808:4808): Creando el hilo para comunicarme con Yama
+[INFO] 17:31:56:712 MASTER/(4808:4811): Ingrese JOB a Ejecutar
+[INFO] 17:32:33:509 MASTER/(4808:4811): Se va a ejecutar camila
+[INFO] 17:32:33:510 MASTER/(4808:4811): 6
+[INFO] 17:41:56:796 MASTER/(5055:5055): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:41:56:797 MASTER/(5055:5055): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:41:56:798 MASTER/(5055:5055): Creando el hilo para comunicarme con Yama
+[INFO] 17:41:56:800 MASTER/(5055:5057): Ingrese JOB a Ejecutar
+[INFO] 17:42:08:234 MASTER/(5055:5057): Se va a ejecutar hola
+[INFO] 17:42:08:235 MASTER/(5055:5057): 4
+[INFO] 17:43:59:204 MASTER/(5205:5205): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:43:59:206 MASTER/(5205:5205): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:43:59:209 MASTER/(5205:5205): Creando el hilo para comunicarme con Yama
+[INFO] 17:43:59:210 MASTER/(5205:5207): Ingrese JOB a Ejecutar
+[INFO] 17:44:12:919 MASTER/(5205:5207): Se va a ejecutar hola
+[INFO] 17:44:12:919 MASTER/(5205:5207): 4
+[INFO] 17:46:54:996 MASTER/(5288:5288): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:46:54:997 MASTER/(5288:5288): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:46:54:997 MASTER/(5288:5288): Creando el hilo para comunicarme con Yama
+[INFO] 17:46:54:999 MASTER/(5288:5291): Ingrese JOB a Ejecutar
+[INFO] 17:47:03:512 MASTER/(5349:5349): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:47:03:513 MASTER/(5349:5349): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:47:03:513 MASTER/(5349:5349): Creando el hilo para comunicarme con Yama
+[INFO] 17:47:03:515 MASTER/(5349:5351): Ingrese JOB a Ejecutar
+[INFO] 17:47:16:112 MASTER/(5472:5472): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:47:16:121 MASTER/(5472:5472): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:47:16:121 MASTER/(5472:5472): Creando el hilo para comunicarme con Yama
+[INFO] 17:47:16:122 MASTER/(5472:5474): Ingrese JOB a Ejecutar
+[INFO] 17:47:24:547 MASTER/(5472:5474): Se va a ejecutar holas
+[INFO] 17:47:24:547 MASTER/(5472:5474): 5
+[INFO] 17:50:42:673 MASTER/(5733:5733): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:50:42:673 MASTER/(5733:5733): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:50:42:673 MASTER/(5733:5733): Creando el hilo para comunicarme con Yama
+[INFO] 17:50:42:678 MASTER/(5733:5736): Ingrese JOB a Ejecutar
+[INFO] 17:50:59:932 MASTER/(5733:5736): Se va a ejecutar hola
+[INFO] 17:50:59:932 MASTER/(5733:5736): 4
+[INFO] 17:57:27:439 MASTER/(5858:5858): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 17:57:27:441 MASTER/(5858:5858): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 17:57:27:442 MASTER/(5858:5858): Creando el hilo para comunicarme con Yama
+[INFO] 17:57:27:445 MASTER/(5858:5862): Ingrese JOB a Ejecutar
+[INFO] 17:57:37:504 MASTER/(5858:5862): Se va a ejecutar cacacac
+[INFO] 17:57:37:504 MASTER/(5858:5862): 7

@@ -87,7 +87,6 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
 		logInfo("YAMA envia a Master solicitud de transformación.");
-		// FALTA serializar paquete
 
 		Paquete* paqueteSolicitudTransf = crearPaquete(codigo,
 				tamanio, mensaje);
