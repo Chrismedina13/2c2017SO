@@ -60,3 +60,11 @@
 [INFO] 23:12:14:49 MASTER/(3592:3598): Ingrese JOB a Ejecutar
 [INFO] 23:12:23:359 MASTER/(3592:3598): Se va a ejecutar holaaa
 [INFO] 23:12:23:359 MASTER/(3592:3598): 6
+[INFO] 16:14:27:899 MASTER/(5440:5440): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:14:27:912 MASTER/(5440:5440): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:14:27:916 MASTER/(5440:5440): Creando el hilo para comunicarme con Yama
+[INFO] 16:14:27:930 MASTER/(5440:5446): Ingrese JOB a Ejecutar
+[INFO] 16:14:50:870 MASTER/(5440:5446): Se va a ejecutar algo
+[INFO] 16:14:50:872 MASTER/(5440:5446): 4

@@ -103,6 +103,8 @@ UbicacionBloquesArchivo *deserializarUbicacionArchivo(
 
 char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal) {
+
+	loginfo("Serializadando el primer nodo");
 	char* rtaSerializada = malloc((sizeof(int) * 4 + sizeof(char*) * 2));
 	int desplazamiento = 0;
 	serializarDato(rtaSerializada, &(nodo), sizeof(int), &desplazamiento);
@@ -119,6 +121,7 @@ char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 
 	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
 			&desplazamiento);
+	loginfo("Serializar respuesta transf yama bien");
 	return (rtaSerializada);
 
 }
@@ -236,14 +239,18 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	int i;
 	char* ListaSerializada;
 	RespuestaTransformacionYAMA * nodo;
-
+	loginfo("llego hasta aca 1");
+	char* algo;
 	for (i = 0; list_size(lista); i++) {
-		nodo = list_get(ListaSerializada, i);
-		ListaSerializada = strcat(ListaSerializada,
-				serializarRespuestaTransformacionYAMA(nodo->nodo,
-						nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,
-						nodo->bytesOcupados, nodo->archivoTemporal));
+		nodo = list_get(lista, i);
+		algo = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker,
+				nodo->ipWorkwer, nodo->bloque,
+				nodo->bytesOcupados, nodo->archivoTemporal);
+		string_append(ListaSerializada,algo);
+		algo = '\0';
 	}
+
+	loginfo("llego hasta aca 2");
 	return (ListaSerializada);
 }
 t_list * deserializarListaRespuestaTransf(char * listaSerializada) {
