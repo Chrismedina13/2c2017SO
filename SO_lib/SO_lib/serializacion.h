@@ -56,12 +56,19 @@ char* serializarFinTransformacion(finTransformacion* fin);
 
 finTransformacion * deserializarFinTransformacion(char* FT);
 
-char* serializarDatosTransf(int bloque, int bytesOcupados,
-		char* archivoTemporal);
+char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
+		char* archivoTemporal,script* scriptTransformacion);
 
-datos_transformacion *deserializarDatosTransf(char* rtaSerializada);
+infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 
 char * serializarListaTemp(t_list * lista);
+
+//char* serializarScript(char* nombre, int tamanio, char* contenido);
+/*HAY ALGUNA RAZON PARA PASARLE LOS PARAMETROS POR SEPARADO EN VEZ DE LA ESTRUCTURA DIRECTAMENTE?*/
+char* serializarScript(script* script);
+
+
+char* deserializarScript(char* rtaSerializada);
 
 
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);

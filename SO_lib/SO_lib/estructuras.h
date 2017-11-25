@@ -134,19 +134,22 @@ typedef struct saludo_datanode{
 	char* ip_worker;
 }saludo_datanode;
 
+typedef struct script{
+	char* nombre;
+	int tamanio;
+	char* contenido;
+} script;
+
 //Info que le manda el Master a Worker
 typedef struct infoParaWorker{
 	int nodo;
 	int bloque;
 	int bytesOcupados;
 	char* archivoTemporal;
+	script* scritpTransformacion;
 } infoParaWorker;
 
-typedef struct script{
-	char* nombre;
-	int tamanio;
-	char* contenido;
-} script;
+
 
 t_list * list_info_workers;
 t_list * listaUbicaciones;
