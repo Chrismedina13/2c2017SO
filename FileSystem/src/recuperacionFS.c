@@ -17,6 +17,8 @@
  * 6 hago las copias que me falten, estado estable (fin)
  */
 
+
+
 int recuperacionFileSystem(){
 
 }
@@ -184,7 +186,7 @@ int recuperarTablaDeArchivos(){
 
 			while ((linea =fgets(buffer, BUFSIZ, entry_file)) != NULL){
 
-				int copia = obtenerCopia(linea); //si es linea de bytes, pone a copia en 3
+			int copia = obtenerCopia(linea); //si es linea de bytes, pone a copia en 3
 
 				while(copia<2){
 
@@ -233,8 +235,15 @@ int recuperarTablaDeArchivos(){
 
 int obtenerCopia(char* linea){
 
+	int count=0;
+	while(linea[count]!=NULL){
+
+	}
+return(1);
 
 }
+
+
 
 int obtenerBloque(char* linea){
 
@@ -289,3 +298,5 @@ int obtenerDesplazamiento(char* linea){
 int obtenerBytes(char* linea){
 
 }
+
+
