@@ -95,13 +95,15 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 			listaDeWorkersAPlanificar, planificacionDelJOb);
 
 	logInfo("Actualizar Tabla Global");
-	ingresarDatosATablaGlobal(jobCompleto);
+	//probar//ingresarDatosATablaGlobal(jobCompleto);
 
-	/* //Se serializaria la lista serializarRespuestaTransformacionYAMA(); */
+	logInfo("Serializar respueta transformacion a YAMA");
 
 	char* respuesta = serializarListaRespuestaTransf(planificacionDelJOb);
 
 	int tamanioRespuesta = list_size(planificacionDelJOb) * (sizeof(int) * 4 + sizeof(char*) * 2);
+
+	logInfo("listo para enviar");
 
 	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
 			respuesta, tamanioRespuesta);

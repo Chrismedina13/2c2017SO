@@ -297,6 +297,7 @@ char* serializarDatosTransf(int bloque, int bytesOcupados,
 
 }
 
+/*
 datos_transformacion *deserializarDatosTransf(char* rtaSerializada) {
 	datos_transformacion * datos = malloc(sizeof(int) * 2 + sizeof(char*));
 	int desplazamiento = 0;
@@ -310,7 +311,7 @@ datos_transformacion *deserializarDatosTransf(char* rtaSerializada) {
 	return (datos);
 
 }
-
+*/
 char * serializarListaTemp(t_list * lista) {
 	int i;
 	char* ListaSerializada;
@@ -434,6 +435,7 @@ char* serializarScript(char* nombre, int tamanio, char* contenido){
 	return scriptSerializado;
 }
 
+/*
 script* deserilizarBloque(char* bloqueSerializado) {
 	SetBloque* setbloque = malloc(1024 * 1024 + 4);
 	int desplazamiento = 0;
@@ -444,5 +446,5 @@ script* deserilizarBloque(char* bloqueSerializado) {
 	return setbloque;
 }
 
-
+*/
 

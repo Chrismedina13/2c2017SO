@@ -206,7 +206,16 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
 	logInfo("Armar estructura para mandar a Master");
-	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+	t_list* respuestaAMaster = list_create(); //r= armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+	//falta recivir los nodos
+
+	RespuestaTransformacionYAMA* respuesta1 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
+	RespuestaTransformacionYAMA* respuesta2 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
+	RespuestaTransformacionYAMA* respuesta3 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
+
+	list_add(respuestaAMaster,respuesta1);
+	list_add(respuestaAMaster,respuesta2);
+	list_add(respuestaAMaster,respuesta3);
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
@@ -386,7 +395,16 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 
 
 	logInfo("Armar estructura para mandar a Master");
-	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+	t_list* respuestaAMaster = list_create(); //;armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+	//faltaLLenarLaTablaDeNodos
+
+	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal");
+	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal2");
+	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal3");
+
+	list_add(respuestaAMaster,respuestaTrans1);
+	list_add(respuestaAMaster,respuestaTrans2);
+	list_add(respuestaAMaster,respuestaTrans3);
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);

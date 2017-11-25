@@ -21,7 +21,7 @@ int deserializarINT(char* stream);
 
 char* serializarBloque(int numeroBloque, char* contenidoBloque);
 
-SetBloque* deserilizarBloque(char* bloqueSerializado);
+//SetBloque* deserilizarBloque(char* bloqueSerializado);
 
 char * serializarUbicacionBloque(UbicacionBloque ubicacionbloque);
 UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
@@ -59,7 +59,7 @@ finTransformacion * deserializarFinTransformacion(char* FT);
 char* serializarDatosTransf(int bloque, int bytesOcupados,
 		char* archivoTemporal);
 
-datos_transformacion *deserializarDatosTransf(char* rtaSerializada);
+//datos_transformacion *deserializarDatosTransf(char* rtaSerializada);
 
 char * serializarListaTemp(t_list * lista);
 
