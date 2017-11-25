@@ -237,6 +237,7 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	char* ListaSerializada;
 	RespuestaTransformacionYAMA * nodo;
 
+
 	for (i = 0; list_size(lista); i++) {
 		nodo = list_get(ListaSerializada, i);
 		ListaSerializada = strcat(ListaSerializada,
