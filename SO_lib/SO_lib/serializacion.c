@@ -282,7 +282,40 @@ finTransformacion * deserializarFinTransformacion(char* FT) {
 	return fin;
 
 }
+<<<<<<< HEAD
 
+=======
+//serializacion para la estructura datos_transformacion
+char* serializarDatosTransf(int bloque, int bytesOcupados,
+		char* archivoTemporal) {
+	char* rtaSerializada = malloc((sizeof(int) * 2 + sizeof(char*)));
+	int desplazamiento = 0;
+	serializarDato(rtaSerializada, &(bloque), sizeof(int), &desplazamiento);
+	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
+			&desplazamiento);
+	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
+			&desplazamiento);
+
+	return (rtaSerializada);
+
+}
+
+/*
+datos_transformacion *deserializarDatosTransf(char* rtaSerializada) {
+	datos_transformacion * datos = malloc(sizeof(int) * 2 + sizeof(char*));
+	int desplazamiento = 0;
+
+	deserializarDato(&(datos->bloque), rtaSerializada, sizeof(int),
+			&desplazamiento);
+	deserializarDato(&(datos->bytesOcupados), rtaSerializada, sizeof(int),
+			&desplazamiento);
+	datos->archivoTemporal = strdup(rtaSerializada + desplazamiento);
+
+	return (datos);
+
+}
+*/
+>>>>>>> 1b3cf3a8e561ad74305ca0cbe993ba1b5ff7196c
 char * serializarListaTemp(t_list * lista) {
 	int i;
 	char* ListaSerializada;
@@ -415,8 +448,14 @@ char* serializarScript(script* script){
 	return scriptSerializado;
 }
 
+<<<<<<< HEAD
 script* deserilizarScript(char* bloqueSerializado) {
 	script* scriptDeserializado = malloc(1024 * 1024 + 4);
+=======
+/*
+script* deserilizarBloque(char* bloqueSerializado) {
+	SetBloque* setbloque = malloc(1024 * 1024 + 4);
+>>>>>>> 1b3cf3a8e561ad74305ca0cbe993ba1b5ff7196c
 	int desplazamiento = 0;
 	deserializarDato(&(scriptDeserializado->tamanio), bloqueSerializado, sizeof(int),&desplazamiento);
 	scriptDeserializado->contenido = string_substring(bloqueSerializado, sizeof(int), scriptDeserializado->tamanio + sizeof(int));
@@ -424,5 +463,5 @@ script* deserilizarScript(char* bloqueSerializado) {
 	return scriptDeserializado;
 }
 
-
+*/
 

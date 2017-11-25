@@ -20,20 +20,19 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	jobAEjecutar = retirarJobDeLista();
 	logInfo("el job a ejecutar es: %s", jobAEjecutar->nombreDelArchivo);
 
-	// Pediria a FS los bloques del job y ejecutaria la planificacion
-
+	logInfo("Envio De JOB a FS");
 	int tamanioJOB = strlen(jobAEjecutar->nombreDelArchivo);
-
-	logInfo("%i", tamanioJOB);
-
-	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,
-			jobAEjecutar);
-
+	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,jobAEjecutar->nombreDelArchivo);
 	if (enviarPaquete(FDsocketClienteFileSystem, paqueteDeEnvioDeJOB) == -1) {
 		logInfo("Error en envio de job");
+	}else{
+		logInfo("Envio correcto de nombre de job a FS");
 	}
 
 	destruirPaquete(paqueteDeEnvioDeJOB);
+
+	logInfo("Esperando Respuesta de las ubicaciones de las partes del job");
+
 
 	/* Aca tiene que hacer un recv de FS la lista de bloque que componen al archivo
 	 la ubicacion de sus copias y espacio ocupado en el bloque. Empieza la planificacion
@@ -92,16 +91,18 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
 
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
-			listaDeWorkersAPlanificar, planificacionDelJOb);
+			listaDeWorkersAPlanificar);
 
 	logInfo("Actualizar Tabla Global");
-	ingresarDatosATablaGlobal(jobCompleto);
+	//probar//ingresarDatosATablaGlobal(jobCompleto);
 
-	/* //Se serializaria la lista serializarRespuestaTransformacionYAMA(); */
+	logInfo("Serializar respueta transformacion a YAMA");
 
 	char* respuesta = serializarListaRespuestaTransf(planificacionDelJOb);
 
 	int tamanioRespuesta = list_size(planificacionDelJOb) * (sizeof(int) * 4 + sizeof(char*) * 2);
+
+	logInfo("listo para enviar");
 
 	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
 			respuesta, tamanioRespuesta);

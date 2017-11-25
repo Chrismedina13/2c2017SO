@@ -279,6 +279,7 @@ t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo){
 
 			list_add(listaArchvosTemporales,registro->arch_temp);
 
+			i++;
 		}else{
 
 			i++;
@@ -302,7 +303,8 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 		t_reg* registro = list_get(tabla_estados,i);
 
 		if(numeroDeJob == registro->job && master == registro->master && registro->etapa == "REDUCCION LOCAL"){
-			//nodoConMenorCarga = nodoConMenorCargaDeTrabajo(int nodo,int master);
+
+			nodoConMenorCarga = nodoConMenorCargaDeTrabajoParaReduccionGlobal(numeroDeJob,master);
 
 			if(registro->nodo == nodoConMenorCarga){
 
@@ -327,6 +329,7 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 			}
 
+			i++;
 		}else{
 
 			i++;
@@ -341,22 +344,49 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 
 
-int nodoConMenorCargaDeTrabajo(JOBCompleto* jobC){
+int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 
-	int i= 0;
-	int nodoConMenorTrabajo = 0;
+	t_list* nodosIntervinientes = list_create();
+	int i = 0;
+	int a = 0;
+	int nodoConMenorCarga;
+	int carga1;
+	int carga2;
 
-	while(i < (list_size(jobC->respuestaReduccionLocal) -1)){
-		RespuestaReduccionLocal* RRL1 = list_get(jobC->respuestaReduccionLocal,i);
-		RespuestaReduccionLocal* RRL2 = list_get(jobC->respuestaReduccionLocal,(i+1));
-		if(cargaDeTrabajoDelNodo(RRL1->nodo) <= cargaDeTrabajoDelNodo(RRL2->nodo)){
+	while(i < list_size(tabla_estados)){
 
-			nodoConMenorTrabajo = RRL1->nodo;
+		t_reg* registroNodo = list_get(tabla_estados,i);
+		if(registroNodo->job == job && registroNodo->master == master && registroNodo->etapa == "REDUCCION LOCAL"){
+
+			list_add(nodosIntervinientes,registroNodo->nodo);
+			i++;
+
 		}else{
-			nodoConMenorTrabajo = RRL2->nodo;
+
+			i++;
 		}
 	}
-	return nodoConMenorTrabajo;
+
+	while(a < (list_size(nodosIntervinientes)-1)){
+
+		carga1 = cargaDeTrabajoDelNodo(list_get(nodosIntervinientes,a));
+		carga2 = cargaDeTrabajoDelNodo(list_get(nodosIntervinientes,(a+1)));
+
+		if(carga1 <= carga2){
+
+			nodoConMenorCarga = list_get(nodosIntervinientes,a);
+			a++;
+		}else{
+
+			nodoConMenorCarga = list_get(nodosIntervinientes,(a+1));
+			a++;
+		}
+
+	}
+
+	list_destroy_and_destroy_elements(nodosIntervinientes,free);
+
+	return nodoConMenorCarga;
 }
 
 int cargaDeTrabajoDelNodo(int nodo){
@@ -384,7 +414,7 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 		t_reg* registroAAnalizar = list_get(tabla_estados,i);
 
 		if(registroAAnalizar->job == finRG->numeroDeJob && registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->master == master
-			&& registroAAnalizar->nodo == finRG->nodo){
+			&& registroAAnalizar->nodo == finRG->nodo ){
 
 			Info_Workers* info = list_get(list_info_workers,finRG->nodo);
 
@@ -393,6 +423,8 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 
 			return respuestaAF;
 		}
+
+		i++;
 	}
 
 	return NULL;

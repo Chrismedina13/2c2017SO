@@ -25,7 +25,7 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 void mensajesRecibidosDeMaster(int codigo, int FDMaster);
 RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int master);
 t_list* respuestaReduccionGlobal(int numeroDeJob,int master);
-int nodoConMenorCargaDeTrabajo(JOBCompleto* jobC);
+int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job);
 int cargaDeTrabajoDelNodo(int nodo);
 respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master);
 t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo);
