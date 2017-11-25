@@ -65,7 +65,7 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 
 
 
-	t_list * lista_ubicaciones;
+	t_list * lista_ubicaciones = list_create();
 	char* lista_serializada;
 	int tamanio_lista_serializada;
 

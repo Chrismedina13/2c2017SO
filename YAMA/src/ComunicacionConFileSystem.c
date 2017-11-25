@@ -27,10 +27,12 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	logInfo("%i", tamanioJOB);
 
 	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,
-			jobAEjecutar);
+			jobAEjecutar->nombreDelArchivo);
 
 	if (enviarPaquete(FDsocketClienteFileSystem, paqueteDeEnvioDeJOB) == -1) {
 		logInfo("Error en envio de job");
+	}else{
+		logInfo("Envio correcto de nombre de job a FS");
 	}
 
 	destruirPaquete(paqueteDeEnvioDeJOB);
