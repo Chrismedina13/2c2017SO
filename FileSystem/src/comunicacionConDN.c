@@ -25,13 +25,8 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 
 
-	char* buffer = malloc(20);
-    char buffer_ipWorker[4];
-	int cantBloques=20;
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
-	int cantArchivos = config->cant_archivos;
-	int h=0;
-	int index_archivo;
+
 
 
 	//Creo Servidor Principal
