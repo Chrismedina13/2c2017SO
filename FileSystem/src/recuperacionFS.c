@@ -17,6 +17,8 @@
  * 6 hago las copias que me falten, estado estable (fin)
  */
 
+
+
 int recuperacionFileSystem(){
 
 }
@@ -184,7 +186,7 @@ int recuperarTablaDeArchivos(){
 
 			while ((linea =fgets(buffer, BUFSIZ, entry_file)) != NULL){
 
-				int copia = obtenerCopia(linea); //si es linea de bytes, pone a copia en 3
+			int copia = obtenerCopia(linea); //si es linea de bytes, pone a copia en 3
 
 				while(copia<2){
 
@@ -233,10 +235,56 @@ int recuperarTablaDeArchivos(){
 
 int obtenerCopia(char* linea){
 
+	int count=0;
+	while(linea[count]!=NULL){
+
+	}
+return(1);
+
 }
+
+
 
 int obtenerBloque(char* linea){
 
+	int count=0;
+	int bloque;
+	int countAux=0;
+	int temp;
+	char* buffer =malloc(sizeof(linea));
+
+	while(linea[count]!=NULL){
+		if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+			while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+					linea[count]=='9' || linea[count]=='0' ){
+				logInfo("%c",linea[count]);
+				buffer[countAux]=linea[count];
+				//string_append(&buffer,linea[count]);
+				count++;
+				countAux++;
+			}
+			if(countAux>0){
+				if(countAux==1){
+					temp=buffer[1]-'0';
+					return(temp);
+				}
+				if(countAux==2){
+					temp=buffer[1]-'0';
+					temp=temp+(buffer[0]-'0')*10;
+					return(temp);
+				}
+				if(countAux==2){
+					temp=buffer[2]-'0';
+					temp=temp+(buffer[1]-'0')*10;
+					temp=temp+(buffer[2]-'0')*100;
+					return(temp);
+				}
+			}
+		}
+		count++;
+	}
+	return(-1);
 }
 
 int obtenerNodo(char* linea){
@@ -250,3 +298,5 @@ int obtenerDesplazamiento(char* linea){
 int obtenerBytes(char* linea){
 
 }
+
+

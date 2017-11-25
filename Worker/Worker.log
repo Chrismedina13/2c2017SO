@@ -19,3 +19,9 @@
 [INFO] 23:55:35:171 WORKER/(15324:15325): Nueva conexion del socket cliente Master de FD: 6
 [INFO] 23:55:35:173 WORKER/(15324:15325): Recibi de Master: Holaa
 [INFO] 23:55:42:478 WORKER/(15324:15325): Conexion cerrada del FD : 6
+[INFO] 17:09:11:847 WORKER/(2785:2785): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 17:09:11:849 WORKER/(2785:2785): Comunicacion con los Masters
+[INFO] 17:09:11:849 WORKER/(2785:2785): Comunicacion con los FILESYSTEM
+[INFO] 17:09:11:852 WORKER/(2785:2786): SocketCliente = -1 
+
