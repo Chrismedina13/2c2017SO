@@ -26,8 +26,10 @@ char* serializarBloque(int numeroBloque, char* contenidoBloque) {
 	char *bloqueSerializado = malloc(
 			strlen(contenidoBloque) + sizeof(char) + sizeof(int));
 	int desplazamiento = 0;
+
 	serializarDato(bloqueSerializado, &(numeroBloque), sizeof(int),
 			&desplazamiento);
+
 	serializarDato(bloqueSerializado, contenidoBloque,
 			strlen(contenidoBloque) + sizeof(char), &desplazamiento);
 
@@ -43,7 +45,6 @@ SetBloque* deserilizarBloque(char* bloqueSerializado) {
 
 	return setbloque;
 }
-
 
 char* serializarUbicacionBloque(UbicacionBloque ubicacionbloque) {
 	char* ubicacionBloqueSerializado = malloc(sizeof(int) * 2);
@@ -104,24 +105,34 @@ UbicacionBloquesArchivo *deserializarUbicacionArchivo(
 char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal) {
 
-	loginfo("Serializadando el primer nodo");
-	char* rtaSerializada = malloc((sizeof(int) * 4 + sizeof(char*) * 2));
+	logInfo("Serializadando el primer nodo");
+
+	char* rtaSerializada = malloc(
+			sizeof(int) * 4 + sizeof(char) * 2 + strlen(ipWorker)
+					+ strlen(archivoTemporal));
+
 	int desplazamiento = 0;
+
 	serializarDato(rtaSerializada, &(nodo), sizeof(int), &desplazamiento);
-
+	logInfo("Serializo nodo");
 	serializarDato(rtaSerializada, &(puertoWorker), sizeof(int),
-
 			&desplazamiento);
 	serializarDato(rtaSerializada, &(bloque), sizeof(int), &desplazamiento);
-
+	logInfo("Serializo bloque");
 	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
 			&desplazamiento);
-
-	serializarDato(rtaSerializada, &(ipWorker), sizeof(char*), &desplazamiento);
-
-	serializarDato(rtaSerializada, &(archivoTemporal), sizeof(char*),
+	logInfo("Serializo bytes");
+	serializarDato(rtaSerializada, ipWorker, (strlen(ipWorker) + 1),
 			&desplazamiento);
-	loginfo("Serializar respuesta transf yama bien");
+	logInfo("Serializo ip");
+	serializarDato(rtaSerializada, archivoTemporal,
+			(strlen(archivoTemporal) + 1), &desplazamiento);
+	logInfo("Serializo archivo");
+
+	logInfo("Serializar respuesta transf yama bien");
+
+	logInfo("Resupuesta nodo: %s", rtaSerializada);
+
 	return (rtaSerializada);
 
 }
@@ -137,11 +148,10 @@ RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 			rtaSerializada, sizeof(int), &desplazamiento);
 
 	deserializarDato(&(respuestaTransformacionYAMA->bloque), rtaSerializada,
-				sizeof(int), &desplazamiento);
-
+			sizeof(int), &desplazamiento);
 
 	deserializarDato(&(respuestaTransformacionYAMA->bytesOcupados),
-				rtaSerializada, sizeof(int), &desplazamiento);
+			rtaSerializada, sizeof(int), &desplazamiento);
 
 	respuestaTransformacionYAMA->ipWorkwer = strdup(
 			rtaSerializada + desplazamiento);
@@ -239,18 +249,25 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	int i;
 	char* ListaSerializada;
 	RespuestaTransformacionYAMA * nodo;
-	loginfo("llego hasta aca 1");
-	char* algo;
-	for (i = 0; list_size(lista); i++) {
+
+	logInfo("llego hasta aca 1");
+
+	logInfo("%d", list_size(lista));
+
+	char* algo = string_new();
+
+	for (i = 0; i < list_size(lista); i++) {
 		nodo = list_get(lista, i);
-		algo = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker,
-				nodo->ipWorkwer, nodo->bloque,
+
+		algo = serializarRespuestaTransformacionYAMA(nodo->nodo,
+				nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,
 				nodo->bytesOcupados, nodo->archivoTemporal);
-		string_append(ListaSerializada,algo);
-		algo = '\0';
+
+		strcat(&ListaSerializada,algo);
 	}
 
-	loginfo("llego hasta aca 2");
+	logInfo("Retorno lista Serializada ok ");
+
 	return (ListaSerializada);
 }
 t_list * deserializarListaRespuestaTransf(char * listaSerializada) {
@@ -299,68 +316,62 @@ char * serializarListaTemp(t_list * lista) {
 
 		contenido = list_get(lista, i);
 
-		strcat(ListaSerializada,contenido);
+		strcat(ListaSerializada, contenido);
 	}
 	return (ListaSerializada);
 }
 //falta hacer la deserrealizar de la lista de char*
 /*t_list * deserializarListaTemp(char * lista) {
-	int i;
-	t_list * Lista;
+ int i;
+ t_list * Lista;
 
-	char * despl;
-	for (i = 0; i<sizeof(lista); (i + sizeof(datos_Reduccion))) {
-		despl = string_substring(lista, i,
-				sizeof(Info_Workers));
-		datos_Reduccion = deserializarInfoWorker(despl);
-		list_add(Lista, infoworkers);
-	}
+ char * despl;
+ for (i = 0; i<sizeof(lista); (i + sizeof(datos_Reduccion))) {
+ despl = string_substring(lista, i,
+ sizeof(Info_Workers));
+ datos_Reduccion = deserializarInfoWorker(despl);
+ list_add(Lista, infoworkers);
+ }
 
-	return (Lista);
-}*/
+ return (Lista);
+ }*/
 
+char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker) {
+	char *saludo_serializado = malloc(
+			sizeof(char) + sizeof(int) * 2 + strlen(ipWorker));
+	int desplazamiento = 0;
 
-char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker ){
-	char *saludo_serializado= malloc(sizeof(char) + sizeof(int)*2 + strlen(ipWorker));
-		int desplazamiento = 0;
+	serializarDato(saludo_serializado, &(nombre_nodo), sizeof(int),
+			&desplazamiento);
 
-		serializarDato(saludo_serializado, &(nombre_nodo), sizeof(int),
-				&desplazamiento);
+	serializarDato(saludo_serializado, &(capacidad_nodo), sizeof(int),
+			&desplazamiento);
 
-		serializarDato(saludo_serializado, &(capacidad_nodo), sizeof(int),
-					&desplazamiento);
+	serializarDato(saludo_serializado, ipWorker,
+			strlen(ipWorker) + sizeof(char), &desplazamiento);
 
-
-			serializarDato(saludo_serializado, ipWorker,
-				strlen(ipWorker) + sizeof(char), &desplazamiento);
-
-		return saludo_serializado;
+	return saludo_serializado;
 
 }
 
-
-saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado){
+saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 	saludo_datanode* saludo = malloc(40);
 	int desplazamiento = 0;
 
-
-
-	deserializarDato(&(saludo->nombre_nodo),saludoSerializado, sizeof(int),
+	deserializarDato(&(saludo->nombre_nodo), saludoSerializado, sizeof(int),
 			&desplazamiento);
 
 	deserializarDato(&(saludo->capacidad_nodo), saludoSerializado, sizeof(int),
-					&desplazamiento);
+			&desplazamiento);
 
-
-
-		saludo->ip_worker = strdup(saludoSerializado + desplazamiento);
+	saludo->ip_worker = strdup(saludoSerializado + desplazamiento);
 
 	return saludo;
 
 }
 
-
-char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados, char* archivoTemporal,script* scriptTransformacion) {
+char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
+		char* archivoTemporal, script* scriptTransformacion) {
 	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*)));
 	int desplazamiento = 0;
 
@@ -371,53 +382,51 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados, char* ar
 	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
 			&desplazamiento);
 
-	serializarDato(rtaSerializada, &(archivoTemporal), string_length(archivoTemporal),
-			&desplazamiento);
+	serializarDato(rtaSerializada, &(archivoTemporal),
+			string_length(archivoTemporal), &desplazamiento);
 
 	char* scriptSerializado = serializarScript(scriptTransformacion);
-	serializarDato(rtaSerializada,scriptSerializado,string_length(scriptSerializado),&desplazamiento);
+	serializarDato(rtaSerializada, scriptSerializado,
+			string_length(scriptSerializado), &desplazamiento);
 
 	return (rtaSerializada);
 
 }
 
-infoParaWorker *deserializarInfoParaWorker(
-		char* rtaSerializada) {
+infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 
-	infoParaWorker * respuesta = malloc(sizeof(int) * 3 + sizeof(char*) + sizeof(script));
+	infoParaWorker * respuesta = malloc(
+			sizeof(int) * 3 + sizeof(char*) + sizeof(script));
 
 	int desplazamiento = 0;
 
 	respuesta->nodo = strdup(rtaSerializada + desplazamiento);
 
+	deserializarDato(&(respuesta->bloque), rtaSerializada, sizeof(int),
+			&desplazamiento);
 
-	deserializarDato(&(respuesta->bloque), rtaSerializada,
-				sizeof(int), &desplazamiento);
+	deserializarDato(&(respuesta->bytesOcupados), rtaSerializada, sizeof(int),
+			&desplazamiento);
 
-
-	deserializarDato(&(respuesta->bytesOcupados),
-				rtaSerializada, sizeof(int), &desplazamiento);
-
-
-	respuesta->archivoTemporal = strdup(
-			rtaSerializada + desplazamiento);
-
-
+	respuesta->archivoTemporal = strdup(rtaSerializada + desplazamiento);
 
 	return (respuesta);
 
 }
 
-
-char* serializarScript(script* script){
+char* serializarScript(script* script) {
 	char* nombre = script->nombre;
 	char* contenido = script->contenido;
 	int tamanio = script->tamanio;
-	char* scriptSerializado = malloc(strlen(nombre) + strlen(contenido) + sizeof(char)*2 + sizeof(int));
+	char* scriptSerializado = malloc(
+			strlen(nombre) + strlen(contenido) + sizeof(char) * 2
+					+ sizeof(int));
 	int desplazamiento = 0;
-	serializarDato(scriptSerializado, &(tamanio), sizeof(int),&desplazamiento);
-	serializarDato(scriptSerializado, contenido,strlen(contenido) + sizeof(char), &desplazamiento);
-	serializarDato(scriptSerializado, nombre,strlen(nombre) + sizeof(char), &desplazamiento);
+	serializarDato(scriptSerializado, &(tamanio), sizeof(int), &desplazamiento);
+	serializarDato(scriptSerializado, contenido,
+			strlen(contenido) + sizeof(char), &desplazamiento);
+	serializarDato(scriptSerializado, nombre, strlen(nombre) + sizeof(char),
+			&desplazamiento);
 
 	return scriptSerializado;
 }
@@ -425,11 +434,13 @@ char* serializarScript(script* script){
 script* deserilizarScript(char* bloqueSerializado) {
 	script* scriptDeserializado = malloc(1024 * 1024 + 4);
 	int desplazamiento = 0;
-	deserializarDato(&(scriptDeserializado->tamanio), bloqueSerializado, sizeof(int),&desplazamiento);
-	scriptDeserializado->contenido = string_substring(bloqueSerializado, sizeof(int), scriptDeserializado->tamanio + sizeof(int));
-	scriptDeserializado->nombre = string_substring(bloqueSerializado, sizeof(int) + string_length(scriptDeserializado->contenido), string_length(bloqueSerializado));
+	deserializarDato(&(scriptDeserializado->tamanio), bloqueSerializado,
+			sizeof(int), &desplazamiento);
+	scriptDeserializado->contenido = string_substring(bloqueSerializado,
+			sizeof(int), scriptDeserializado->tamanio + sizeof(int));
+	scriptDeserializado->nombre = string_substring(bloqueSerializado,
+			sizeof(int) + string_length(scriptDeserializado->contenido),
+			string_length(bloqueSerializado));
 	return scriptDeserializado;
 }
-
-
 
