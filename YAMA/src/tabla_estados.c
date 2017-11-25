@@ -53,12 +53,12 @@ t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* eta
 }
 
 
-void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
+void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto,t_list* listaRespuestaPlanificacionYama){
 
 	int i = 0;
-	while(i<list_size(jobCompleto->respuestaDePlanificacion)){
+	while(i<list_size(listaRespuestaPlanificacionYama)){
 
-		RespuestaTransformacionYAMA* respuesta = list_get(jobCompleto->respuestaDePlanificacion,i);
+		RespuestaTransformacionYAMA* respuesta = list_get(listaRespuestaPlanificacionYama,i);
 
 		t_reg* registro = crearRegistroTablaGlobal(jobCompleto->job->identificadorJob,jobCompleto->job->master,
 				respuesta->nodo,respuesta->bloque,"TRANSFORMACION",respuesta->archivoTemporal,"EN PROCESO");
@@ -68,6 +68,7 @@ void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
 
 	}
 }
+
 
 // si bloque es 0, Para la entradas de Reduccion Local no tiene bloque
 void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal* RRL,int numeroMaster){

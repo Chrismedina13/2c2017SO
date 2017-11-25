@@ -397,8 +397,6 @@ void consolaFileSystem(){
 						SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
 						setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
 						setbloque1->contenidoBloque=bloque;
-
-
 						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
 						mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
 						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
@@ -525,7 +523,13 @@ void consolaFileSystem(){
 
 						char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,count);
 
-						mensajesEnviadosADataNode(SET_BLOQUE, nodoACopiar, bloque, 1024*1024);
+						SetBloque *setbloque= malloc(sizeof(char)*1024+sizeof(int));
+						setbloque->nrobloque= desplazamiento;
+						setbloque->contenidoBloque=bloque;
+						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque->contenidoBloque)));
+						mensaje = serializarBloque(setbloque->nrobloque,setbloque->contenidoBloque);
+						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque->contenidoBloque));
+						mensajesEnviadosADataNode(SET_BLOQUE, nodoACopiar, mensaje, tamanioSetBloque);
 
 						logInfo("El bloque fue copiado con exito.");
 
