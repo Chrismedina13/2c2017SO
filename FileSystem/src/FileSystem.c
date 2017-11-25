@@ -11,7 +11,6 @@
 int main(int argc, char *argv[]) {
 
 
-
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
