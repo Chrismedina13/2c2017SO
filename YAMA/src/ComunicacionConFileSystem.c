@@ -20,15 +20,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	jobAEjecutar = retirarJobDeLista();
 	logInfo("el job a ejecutar es: %s", jobAEjecutar->nombreDelArchivo);
 
-	// Pediria a FS los bloques del job y ejecutaria la planificacion
-
+	logInfo("Envio De JOB a FS");
 	int tamanioJOB = strlen(jobAEjecutar->nombreDelArchivo);
-
-	logInfo("%i", tamanioJOB);
-
-	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,
-			jobAEjecutar->nombreDelArchivo);
-
+	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,jobAEjecutar->nombreDelArchivo);
 	if (enviarPaquete(FDsocketClienteFileSystem, paqueteDeEnvioDeJOB) == -1) {
 		logInfo("Error en envio de job");
 	}else{
@@ -36,6 +30,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	}
 
 	destruirPaquete(paqueteDeEnvioDeJOB);
+
+	logInfo("Esperando Respuesta de las ubicaciones de las partes del job");
+
 
 	/* Aca tiene que hacer un recv de FS la lista de bloque que componen al archivo
 	 la ubicacion de sus copias y espacio ocupado en el bloque. Empieza la planificacion
@@ -94,7 +91,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
 
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
-			listaDeWorkersAPlanificar, planificacionDelJOb);
+			listaDeWorkersAPlanificar);
 
 	logInfo("Actualizar Tabla Global");
 	//probar//ingresarDatosATablaGlobal(jobCompleto);

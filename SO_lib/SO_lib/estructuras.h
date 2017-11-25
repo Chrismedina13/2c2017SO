@@ -36,9 +36,6 @@ typedef struct jobCompleto{
 
 	Job* job; //Puntero a una estructura JOB
 	t_list* ubicacionDeLasPartesDelJOB;
-	t_list* respuestaDePlanificacion;
-	t_list* respuestaReduccionLocal;
-	t_list* respuesReduciionGlobal;
 }JOBCompleto;
 
 
@@ -170,8 +167,7 @@ UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int b
 		,int copia2Nodo,int copia2Bloque);
 
 void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
-JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes, t_list* listaDePlanificacion);
-int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
+JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes);
 int tamanioJOB(Job* job);
 RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
