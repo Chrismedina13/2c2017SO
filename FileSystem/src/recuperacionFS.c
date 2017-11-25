@@ -21,6 +21,9 @@
 
 int recuperacionFileSystem(){
 
+	cargarDirectorios();
+
+
 }
 
 int recuperarTablaDeNodos(){
@@ -106,7 +109,6 @@ int recuperarTablaDeArchivos(){
     char    buffer[BUFSIZ];
 
     /* Scanning the in directory */
-    int cantDir =  cantidadDirectorios();
     char* directorio;
     int indice;
     strcpy(directorio,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/");
@@ -236,14 +238,38 @@ int recuperarTablaDeArchivos(){
 int obtenerCopia(char* linea){
 
 	int count=0;
-	while(linea[count]!=NULL){
+	int bloque=0;
+	int countAux=0;
+	int temp;
+	char* buffer =malloc(sizeof(linea));
 
+	while(linea[count]!=NULL){
+		if(bloque==0){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					//string_append(&buffer,linea[count]);
+					count++;
+					bloque=1;
+				}
+			}
+		}
+		if(linea[count]=='1'){
+			free(buffer);
+			return(1);
+		}
+		if(linea[count]=='0'){
+			free(buffer);
+			return(0);
+		}
+
+		count++;
 	}
-return(1);
+	free(buffer);
+	return(-1);
 
 }
-
-
 
 int obtenerBloque(char* linea){
 
@@ -266,36 +292,236 @@ int obtenerBloque(char* linea){
 			}
 			if(countAux>0){
 				if(countAux==1){
-					temp=buffer[1]-'0';
+					temp=buffer[0]-'0';
+					free(buffer);
 					return(temp);
 				}
 				if(countAux==2){
 					temp=buffer[1]-'0';
 					temp=temp+(buffer[0]-'0')*10;
+					free(buffer);
 					return(temp);
 				}
-				if(countAux==2){
+				if(countAux==3){
 					temp=buffer[2]-'0';
 					temp=temp+(buffer[1]-'0')*10;
-					temp=temp+(buffer[2]-'0')*100;
+					temp=temp+(buffer[0]-'0')*100;
+					free(buffer);
 					return(temp);
 				}
 			}
 		}
 		count++;
 	}
+	free(buffer);
 	return(-1);
 }
 
 int obtenerNodo(char* linea){
 
+	int count=0;
+	int flag=0;
+	int countAux=0;
+	int nodo;
+	char* buffer =malloc(sizeof(linea));
+	int temp=0;
+
+	while(linea[count]!=NULL){
+		if(flag==0){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					count++;
+					flag=1;
+				}
+			}
+		}
+		if(flag==1){
+			if(linea[count]=='1' || linea[count]=='0'){
+				count++;
+				flag=2;
+			}
+		}
+		if(flag==2){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+							linea[count]=='9' || linea[count]=='0' ){
+				nodo=linea[count]-'0';
+				return(nodo);
+
+			}
+		}
+		count++;
+	}
+	free(buffer);
+	return(-1);
+
 }
 
 int obtenerDesplazamiento(char* linea){
 
+	int count=0;
+	int flag=0;
+	int countAux=0;
+	int temp;
+	char* buffer =malloc(sizeof(linea));
+
+	while(linea[count]!=NULL){
+		if(flag==0){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					count++;
+					flag=1;
+				}
+			}
+		}
+		if(flag==1){
+			if(linea[count]=='1' || linea[count]=='0'){
+				count++;
+				flag=2;
+			}
+		}
+		if(flag==2){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+							linea[count]=='9' || linea[count]=='0' ){
+				count++;
+				flag=3;
+			}
+		}
+		if(flag==3){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					buffer[countAux]=linea[count];
+					count++;
+					countAux++;
+					}
+					if(countAux>0){
+						if(countAux==1){
+							temp=buffer[0]-'0';
+							free(buffer);
+							return(temp);
+					}
+					if(countAux==2){
+						temp=buffer[1]-'0';
+						temp=temp+(buffer[0]-'0')*10;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==3){
+						temp=buffer[2]-'0';
+						temp=temp+(buffer[1]-'0')*10;
+						temp=temp+(buffer[0]-'0')*100;
+						free(buffer);
+						return(temp);
+					}
+				}
+			}
+		}
+		count++;
+	}
+	free(buffer);
+	return(-1);
+
+
 }
 
 int obtenerBytes(char* linea){
+
+	int count=0;
+	int bytes=0;
+	int countAux=0;
+	int temp;
+	char* buffer =malloc(sizeof(linea));
+
+	while(linea[count]!=NULL){
+		if(bytes==0){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+				linea[count]=='9' || linea[count]=='0' ){
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					count++;
+					bytes=1;
+				}
+			}
+		}
+		if(bytes==1){
+			if(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+					linea[count]=='9' || linea[count]=='0' ){
+
+				while(linea[count]=='1' || linea[count]=='2' || linea[count]=='3' || linea[count]=='4' || linea[count]=='5' || linea[count]=='6' || linea[count]=='7' || linea[count]=='8' ||
+						linea[count]=='9' || linea[count]=='0' ){
+					buffer[countAux]=linea[count];
+					count++;
+					countAux++;
+				}
+				if(countAux>0){
+					if(countAux==1){
+						temp=buffer[0]-'0';
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==2){
+						temp=buffer[1]-'0';
+						temp=temp+(buffer[0]-'0')*10;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==3){
+						temp=buffer[2]-'0';
+						temp=temp+(buffer[1]-'0')*10;
+						temp=temp+(buffer[0]-'0')*100;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==4){
+						temp=buffer[3]-'0';
+						temp=temp+(buffer[2]-'0')*10;
+						temp=temp+(buffer[1]-'0')*100;
+						temp=temp+(buffer[0]-'0')*1000;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==5){
+						temp=buffer[4]-'0';
+						temp=temp+(buffer[3]-'0')*10;
+						temp=temp+(buffer[2]-'0')*100;
+						temp=temp+(buffer[1]-'0')*1000;
+						temp=temp+(buffer[0]-'0')*10000;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==6){
+						temp=buffer[5]-'0';
+						temp=temp+(buffer[4]-'0')*10;
+						temp=temp+(buffer[3]-'0')*100;
+						temp=temp+(buffer[2]-'0')*1000;
+						temp=temp+(buffer[1]-'0')*10000;
+						temp=temp+(buffer[9]-'0')*100000;
+						free(buffer);
+						return(temp);
+					}
+					if(countAux==7){
+						temp=buffer[6]-'0';
+						temp=temp+(buffer[5]-'0')*10;
+						temp=temp+(buffer[4]-'0')*100;
+						temp=temp+(buffer[3]-'0')*1000;
+						temp=temp+(buffer[2]-'0')*10000;
+						temp=temp+(buffer[1]-'0')*100000;
+						temp=temp+(buffer[0]-'0')*1000000;
+						free(buffer);
+						return(temp);
+					}
+				}
+			}
+		}
+		count++;
+	}
+	free(buffer);
+	return(-1);
 
 }
 
