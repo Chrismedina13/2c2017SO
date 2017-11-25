@@ -249,6 +249,7 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	int i;
 	char* ListaSerializada;
 	RespuestaTransformacionYAMA * nodo;
+<<<<<<< HEAD
 
 	logInfo("llego hasta aca 1");
 
@@ -257,6 +258,16 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	char* algo = string_new();
 
 	for (i = 0; i < list_size(lista); i++) {
+=======
+<<<<<<< HEAD
+
+
+=======
+	loginfo("llego hasta aca 1");
+	char* algo;
+>>>>>>> bf494888d965c3f77ab8bbb228b79158e74489fc
+	for (i = 0; list_size(lista); i++) {
+>>>>>>> c62fd4a5338c6c28f98bc603df802966149b4c9b
 		nodo = list_get(lista, i);
 
 		algo = serializarRespuestaTransformacionYAMA(nodo->nodo,
