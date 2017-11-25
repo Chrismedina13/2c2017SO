@@ -247,7 +247,7 @@ Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado) {
 }
 char * serializarListaRespuestaTransf(t_list * lista) {
 	int i;
-	char* ListaSerializada;
+	char* ListaSerializada = malloc(sizeof(RespuestaTransformacionYAMA)*list_size(lista));
 	RespuestaTransformacionYAMA * nodo;
 
 	logInfo("llego hasta aca 1");
