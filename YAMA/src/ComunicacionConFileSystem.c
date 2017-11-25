@@ -91,7 +91,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
 
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
-			listaDeWorkersAPlanificar);
+			listaDeWorkersAPlanificar, planificacionDelJOb);
 
 	logInfo("Actualizar Tabla Global");
 	//probar//ingresarDatosATablaGlobal(jobCompleto);

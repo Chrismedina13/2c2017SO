@@ -125,9 +125,30 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
     int numeroDeJobFinalReduccionLocal;
     t_list* RRG;
     int jobDeFinalizacionReduccionGlobal;
+    Replanificacion* replanificacion;
     respuestaAlmacenadoFinal* RAF;
+    t_list* nuevaPlanificacion;
 
 	switch (codigo) {
+	case REPLANIFICACION:
+		recv(FDMaster, pesoMensaje, 4, 0);
+		tamanio = deserializarINT(pesoMensaje);
+		logInfo("tamanio de lo que recibo %i", tamanio);
+		mensaje = malloc(tamanio + 1);
+		mensaje[tamanio] = '\0';
+		recv(FDMaster, mensaje, tamanio, 0);
+
+		//replanificacion = deserializarReplanificacion(mensaje);
+
+		nuevaPlanificacion = replanificar(replanificacion);
+
+
+
+
+
+
+
+		break;
 	case NOMBRE_ARCHIVO:
 		recv(FDMaster, pesoMensaje, 4, 0);
 		tamanio = deserializarINT(pesoMensaje);
@@ -217,7 +238,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 
 		break;
-	case ALMACENADO_FINAL:
+	case SOL_ALMACENADO_FINAL:
 		logInfo("Yama recibe señal de finalización de Almacenamiento Final.");
 		recv(FDMaster, pesoMensaje, 4, 0);
 		tamanio = deserializarINT(pesoMensaje);
@@ -430,8 +451,57 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 	return NULL;
 }
 
+t_list* replanificacion(Replanificacion* replani,int master){
+
+	t_list* listaConNuevaPlanificacion;
+	int i = 0;
+
+	while( i < list_size(listaDeJobs)){
+
+		JOBCompleto* job = list_get(listaDeJobs,i);
+		if(job->job->master == master && job->job->identificadorJob == replani->numeroDeJOb){
+
+		listaConNuevaPlanificacion = crearNuevaPlanificacion(job->respuestaTransformacion,job->ubicacionDeLasPartesDelJOB,replani->nodoCaido);
+
+		}
+		else{
+
+			i++;
+		}
+
+	}
+
+
+}
+
+t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacionDeLosBloques,int nodoCaido){
+
+	t_list* listaConNuevaRespuesta = list_create();
+	int i = 0;
+	RespuestaTransformacionYAMA* respuestaAAnalizar;
+	RespuestaTransformacionYAMA* respuestaAModificar;
+	int otroNodo;
+
+	while(i<list_size(respuestaTransformacion)){
+	 respuestaAAnalizar= list_get(respuestaTransformacion,i);
+		if(respuestaAAnalizar->nodo == nodoCaido){
+			respuestaAModificar = list_remove(respuestaTransformacion,i);
+			otroNodo = otroNodoDondeEstaLaParte(ubicacionDeLosBloques,nodoCaido);
 
 
 
 
+		}
+		else{
+
+		}
+
+
+	}
+
+}
+
+int otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo){
+
+}
 
