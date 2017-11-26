@@ -257,7 +257,6 @@ RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int mast
 
 	int i =0;
 	RespuestaReduccionLocal* RRL;
-	int puertoNodo;
 	t_list* listaArchivosTemporalesTrans;
 	char* ArchivoreduccionLocal;
 
@@ -315,7 +314,6 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 	int i;
 	t_list* listaRRG;
 	int nodoConMenorCarga = 0;
-	char* archivoRRG;
 
 	while(i < list_size(tabla_estados)){
 
@@ -329,7 +327,7 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 				Info_Workers* info = list_get(list_info_workers,((registro->nodo)-1));
 				variableReduciionGlobal++;
-				archivoRRG = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
+				char* archivoRRG = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
 
 				RespuestaReduccionGlobal* RRGEncargado = crearRespuestaReduccionGlobal(registro->nodo,info->puerto,info->ipWorker
 						,registro->arch_temp,archivoRRG,true);
@@ -339,10 +337,10 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 				Info_Workers* info = list_get(list_info_workers,((registro->nodo)-1));
 				variableReduciionGlobal++;
-				archivoRRG = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
+				char* archivoRRGlobal = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
 
 				RespuestaReduccionGlobal* RRGNOEncargado = crearRespuestaReduccionGlobal(registro->nodo,info->puerto,info->ipWorker
-						,registro->arch_temp,archivoRRG,false);
+						,registro->arch_temp,archivoRRGlobal,false);
 
 				list_add(listaRRG,RRGNOEncargado);
 
