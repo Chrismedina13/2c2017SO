@@ -268,15 +268,15 @@ char * serializarListaRespuestaTransf(t_list * lista) {
 	return (ListaSerializada);
 }
 t_list * deserializarListaRespuestaTransf(char * listaSerializada) {
-	int i;
+	int i, desplazamiento;
 	t_list * Lista;
 	RespuestaTransformacionYAMA * nodo;
-	char * despl;
-	for (i = 0; sizeof(listaSerializada);
-			(i + sizeof(RespuestaTransformacionYAMA))) {
-		despl = string_substring(listaSerializada, i,
+	char * respuestaTransformacionYama; //UNA RESPUESTA INDIVIDUAL DE LA LISTA
+
+	for (i = 0; i<= strlen(listaSerializada);(i + sizeof(RespuestaTransformacionYAMA))) {
+		respuestaTransformacionYama = string_substring(listaSerializada, i,
 				sizeof(RespuestaTransformacionYAMA));
-		nodo = deserializarRespuestaTransformacionYAMA(despl);
+		nodo = deserializarRespuestaTransformacionYAMA(respuestaTransformacionYama);
 		list_add(Lista, nodo);
 	}
 
