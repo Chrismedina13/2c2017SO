@@ -20,6 +20,15 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 	logInfo("%i", tamanioJOB);
 
 	mensajesEnviadosAYama(NOMBRE_ARCHIVO, FDsocketClienteYAMA, job, tamanioJOB);
+	//voy a recibir datos de Yama
+	char pesoCodigo[4];
+	recv(FDsocketClienteYAMA, pesoCodigo, 4, 0);
+
+		int codigo = deserializarINT(pesoCodigo);
+
+		logInfo("Recibi de YAMA: %i", codigo);
+
+	mensajesRecibidosDeYama(codigo, FDsocketClienteYAMA);
 
 	free(job);
 }

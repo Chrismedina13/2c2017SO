@@ -192,3 +192,11 @@
 [INFO] 17:57:27:445 MASTER/(5858:5862): Ingrese JOB a Ejecutar
 [INFO] 17:57:37:504 MASTER/(5858:5862): Se va a ejecutar cacacac
 [INFO] 17:57:37:504 MASTER/(5858:5862): 7
+[INFO] 13:44:06:278 MASTER/(2933:2933): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 13:44:06:279 MASTER/(2933:2933): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 13:44:06:279 MASTER/(2933:2933): Creando el hilo para comunicarme con Yama
+[INFO] 13:44:06:283 MASTER/(2933:2938): Ingrese JOB a Ejecutar
+[INFO] 13:44:09:400 MASTER/(2933:2938): Se va a ejecutar hola
+[INFO] 13:44:09:400 MASTER/(2933:2938): 4
