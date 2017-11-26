@@ -123,7 +123,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
     RespuestaReduccionLocal* RRL;
     int numeroDeJobFinalReduccionLocal;
     t_list* RRG;
-    int jobDeFinalizacionReduccionGlobal;
     Replanificacion* replanificacion;
     respuestaAlmacenadoFinal* RAF;
     t_list* nuevaPlanificacion;
@@ -139,7 +138,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		//replanificacion = deserializarReplanificacion(mensaje);
 
-		nuevaPlanificacion = replanificar(replanificacion);
+		//nuevaPlanificacion = replanificacion(replanificacion,FDMaster);
 
 
 
@@ -452,24 +451,26 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 
 t_list* replanificacion(Replanificacion* replani,int master){
 
-	t_list* listaConNuevaPlanificacion;
+	t_list* nuevaPlanificacion;
 	int i = 0;
 
-	while( i < list_size(listaDeJobs)){
+	while(i< list_size(listaDeJobs)){
 
 		JOBCompleto* job = list_get(listaDeJobs,i);
 		if(job->job->master == master && job->job->identificadorJob == replani->numeroDeJOb){
 
-		listaConNuevaPlanificacion = crearNuevaPlanificacion(job->respuestaTransformacion,job->ubicacionDeLasPartesDelJOB,replani->nodoCaido);
+		nuevaPlanificacion = crearNuevaPlanificacion(job->respuestaTransformacion,job->ubicacionDeLasPartesDelJOB,replani->nodoCaido);
 
-		}
-		else{
+		return nuevaPlanificacion;
+
+		}else{
 
 			i++;
 		}
 
 	}
 
+	return NULL;
 
 }
 
@@ -478,29 +479,61 @@ t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacio
 	t_list* listaConNuevaRespuesta = list_create();
 	int i = 0;
 	RespuestaTransformacionYAMA* respuestaAAnalizar;
-	RespuestaTransformacionYAMA* respuestaAModificar;
-	int otroNodo;
 
 	while(i<list_size(respuestaTransformacion)){
 	 respuestaAAnalizar= list_get(respuestaTransformacion,i);
 		if(respuestaAAnalizar->nodo == nodoCaido){
-			respuestaAModificar = list_remove(respuestaTransformacion,i);
-			otroNodo = otroNodoDondeEstaLaParte(ubicacionDeLosBloques,nodoCaido);
 
+			RespuestaTransformacionYAMA* respuestaAModificar = list_remove(respuestaTransformacion,i);
+			UbicacionBloque* ubicacionNuevoBloque = otroNodoDondeEstaLaParte(ubicacionDeLosBloques,respuestaAModificar->nodo,respuestaAModificar->bloque);
+			Info_Workers* info = list_get(list_info_workers,((ubicacionNuevoBloque->nodo)+1));
 
+			RespuestaTransformacionYAMA* nuevaRespuesta = setRespuestaTransformacionYAMA(ubicacionNuevoBloque->nodo,info->puerto,info->ipWorker,
+					ubicacionNuevoBloque->desplazamiento,respuestaAModificar->bytesOcupados,respuestaAModificar->archivoTemporal);
 
-
+			list_add(listaConNuevaRespuesta,nuevaRespuesta);
+			i++;
 		}
 		else{
 
+			RespuestaTransformacionYAMA* respuestaAModificar = list_remove(respuestaTransformacion,i);
+			list_add(listaConNuevaRespuesta,respuestaAModificar);
+			i++;
 		}
-
-
 	}
+
+	return listaConNuevaRespuesta;
 
 }
 
-int otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo){
+UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque){
 
+	int i = 0;
+	UbicacionBloque* ubiBloque1;
+	UbicacionBloque* ubiBloque2;
+
+	while(i < list_size(ubicacionDeLosBloques)){
+
+		UbicacionBloquesArchivo* ubi = list_get(ubicacionDeLosBloques,i);
+
+		ubiBloque1->nodo = ubi->ubicacionCopia1.nodo;
+		ubiBloque1->desplazamiento = ubi->ubicacionCopia1.desplazamiento;
+		ubiBloque2->nodo = ubi->ubicacionCopia2.nodo;
+		ubiBloque2->desplazamiento = ubi->ubicacionCopia2.desplazamiento;
+
+		if(ubiBloque1->nodo == nodo && ubiBloque1->desplazamiento == bloque){
+
+			return  ubiBloque2;
+		}
+		if(ubiBloque2->nodo == nodo && ubiBloque2->desplazamiento == bloque){
+
+			return ubiBloque1;
+		}
+
+		i++;
+	}
+
+
+	return NULL;
 }
 

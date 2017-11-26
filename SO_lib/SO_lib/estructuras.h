@@ -184,7 +184,7 @@ int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
 int tamanioJOB(Job* job);
 RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
-respuestaAlmacenadoFinal* crearRespuestaAlmacenamientoGlobal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
+respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
 
 
