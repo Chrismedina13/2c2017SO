@@ -29,6 +29,7 @@ int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job);
 int cargaDeTrabajoDelNodo(int nodo);
 respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master);
 t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo);
+t_list* replanificacion(Replanificacion* replani,int master);
 
 
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

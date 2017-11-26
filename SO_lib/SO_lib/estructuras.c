@@ -32,7 +32,15 @@ RespuestaReduccionLocal* crearRespuestaReduccionLocal(int nodo,int puertoWorker,
 }
 
 
+Replanificacion* crearEstructuraReplanificacion(int numeroDeJOb, int nodoCaido){
 
+	Replanificacion* replanificacion = malloc(sizeof(int) * 2);
+	replanificacion->numeroDeJOb = numeroDeJOb;
+	replanificacion->nodoCaido = nodoCaido;
+
+	return replanificacion;
+
+}
 
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 		int carga, int parteDeArchivo) {
@@ -152,15 +160,31 @@ int tamanioJOB(Job* job){
 	return 8 + strlen(job->nombreDelArchivo);
 }
 
+int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta){
+
+ 	int a = 0;
+ 	int tamanio = 0;
+ 	while(a < list_size(listaDeRespuesta)){
+
+ 		RespuestaTransformacionYAMA* respuesta = list_get(listaDeRespuesta,a);
+ 		tamanio += strlen(respuesta->archivoTemporal) + (sizeof(int)*4) + strlen(respuesta->ipWorkwer) ;
+ 		a++;
+ 	}
+
+ 	return tamanio;
+
+ }
 
 
-JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes){
+
+JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes,t_list* respuestaTransformacion){
 
 	JOBCompleto* jobCompleto = malloc(tamanioJOB(job)
-			+ 24*list_size(listaDeUbicacionPartes));
+			+ 24*list_size(listaDeUbicacionPartes) + tamanioRespuestaTransformacionYAMA(respuestaTransformacion));
 
 	jobCompleto->job = job; // Ya reserve memoria antes en crear job fijarse al probar
 	jobCompleto->ubicacionDeLasPartesDelJOB = listaDeUbicacionPartes;
+	jobCompleto->respuestaTransformacion = respuestaTransformacion;
 	return jobCompleto;
 }
 

@@ -36,6 +36,7 @@ typedef struct jobCompleto{
 
 	Job* job; //Puntero a una estructura JOB
 	t_list* ubicacionDeLasPartesDelJOB;
+	t_list* respuestaTransformacion;
 }JOBCompleto;
 
 
@@ -131,6 +132,14 @@ typedef struct saludo_datanode{
 	char* ip_worker;
 }saludo_datanode;
 
+typedef struct replanificacion{
+
+	int numeroDeJOb;
+	int nodoCaido;
+
+}Replanificacion;
+
+
 typedef struct script{
 	char* nombre;
 	int tamanio;
@@ -170,7 +179,8 @@ UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int b
 		,int copia2Nodo,int copia2Bloque);
 
 void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
-JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes);
+JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes,t_list* respuestaTransformacion);
+int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
 int tamanioJOB(Job* job);
 RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
