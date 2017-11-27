@@ -35,6 +35,9 @@
 
 sem_t SEMAFORODATANODE;
 sem_t cantNodosAux;
+sem_t semaforo_yama;
+
+
 
 
 //tabla de directorios

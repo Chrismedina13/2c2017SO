@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
 	//proban2
 
-	recuperarTablaDeArchivos();
+//	recuperarTablaDeArchivos();
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 	//semaforos
 	int cantNodos= config->cant_nodos;
 	sem_init(&cantNodosAux,0,0);
+	sem_init(&semaforo_yama,0,0);
 
 
 	logInfo(
@@ -86,6 +87,7 @@ int main(int argc, char *argv[]) {
 	//deja que se conecte yama, y se queda esperando
 
 	sem_destroy(&cantNodosAux);
+	sem_destroy(&semaforo_yama);
 	free(config);
 	return EXIT_SUCCESS;
 }

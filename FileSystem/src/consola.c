@@ -63,6 +63,10 @@ char* getStdinString() {
 
 void consolaFileSystem(){
 
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+	int cantidad_archivos = config->cant_archivos;
+
+
 		sem_wait(&cantNodosAux);
 
 		bool compararComando;
@@ -419,6 +423,10 @@ void consolaFileSystem(){
 					status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones, indiceArchivo);
 					if(status==1){
 						logInfo("Registro de archivo creado correctamente.");
+
+						if(cantidad_archivos==cantArchivos){
+							sem_post(&semaforo_yama);
+						}
 					}
 					if(status==1){
 						logInfo("Registro de archivo no pudo ser creado.");

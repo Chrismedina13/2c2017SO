@@ -28,6 +28,29 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+	//PROBANDO SERIALIZAR Y DESERIALIZAR
+
+		/*char* bloqueserializado = serializarBloque(1,"hola como estas?");
+		printf("tamanio del bloqueserializado: %i", string_length(bloqueserializado));
+		SetBloque* bloque = deserilizarBloque(bloqueserializado);
+		printf("\nNumero de bloque: %d\nContenido: %s\n",bloque->nrobloque,bloque->contenidoBloque);
+
+		char* palabra = "holas";
+		printf("Longitud de la palabra: %d",string_length(palabra));
+*/
+		RespuestaTransformacionYAMA* nodo = setRespuestaTransformacionYAMA(1,2,"12.12",15,12345,"Documento");
+		int n = nodo->nodo;
+
+		logInfo("\nNodo: %i\nPuerto woeker: %d\nArchivo temporal: %s",n,nodo->puertoWorker,nodo->archivoTemporal);
+
+		char* respuesta = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,nodo->bytesOcupados, nodo->archivoTemporal);
+		logInfo("Antes de deserializar. Tamanio de respuesta: %d ", strlen(respuesta));
+
+
+		RespuestaTransformacionYAMA* nodoDeserializado = deserializarRespuestaTransformacionYAMA(respuesta);
+		printf("\n\nArchivo temporal: %s \n\n",nodoDeserializado->archivoTemporal);
+
+
 	//Archivo de configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 

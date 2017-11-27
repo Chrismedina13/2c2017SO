@@ -18,7 +18,7 @@
 #define CPFROM "cpfrom"
 #define CPTO "cpto"
 #define CPBLOCK "cpblock"
-#define MD5 "md5"
+#define MD5 "md5sum"
 #define INFO "info"
 #define HELP "help"
 #define ARCH "-a"
