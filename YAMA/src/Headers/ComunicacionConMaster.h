@@ -25,8 +25,8 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 void mensajesRecibidosDeMaster(int codigo, int FDMaster);
 RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int master);
 t_list* respuestaReduccionGlobal(int numeroDeJob,int master);
-int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job);
-int cargaDeTrabajoDelNodo(int nodo);
+int* nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job);
+int cargaDeTrabajoDelNodo(int* nodo);
 respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master);
 t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo);
 
@@ -34,5 +34,7 @@ t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo);
 t_list* replanificacion(Replanificacion* replani,int master);
 t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacionDeLosBloques,int nodoCaido);
 UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque);
+Replanificacion* deserializarReplanificacion(char* replanifSerializado);
+char* serializarReplanificacion(int numeroJob,int nodoCaido);
 
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

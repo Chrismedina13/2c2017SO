@@ -1,5 +1,6 @@
 #include <commons/collections/list.h>
 #include "SO_lib/estructuras.h"
+#include "logYAMA.h"
 /*  Definicion de estructuras */
 
 typedef struct {
@@ -24,5 +25,8 @@ void actualizarTablaDeEstadosFinReduccionLocal(int master,int job);
 void crearEntradasReduccionGlobal(t_list* RRG,int master,int job);
 void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master);
 void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransformacion* ft,int master);
+void actualizarNodosCaidosReplanificacion(Replanificacion* replanif, int master);
+void insertarNodosNuevosPlanificados(t_list* respuestaNuevaPlanificacion,int Master,int numeroDeJOB);
+bool existeTransformacionEnTablaGlobal(RespuestaTransformacionYAMA* respuesta);
 
 

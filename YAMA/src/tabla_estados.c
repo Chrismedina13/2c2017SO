@@ -83,9 +83,10 @@ void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal
 void actualizarTablaDeEstadosFinReduccionLocal(int master,int job){
 
 	int i = 0;
+	char* RL = "REDUCCION LOCAL";
 	while(i < list_size(tabla_estados)){
 		t_reg* registroACosultar = list_get(tabla_estados,i);
-		if(registroACosultar->master == master && registroACosultar->job == job && registroACosultar->etapa == "REDUCCION LOCAL"){
+		if(registroACosultar->master == master && registroACosultar->job == job && registroACosultar->etapa == RL){
 			t_reg* registroAModificar  = list_remove(tabla_estados,i);
 			registroAModificar->estado = "OK";
 			list_add_in_index(tabla_estados,i,registroAModificar);
@@ -114,12 +115,14 @@ void crearEntradasReduccionGlobal(t_list* RRG,int master,int job){
 void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master){
 
 	int i = 0;
+	char* enProceso = "EN PROCESO";
+	char* RG = "REDUCCION GLOBAL";
 	while(i< list_size(tabla_estados)){
 
 		t_reg* registroAAnalizar = list_get(tabla_estados,i);
 
 		if(registroAAnalizar->master == master && registroAAnalizar->job == job &&
-				registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->estado == "EN PROCESO"){
+				registroAAnalizar->etapa == RG && registroAAnalizar->estado == enProceso){
 
 			t_reg* registroAmodificar = list_remove(tabla_estados,i);
 			registroAmodificar->estado = "OK";
@@ -136,4 +139,67 @@ void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransform
 	t_reg* registro = crearRegistroTablaGlobal(ft->numeroDeJob,master,
 			RAF->nodo,0,"ALMACENADO FINAL",RAF->archivoDeReduccionGlobal,"EN  PROCESO");
 
+	list_add(tabla_estados,registro);
+
+}
+
+
+void actualizarNodosCaidosReplanificacion(Replanificacion* replanif, int master){
+	int i = 0;
+
+	while(i < list_size(tabla_estados)){
+
+		t_reg* registro = list_get(tabla_estados,i);
+		if(registro->job == replanif->numeroDeJOb && registro->master == master && registro->nodo == replanif->nodoCaido){
+
+			t_reg* registroAModificar = list_remove(tabla_estados,i);
+			registroAModificar->estado = "Error nodo caido";
+			list_add_in_index(tabla_estados,i,registroAModificar);
+			i++;
+		}else{
+
+			i++;
+		}
+	}
+}
+
+void insertarNodosNuevosPlanificados(t_list* respuestaNuevaPlanificacion,int Master,int numeroDeJOB){
+
+	int i = 0;
+	while( i < list_size(respuestaNuevaPlanificacion)){
+		RespuestaTransformacionYAMA * respuestaTY = list_get(respuestaNuevaPlanificacion,i);
+		if(existeTransformacionEnTablaGlobal(respuestaTY)){
+
+			i++;
+		}else{
+
+			t_reg* registroNuevo = crearRegistroTablaGlobal(numeroDeJOB,Master,respuestaTY->nodo,respuestaTY->bloque,"TRANSFORMACION",
+					respuestaTY->archivoTemporal,"EN PROCESO");
+
+			list_add(tabla_estados,registroNuevo);
+			i++;
+		}
+	}
+}
+
+
+bool existeTransformacionEnTablaGlobal(RespuestaTransformacionYAMA* respuesta){
+
+	int i = 0;
+	char* transformacion = "TRANSFORMACION";
+
+	while(i < list_size(tabla_estados)){
+
+		t_reg* registroDeLaTabla = list_get(tabla_estados,i);
+		if(respuesta->nodo == registroDeLaTabla->nodo && respuesta->bloque == registroDeLaTabla->bloque &&
+				respuesta->archivoTemporal == registroDeLaTabla->arch_temp && registroDeLaTabla->etapa == transformacion){
+
+			return true;
+		}else{
+
+			i++;
+		}
+	}
+
+	return false;
 }

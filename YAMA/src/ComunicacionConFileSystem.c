@@ -98,11 +98,15 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	logInfo("Serializar respueta transformacion a YAMA");
 
-	char* respuesta = serializarListaRespuestaTransf(planificacionDelJOb);
+	int tamanioRespuesta = (tamanioRespuestaTransformacionYAMA(planificacionDelJOb) +
+			((sizeof(int)*2)*list_size(planificacionDelJOb)) + (2*list_size(planificacionDelJOb)));
 
-	int tamanioRespuesta = list_size(planificacionDelJOb) * (sizeof(int) * 4 + sizeof(char*) * 2);
+	/*lo que esta despues
+			del primer mas es por los dos int que le aagregue para el tamnio y despues del ultimo mas es por los +1 a los char**/
 
-	logInfo("listo para enviar");
+	char* respuesta = serializarListaRespuestaTransformacionYAMA(planificacionDelJOb,tamanioRespuesta);
+
+	logInfo("listo para enviar el tamanio de la respuesta es %i", tamanioRespuesta);
 
 	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
 			respuesta, tamanioRespuesta);
