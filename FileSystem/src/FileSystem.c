@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
 	//proban2
 
-	recuperarTablaDeArchivos();
+//	recuperarTablaDeArchivos();
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);

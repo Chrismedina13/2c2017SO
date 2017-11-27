@@ -1689,3 +1689,45 @@
 [INFO] 17:05:45:505 DATANODE/(11709:11709): ERROR EN EL ENVIO DE SALUDO
 [INFO] 17:05:45:505 DATANODE/(11709:11709): Recibi de FS el codigo : 134518251
 [INFO] 17:05:45:505 DATANODE/(11709:11709): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 19:51:52:952 DATANODE/(9549:9549): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion nombre nodo : 2 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 19:51:52:953 DATANODE/(9549:9549): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 19:51:52:954 DATANODE/(9549:9549): SocketCliente = 4 
+
+[INFO] 19:51:52:954 DATANODE/(9549:9549): se manda a file system el saludo
+[INFO] 19:51:53:324 DATANODE/(9549:9549): Recibi de FS el codigo : 134519211
+[INFO] 19:51:53:324 DATANODE/(9549:9549): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 19:56:14:689 DATANODE/(9730:9730): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 19:56:14:692 DATANODE/(9730:9730): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 19:56:14:692 DATANODE/(9730:9730): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 19:56:14:692 DATANODE/(9730:9730): Archivo de configuracion ip fileSystem : 127.0.0.1 
+
+[INFO] 19:56:14:692 DATANODE/(9730:9730): Archivo de configuracion nombre nodo : 2 
+
+[INFO] 19:56:14:693 DATANODE/(9730:9730): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 19:56:14:694 DATANODE/(9730:9730): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 19:56:14:694 DATANODE/(9730:9730): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 19:56:14:694 DATANODE/(9730:9730): SocketCliente = 4 
+
+[INFO] 19:56:14:694 DATANODE/(9730:9730): se manda a file system el saludo
+[INFO] 19:56:15:115 DATANODE/(9730:9730): Recibi de FS el codigo : 134519211
+[INFO] 19:56:15:115 DATANODE/(9730:9730): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
