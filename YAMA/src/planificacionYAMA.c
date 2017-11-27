@@ -209,9 +209,9 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 	t_list* respuestaAMaster = list_create(); //r= armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
 	//falta recivir los nodos
 
-	RespuestaTransformacionYAMA* respuesta1 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
-	RespuestaTransformacionYAMA* respuesta2 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
-	RespuestaTransformacionYAMA* respuesta3 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"Holaa");
+	RespuestaTransformacionYAMA* respuesta1 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"HolaaAAA");
+	RespuestaTransformacionYAMA* respuesta2 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"HolaaAAA");
+	RespuestaTransformacionYAMA* respuesta3 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"HolaaAAA");
 
 	list_add(respuestaAMaster,respuesta1);
 	list_add(respuestaAMaster,respuesta2);
