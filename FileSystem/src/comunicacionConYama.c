@@ -6,9 +6,13 @@
  */
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
+#include "Headers/FileSystem.h"
 
 
 void comunicacionYAMA(ParametrosComunicacion* parametros) {
+
+	sem_wait(&semaforo_yama);
+
 
 	char codigoRecibido[4];
 	int codigo;
