@@ -76,5 +76,11 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
 
+char* serializarListaRespuestaTransformacionYAMA(t_list* respuesta,int tamanioTotalLista);
+
+t_list* deserializarListaRespuestaTransformacionYAMA(char* respuestaSerializada,int tamanioDeLoRecibido);
+
+
+
 #endif
 

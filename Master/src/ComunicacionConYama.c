@@ -120,6 +120,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 	char pesoMsj[4];
 	int tamanio;
 	char* mensaje;
+	t_list* listaDeWorkers;
 
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
@@ -140,8 +141,12 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 		} else {
 
-			t_list* listaDeWorkers = deserializarListaRespuestaTransf(mensaje);
-			/*logInfo(
+			logInfo("Recibo corecctamente la respuesta");
+
+			 listaDeWorkers = deserializarListaRespuestaTransformacionYAMA(mensaje, tamanio);
+
+			 logInfo("Terminada la deserializacion");
+			 /*logInfo(
 			 "Se recibió de forma correcta la a Estructura Respuesta Transf .",
 			 tamanio);*7
 			 /*una vez que MASTER recibe los workers a planificar crea un hilo
