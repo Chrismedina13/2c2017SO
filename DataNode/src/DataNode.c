@@ -17,8 +17,9 @@ int main(int argc, char *argv[]) {
 
 	//char* buffer = malloc(4);
 
-	char bufferBloque[4];
+	//char bufferBloque[4];
 	char buffer[4];
+
 
 
 	crearLog("DataNode.log", "DATANODE", 1, log_level_from_string("INFO"));
@@ -63,10 +64,21 @@ int main(int argc, char *argv[]) {
 	//mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
 
 
-	recv(FDsocketClienteFileSystem, bufferBloque,4, 0);
-	int codigo2 =deserializarINT(bufferBloque);
-	logInfo("Recibi de FS el codigo : %i", codigo2);
-    mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
+	recv(FDsocketClienteFileSystem, buffer,4, 0);
+	int codigo =deserializarINT(buffer);
+	logInfo("Recibi de FS el codigo : %i", codigo);
+    mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
+
+
+
+
+	char* bloque = malloc(1024*1024);
+
+	bloque= get_bloque(3);
+	logInfo(bloque);
+     free(bloque);
+
+
 
 	free(config);
 
