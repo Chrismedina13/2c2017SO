@@ -123,7 +123,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
     RespuestaReduccionLocal* RRL;
     int numeroDeJobFinalReduccionLocal;
     t_list* RRG;
-    Replanificacion* replanificacion;
+    Replanificacion* parametrosReplanif;
     respuestaAlmacenadoFinal* RAF;
     t_list* nuevaPlanificacion;
 
@@ -136,11 +136,17 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		mensaje[tamanio] = '\0';
 		recv(FDMaster, mensaje, tamanio, 0);
 
-		//replanificacion = deserializarReplanificacion(mensaje);
+		parametrosReplanif = deserializarReplanificacion(mensaje);
 
-		//nuevaPlanificacion = replanificacion(replanificacion,FDMaster);
+		nuevaPlanificacion = replanificacion(parametrosReplanif,FDMaster);
 
+		actualizarNodosCaidosReplanificacion(parametrosReplanif,FDMaster);
 
+		//serializarRespuestaTransformacionYAMA(nuevaPlanificacion);
+
+		//mensajesEnviadosAmaster();
+
+		insertarNodosNuevosPlanificados(nuevaPlanificacion,FDMaster,parametrosReplanif->numeroDeJOb);
 
 
 
@@ -288,12 +294,13 @@ t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo){
 
 	t_list* listaArchvosTemporales = list_create();
 	int i = 0;
+	char* transforamcion = "TRANSFORMACION";
 
 	while(i < list_size(tabla_estados)){
 
 		t_reg* registro = list_get(tabla_estados,i);
 
-		if(registro->job == job && registro->master == master && registro->etapa == "TRANSFORMACION" && registro->nodo == nodo){
+		if(registro->job == job && registro->master == master && registro->etapa == transforamcion && registro->nodo == nodo){
 
 			list_add(listaArchvosTemporales,registro->arch_temp);
 
@@ -312,14 +319,15 @@ t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo){
 t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 	int i;
-	t_list* listaRRG;
-	int nodoConMenorCarga = 0;
+	t_list* listaRRG = list_create();
+	int* nodoConMenorCarga;
+	char* reduccionLocal = "REDUCCION LOCAL";
 
 	while(i < list_size(tabla_estados)){
 
 		t_reg* registro = list_get(tabla_estados,i);
 
-		if(numeroDeJob == registro->job && master == registro->master && registro->etapa == "REDUCCION LOCAL"){
+		if(numeroDeJob == registro->job && master == registro->master && registro->etapa == reduccionLocal){
 
 			nodoConMenorCarga = nodoConMenorCargaDeTrabajoParaReduccionGlobal(numeroDeJob,master);
 
@@ -361,21 +369,24 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 
 
-int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
+int* nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 
 	t_list* nodosIntervinientes = list_create();
 	int i = 0;
 	int a = 0;
-	int nodoConMenorCarga;
+	int* nodoConMenorCarga;
 	int carga1;
 	int carga2;
+	int* nodo1;
+	int* nodo2;
+	char* reduccionLocal = "REDUCCION LOCAL";
 
 	while(i < list_size(tabla_estados)){
 
 		t_reg* registroNodo = list_get(tabla_estados,i);
-		if(registroNodo->job == job && registroNodo->master == master && registroNodo->etapa == "REDUCCION LOCAL"){
+		if(registroNodo->job == job && registroNodo->master == master && registroNodo->etapa == reduccionLocal){
 
-			list_add(nodosIntervinientes,registroNodo->nodo);
+			list_add(nodosIntervinientes,&registroNodo->nodo);
 			i++;
 
 		}else{
@@ -386,8 +397,12 @@ int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 
 	while(a < (list_size(nodosIntervinientes)-1)){
 
-		carga1 = cargaDeTrabajoDelNodo(list_get(nodosIntervinientes,a));
-		carga2 = cargaDeTrabajoDelNodo(list_get(nodosIntervinientes,(a+1)));
+
+		nodo1 = list_get(nodosIntervinientes,a);
+		nodo2 = list_get(nodosIntervinientes,(a+1));
+
+		carga1 = cargaDeTrabajoDelNodo(nodo1);
+		carga2 = cargaDeTrabajoDelNodo(nodo2);
 
 		if(carga1 <= carga2){
 
@@ -406,7 +421,7 @@ int nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 	return nodoConMenorCarga;
 }
 
-int cargaDeTrabajoDelNodo(int nodo){
+int cargaDeTrabajoDelNodo(int* nodo){
 
 	int i = 0;
 	while(i < list_size(listaDeWorkerTotales)){
@@ -419,18 +434,19 @@ int cargaDeTrabajoDelNodo(int nodo){
 			i++;
 		}
 	}
-	return NULL;
+	return -1;
 }
 
 respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int master){
 
 	int i = 0;
 	respuestaAlmacenadoFinal* respuestaAF;
+	char* reduccionGlobal = "REDUCCION GLOBAL";
 
 	while(i < list_size(tabla_estados)){
 		t_reg* registroAAnalizar = list_get(tabla_estados,i);
 
-		if(registroAAnalizar->job == finRG->numeroDeJob && registroAAnalizar->etapa == "REDUCCION GLOBAL" && registroAAnalizar->master == master
+		if(registroAAnalizar->job == finRG->numeroDeJob && registroAAnalizar->etapa == reduccionGlobal && registroAAnalizar->master == master
 			&& registroAAnalizar->nodo == finRG->nodo ){
 
 			Info_Workers* info = list_get(list_info_workers,finRG->nodo);
@@ -490,6 +506,7 @@ t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacio
 					ubicacionNuevoBloque->desplazamiento,respuestaAModificar->bytesOcupados,respuestaAModificar->archivoTemporal);
 
 			list_add(listaConNuevaRespuesta,nuevaRespuesta);
+			free(ubicacionNuevoBloque);
 			i++;
 		}
 		else{
@@ -507,12 +524,13 @@ t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacio
 UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque){
 
 	int i = 0;
-	UbicacionBloque* ubiBloque1;
-	UbicacionBloque* ubiBloque2;
 
 	while(i < list_size(ubicacionDeLosBloques)){
 
 		UbicacionBloquesArchivo* ubi = list_get(ubicacionDeLosBloques,i);
+
+		UbicacionBloque* ubiBloque1 = malloc(sizeof(UbicacionBloque));
+		UbicacionBloque* ubiBloque2= malloc(sizeof(UbicacionBloque));
 
 		ubiBloque1->nodo = ubi->ubicacionCopia1.nodo;
 		ubiBloque1->desplazamiento = ubi->ubicacionCopia1.desplazamiento;
@@ -521,17 +539,47 @@ UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo
 
 		if(ubiBloque1->nodo == nodo && ubiBloque1->desplazamiento == bloque){
 
+			free(ubiBloque1);
 			return  ubiBloque2;
 		}
 		if(ubiBloque2->nodo == nodo && ubiBloque2->desplazamiento == bloque){
 
+			free(ubiBloque2);
 			return ubiBloque1;
 		}
+
+		free(ubiBloque1);
+		free(ubiBloque2);
 
 		i++;
 	}
 
 
 	return NULL;
+}
+
+//Esto va en serializacion.c
+
+Replanificacion* deserializarReplanificacion(char* replanifSerializado){
+
+	Replanificacion* replanif = malloc(sizeof(int)*2);
+	int desplazamiento = 0;
+	deserializarDato(&(replanif->numeroDeJOb), replanifSerializado, sizeof(int),&desplazamiento);
+	deserializarDato(&(replanif->nodoCaido), replanifSerializado, sizeof(int),&desplazamiento);
+
+	return replanif;
+
+}
+
+char* serializarReplanificacion(int numeroJob,int nodoCaido){
+
+	char* replanifSerializado = malloc(sizeof(int)*2);
+
+	int desplazamiento = 0;
+
+	serializarDato(replanifSerializado, &(numeroJob), sizeof(int),&desplazamiento);
+	serializarDato(replanifSerializado, &(nodoCaido), sizeof(int), &desplazamiento);
+
+	return replanifSerializado;
 }
 
