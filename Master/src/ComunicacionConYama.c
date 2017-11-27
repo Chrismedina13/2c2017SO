@@ -120,7 +120,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 	char pesoMsj[4];
 	int tamanio;
 	char* mensaje;
-	t_list* listaDeWorkers;
+	t_list* listaDeWorkers = list_create();
 
 	switch (codigo) {
 	case SOL_TRANSFORMACION:

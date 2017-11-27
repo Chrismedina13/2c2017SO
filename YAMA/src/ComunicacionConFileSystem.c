@@ -111,6 +111,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
 			respuesta, tamanioRespuesta);
 
+	logInfo("Se envio respuesta correctamaente");
+
+
 	list_add(listaDeJobs, jobCompleto);
 
 }

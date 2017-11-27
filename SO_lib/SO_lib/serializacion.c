@@ -458,10 +458,10 @@ char* serializarListaRespuestaTransformacionYAMA(t_list* respuesta,int tamanioTo
 		serializarDato(respuestaSerializada, &(respuestaTY->bloque), sizeof(int), &desplazamiento);
 		serializarDato(respuestaSerializada, &(respuestaTY->bytesOcupados), sizeof(int),&desplazamiento);
 		int tamanioIP = strlen(respuestaTY->ipWorkwer);
-		serializarDato(respuestaSerializada, &(tamanioIP), sizeof(int),&desplazamiento);
-		serializarDato(respuestaSerializada, respuestaTY->ipWorkwer,(tamanioIP + 1), &desplazamiento);
 		int tamanioArchivoTemporal = strlen(respuestaTY->archivoTemporal);
+		serializarDato(respuestaSerializada, &(tamanioIP), sizeof(int),&desplazamiento);
 		serializarDato(respuestaSerializada, &(tamanioArchivoTemporal), sizeof(int),&desplazamiento);
+		serializarDato(respuestaSerializada, respuestaTY->ipWorkwer,(tamanioIP + 1), &desplazamiento);
 		serializarDato(respuestaSerializada, respuestaTY->archivoTemporal,(tamanioArchivoTemporal + 1), &desplazamiento);
 
 		i++;
@@ -477,22 +477,30 @@ t_list* deserializarListaRespuestaTransformacionYAMA(char* respuestaSerializada,
 	t_list* listaRespuesta = list_create();
 	int desplazamiento = 0;
 	int tamanioTomado = 0;
+	int tamanioip = malloc(sizeof(int));
+	int tamanioArchivo = malloc(sizeof(int));
 
 	while(tamanioTomado <= tamanioDeLoRecibido){
 
 		RespuestaTransformacionYAMA* respuesta = malloc(sizeof(RespuestaTransformacionYAMA));
-		int tamanioip;
-		int tamanioArchivo;
+
 		deserializarDato(&(respuesta->nodo),respuestaSerializada,sizeof(int), &desplazamiento);
 		deserializarDato(&(respuesta->puertoWorker),respuestaSerializada,sizeof(int), &desplazamiento);
 		deserializarDato(&(respuesta->bloque),respuestaSerializada,sizeof(int), &desplazamiento);
 		deserializarDato(&(respuesta->bytesOcupados),respuestaSerializada,sizeof(int), &desplazamiento);
-		deserializarDato(&(respuesta->bloque),respuestaSerializada,sizeof(int), &desplazamiento);
 		deserializarDato(&(tamanioip),respuestaSerializada,sizeof(int), &desplazamiento);
-		deserializarDato(&(respuesta->ipWorkwer),respuestaSerializada,tamanioip + 1, &desplazamiento);
 		deserializarDato(&(tamanioArchivo),respuestaSerializada,sizeof(int), &desplazamiento);
-		deserializarDato(&(respuesta->ipWorkwer),respuestaSerializada,tamanioArchivo+1, &desplazamiento);
 
+		char* ip = malloc(tamanioip);
+		char* archivo = malloc(tamanioArchivo);
+
+		ip = string_substring(respuestaSerializada,desplazamiento,tamanioip + 1);
+		desplazamiento += (tamanioip +1);
+		archivo = string_substring(respuestaSerializada,desplazamiento,tamanioArchivo + 1);
+		desplazamiento += (tamanioip +1);
+
+		respuesta->ipWorkwer = strdup(ip);
+		respuesta->archivoTemporal = strdup(archivo);
 
 		list_add(listaRespuesta,respuesta);
 
