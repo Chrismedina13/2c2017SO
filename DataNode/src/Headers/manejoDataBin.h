@@ -24,6 +24,7 @@ char* obtenerPuntero(const char* rutaArchivo);
 
 int set_bloque(char * contenido, int nro_bloque);
 
+
 int tamanioArchivo(int fp);
 
 #endif /* HEADERS_MANEJODATABIN_H_ */
