@@ -34,8 +34,11 @@ char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
 
 t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
+
+
 RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 		char* rtaSerializada);
+
 
 char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal);
@@ -47,6 +50,8 @@ t_list * deserializarLista_info_workers(char * listaWorkersSerializada);
 char* serializarInfoWorker(int puerto, char* ipWorker);
 
 Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
+
+int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo);
 
 char * serializarListaRespuestaTransf(t_list * lista);
 
@@ -80,7 +85,8 @@ char* serializarListaRespuestaTransformacionYAMA(t_list* respuesta,int tamanioTo
 
 t_list* deserializarListaRespuestaTransformacionYAMA(char* respuestaSerializada,int tamanioDeLoRecibido);
 
-
+char* serializarListaYAMA(t_list* lista);
+t_list* deserializarListaYAMA(char* stackSerializado);
 
 #endif
 

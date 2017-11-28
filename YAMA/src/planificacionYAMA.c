@@ -390,8 +390,8 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	//faltaLLenarLaTablaDeNodos
 
 	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal");
-	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal2");
-	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(1,2,"12.12",12,1212,"archivoTemporal3");
+	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.2",22,22122,"archivoTemporal2");
+	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(3,31,"3.333",33,33133,"archivoTemporal3");
 
 	list_add(respuestaAMaster,respuestaTrans1);
 	list_add(respuestaAMaster,respuestaTrans2);

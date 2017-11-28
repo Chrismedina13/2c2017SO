@@ -143,7 +143,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 			logInfo("Recibo corecctamente la respuesta");
 
-			 listaDeWorkers = deserializarListaRespuestaTransformacionYAMA(mensaje, tamanio);
+			 listaDeWorkers = deserializarListaYAMA(mensaje);
 
 			 logInfo("Terminada la deserializacion");
 			 /*logInfo(
