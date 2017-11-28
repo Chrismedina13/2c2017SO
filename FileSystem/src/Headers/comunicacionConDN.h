@@ -25,7 +25,7 @@ typedef struct ParametrosComunicacion{
 }ParametrosComunicacion;
 
 void comunicacionDN(ParametrosComunicacion* parametros);
-ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA, int puertoWorker);
+//ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA, int puertoWorker);
 
 
 void mensajesRecibidosDeDN(int codigo, int FD_DN);

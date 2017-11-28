@@ -7,7 +7,7 @@
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
 #include "SO_lib/estructuras.h"
-#include "Headers/FileSystem.h"
+//#include "Headers/FileSystem.h"
 #include "Headers/configuracion.h"
 
 
@@ -205,9 +205,9 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        list_add_in_index(list_nodos_id_fd, (saludo->nombre_nodo - 1), nodos);
 
 
-
+				        if(cantNodos==list_size(list_nodos_id_fd)){
 				        semaphore_signal(SEMAFORODN);
-
+				        }
 				        break;
 
 	    default:
@@ -265,10 +265,10 @@ void cargarNodos2(int idNodo, int capacidad){
 
 		bloques_nodo* nodo1 = malloc(sizeof(int)*23);
 		nodo1->idNodo=idNodo;
-		nodo1->bloquesTotales=20;
-		nodo1->bloquesLibres=20; // falta ver q pasa con un nodo viejo
+		nodo1->bloquesTotales=capacidad;
+		nodo1->bloquesLibres=capacidad; // falta ver q pasa con un nodo viejo
 		int i=0;
-		while(i<20){
+		while(i<capacidad){
 		nodo1->bitmap[i]=0;
 		i++;
 		}

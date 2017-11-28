@@ -7,6 +7,7 @@
 
 #ifndef HEADERS_CONFIGURACION_H_
 #define HEADERS_CONFIGURACION_H_
+#include "FileSystem.h"
 #include "commons/config.h"
 #include <stddef.h>
 #include <string.h>

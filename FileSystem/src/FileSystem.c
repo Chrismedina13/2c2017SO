@@ -15,24 +15,9 @@ int main(int argc, char *argv[]) {
 	//Archivo de logs
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
-	//Recibir Nodos
-	//cargarNodos();
-
-	//proban2
-
-//	recuperarTablaDeArchivos();
 
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
-
-	//semaforos
-	int cantNodos= config->cant_nodos;
-	//sem_init(&cantNodosAux,0,0);
-//	sem_init(&semaforo_yama,0,0);
-
-	SEMAFORODN = make_semaphore(0);
-	SEMAFOROYAMA = make_semaphore(0);
-
 
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
@@ -42,25 +27,28 @@ int main(int argc, char *argv[]) {
 			config->puerto_yama);
 
 
+	//Recuperacion FileSystem
+
 	if(config->estado_recuperacion==0){
 		logInfo("FILE SYSTEM NO SE ENCUENTRA EN ESTADO DE RECUPERACION");
-		logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
+		//logInfo("CREANDO ESTRUCTURAS ADMINISTRATIVAS");
+	}
+
+	if(config->estado_recuperacion==1){
+		logInfo("FILE SYSTEM SE ENCUENTRA EN ESTADO DE RECUPERACION");
+		logInfo("LEVANTANDO ESTRUCTURAS DEL ESTADO ANTERIOR...");
+
 
 		int status =  recuperacionFileSystem();
 		if(status==-1){
 			logInfo("FILE SYSTEM NO PUEDE RECUPERARSE");
+
+			//hacer algo extra?
 		}
+
 		if(status==1){
 			logInfo("FILE SYSTEM SE RECUPERO CORRECTAMENTE");
 		}
-	}
-
-	else{
-		logInfo("FILE SYSTEM SE ENCUENTRA EN ESTADO DE RECUPERACION");
-		logInfo("LEVANTANDO ESTRUCTURAS DEL ESTADO ANTERIOR...");
-
-		//ACA ES DONDE DESDE NODOS.BIN, DIRECTORIOS.DAT Y ARCHIVOS.DAT LEVANTO MIS ESTRUCTURAS. --> me parece que levanto las estructuras cuando en la consola se pone format
-		//HAY QUE VER SI ME FALTA INFO LE PREGUNTO A YAMA (?)
 	}
 
 	logInfo("Creando el hilo para comunicarme con Data Node");
@@ -68,6 +56,14 @@ int main(int argc, char *argv[]) {
 	logInfo("Creando el hilo para comunicarme con WORKER");
 
 	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
+
+	//semaforos
+	int cantNodos= config->cant_nodos;
+
+	SEMAFORODN = make_semaphore(0);
+	SEMAFOROYAMA = make_semaphore(0);
+
+	//incian los hilos
 
 	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
 

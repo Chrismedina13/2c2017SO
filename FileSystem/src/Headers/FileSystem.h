@@ -1,5 +1,4 @@
 /*
- * FileSystem.h
  *
  *  Created on: 7/9/2017
  *      Author: utnso
@@ -146,6 +145,8 @@ char* pathToType(char* path);
 char* pathToFile(char* path);
 
 t_list* nombreToUbicaciones(char* nombre);
+
+int cantNodos;
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */

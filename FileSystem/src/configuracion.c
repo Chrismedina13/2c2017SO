@@ -30,6 +30,7 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 	configuracion->cant_nodos = config_get_int_value(configTemporal, CANT_NODOS);
 	configuracion->cant_archivos = config_get_int_value(configTemporal, CANT_ARCHIVOS);
 
+
     config_destroy(configTemporal);
 
     return configuracion;

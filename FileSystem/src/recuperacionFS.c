@@ -21,11 +21,26 @@
 
 int recuperacionFileSystem(){
 
-	cargarDirectorios();
+	int statusDir = cargarDirectorios();
+	if(statusDir==-1){
+		logInfo("Recuperacion de directorios fallo.");
+		logInfo("File System no puede recuperar su estado anterior.");
+		return(-1);
+	}
 
-	recuperarTablaDeNodos();
+	int statusNod = recuperarTablaDeNodos();
+	if(statusDir==-1){
+		logInfo("Recuperacion de Nodos fallo.");
+		logInfo("File System no puede recuperar su estado anterior.");
+		return(-1);
+	}
 
-	recuperarTablaDeArchivos();
+	int statusArch = recuperarTablaDeArchivos();
+	if(statusDir==-1){
+		logInfo("Recuperacion de Archivos fallo.");
+		logInfo("File System no puede recuperar su estado anterior.");
+		return(-1);
+	}
 
 	return(1);
 }
@@ -94,7 +109,7 @@ int recuperarTablaDeNodos(){
 			list_add(&(tabla_de_nodos.listaCapacidadNodos),nodo);
 
 		}
-		return 0;
+		return 1;
 }
 
 int recuperarTablaDeArchivos(){
@@ -116,9 +131,8 @@ int recuperarTablaDeArchivos(){
     char* directorio;
     int indice;
     strcpy(directorio,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/yamafs/metadata/archivos/");
-    int count = 3;
-    t_list* ubicaciones;
-	list_create(ubicaciones);
+    int count = 3; //arranca en 3 pues yamafs 0, metadata 1, archivos 2
+    t_list* ubicaciones = list_create();
 
 	UbicacionBloquesArchivo* ubicacion;
 
@@ -132,7 +146,6 @@ int recuperarTablaDeArchivos(){
             return -1;
         }
 
-    	}
 
 		while ((in_file = readdir(FD))){
 
@@ -235,6 +248,7 @@ int recuperarTablaDeArchivos(){
 			/* When you finish with the file, close it */
 			fclose(entry_file);
 		}
+    }
 
 	return 0;
 }
