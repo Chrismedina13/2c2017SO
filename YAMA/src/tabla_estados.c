@@ -203,3 +203,24 @@ bool existeTransformacionEnTablaGlobal(RespuestaTransformacionYAMA* respuesta){
 
 	return false;
 }
+
+void actualizarAlmacenadoFinalOK(numeroDeJob,master){
+
+	int i = 0;
+	char* af = "ALMACENADO FINAL";
+	char* ep = "EN PROCESO";
+
+	while(i< list_size(tabla_estados)){
+		t_reg* registro = list_get(tabla_estados,i);
+		if(registro->job == numeroDeJob && registro->master == master && registro->etapa == af && registro->estado == ep){
+			t_reg* registroM = list_remove(tabla_estados,i);
+
+			registro->estado = "OK";
+
+			list_add_in_index(tabla_estados,i,registroM);
+			i++;
+		}else{
+			i++;
+		}
+	}
+}

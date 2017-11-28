@@ -28,5 +28,6 @@ void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransform
 void actualizarNodosCaidosReplanificacion(Replanificacion* replanif, int master);
 void insertarNodosNuevosPlanificados(t_list* respuestaNuevaPlanificacion,int Master,int numeroDeJOB);
 bool existeTransformacionEnTablaGlobal(RespuestaTransformacionYAMA* respuesta);
+void actualizarAlmacenadoFinalOK(numeroDeJob,master);
 
 

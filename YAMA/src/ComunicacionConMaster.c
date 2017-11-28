@@ -116,7 +116,7 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 	}
 }
 void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
-//Yama recibe de master
+
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
@@ -126,6 +126,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
     Replanificacion* parametrosReplanif;
     respuestaAlmacenadoFinal* RAF;
     t_list* nuevaPlanificacion;
+    int jobQueFinalizo;
 
 	switch (codigo) {
 	case REPLANIFICACION:
@@ -147,10 +148,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		//mensajesEnviadosAmaster();
 
 		insertarNodosNuevosPlanificados(nuevaPlanificacion,FDMaster,parametrosReplanif->numeroDeJOb);
-
-
-
-
 
 		break;
 	case NOMBRE_ARCHIVO:
@@ -216,6 +213,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		crearEntradasReduccionGlobal(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 
+		actualizarCargaWorkerReduccionGlobal(RRG);
+
 		break;
 
 	case FIN_REDUCCION_GLOBAL:
@@ -251,13 +250,28 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		mensaje[tamanio] = '\0';
 		recv(FDMaster, mensaje, tamanio, 0);
 		break;
+	case FINALIZACION_DE_JOB:
+
+		logInfo("Yama recibe señal de finalización de JOB ");
+		recv(FDMaster, pesoMensaje, 4, 0);
+		tamanio = deserializarINT(pesoMensaje);
+		logInfo("tamanio de lo que recibo %i", tamanio);
+		mensaje = malloc(tamanio + 1);
+		mensaje[tamanio] = '\0';
+		recv(FDMaster, mensaje, tamanio, 0);
+
+		jobQueFinalizo = deserializarINT(mensaje);
+
+		logInfo("Actualizar estructuras por finalizacion de job e");
+		actualizarEstructurasFinalizacionDeJOB(jobQueFinalizo, FDMaster);
+
+		break;
 
 	default:
 		logInfo("YAMA recibe un señal que no sabe traducir.");
 		break;
 	}
 }
-
 
 RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int master){
 
@@ -287,8 +301,6 @@ RespuestaReduccionLocal* respuestaReduccionLocal(finTransformacion* fin,int mast
 
 	return NULL;
 }
-
-
 
 t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo){
 
@@ -365,9 +377,6 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 	return listaRRG;
 
 }
-
-
-
 
 int* nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 
@@ -553,8 +562,6 @@ UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo
 
 		i++;
 	}
-
-
 	return NULL;
 }
 
@@ -583,3 +590,66 @@ char* serializarReplanificacion(int numeroJob,int nodoCaido){
 	return replanifSerializado;
 }
 
+void actualizarCargaWorkerReduccionGlobal(t_list* RRG){
+
+	int nodoEncargado = nodoEncargadoDeLaReduccionGlobal(RRG);
+	if(nodoEncargado != -1){
+	int cantidadDeArchivosAEfectuarRG = list_size(RRG);
+	int cantidadDeTrabajoAAumentar = (cantidadDeArchivosAEfectuarRG / 2);
+
+	actualizarCargaANodo(nodoEncargado,cantidadDeTrabajoAAumentar);
+	}
+	else{
+
+		logInfo("Error de encontrar el nodo para actualizar carga");
+	}
+}
+
+int nodoEncargadoDeLaReduccionGlobal(t_list* RRG){
+
+	int i = 0;
+	while(i < list_size(RRG)){
+		RespuestaReduccionGlobal* respuestaRG = list_get(RRG,i);
+		if(respuestaRG->encargado == true){
+
+			return respuestaRG->nodo;
+		}
+		else{
+
+			i++;
+		}
+	}
+
+	return -1;
+}
+
+int actualizarCargaANodo(int nodo, int cantidadDeCarga){
+
+	int i = 0;
+
+	while(i < list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,i);
+		if(nodo->nodo == nodo){
+
+			nodoParaPlanificar* nodo = list_remove(listaDeWorkerTotales,i);
+			nodo->carga += cantidadDeCarga;
+			list_add_in_index(listaDeWorkerTotales,i,nodo);
+			return 0;
+		}else{
+			i++;
+		}
+	}
+
+	return -1;
+}
+
+void actualizarEstructurasFinalizacionDeJOB(int numeroDeJob, int master){
+
+	actualizarAlmacenadoFinalOK(numeroDeJob,master);
+
+	//borrarJOBCompleto(numeroDeJob,master);
+
+	//actualizarCargaDeTrabajoFinalizacionDeJOB();
+
+}

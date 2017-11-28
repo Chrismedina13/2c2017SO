@@ -28,16 +28,7 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-	//PROBANDO SERIALIZAR Y DESERIALIZAR
 
-		/*char* bloqueserializado = serializarBloque(1,"hola como estas?");
-		printf("tamanio del bloqueserializado: %i", string_length(bloqueserializado));
-		SetBloque* bloque = deserilizarBloque(bloqueserializado);
-		printf("\nNumero de bloque: %d\nContenido: %s\n",bloque->nrobloque,bloque->contenidoBloque);
-
-		char* palabra = "holas";
-		printf("Longitud de la palabra: %d",string_length(palabra));
-*/
 		RespuestaTransformacionYAMA* nodo = setRespuestaTransformacionYAMA(1,2,"12.12",15,12345,"Documento");
 		int n = nodo->nodo;
 
