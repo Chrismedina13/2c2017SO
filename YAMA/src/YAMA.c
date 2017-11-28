@@ -28,18 +28,29 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+	//PROBANDO SERIALIZAR Y DESERIALIZAR
 
-		RespuestaTransformacionYAMA* nodo = setRespuestaTransformacionYAMA(1,2,"12.12",15,12345,"Documento");
-		int n = nodo->nodo;
+			RespuestaTransformacionYAMA* nodo1 = setRespuestaTransformacionYAMA(11,21,"12.121",151,123451,"Documento1");
+			RespuestaTransformacionYAMA* nodo2 = setRespuestaTransformacionYAMA(12,22,"12.122",152,123452,"Documento2");
+			RespuestaTransformacionYAMA* nodo3 = setRespuestaTransformacionYAMA(13,23,"12.123",153,123453,"Documento3");
+			t_list* lista = list_create();
+			list_add(lista,nodo1);
+			list_add(lista,nodo2);
+			list_add(lista,nodo3);
 
-		logInfo("\nNodo: %i\nPuerto woeker: %d\nArchivo temporal: %s",n,nodo->puertoWorker,nodo->archivoTemporal);
+			char* listaSErializada = serializarListaRespuestaTransf(lista);
+			logInfo("Lista serializada");
+			RespuestaTransformacionYAMA* respuestaDeserializada = deserializarListaRespuestaTransf(listaSErializada);
+			logInfo("Respuesta lista deserialoizada");
+	/*		logInfo("\nNodo: %i\nPuerto woeker: %d\nArchivo temporal: %s",n,nodo->puertoWorker,nodo->archivoTemporal);
 
-		char* respuesta = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,nodo->bytesOcupados, nodo->archivoTemporal);
-		logInfo("Antes de deserializar. Tamanio de respuesta: %d ", strlen(respuesta));
+			char* respuesta = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,nodo->bytesOcupados, nodo->archivoTemporal);
+			logInfo("Antes de deserializar. Tamanio de respuesta: %d ", strlen(respuesta));
 
 
-		RespuestaTransformacionYAMA* nodoDeserializado = deserializarRespuestaTransformacionYAMA(respuesta);
-		printf("\n\nArchivo temporal: %s \n\n",nodoDeserializado->archivoTemporal);
+			RespuestaTransformacionYAMA* nodoDeserializado = deserializarRespuestaTransformacionYAMA(respuesta);
+			printf("\n\nArchivo temporal: %s \n\n",nodoDeserializado->archivoTemporal);
+	*/
 
 
 	//Archivo de configuracion
