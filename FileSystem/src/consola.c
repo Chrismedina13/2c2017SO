@@ -67,7 +67,7 @@ void consolaFileSystem(){
 	int cantidad_archivos = config->cant_archivos;
 
 
-		sem_wait(&cantNodosAux);
+		semaphore_wait(SEMAFORODN);
 
 		bool compararComando;
 
@@ -376,60 +376,87 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], CPFROM)){
 					compararComando=false;
 
-					int status;
+					int status=0;
 
 					int indiceArchivo = newArchivo();
 
-					//parte el archivo en bloques
+					//reviso si hay lugar en mis nodos
 
-					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
-
-					int cantBloques = list_size(bloquesDeTexto);
-
-					//le pasa los bloques a los nodos
-
-					t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-					ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
-
-					int count = 0;
-
-					while(count<cantBloques){
-
-						char* bloque = list_get(bloquesDeTexto,count);
-						UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
-
-						SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
-						setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
-						setbloque1->contenidoBloque=bloque;
-						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
-						mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
-						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
-						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, mensaje, tamanioSetBloque);
-
-						SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
-						setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
-						setbloque2->contenidoBloque=bloque;
-						char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
-					    mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
-						int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
-						mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, mensaje2, tamanioSetBloque2);
-
-						count++;
-
+					FILE * fp = fopen(comandos[1], "r");
+					if (!fp) {
+					  perror("Error al abrir el Archivo");
+					  status = -1;
 					}
 
-					//crea registro del archivo en YAMAFS
+					int bloquesArchivo = (tamanioArchivo(fp)/MB)*2;
+					int bloquesLibres = tabla_de_nodos.bloqueslibres;
 
-					status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones, indiceArchivo);
-					if(status==1){
-						logInfo("Registro de archivo creado correctamente.");
+					if(bloquesArchivo>bloquesLibres){//necesita guardar una copia por cada bloque
+						logInfo("No hay lugar suficiente para almacenar el archivo y sus copias");
+						status = -1;
+					}
+					/*
+					if(lugarEnNodos(bloquesArchivo)==-1){
+						logInfo("La distribucion de los bloques en Nodos no permite almacenar el archivo");
+						status = -1;
+					}
+					*/
 
-						if(cantidad_archivos==cantArchivos){
-							sem_post(&semaforo_yama);
+					//empieza el comando
+
+					if(status==0){
+
+						//parte el archivo en bloques
+
+						t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
+
+						int cantBloques = list_size(bloquesDeTexto);
+
+						//le pasa los bloques a los nodos
+
+						t_list* ubicaciones; //tipo ubicacionBloquesArchivo
+						ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
+
+						int count = 0;
+
+						while(count<cantBloques){
+
+							char* bloque = list_get(bloquesDeTexto,count);
+							UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
+
+							SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
+							setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
+							setbloque1->contenidoBloque=bloque;
+							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
+							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
+							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, mensaje, tamanioSetBloque);
+
+							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
+							setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
+							setbloque2->contenidoBloque=bloque;
+							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
+							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
+							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, mensaje2, tamanioSetBloque2);
+
+							count++;
+
 						}
-					}
-					if(status==1){
-						logInfo("Registro de archivo no pudo ser creado.");
+
+						//crea registro del archivo en YAMAFS
+
+						status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones, indiceArchivo);
+						if(status==1){
+							logInfo("Registro de archivo creado correctamente.");
+
+							if(cantidad_archivos==cantArchivos){
+								semaphore_signal(SEMAFOROYAMA);
+							}
+						}
+						if(status==1){
+							logInfo("Registro de archivo no pudo ser creado.");
+						}
 					}
 				}
 			}

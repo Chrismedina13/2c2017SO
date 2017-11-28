@@ -206,7 +206,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 
 
-                        sem_post(&cantNodosAux);
+				        semaphore_signal(SEMAFORODN);
 
 				        break;
 

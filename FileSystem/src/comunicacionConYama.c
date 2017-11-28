@@ -11,7 +11,7 @@
 
 void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
-	sem_wait(&semaforo_yama);
+	semaphore_wait(SEMAFOROYAMA);
 
 
 	char codigoRecibido[4];

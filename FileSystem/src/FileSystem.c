@@ -8,6 +8,7 @@
 #include "Headers/comunicacionConWorker.h"
 #include "Headers/nodos.h"
 
+
 int main(int argc, char *argv[]) {
 
 
@@ -26,8 +27,11 @@ int main(int argc, char *argv[]) {
 
 	//semaforos
 	int cantNodos= config->cant_nodos;
-	sem_init(&cantNodosAux,0,0);
-	sem_init(&semaforo_yama,0,0);
+	//sem_init(&cantNodosAux,0,0);
+//	sem_init(&semaforo_yama,0,0);
+
+	SEMAFORODN = make_semaphore(0);
+	SEMAFOROYAMA = make_semaphore(0);
 
 
 	logInfo(
@@ -86,8 +90,8 @@ int main(int argc, char *argv[]) {
 
 	//deja que se conecte yama, y se queda esperando
 
-	sem_destroy(&cantNodosAux);
-	sem_destroy(&semaforo_yama);
+	//sem_destroy(&cantNodosAux);
+	//sem_destroy(&semaforo_yama);
 	free(config);
 	return EXIT_SUCCESS;
 }
