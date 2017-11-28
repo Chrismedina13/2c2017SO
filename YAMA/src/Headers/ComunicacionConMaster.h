@@ -44,6 +44,12 @@ void actualizarCargaWorkerReduccionGlobal(t_list* RRG);
 void actualizarEstructurasFinalizacionDeJOB(int numeroDeJob, int master);
 
 
+void asignarNodoEncargadoAJobCompleto(t_list* RRG,int master, int job);
+
+bool estaNodoEnLaRespuestaDeTransformacion(int nodo,t_list* respuestaTransformacion);
+
+void actualizarCargaDeTrabajoFinalizacionDeJOBYEliminarJOB(int numeroDeJob,int master);
+
 
 
 

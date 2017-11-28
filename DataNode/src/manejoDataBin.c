@@ -36,12 +36,17 @@ const int MB = 1024*1024;
 
 			FILE * fp = fopen(rutaDelArchivo, "r");
 			if (!fp) {
-			  perror("Error al abrir el Archivo");
+			  perror("Error al abrir el Archivo \n");
 
 			}
 
 			int tamanio = tamanioArchivo(fp);
 			char* bloque = string_substring(p, nro_bloque* MB, MB);
+
+
+			 if (munmap (p, tamanio) == -1) {
+			                printf("Error al cerrar la proyeccion \n");
+			        }
 
             return(bloque);
 
@@ -50,7 +55,7 @@ const int MB = 1024*1024;
 	int set_bloque(char * contenido, int nro_bloque){
 
 
-		const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.txt";
+		const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data2.txt";
 	//	int tamanioBloque = strlen (1024*1024);
 
 		char* p = obtenerPuntero(rutaDelArchivo);
@@ -61,17 +66,17 @@ const int MB = 1024*1024;
            return(0);
 		}
 
-		int tamanio = tamanioArchivo(fp);
-		char* bloque = string_substring(p, nro_bloque* MB, MB);
+
+		fseek(fp, nro_bloque *MB, SEEK_CUR);
+	    fwrite(contenido, 1, strlen(contenido), fp);
+
+	    return(1);
+	}
+
+	//	char* arch = string_new();
+	//	fputs( bloque, fp );
 
 
-
-
-
-
-
- return (1);
-			}
 
 
 	char* obtenerPuntero(const char* rutaArchivo){
