@@ -8,6 +8,8 @@
 #ifndef HEADERS_FILESYSTEM_H_
 #define HEADERS_FILESYSTEM_H_
 #define MAX 1000
+#define MB 1024*1024
+
 #include "configuracion.h"
 #include <stddef.h>
 #include <string.h>
@@ -25,20 +27,19 @@
 #include "SO_lib/estructuras.h"
 #include "commons/bitarray.h"
 #include "commons/string.h"
+#include "SO_lib/sem.h"
 #include <dirent.h>
 #include "commons/collections/list.h"
 #include <semaphore.h>
+
+
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/filesystem.conf"
 
 //semaforos
 
-sem_t SEMAFORODATANODE;
-sem_t cantNodosAux;
-sem_t semaforo_yama;
-
-
-
+Semaphore *SEMAFORODN;
+Semaphore *SEMAFOROYAMA;
 
 //tabla de directorios
 

@@ -32,7 +32,7 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 
 	fprintf(fp, "TAMANIO=%d\nLIBRE=%d\nNODOS=[", tablaNodos.tamanio, tablaNodos.bloqueslibres); //carga la info del archivo
 	while(count < cantNodos){
-			fprintf(fp, "Nodo%d", list_get(tablaNodos.listaNodos,count));
+			fprintf(fp, "Nodo%d", list_get(tablaNodos.listaNodos,count)); //tira warning, pero los elementos de la lista son int, y funciona? asi que va
 			count++;
 			if (count<cantNodos)fprintf(fp, ",");
 	}
@@ -95,6 +95,9 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		bitMapNodo1 = list_get(mapa_de_bits,indexList1);
 		index1 = bitMapNodo1->idNodo;
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+		if(desplazamiento1==-1){
+			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+		}
 
 		list_remove(mapa_de_bits,indexList1);
 
@@ -104,6 +107,9 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		bitMapNodo2 = list_get(mapa_de_bits,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
+		if(desplazamiento2==-1){
+			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+		}
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
@@ -133,6 +139,125 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
 }
 
+/*
+t_list* distribuirBloques2(t_list* bloques, t_list* mapa_de_bits_original, int indiceArchivo){
+
+	Recibe una lista de char* con bloques de texto (bloques) y una lista de bitMap (nodos)
+	 * Devuelve una lista de ubicacionBloquesArchivo
+
+
+	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
+
+	t_list* mapa_de_bits = copyList(mapa_de_bits_original);
+
+	int cantBloques = list_size(bloques);
+	int indiceBloque = 0;
+	//t_list* listaUbicacionesBloquesArchivos = list_create();
+	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
+
+	while(indiceBloque<cantBloques){
+
+		//carga el bloque a guardar (char*)
+
+		char* bloque = list_get(bloques,indiceBloque);
+		int nodosLlenos=0;
+
+		//elije los 2 nodos mas vacios
+
+		int indiceOriginal = elegirNodo(nodos);
+		bitMap* nodoConOriginal = list_remove(nodos,indiceOriginal);
+		int indiceConCopia = elegirNodo(nodos);
+		bitMap* nodoConCopia = list_remove(nodos,indiceConCopia);
+		int parteDelNodoDelOriginal = actualizarBitmapDelNodo(&nodoConOriginal);
+		int parteDelNodoDeLaCopia = actualizarBitmapDelNodo(&nodoConCopia);
+		printf("Parte del nodo del original: %d\n",parteDelNodoDelOriginal);
+		printf("Parte del nodo de la copia: %d\n", parteDelNodoDeLaCopia);
+		list_add(nodos,nodoConOriginal);
+		list_add(nodos,nodoConCopia);
+
+
+		int count = 0;
+		int index1, indexList1, index2, indexList2;
+		int desplazamiento1, desplazamiento2;
+		bloques_nodo* bitMapNodo1 = malloc(sizeof(bloques_nodo));
+		bloques_nodo* bitMapNodo2 = malloc(sizeof(bloques_nodo));
+
+		indexList1 = elegirNodo(mapa_de_bits);
+		bitMapNodo1 = list_get(mapa_de_bits,indexList1);
+		index1 = bitMapNodo1->idNodo;
+		desplazamiento1 = buscarBloqueVacio2(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+		if(desplazamiento1==-1){
+			nodosLlenos=-1;
+		}
+
+
+		list_remove(mapa_de_bits,indexList1);
+
+		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
+
+		indexList2 = elegirNodo(mapa_de_bits);
+		bitMapNodo2 = list_get(mapa_de_bits,indexList2);
+		index2 = bitMapNodo2->idNodo;
+		desplazamiento2 = buscarBloqueVacio2(bitMapNodo2); //lo devuleve y lo pone en ocupado
+		if(desplazamiento2==-1){
+			nodosLlenos=-1;
+		}
+
+
+		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
+
+		list_add(mapa_de_bits,bitMapNodo1);
+
+		//cargo los datos de los bloques en tabla_de_archivos
+
+		UbicacionBloquesArchivo* ubicacionBloquesArchivo = malloc(sizeof(UbicacionBloquesArchivo));
+		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+		ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
+		ubicacionBloquesArchivo->ubicacionCopia1.desplazamiento = desplazamiento1;
+		ubicacionBloquesArchivo->ubicacionCopia1.nodo = index1;
+		ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento = desplazamiento2;
+		ubicacionBloquesArchivo->ubicacionCopia2.nodo = index2;
+		//printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
+		//		desplazamiento1,index2, desplazamiento2);
+		//list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
+		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);//empieza a cargar el vector de archivos
+
+	//	free(ubicacionBloquesArchivo);
+	//	free(bitMapNodo1);
+	//	free(bitMapNodo2);
+
+		indiceBloque++;
+	}
+	return (tabla_de_archivos[indiceArchivo].ubicaciones);
+	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
+}
+
+t_list* copyList(t_list* mapa_de_bits_original){
+
+	int count=0;
+
+	t_list* listaCopia = list_create();
+	bloques_nodo infoNodoOriginal = list_get(mapa_de_bits_original,0);
+
+	while(infoNodoOriginal!=NULL)
+	{
+		bloques_nodo infoNodoOriginal = list_get(mapa_de_bits_original,count);
+	    bloques_nodo *infoNodo = (bloques_nodo *) malloc (sizeof(bloques_nodo));
+	    infoNodo->idNodo=infoNodoOriginal->idNodo;
+	    infoNodo->bloquesLibres =infoNodoOriginal->bloquesLibres;
+	    infoNodo->bloquesTotales =infoNodoOriginal->bloquesTotales;
+	    while(count<infoNodo){
+	    	infoNodo->bitmap[count]=infoNodoOriginal->bitmap[count];
+	    	count++;
+	    }
+	}
+
+	return(listaCopia);
+
+
+}
+*/
+
 int elegirNodo(t_list* nodos){
 
 	int count = 0;
@@ -154,7 +279,7 @@ int elegirNodo(t_list* nodos){
 
 int bloquesLibres(bloques_nodo* nodo){
 	int i,libres=0;
-	for(i=0;i<20;i++){
+	for(i=0;i<nodo->bloquesTotales;i++){
 		if(nodo->bitmap[i] == 0) libres++;
 	}
 	return libres;
@@ -162,7 +287,7 @@ int bloquesLibres(bloques_nodo* nodo){
 
 int ocuparBloqueBitMap(bloques_nodo* nodo){ // en desuso, reemplazada por buscarBloqueVacio
 	int i;
-	for(i=0;i<20;i++){
+	for(i=0;i<nodo->bloquesTotales;i++){
 		if(nodo->bitmap[i] == 0){
 			nodo->bitmap[i] = 1;
 			return i;
@@ -175,10 +300,11 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 
 	/*Recibe un bloques_nodo
 	 * Devuelve el desplazamiento (para anotarlo en donde corresponda) y setea el desplazamiento del bitmap como ocupado.
+	 * Si el nodo esta lleno devuelve -1.
 	 */
 
 	int count = 0;
-	while(count<20){
+	while(count<nodo->bloquesTotales){
 		if(nodo->bitmap[count]==0){
 			nodo->bitmap[count]=1;
 			return(count);
@@ -187,6 +313,25 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 	}
 	return(-1);
 }
+
+/*
+int buscarBloqueVacio2(bloques_nodo* nodo){
+
+	Recibe un bloques_nodo
+	 * Devuelve el desplazamiento (para anotarlo en donde corresponda).
+	 * Si el nodo esta lleno devuelve -1.
+
+
+	int count = 0;
+	while(count<nodo->bloquesTotales){
+		if(nodo->bitmap[count]==0){
+			return(count);
+		}
+	count++;
+	}
+	return(-1);
+}
+*/
 
 t_list* inicializarBitMapNodos(t_list* listaNodos){
 
@@ -205,7 +350,7 @@ t_list* inicializarBitMapNodos(t_list* listaNodos){
 
 		idNodo = list_get(listaNodos,count);
 		mapa->idNodo = idNodo;
-		for( desplazamiento=0; desplazamiento<20;desplazamiento++){
+		for( desplazamiento=0; desplazamiento<160;desplazamiento++){
 			mapa->bitmap[desplazamiento]=0;
 		//	printf("nodo:%d desplazamiento:%d, empty:%d\n",mapa->id_nodo,i, mapa->bitmap[i]);
 		}
@@ -217,7 +362,8 @@ t_list* inicializarBitMapNodos(t_list* listaNodos){
 	return(bitMapNodos);
 }
 
-void cargarNodos(){
+/*
+void cargarNodos(){ //en desuso
 
 		//EJEMPLO DE NODOS CARGADOS
 		tabla_de_nodos.tamanio=40;
@@ -267,6 +413,7 @@ void cargarNodos(){
 		//FIN EJEMPLO NODOS CARGADOS
 
 }
+*/
 
 int showBitMap(t_list* Mapa_de_bits){
 
@@ -279,7 +426,7 @@ int showBitMap(t_list* Mapa_de_bits){
 
 		id = mapa->idNodo;
 		printf("%d\n",id);
-		while(count<20){
+		while(count<mapa->bloquesTotales){
 			printf("nodo:%d desplazamiento:%d, empty:%d\n",mapa->idNodo,count, mapa->bitmap[count]);
 			count++;
 		}
@@ -319,7 +466,6 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 	 */
 
 	int count = 0;
-	int status;
 	int cantPartes;
 	UbicacionBloquesArchivo* ubicaciones;
 
