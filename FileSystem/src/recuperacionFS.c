@@ -23,7 +23,11 @@ int recuperacionFileSystem(){
 
 	cargarDirectorios();
 
+	recuperarTablaDeNodos();
 
+	recuperarTablaDeArchivos();
+
+	return(1);
 }
 
 int recuperarTablaDeNodos(){

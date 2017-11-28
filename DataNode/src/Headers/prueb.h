@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <commons/collections/list.h>
+#include "DataNode.h"
 
 
 typedef struct t_person {

@@ -213,6 +213,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		crearEntradasReduccionGlobal(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 
+		asignarNodoEncargadoAJobCompleto(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 		actualizarCargaWorkerReduccionGlobal(RRG);
 
 		break;
@@ -262,7 +263,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		jobQueFinalizo = deserializarINT(mensaje);
 
-		logInfo("Actualizar estructuras por finalizacion de job e");
+		logInfo("Actualizar estructuras por finalizacion de job ");
 		actualizarEstructurasFinalizacionDeJOB(jobQueFinalizo, FDMaster);
 
 		break;
@@ -345,7 +346,7 @@ t_list* respuestaReduccionGlobal(int numeroDeJob,int master){
 
 			if(registro->nodo == nodoConMenorCarga){
 
-				Info_Workers* info = list_get(list_info_workers,((registro->nodo)-1));
+				Info_Workers* info = list_get(ipYPuertoWoerkers,((registro->nodo)-1));
 				variableReduciionGlobal++;
 				char* archivoRRG = generarNombreArchivoReduccionGlobal(variableReduciionGlobal);
 
@@ -429,6 +430,33 @@ int* nodoConMenorCargaDeTrabajoParaReduccionGlobal(int master,int job){
 
 	return nodoConMenorCarga;
 }
+
+void asignarNodoEncargadoAJobCompleto(t_list* RRG,int master, int job){
+
+	int i = 0;
+	while(i < list_size(RRG)){
+
+		RespuestaReduccionGlobal* rrg = list_get(RRG,i);
+		if(rrg->encargado == true){
+
+			//elNodoEncargadoEs(rrg->nodo,master,job);
+			i++;
+		}else{
+
+			i++;
+		}
+	}
+}
+
+/*
+void elNodoEncargadoEs(int nodo,int master,int job){
+
+	int i = 0;
+	while(i < list_size()){
+
+
+	}
+}*/
 
 int cargaDeTrabajoDelNodo(int* nodo){
 
@@ -648,8 +676,94 @@ void actualizarEstructurasFinalizacionDeJOB(int numeroDeJob, int master){
 
 	actualizarAlmacenadoFinalOK(numeroDeJob,master);
 
-	//borrarJOBCompleto(numeroDeJob,master);
+	actualizarCargaDeTrabajoFinalizacionDeJOBYEliminarJOB(numeroDeJob,master);
+}
 
-	//actualizarCargaDeTrabajoFinalizacionDeJOB();
 
+void actualizarCargaDeTrabajoFinalizacionDeJOBYEliminarJOB(int numeroDeJob,int master){
+
+	int i= 0;
+
+	while(i< list_size(listaDeJobs)){
+		JOBCompleto* jc = list_get(listaDeJobs,i);
+		if(jc->job->identificadorJob == numeroDeJob && jc->job->master == master){
+
+			actualizarCargaDeTrabajoWorkerPorFinalizacion(jc);
+			JOBCompleto* jc = list_remove(listaDeJobs,i);
+
+			//destruirJobCompleto(jc);
+		}else{
+
+			i++;
+		}
+	}
+}
+
+void actualizarCargaDeTrabajoWorkerPorFinalizacion(JOBCompleto* jc){
+
+	int i = 0;
+	while(i<list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,i);
+		if(estaNodoEnLaRespuestaDeTransformacion(nodo->nodo,jc->respuestaTransformacion)){
+
+			int cantidadAReducir = cantidadDeTrasformacionesYReduccionesQueHace(nodo->nodo,jc->respuestaTransformacion);
+			reducirCargaANodo(nodo->nodo,cantidadAReducir);
+
+
+		}else{
+			i++;
+		}
+	}
+}
+
+bool estaNodoEnLaRespuestaDeTransformacion(int nodo,t_list* respuestaTransformacion){
+	int i = 0;
+	while(i < list_size(respuestaTransformacion)){
+		RespuestaTransformacionYAMA* rty = list_get(respuestaTransformacion,i);
+		if(rty->nodo == nodo){
+
+			return true;
+		}else{
+			i++;	}
+	}
+	return false;
+}
+
+int cantidadDeTrasformacionesYReduccionesQueHace(int nodo,t_list* respuestaTransformacionYama){
+	int i = 0;
+	int cantidad = 0;
+	while(i < list_size(respuestaTransformacionYama)){
+		RespuestaTransformacionYAMA* rty = list_get(respuestaTransformacionYama,i);
+		if(rty->nodo == nodo){
+
+			cantidad += 1;
+			i++;
+		}else{
+			i++;
+		}
+	}
+
+	return cantidad;
+}
+
+int reducirCargaANodo(int nodo, int cantidadDeCarga){
+
+	int i = 0;
+
+	while(i < list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,i);
+		if(nodo->nodo == nodo){
+
+			nodoParaPlanificar* nodo = list_remove(listaDeWorkerTotales,i);
+			nodo->carga -= cantidadDeCarga;
+			list_add_in_index(listaDeWorkerTotales,i,nodo);
+			return 0;
+		}else{
+			i++;
+		}
+	}
+
+	return -1;
 }

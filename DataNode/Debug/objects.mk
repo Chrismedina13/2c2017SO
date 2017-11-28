@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lSO_lib -lcommons
+LIBS := -lcommons -lpthread -lSO_lib
 
