@@ -37,4 +37,14 @@ UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo
 Replanificacion* deserializarReplanificacion(char* replanifSerializado);
 char* serializarReplanificacion(int numeroJob,int nodoCaido);
 
+int actualizarCargaANodo(int nodo, int cantidadDeCarga);
+int nodoEncargadoDeLaReduccionGlobal(t_list* RRG);
+void actualizarCargaWorkerReduccionGlobal(t_list* RRG);
+
+void actualizarEstructurasFinalizacionDeJOB(int numeroDeJob, int master);
+
+
+
+
+
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

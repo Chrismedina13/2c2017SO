@@ -30,25 +30,27 @@ int main(int argc, char *argv[]) {
 
 	//PROBANDO SERIALIZAR Y DESERIALIZAR
 
-		/*char* bloqueserializado = serializarBloque(1,"hola como estas?");
-		printf("tamanio del bloqueserializado: %i", string_length(bloqueserializado));
-		SetBloque* bloque = deserilizarBloque(bloqueserializado);
-		printf("\nNumero de bloque: %d\nContenido: %s\n",bloque->nrobloque,bloque->contenidoBloque);
+			RespuestaTransformacionYAMA* nodo1 = setRespuestaTransformacionYAMA(11,21,"12.121",151,123451,"Documento1");
+			RespuestaTransformacionYAMA* nodo2 = setRespuestaTransformacionYAMA(12,22,"12.122",152,123452,"Documento2");
+			RespuestaTransformacionYAMA* nodo3 = setRespuestaTransformacionYAMA(13,23,"12.123",153,123453,"Documento3");
+			t_list* lista = list_create();
+			list_add(lista,nodo1);
+			list_add(lista,nodo2);
+			list_add(lista,nodo3);
 
-		char* palabra = "holas";
-		printf("Longitud de la palabra: %d",string_length(palabra));
-*/
-		RespuestaTransformacionYAMA* nodo = setRespuestaTransformacionYAMA(1,2,"12.12",15,12345,"Documento");
-		int n = nodo->nodo;
+			char* listaSErializada = serializarListaRespuestaTransf(lista);
+			logInfo("Lista serializada");
+			RespuestaTransformacionYAMA* respuestaDeserializada = deserializarListaRespuestaTransf(listaSErializada);
+			logInfo("Respuesta lista deserialoizada");
+	/*		logInfo("\nNodo: %i\nPuerto woeker: %d\nArchivo temporal: %s",n,nodo->puertoWorker,nodo->archivoTemporal);
 
-		logInfo("\nNodo: %i\nPuerto woeker: %d\nArchivo temporal: %s",n,nodo->puertoWorker,nodo->archivoTemporal);
-
-		char* respuesta = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,nodo->bytesOcupados, nodo->archivoTemporal);
-		logInfo("Antes de deserializar. Tamanio de respuesta: %d ", strlen(respuesta));
+			char* respuesta = serializarRespuestaTransformacionYAMA(nodo->nodo,nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,nodo->bytesOcupados, nodo->archivoTemporal);
+			logInfo("Antes de deserializar. Tamanio de respuesta: %d ", strlen(respuesta));
 
 
-		RespuestaTransformacionYAMA* nodoDeserializado = deserializarRespuestaTransformacionYAMA(respuesta);
-		printf("\n\nArchivo temporal: %s \n\n",nodoDeserializado->archivoTemporal);
+			RespuestaTransformacionYAMA* nodoDeserializado = deserializarRespuestaTransformacionYAMA(respuesta);
+			printf("\n\nArchivo temporal: %s \n\n",nodoDeserializado->archivoTemporal);
+	*/
 
 
 	//Archivo de configuracion

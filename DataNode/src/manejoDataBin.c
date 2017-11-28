@@ -48,6 +48,28 @@ const int MB = 1024*1024;
 			}
 
 	int set_bloque(char * contenido, int nro_bloque){
+
+
+		const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.txt";
+	//	int tamanioBloque = strlen (1024*1024);
+
+		char* p = obtenerPuntero(rutaDelArchivo);
+
+		FILE * fp = fopen(rutaDelArchivo, "wr");
+		if (!fp) {
+		  perror("Error al abrir el Archivo");
+           return(0);
+		}
+
+		int tamanio = tamanioArchivo(fp);
+		char* bloque = string_substring(p, nro_bloque* MB, MB);
+
+
+
+
+
+
+
  return (1);
 			}
 
