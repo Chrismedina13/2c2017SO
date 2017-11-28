@@ -105,7 +105,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 			del primer mas es por los dos int que le aagregue para el tamnio y despues del ultimo mas es por los +1 a los char**/
 
 
-	char* respuesta = serializarListaYAMA(planificacionDelJOb,tamanioRespuesta);
+	char* respuesta = serializarListaYAMA(planificacionDelJOb);
 
 	logInfo("listo para enviar el tamanio de la respuesta es %i", tamanioRespuesta);
 
