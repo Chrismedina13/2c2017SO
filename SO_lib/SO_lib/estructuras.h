@@ -37,6 +37,7 @@ typedef struct jobCompleto{
 	Job* job; //Puntero a una estructura JOB
 	t_list* ubicacionDeLasPartesDelJOB;
 	t_list* respuestaTransformacion;
+	int nodoEncargado;
 }JOBCompleto;
 
 
