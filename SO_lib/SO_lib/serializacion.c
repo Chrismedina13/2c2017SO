@@ -383,13 +383,6 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 
 }
 
-/*EJEMPLO DE USO serializarInfoParaWorker
-char* rutaScript = "/home/utnso/Escritorio/Script.sh";
-char* rutaArchivoTemporal = "/home/utnso/Escritorio/tmp.dat";
-char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
-script* scriptTransformacion = malloc(strlen(rutaScript) + strlen(punteroAlContenidoDelScript));
-scriptTransformacion
-*/
 
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal, script* scriptTransformacion) {
@@ -410,7 +403,7 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 	serializarDato(rtaSerializada, &(bytesOcupados), sizeof(int),
 			&desplazamiento);
 
-	serializarDato(rtaSerializada, &(archivoTemporal),
+	serializarDato(rtaSerializada, archivoTemporal,
 			tamanioArchivoTemporal, &desplazamiento);
 
 	char* scriptSerializado = serializarScript(scriptTransformacion);
@@ -446,7 +439,9 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 
 	respuesta->archivoTemporal = string_substring(rtaSerializada,desplazamiento,tamanioArchivoTemp);
 	desplazamiento=+tamanioArchivoTemp;
-	respuesta->scritpTransformacion = string_substring(rtaSerializada,desplazamiento,tamanioScript);
+
+	char scriptSerializado = string_substring(rtaSerializada,desplazamiento,tamanioScript);
+	respuesta->scritpTransformacion = deserilizarScript(scriptSerializado);
 	desplazamiento=+tamanioScript;
 
 	free(rtaSerializada);
@@ -480,10 +475,10 @@ script* deserilizarScript(char* bloqueSerializado) {
 	script* scriptDeserializado = malloc(tamanioContenido+tamanioNombre);
 
 	scriptDeserializado->contenido = string_substring(bloqueSerializado,desplazamiento, tamanioContenido);
-	desplazamiento += tamanioContenido;
+	desplazamiento = desplazamiento+ tamanioContenido;
 
 	scriptDeserializado->nombre = string_substring(bloqueSerializado,desplazamiento,tamanioNombre);
-	desplazamiento += tamanioNombre;
+	desplazamiento = desplazamiento+ tamanioNombre;
 
 	free(bloqueSerializado);
 

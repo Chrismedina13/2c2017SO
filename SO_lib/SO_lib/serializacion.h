@@ -61,11 +61,9 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 char * serializarListaTemp(t_list * lista);
 
 //char* serializarScript(char* nombre, int tamanio, char* contenido);
-/*HAY ALGUNA RAZON PARA PASARLE LOS PARAMETROS POR SEPARADO EN VEZ DE LA ESTRUCTURA DIRECTAMENTE?*/
 char* serializarScript(script* script);
 
-
-char* deserializarScript(char* rtaSerializada);
+script* deserilizarScript(char* bloqueSerializado);
 
 
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
