@@ -29,9 +29,9 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensaje -> bytesOcupados = parametros->bytesOcupados;
 	mensaje -> archivoTemporal = parametros ->archivoTemporal;
 
-		char* respuesta = serializarInfoParaWorker(mensaje);
+	char* respuesta = serializarInfoParaWorker(mensaje);
 
-		int tamanioRespuesta = (sizeof(int) * 3+ sizeof(char*));
+	int tamanioRespuesta = (sizeof(int) * 3+ sizeof(char*));
 
 	mensajesEnviadosAWorker(TAREA_WORKER,FDServidorWORKER,respuesta, tamanioRespuesta);
 

@@ -68,8 +68,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 					} else {
 						int codigo = deserializarINT(buffer);
 						logInfo("Recibi de Master: %s", codigo);
-						infoParaWorker* info = mensajesRecibidosDeMaster(codigo,
-								i);
+						infoParaWorker* info = mensajesRecibidosDeMaster(codigo,i);
 						//deberia divir la info 3 cosas:el cod a ejecutar,el origen de datos y el destino
 						int v_origen;
 						char* v_destino;
@@ -153,6 +152,7 @@ case TAREA_WORKER:
 //falta desereaalizar
 
 		infoParaWorker* info = deserializarInfoParaWorker(mensaje);
+		logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
 		return info;
 	}
 	break;

@@ -143,8 +143,6 @@ char* serializarListaYAMA(t_list* contextos){
 t_list* deserializarListaYAMA(char* stackSerializado){
 	int tamanio_lista= malloc(sizeof(int));
 
-
-
 	int desplazamiento = 0;
 	t_list* contextos = list_create();//malloc(sizeof(contexto) * tamanio_contexto);
 	int i;
@@ -169,7 +167,7 @@ t_list* deserializarListaYAMA(char* stackSerializado){
 
 		free(contextoSerializado);
 	}
-	free(tamanio_lista);
+	//free(tamanio_lista);
 	return contextos;
 
 }

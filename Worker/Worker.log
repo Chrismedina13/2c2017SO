@@ -25,3 +25,39 @@
 [INFO] 17:09:11:849 WORKER/(2785:2785): Comunicacion con los FILESYSTEM
 [INFO] 17:09:11:852 WORKER/(2785:2786): SocketCliente = -1 
 
+[INFO] 18:35:34:767 WORKER/(7343:7343): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 18:35:34:772 WORKER/(7343:7343): Comunicacion con los Masters
+[INFO] 18:35:34:772 WORKER/(7343:7343): Comunicacion con los FILESYSTEM
+[INFO] 18:35:34:777 WORKER/(7343:7345): SocketCliente = -1 
+
+[INFO] 19:08:51:468 WORKER/(9359:9359): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 19:08:51:479 WORKER/(9359:9359): Comunicacion con los Masters
+[INFO] 19:08:51:479 WORKER/(9359:9359): Comunicacion con los FILESYSTEM
+[INFO] 19:08:51:484 WORKER/(9359:9361): SocketCliente = -1 
+
+[INFO] 19:10:05:484 WORKER/(9751:9751): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 19:10:05:490 WORKER/(9751:9751): Comunicacion con los Masters
+[INFO] 19:10:05:490 WORKER/(9751:9751): Comunicacion con los FILESYSTEM
+[INFO] 19:10:05:497 WORKER/(9751:9755): SocketCliente = -1 
+
+[INFO] 19:10:35:262 WORKER/(10132:10132): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 19:10:35:269 WORKER/(10132:10132): Comunicacion con los Masters
+[INFO] 19:10:35:269 WORKER/(10132:10132): Comunicacion con los FILESYSTEM
+[INFO] 19:10:35:273 WORKER/(10132:10135): SocketCliente = -1 
+
+[INFO] 19:11:03:888 WORKER/(10168:10168): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 19:11:06:162 WORKER/(10168:10168): Comunicacion con los Masters
+[INFO] 19:11:06:611 WORKER/(10168:10168): Comunicacion con los FILESYSTEM
+[INFO] 19:11:12:248 WORKER/(10168:10195): SocketCliente = -1 
+
+[INFO] 19:12:17:603 WORKER/(10257:10257): Leo  /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf 
+
+[INFO] 19:12:21:992 WORKER/(10257:10257): Comunicacion con los Masters
+[INFO] 19:12:22:591 WORKER/(10257:10257): Comunicacion con los FILESYSTEM
+[INFO] 19:12:26:801 WORKER/(10257:10280): SocketCliente = -1 
+
