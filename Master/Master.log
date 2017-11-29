@@ -218,3 +218,626 @@
 
 [INFO] 19:33:23:479 MASTER/(8729:8729): Creando el hilo para comunicarme con Yama
 [INFO] 19:33:23:479 MASTER/(8729:8733): Ingrese JOB a Ejecutar
+[INFO] 21:44:06:545 MASTER/(15824:15824): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 21:44:06:558 MASTER/(15824:15824): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 21:44:06:558 MASTER/(15824:15824): Creando el hilo para comunicarme con Yama
+[INFO] 21:44:06:563 MASTER/(15824:15825): Ingrese JOB a Ejecutar
+[INFO] 21:44:11:291 MASTER/(15824:15825): Se va a ejecutar sadaasd
+[INFO] 21:44:11:291 MASTER/(15824:15825): 7
+[INFO] 21:44:11:332 MASTER/(15824:15825): Recibi de YAMA: 2
+[INFO] 21:44:11:334 MASTER/(15824:15825): Master recibe de Yama solicitud de transformación.
+[INFO] 21:44:11:334 MASTER/(15824:15825): Tamanio de lo que recibo 113
+[INFO] 21:44:11:335 MASTER/(15824:15825): Recibo corecctamente la respuesta
+[INFO] 21:44:11:335 MASTER/(15824:15825): tamnio_lista 3
+[INFO] 21:44:11:335 MASTER/(15824:15825): Entro a deserializar la estructura
+[INFO] 21:44:11:336 MASTER/(15824:15825): Entro a 1
+Tamanio ip worker: 6
+[INFO] 21:44:11:336 MASTER/(15824:15825): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 21:44:11:336 MASTER/(15824:15825): Entro a 3
+ID NODO: 1
+[INFO] 21:44:11:336 MASTER/(15824:15825): Entro a 4
+Puerto: 11
+[INFO] 21:44:11:336 MASTER/(15824:15825): Entro a 5
+Bloque: 12
+[INFO] 21:44:11:337 MASTER/(15824:15825): Entro a 6
+Bytesocupados: 1212
+[INFO] 21:44:11:338 MASTER/(15824:15825): Entro a 7
+IP: 12.1ue
+[INFO] 21:44:11:340 MASTER/(15824:15825): LLego ip WORKER
+[INFO] 21:44:11:340 MASTER/(15824:15825): Entro a 6
+ARchivo: st(
+[INFO] 21:44:11:341 MASTER/(15824:15825): LLego a archivo
+[INFO] 21:44:11:341 MASTER/(15824:15825): Respuesta archivo temporal: st(
+[INFO] 21:44:11:343 MASTER/(15824:15825): DESERIALIZAR COMPLETO
+[INFO] 21:44:11:343 MASTER/(15824:15825): Entro a deserializar la estructura
+[INFO] 21:44:11:343 MASTER/(15824:15825): Entro a 1
+Tamanio ip worker: 6
+[INFO] 21:44:11:344 MASTER/(15824:15825): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 21:44:11:344 MASTER/(15824:15825): Entro a 3
+ID NODO: 2
+[INFO] 21:44:11:345 MASTER/(15824:15825): Entro a 4
+Puerto: 21
+[INFO] 21:44:11:345 MASTER/(15824:15825): Entro a 5
+Bloque: 22
+[INFO] 21:44:11:359 MASTER/(15824:15825): Entro a 6
+Bytesocupados: 22122
+[INFO] 21:44:11:359 MASTER/(15824:15825): Entro a 7
+IP: 22.2
+[INFO] 21:44:11:359 MASTER/(15824:15825): LLego ip WORKER
+[INFO] 21:44:11:359 MASTER/(15824:15825): Entro a 6
+ARchivo: 
+[INFO] 21:44:11:359 MASTER/(15824:15825): LLego a archivo
+[INFO] 21:44:11:359 MASTER/(15824:15825): Respuesta archivo temporal: 
+[INFO] 21:44:11:360 MASTER/(15824:15825): DESERIALIZAR COMPLETO
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a deserializar la estructura
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 1
+Tamanio ip worker: 5
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 3
+ID NODO: 3
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 4
+Puerto: 31
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 5
+Bloque: 33
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 6
+Bytesocupados: 33133
+[INFO] 21:44:11:360 MASTER/(15824:15825): Entro a 7
+IP: 3.32
+[INFO] 21:44:11:366 MASTER/(15824:15825): LLego ip WORKER
+[INFO] 21:44:11:366 MASTER/(15824:15825): Entro a 6
+ARchivo: 
+[INFO] 21:44:11:367 MASTER/(15824:15825): LLego a archivo
+[INFO] 21:44:11:367 MASTER/(15824:15825): Respuesta archivo temporal: 
+[INFO] 21:44:11:367 MASTER/(15824:15825): DESERIALIZAR COMPLETO
+[INFO] 21:55:39:450 MASTER/(16254:16254): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 21:55:39:458 MASTER/(16254:16254): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 21:55:39:458 MASTER/(16254:16254): Creando el hilo para comunicarme con Yama
+[INFO] 21:55:39:480 MASTER/(16254:16259): Ingrese JOB a Ejecutar
+[INFO] 21:55:43:882 MASTER/(16254:16259): Se va a ejecutar kkk
+[INFO] 21:55:43:882 MASTER/(16254:16259): 3
+[INFO] 21:55:43:926 MASTER/(16254:16259): Recibi de YAMA: 2
+[INFO] 21:55:43:926 MASTER/(16254:16259): Master recibe de Yama solicitud de transformación.
+[INFO] 21:55:43:927 MASTER/(16254:16259): Tamanio de lo que recibo 113
+[INFO] 21:55:43:927 MASTER/(16254:16259): Recibo corecctamente la respuesta
+[INFO] 21:55:43:928 MASTER/(16254:16259): tamnio_lista 3
+[INFO] 21:55:43:928 MASTER/(16254:16259): Entro a deserializar la estructura
+[INFO] 21:55:43:929 MASTER/(16254:16259): Entro a 1
+Tamanio ip worker: 6
+[INFO] 21:55:43:929 MASTER/(16254:16259): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 21:55:43:930 MASTER/(16254:16259): Entro a 3
+ID NODO: 1
+[INFO] 21:55:43:930 MASTER/(16254:16259): Entro a 4
+Puerto: 11
+[INFO] 21:55:43:930 MASTER/(16254:16259): Entro a 5
+Bloque: 12
+[INFO] 21:55:43:930 MASTER/(16254:16259): Entro a 6
+Bytesocupados: 1212
+[INFO] 21:55:43:930 MASTER/(16254:16259): Entro a 7
+IP: 12.1ue
+[INFO] 21:55:43:931 MASTER/(16254:16259): LLego ip WORKER
+[INFO] 21:57:35:552 MASTER/(16544:16544): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 21:57:35:556 MASTER/(16544:16544): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 21:57:35:557 MASTER/(16544:16544): Creando el hilo para comunicarme con Yama
+[INFO] 21:57:35:559 MASTER/(16544:16549): Ingrese JOB a Ejecutar
+[INFO] 21:57:51:235 MASTER/(16544:16549): Se va a ejecutar kkk
+[INFO] 21:57:51:241 MASTER/(16544:16549): 3
+[INFO] 21:57:51:329 MASTER/(16544:16549): Recibi de YAMA: 2
+[INFO] 21:57:51:330 MASTER/(16544:16549): Master recibe de Yama solicitud de transformación.
+[INFO] 21:57:51:330 MASTER/(16544:16549): Tamanio de lo que recibo 113
+[INFO] 21:57:51:330 MASTER/(16544:16549): Recibo corecctamente la respuesta
+[INFO] 21:57:51:330 MASTER/(16544:16549): tamnio_lista 3
+[INFO] 21:57:51:330 MASTER/(16544:16549): Entro a deserializar la estructura
+[INFO] 21:57:51:330 MASTER/(16544:16549): Entro a 1
+Tamanio ip worker: 6
+[INFO] 21:57:51:331 MASTER/(16544:16549): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 21:57:51:331 MASTER/(16544:16549): Entro a 3
+ID NODO: 1
+[INFO] 21:57:51:331 MASTER/(16544:16549): Entro a 4
+Puerto: 11
+[INFO] 21:57:51:331 MASTER/(16544:16549): Entro a 5
+Bloque: 12
+[INFO] 21:57:51:332 MASTER/(16544:16549): Entro a 6
+Bytesocupados: 1212
+[INFO] 21:57:51:332 MASTER/(16544:16549): Entro a 7
+IP: 12.1ue
+[INFO] 21:57:51:332 MASTER/(16544:16549): LLego ip WORKER
+[INFO] 22:00:13:558 MASTER/(16941:16941): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:00:13:561 MASTER/(16941:16941): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:00:13:561 MASTER/(16941:16941): Creando el hilo para comunicarme con Yama
+[INFO] 22:00:13:570 MASTER/(16941:16947): Ingrese JOB a Ejecutar
+[INFO] 22:02:12:868 MASTER/(17478:17478): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:02:12:868 MASTER/(17478:17478): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:02:12:879 MASTER/(17478:17478): Creando el hilo para comunicarme con Yama
+[INFO] 22:02:12:889 MASTER/(17478:17482): Ingrese JOB a Ejecutar
+[INFO] 22:02:16:267 MASTER/(17478:17482): Se va a ejecutar kkkk
+[INFO] 22:02:16:268 MASTER/(17478:17482): 4
+[INFO] 22:02:16:311 MASTER/(17478:17482): Recibi de YAMA: 2
+[INFO] 22:02:16:311 MASTER/(17478:17482): Master recibe de Yama solicitud de transformación.
+[INFO] 22:02:16:311 MASTER/(17478:17482): Tamanio de lo que recibo 113
+[INFO] 22:02:16:311 MASTER/(17478:17482): Recibo corecctamente la respuesta
+[INFO] 22:02:16:311 MASTER/(17478:17482): tamnio_lista 3
+[INFO] 22:02:16:312 MASTER/(17478:17482): Entro a deserializar la estructura
+[INFO] 22:02:16:312 MASTER/(17478:17482): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:02:16:312 MASTER/(17478:17482): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:02:16:312 MASTER/(17478:17482): Entro a 3
+ID NODO: 1
+[INFO] 22:02:16:313 MASTER/(17478:17482): Entro a 4
+Puerto: 11
+[INFO] 22:02:16:313 MASTER/(17478:17482): Entro a 5
+Bloque: 12
+[INFO] 22:02:16:313 MASTER/(17478:17482): Entro a 6
+Bytesocupados: 1212
+[INFO] 22:02:16:313 MASTER/(17478:17482): Entro a 7
+IP: 12.1ue
+[INFO] 22:02:16:314 MASTER/(17478:17482): LLego ip WORKER
+[INFO] 22:02:16:315 MASTER/(17478:17482): Entro a 6
+ARchivo: st(
+[INFO] 22:02:16:315 MASTER/(17478:17482): LLego a archivo
+[INFO] 22:02:16:315 MASTER/(17478:17482): Respuesta archivo temporal: st(
+[INFO] 22:02:16:316 MASTER/(17478:17482): DESERIALIZAR COMPLETO
+[INFO] 22:02:16:316 MASTER/(17478:17482): Entro a deserializar la estructura
+[INFO] 22:02:16:317 MASTER/(17478:17482): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:02:16:322 MASTER/(17478:17482): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:02:16:328 MASTER/(17478:17482): Entro a 3
+ID NODO: 2
+[INFO] 22:02:16:328 MASTER/(17478:17482): Entro a 4
+Puerto: 21
+[INFO] 22:02:16:329 MASTER/(17478:17482): Entro a 5
+Bloque: 22
+[INFO] 22:02:16:331 MASTER/(17478:17482): Entro a 6
+Bytesocupados: 22122
+[INFO] 22:02:16:331 MASTER/(17478:17482): Entro a 7
+IP: 22.2
+[INFO] 22:02:16:332 MASTER/(17478:17482): LLego ip WORKER
+[INFO] 22:02:16:332 MASTER/(17478:17482): Entro a 6
+ARchivo: 
+[INFO] 22:02:16:332 MASTER/(17478:17482): LLego a archivo
+[INFO] 22:02:16:332 MASTER/(17478:17482): Respuesta archivo temporal: 
+[INFO] 22:02:16:333 MASTER/(17478:17482): DESERIALIZAR COMPLETO
+[INFO] 22:02:16:333 MASTER/(17478:17482): Entro a deserializar la estructura
+[INFO] 22:02:16:333 MASTER/(17478:17482): Entro a 1
+Tamanio ip worker: 5
+[INFO] 22:02:16:333 MASTER/(17478:17482): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:02:16:333 MASTER/(17478:17482): Entro a 3
+ID NODO: 3
+[INFO] 22:02:16:335 MASTER/(17478:17482): Entro a 4
+Puerto: 31
+[INFO] 22:02:16:335 MASTER/(17478:17482): Entro a 5
+Bloque: 33
+[INFO] 22:02:16:335 MASTER/(17478:17482): Entro a 6
+Bytesocupados: 33133
+[INFO] 22:02:16:335 MASTER/(17478:17482): Entro a 7
+IP: 3.32
+[INFO] 22:02:16:336 MASTER/(17478:17482): LLego ip WORKER
+[INFO] 22:02:16:336 MASTER/(17478:17482): Entro a 6
+ARchivo: 
+[INFO] 22:02:16:336 MASTER/(17478:17482): LLego a archivo
+[INFO] 22:02:16:336 MASTER/(17478:17482): Respuesta archivo temporal: 
+[INFO] 22:02:16:340 MASTER/(17478:17482): DESERIALIZAR COMPLETO
+[INFO] 22:33:36:430 MASTER/(18434:18434): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:33:36:434 MASTER/(18434:18434): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:33:36:434 MASTER/(18434:18434): Creando el hilo para comunicarme con Yama
+[INFO] 22:33:36:442 MASTER/(18434:18438): Ingrese JOB a Ejecutar
+[INFO] 22:33:49:469 MASTER/(18434:18438): Se va a ejecutar kjkljlk
+[INFO] 22:33:49:469 MASTER/(18434:18438): 7
+[INFO] 22:33:49:473 MASTER/(18434:18438): Recibi de YAMA: 2
+[INFO] 22:33:49:473 MASTER/(18434:18438): Master recibe de Yama solicitud de transformación.
+[INFO] 22:33:49:474 MASTER/(18434:18438): Tamanio de lo que recibo 113
+[INFO] 22:33:49:474 MASTER/(18434:18438): Recibo corecctamente la respuesta
+[INFO] 22:33:49:474 MASTER/(18434:18438): tamnio_lista 3
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a deserializar la estructura
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 3
+ID NODO: 1
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 4
+Puerto: 11
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 5
+Bloque: 12
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 6
+Bytesocupados: 1212
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 7
+IP: 12.1ue�
+[INFO] 22:33:49:474 MASTER/(18434:18438): LLego ip WORKER
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 6
+ARchivo: st(
+[INFO] 22:33:49:474 MASTER/(18434:18438): LLego a archivo
+[INFO] 22:33:49:474 MASTER/(18434:18438): Respuesta archivo temporal: st(
+[INFO] 22:33:49:474 MASTER/(18434:18438): DESERIALIZAR COMPLETO
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a deserializar la estructura
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 3
+ID NODO: 2
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 4
+Puerto: 21
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 5
+Bloque: 22
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 6
+Bytesocupados: 22122
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 7
+IP: 22.2
+[INFO] 22:33:49:474 MASTER/(18434:18438): LLego ip WORKER
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 6
+ARchivo: 
+[INFO] 22:33:49:474 MASTER/(18434:18438): LLego a archivo
+[INFO] 22:33:49:474 MASTER/(18434:18438): Respuesta archivo temporal: 
+[INFO] 22:33:49:474 MASTER/(18434:18438): DESERIALIZAR COMPLETO
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a deserializar la estructura
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 1
+Tamanio ip worker: 5
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 3
+ID NODO: 3
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 4
+Puerto: 31
+[INFO] 22:33:49:474 MASTER/(18434:18438): Entro a 5
+Bloque: 33
+[INFO] 22:33:49:475 MASTER/(18434:18438): Entro a 6
+Bytesocupados: 33133
+[INFO] 22:33:49:475 MASTER/(18434:18438): Entro a 7
+IP: 3.32�
+[INFO] 22:33:49:475 MASTER/(18434:18438): LLego ip WORKER
+[INFO] 22:33:49:475 MASTER/(18434:18438): Entro a 6
+ARchivo: 
+[INFO] 22:33:49:475 MASTER/(18434:18438): LLego a archivo
+[INFO] 22:33:49:475 MASTER/(18434:18438): Respuesta archivo temporal: 
+[INFO] 22:33:49:475 MASTER/(18434:18438): DESERIALIZAR COMPLETO
+[INFO] 22:35:23:295 MASTER/(18841:18841): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 22:35:23:301 MASTER/(18841:18841): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 22:35:23:308 MASTER/(18841:18841): Creando el hilo para comunicarme con Yama
+[INFO] 22:35:23:314 MASTER/(18841:18846): Ingrese JOB a Ejecutar
+[INFO] 22:35:27:512 MASTER/(18841:18846): Se va a ejecutar kjjkjkjkjkj
+[INFO] 22:35:27:512 MASTER/(18841:18846): 11
+[INFO] 22:35:27:518 MASTER/(18841:18846): Recibi de YAMA: 2
+[INFO] 22:35:27:518 MASTER/(18841:18846): Master recibe de Yama solicitud de transformación.
+[INFO] 22:35:27:518 MASTER/(18841:18846): Tamanio de lo que recibo 113
+[INFO] 22:35:27:518 MASTER/(18841:18846): Recibo corecctamente la respuesta
+[INFO] 22:35:27:518 MASTER/(18841:18846): tamnio_lista 3
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a deserializar la estructura
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 3
+ID NODO: 1
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 4
+Puerto: 11
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 5
+Bloque: 12
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 6
+Bytesocupados: 1212
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 7
+IP: 12.1ue
+[INFO] 22:35:27:519 MASTER/(18841:18846): LLego ip WORKER
+[INFO] 22:35:27:519 MASTER/(18841:18846): Entro a 6
+ARchivo: st(
+[INFO] 22:35:27:520 MASTER/(18841:18846): LLego a archivo
+[INFO] 22:35:27:520 MASTER/(18841:18846): Respuesta archivo temporal: st(
+[INFO] 22:35:27:520 MASTER/(18841:18846): DESERIALIZAR COMPLETO
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a deserializar la estructura
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 1
+Tamanio ip worker: 6
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 3
+ID NODO: 2
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 4
+Puerto: 21
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 5
+Bloque: 22
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 6
+Bytesocupados: 22122
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 7
+IP: 22.2
+[INFO] 22:35:27:520 MASTER/(18841:18846): LLego ip WORKER
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a 6
+ARchivo: 
+[INFO] 22:35:27:520 MASTER/(18841:18846): LLego a archivo
+[INFO] 22:35:27:520 MASTER/(18841:18846): Respuesta archivo temporal: 
+[INFO] 22:35:27:520 MASTER/(18841:18846): DESERIALIZAR COMPLETO
+[INFO] 22:35:27:520 MASTER/(18841:18846): Entro a deserializar la estructura
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 1
+Tamanio ip worker: 5
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 3
+ID NODO: 3
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 4
+Puerto: 31
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 5
+Bloque: 33
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 6
+Bytesocupados: 33133
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 7
+IP: 3.32
+[INFO] 22:35:27:521 MASTER/(18841:18846): LLego ip WORKER
+[INFO] 22:35:27:521 MASTER/(18841:18846): Entro a 6
+ARchivo: 
+[INFO] 22:35:27:521 MASTER/(18841:18846): LLego a archivo
+[INFO] 22:35:27:521 MASTER/(18841:18846): Respuesta archivo temporal: 
+[INFO] 22:35:27:521 MASTER/(18841:18846): DESERIALIZAR COMPLETO
+[INFO] 09:21:02:72 MASTER/(19398:19398): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:21:02:84 MASTER/(19398:19398): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:21:02:85 MASTER/(19398:19398): Creando el hilo para comunicarme con Yama
+[INFO] 09:21:02:90 MASTER/(19398:19403): Ingrese JOB a Ejecutar
+[INFO] 09:21:09:737 MASTER/(19398:19403): Se va a ejecutar llll
+[INFO] 09:21:09:737 MASTER/(19398:19403): 4
+[INFO] 09:21:09:744 MASTER/(19398:19403): Recibi de YAMA: 2
+[INFO] 09:21:09:744 MASTER/(19398:19403): Master recibe de Yama solicitud de transformación.
+[INFO] 09:21:09:744 MASTER/(19398:19403): Tamanio de lo que recibo 113
+[INFO] 09:21:09:745 MASTER/(19398:19403): Recibo corecctamente la respuesta
+[INFO] 09:21:09:745 MASTER/(19398:19403): tamnio_lista 3
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a deserializar la estructura
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 3
+ID NODO: 1
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 4
+Puerto: 11
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 5
+Bloque: 12
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 6
+Bytesocupados: 1212
+[INFO] 09:21:09:745 MASTER/(19398:19403): Entro a 7
+IP: 12.1ue
+[INFO] 09:21:09:745 MASTER/(19398:19403): LLego ip WORKER
+[INFO] 09:21:09:746 MASTER/(19398:19403): Entro a 6
+ARchivo: st(
+[INFO] 09:21:09:746 MASTER/(19398:19403): LLego a archivo
+[INFO] 09:21:09:746 MASTER/(19398:19403): Respuesta archivo temporal: st(
+[INFO] 09:21:09:746 MASTER/(19398:19403): DESERIALIZAR COMPLETO
+[INFO] 09:21:09:746 MASTER/(19398:19403): Entro a deserializar la estructura
+[INFO] 09:21:09:746 MASTER/(19398:19403): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:21:09:746 MASTER/(19398:19403): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 3
+ID NODO: 2
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 4
+Puerto: 21
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 5
+Bloque: 22
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 6
+Bytesocupados: 22122
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 7
+IP: 22.2
+[INFO] 09:21:09:747 MASTER/(19398:19403): LLego ip WORKER
+[INFO] 09:21:09:747 MASTER/(19398:19403): Entro a 6
+ARchivo: 
+[INFO] 09:21:09:747 MASTER/(19398:19403): LLego a archivo
+[INFO] 09:21:09:747 MASTER/(19398:19403): Respuesta archivo temporal: 
+[INFO] 09:21:09:748 MASTER/(19398:19403): DESERIALIZAR COMPLETO
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a deserializar la estructura
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 1
+Tamanio ip worker: 5
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 3
+ID NODO: 3
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 4
+Puerto: 31
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 5
+Bloque: 33
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 6
+Bytesocupados: 33133
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 7
+IP: 3.32
+[INFO] 09:21:09:748 MASTER/(19398:19403): LLego ip WORKER
+[INFO] 09:21:09:748 MASTER/(19398:19403): Entro a 6
+ARchivo: 
+[INFO] 09:21:09:748 MASTER/(19398:19403): LLego a archivo
+[INFO] 09:21:09:748 MASTER/(19398:19403): Respuesta archivo temporal: 
+[INFO] 09:21:09:748 MASTER/(19398:19403): DESERIALIZAR COMPLETO
+[INFO] 09:27:34:381 MASTER/(19944:19944): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:27:34:385 MASTER/(19944:19944): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:27:34:385 MASTER/(19944:19944): Creando el hilo para comunicarme con Yama
+[INFO] 09:27:34:392 MASTER/(19944:19949): Ingrese JOB a Ejecutar
+[INFO] 09:27:42:24 MASTER/(19944:19949): Se va a ejecutar kkkk
+[INFO] 09:27:42:24 MASTER/(19944:19949): 4
+[INFO] 09:27:42:346 MASTER/(19944:19949): Recibi de YAMA: -1219155136
+[INFO] 09:31:10:527 MASTER/(20239:20239): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:31:10:531 MASTER/(20239:20239): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:31:10:531 MASTER/(20239:20239): Creando el hilo para comunicarme con Yama
+[INFO] 09:31:10:532 MASTER/(20239:20243): Ingrese JOB a Ejecutar
+[INFO] 09:31:19:275 MASTER/(20239:20243): Se va a ejecutar jkkjjj
+[INFO] 09:31:19:275 MASTER/(20239:20243): 6
+[INFO] 09:31:19:591 MASTER/(20239:20243): Recibi de YAMA: -1218622656
+[INFO] 09:34:27:915 MASTER/(20568:20568): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:34:27:917 MASTER/(20568:20568): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:34:27:917 MASTER/(20568:20568): Creando el hilo para comunicarme con Yama
+[INFO] 09:34:27:924 MASTER/(20568:20573): Ingrese JOB a Ejecutar
+[INFO] 09:34:30:410 MASTER/(20568:20573): Se va a ejecutar jjj
+[INFO] 09:34:30:410 MASTER/(20568:20573): 3
+[INFO] 09:34:30:728 MASTER/(20568:20573): Recibi de YAMA: -1218892992
+[INFO] 09:37:18:948 MASTER/(20975:20975): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:37:18:950 MASTER/(20975:20975): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:37:18:950 MASTER/(20975:20975): Creando el hilo para comunicarme con Yama
+[INFO] 09:37:18:953 MASTER/(20975:20979): Ingrese JOB a Ejecutar
+[INFO] 09:37:27:757 MASTER/(20975:20979): Se va a ejecutar kll
+[INFO] 09:37:27:759 MASTER/(20975:20979): 3
+[INFO] 09:37:27:762 MASTER/(20975:20979): Recibi de YAMA: 2
+[INFO] 09:37:27:762 MASTER/(20975:20979): Master recibe de Yama solicitud de transformación.
+[INFO] 09:37:27:762 MASTER/(20975:20979): Tamanio de lo que recibo 137
+[INFO] 09:37:27:762 MASTER/(20975:20979): Recibo corecctamente la respuesta
+[INFO] 09:37:27:762 MASTER/(20975:20979): tamnio_lista 3
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a deserializar la estructura
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 3
+ID NODO: 1
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 4
+Puerto: 11
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 5
+Bloque: 12
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 6
+Bytesocupados: 1212
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 7
+IP: 12.111
+[INFO] 09:37:27:762 MASTER/(20975:20979): LLego ip WORKER
+[INFO] 09:37:27:762 MASTER/(20975:20979): Entro a 6
+ARchivo: archi1
+[INFO] 09:37:27:762 MASTER/(20975:20979): LLego a archivo
+[INFO] 09:37:27:762 MASTER/(20975:20979): Respuesta archivo temporal: archi1
+[INFO] 09:37:27:763 MASTER/(20975:20979): DESERIALIZAR COMPLETO
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a deserializar la estructura
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 3
+ID NODO: 2
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 4
+Puerto: 21
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 5
+Bloque: 22
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 6
+Bytesocupados: 22122
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 7
+IP: 22.222
+[INFO] 09:37:27:763 MASTER/(20975:20979): LLego ip WORKER
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 6
+ARchivo: archi2
+[INFO] 09:37:27:763 MASTER/(20975:20979): LLego a archivo
+[INFO] 09:37:27:763 MASTER/(20975:20979): Respuesta archivo temporal: archi2
+[INFO] 09:37:27:763 MASTER/(20975:20979): DESERIALIZAR COMPLETO
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a deserializar la estructura
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 1
+Tamanio ip worker: 5
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 2
+Tamanio archivo temporal: 6
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 3
+ID NODO: 3
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 4
+Puerto: 31
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 5
+Bloque: 33
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 6
+Bytesocupados: 33133
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 7
+IP: 3.333
+[INFO] 09:37:27:763 MASTER/(20975:20979): LLego ip WORKER
+[INFO] 09:37:27:763 MASTER/(20975:20979): Entro a 6
+ARchivo: archi2
+[INFO] 09:37:27:763 MASTER/(20975:20979): LLego a archivo
+[INFO] 09:37:27:763 MASTER/(20975:20979): Respuesta archivo temporal: archi2
+[INFO] 09:37:27:763 MASTER/(20975:20979): DESERIALIZAR COMPLETO
+[INFO] 09:40:25:445 MASTER/(21394:21394): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 09:40:25:446 MASTER/(21394:21394): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 09:40:25:446 MASTER/(21394:21394): Creando el hilo para comunicarme con Yama
+[INFO] 09:40:25:450 MASTER/(21394:21398): Ingrese JOB a Ejecutar
+[INFO] 09:40:31:198 MASTER/(21394:21398): Se va a ejecutar ssdsd
+[INFO] 09:40:31:198 MASTER/(21394:21398): 5
+[INFO] 09:40:31:204 MASTER/(21394:21398): Recibi de YAMA: 2
+[INFO] 09:40:31:204 MASTER/(21394:21398): Master recibe de Yama solicitud de transformación.
+[INFO] 09:40:31:204 MASTER/(21394:21398): Tamanio de lo que recibo 185
+[INFO] 09:40:31:204 MASTER/(21394:21398): Recibo corecctamente la respuesta
+[INFO] 09:40:31:204 MASTER/(21394:21398): tamnio_lista 3
+[INFO] 09:40:31:204 MASTER/(21394:21398): Entro a deserializar la estructura
+[INFO] 09:40:31:204 MASTER/(21394:21398): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 2
+Tamanio archivo temporal: 22
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 3
+ID NODO: 1
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 4
+Puerto: 11
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 5
+Bloque: 12
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 6
+Bytesocupados: 1212
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 7
+IP: 12.111
+[INFO] 09:40:31:205 MASTER/(21394:21398): LLego ip WORKER
+[INFO] 09:40:31:205 MASTER/(21394:21398): Entro a 6
+ARchivo: archivoTransformacion1
+[INFO] 09:40:31:206 MASTER/(21394:21398): LLego a archivo
+[INFO] 09:40:31:206 MASTER/(21394:21398): Respuesta archivo temporal: archivoTransformacion1
+[INFO] 09:40:31:206 MASTER/(21394:21398): DESERIALIZAR COMPLETO
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a deserializar la estructura
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a 1
+Tamanio ip worker: 6
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a 2
+Tamanio archivo temporal: 22
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a 3
+ID NODO: 2
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a 4
+Puerto: 21
+[INFO] 09:40:31:206 MASTER/(21394:21398): Entro a 5
+Bloque: 22
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 6
+Bytesocupados: 22122
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 7
+IP: 22.222
+[INFO] 09:40:31:207 MASTER/(21394:21398): LLego ip WORKER
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 6
+ARchivo: archivoTransformacion2
+[INFO] 09:40:31:207 MASTER/(21394:21398): LLego a archivo
+[INFO] 09:40:31:207 MASTER/(21394:21398): Respuesta archivo temporal: archivoTransformacion2
+[INFO] 09:40:31:207 MASTER/(21394:21398): DESERIALIZAR COMPLETO
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a deserializar la estructura
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 1
+Tamanio ip worker: 5
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 2
+Tamanio archivo temporal: 22
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 3
+ID NODO: 3
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 4
+Puerto: 31
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 5
+Bloque: 33
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 6
+Bytesocupados: 33133
+[INFO] 09:40:31:207 MASTER/(21394:21398): Entro a 7
+IP: 3.333
+[INFO] 09:40:31:208 MASTER/(21394:21398): LLego ip WORKER
+[INFO] 09:40:31:208 MASTER/(21394:21398): Entro a 6
+ARchivo: archivoTransformacion3
+[INFO] 09:40:31:208 MASTER/(21394:21398): LLego a archivo
+[INFO] 09:40:31:208 MASTER/(21394:21398): Respuesta archivo temporal: archivoTransformacion3
+[INFO] 09:40:31:208 MASTER/(21394:21398): DESERIALIZAR COMPLETO

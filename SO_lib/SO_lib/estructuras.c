@@ -167,7 +167,7 @@ int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta){
  	while(a < list_size(listaDeRespuesta)){
 
  		RespuestaTransformacionYAMA* respuesta = list_get(listaDeRespuesta,a);
- 		tamanio += strlen(respuesta->archivoTemporal) + (sizeof(int)*4) + strlen(respuesta->ipWorkwer) ;
+ 		tamanio += tamanioEstructuraRespuestaTransf(respuesta) ;
  		a++;
  	}
 

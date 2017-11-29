@@ -121,6 +121,8 @@ char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
 	int tamanioArchivoTemporal = strlen(archivoTemporal);
 	int desplazamiento = 0;
 
+
+
 	serializarDato(rtaSerializada, &(tamanioIpWorker), sizeof(int), &desplazamiento);
 		logInfo("Serializo tamanio IpWorker");
 
@@ -156,47 +158,52 @@ RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 
 	logInfo("Entro a deserializar la estructura");
 	int desplazamiento = 0;
-	int tamanioIpWorker;
-	int tamanioArchivoTemporal;
-	int nodo;
-	int bytesOcupados;
-	int puerto;
-	int bloque;
-	char* archivo;
-	char* ipworker;
+	int tamanioIpWorker = malloc(sizeof(int));
+	int tamanioArchivoTemporal = malloc(sizeof(int));
+
 
 	deserializarDato(&(tamanioIpWorker),
 				rtaSerializada, sizeof(int), &desplazamiento);
 	logInfo("Entro a 1\nTamanio ip worker: %d", tamanioIpWorker);
 	deserializarDato(&(tamanioArchivoTemporal),
 				rtaSerializada, sizeof(int), &desplazamiento);
-	logInfo("Entro a 2\nTamanio archivo temporal: %d", tamanioArchivoTemporal);
-	deserializarDato(&(nodo),
-				rtaSerializada, sizeof(int), &desplazamiento);
-	logInfo("Entro a 3\nID NODO: %d",nodo);
-	deserializarDato(&(puerto),
-			rtaSerializada, sizeof(int), &desplazamiento);
-	logInfo("Entro a 4\nPuerto: %d",puerto);
-	deserializarDato(&(bloque), rtaSerializada,
-			sizeof(int), &desplazamiento);
-	logInfo("Entro a 5\nBloque: %d",bloque);
-	deserializarDato(&(bytesOcupados),
-			rtaSerializada, sizeof(int), &desplazamiento);
-	logInfo("Entro a 6\nBytesocupados: %d",bytesOcupados);
+		logInfo("Entro a 2\nTamanio archivo temporal: %d", tamanioArchivoTemporal);
 
-	ipworker = string_substring(rtaSerializada,desplazamiento,tamanioIpWorker);
-	logInfo("Entro a 7\nIP: %s",ipworker);
+	RespuestaTransformacionYAMA * respuestaTransformacionYAMA = malloc((sizeof(int)*4) + tamanioIpWorker + tamanioArchivoTemporal);
+
+	deserializarDato(&(respuestaTransformacionYAMA->nodo),
+				rtaSerializada, sizeof(int), &desplazamiento);
+	logInfo("Entro a 3\nID NODO: %d",respuestaTransformacionYAMA->nodo);
+
+	deserializarDato(&(respuestaTransformacionYAMA->puertoWorker),
+			rtaSerializada, sizeof(int), &desplazamiento);
+	logInfo("Entro a 4\nPuerto: %d",respuestaTransformacionYAMA->puertoWorker);
+
+	deserializarDato(&(respuestaTransformacionYAMA->bloque), rtaSerializada,
+			sizeof(int), &desplazamiento);
+	logInfo("Entro a 5\nBloque: %d",respuestaTransformacionYAMA->bloque);
+
+	deserializarDato(&(respuestaTransformacionYAMA->bytesOcupados),
+			rtaSerializada, sizeof(int), &desplazamiento);
+	logInfo("Entro a 6\nBytesocupados: %d",respuestaTransformacionYAMA->bytesOcupados);
+
+	respuestaTransformacionYAMA->ipWorkwer = string_substring(rtaSerializada,desplazamiento,tamanioIpWorker);
+	respuestaTransformacionYAMA->ipWorkwer[tamanioIpWorker +1] = "\0";
+
+
+	logInfo("Entro a 7\nIP: %s",respuestaTransformacionYAMA->ipWorkwer);
 	logInfo("LLego ip WORKER");
 	desplazamiento+= tamanioIpWorker;
 
-	archivo = string_substring(rtaSerializada,desplazamiento,tamanioArchivoTemporal);
+	respuestaTransformacionYAMA->archivoTemporal = string_substring(rtaSerializada,desplazamiento,tamanioArchivoTemporal);
+	respuestaTransformacionYAMA->archivoTemporal[tamanioArchivoTemporal +1] = "\0";
 
-	logInfo("Entro a 6\nARchivo: %s",archivo);
+	logInfo("Entro a 6\nARchivo: %s",respuestaTransformacionYAMA->archivoTemporal);
+	desplazamiento+= tamanioArchivoTemporal;
+
 
 	logInfo("LLego a archivo");
 
-	RespuestaTransformacionYAMA * respuestaTransformacionYAMA = malloc(sizeof(int)*4 + strlen(ipworker) + strlen(archivo));
-	respuestaTransformacionYAMA = setRespuestaTransformacionYAMA(nodo,puerto,ipworker,bloque,bytesOcupados,archivo);
 	logInfo("Respuesta archivo temporal: %s", respuestaTransformacionYAMA->archivoTemporal);
 	logInfo("DESERIALIZAR COMPLETO");
 
@@ -288,7 +295,7 @@ Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado) {
 
 }
 int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo){
-	int tamanio = sizeof(int)*4 + strlen(nodo->archivoTemporal) + strlen(nodo->ipWorkwer);
+	int tamanio = (sizeof(int)*6) + strlen(nodo->archivoTemporal) + strlen(nodo->ipWorkwer);
 	return tamanio;
 }
 
@@ -456,7 +463,7 @@ script* deserilizarScript(char* bloqueSerializado) {
 char* serializarListaYAMA(t_list* contextos){
 
 	uint32_t total_size = tamanioRespuestaTransformacionYAMA(contextos);
-	char *listaSerializada = malloc(sizeof(char)*total_size + list_size(contextos)*sizeof(uint32_t)+ sizeof(int));
+	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(contextos)*sizeof(uint32_t))+ sizeof(int));
 	int offset = 0;
 	int i;
 	int tamanio_lista = list_size(contextos);
@@ -466,6 +473,7 @@ char* serializarListaYAMA(t_list* contextos){
 		char* contextoSerializado = serializarRespuestaTransformacionYAMA(nodo->nodo,
 				nodo->puertoWorker, nodo->ipWorkwer, nodo->bloque,
 				nodo->bytesOcupados, nodo->archivoTemporal);
+
 		uint32_t size_contexto = tamanioEstructuraRespuestaTransf(list_get(contextos,i));
 		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
 		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto

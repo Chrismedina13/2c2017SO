@@ -49,7 +49,7 @@ typedef struct RespuestaTransformacionYAMA {
 	int bytesOcupados;
 	char* archivoTemporal;
 
-} RespuestaTransformacionYAMA;
+}__attribute__((packed))RespuestaTransformacionYAMA;
 
 typedef struct respuestaReduccionLocal{
 
