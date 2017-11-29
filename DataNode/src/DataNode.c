@@ -70,18 +70,24 @@ int main(int argc, char *argv[]) {
     mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
 
 
+/*	//ejemplo set_bloque
 
 
 	char* bloque = malloc(1024*1024);
 
-	bloque= get_bloque(1);
+	bloque= get_bloque(2);
+	printf("%s", bloque);
 
 
-	if (set_bloque(bloque, 4)==0){
+	if (set_bloque(bloque, 1)==0){
 		logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
+	}
+	else{
+		logInfo("FALLO SET BLOQUE");
 	}
 
 	free(bloque);
+*/
 
 	free(config);
 

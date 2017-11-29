@@ -296,7 +296,7 @@ void cargarNodos2(int idNodo, int capacidad){
 
 
 /*
-					index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
+index_archivo= pathToIndiceArchivo("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/archivoprueba.txt");
 					if(index_archivo==-1){
 						logInfo("RUTA DE ARCHIVO INVALIDA");
 					}
@@ -349,7 +349,7 @@ void cargarNodos2(int idNodo, int capacidad){
 
 
 /*
-				//getbloque
+//getbloque
 				char * nrobloque = malloc(sizeof(int));
 				int bloque=5;
 				nrobloque = serialize_int(bloque);
