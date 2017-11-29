@@ -16,10 +16,14 @@ int main(int argc, char *argv[]) {
 	crearLog("FileSystem.log", "FS", 1, log_level_from_string("INFO"));
 
 
+
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
-	//semaforos
+
+
+	//Semaforos
+
 	int cantNodos= config->cant_nodos;
 
 	SEMAFORODN = make_semaphore(0);
@@ -31,6 +35,23 @@ int main(int argc, char *argv[]) {
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
+
+
+
+	//Creando threads
+
+	logInfo("Creando el hilo para comunicarme con Data Node");
+	logInfo("Creando el hilo para comunicarme con YAMA");
+	logInfo("Creando el hilo para comunicarme con WORKER");
+
+	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
+
+	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
+
+	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
+	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
+	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
+	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
 
 
@@ -58,37 +79,19 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	logInfo("Creando el hilo para comunicarme con Data Node");
-	logInfo("Creando el hilo para comunicarme con YAMA");
-	logInfo("Creando el hilo para comunicarme con WORKER");
-
-	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
-
-	//incian los hilos
-
-	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
-
-	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
-	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
-	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
-	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
 
+	//Espero cierre de threads
 
 	pthread_join(hiloWorker, NULL);
 	pthread_join(hiloYAMA, NULL);
 	pthread_join(hiloConsola, NULL);
 	pthread_join(hiloDN, NULL);
 
-	//recibir datos de nodos (dataNode)
 
-	//recibirNodos();
-	//cargarNodos();//ejemplo hardcodeado de 2 nodos, para probar las funciones de consola
 
-	//deja que se conecte yama, y se queda esperando
+	//Exit status
 
-	//sem_destroy(&cantNodosAux);
-	//sem_destroy(&semaforo_yama);
 	free(config);
 	return EXIT_SUCCESS;
 }
