@@ -55,6 +55,6 @@ int main(int argc, char *argv[]) {
 
    //pthread_join(hiloMaster, NULL);
 
-	free(config); // no estoy seguro si se libera asi
+	//free(config); // no estoy seguro si se libera asi
 	return EXIT_SUCCESS;
 }

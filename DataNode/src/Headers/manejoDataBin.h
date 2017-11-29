@@ -20,8 +20,6 @@
 
 char * get_bloque(int nro_bloque);
 
-char* obtenerPuntero(const char* rutaArchivo);
-
 int set_bloque(char * contenido, int nro_bloque);
 
 
