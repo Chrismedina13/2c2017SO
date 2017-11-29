@@ -261,17 +261,32 @@ t_list* copyList(t_list* mapa_de_bits_original){
 int elegirNodo(t_list* nodos){
 
 	int count = 0;
-	//int indice;
+	int flag;
 	int extraCount = 0;
 
-	bloques_nodo* nodoMasVacio = list_get(nodos,0);
+	bloques_nodo* nodoMasVacio;
+	bloques_nodo* nodoAComparar;
+
+	while(flag==0){
+
+		nodoMasVacio= list_get(nodos,count);
+		if(nodoMasVacio->estado==1){
+			flag=1;
+		}
+		count++;
+	}
+
+	count = 0;
 
 	while(count<list_size(nodos)){
 
-		if(bloquesLibres(list_get(nodos,count))>bloquesLibres(nodoMasVacio)){
+		nodoAComparar = list_get(nodos,count);
+
+		if((bloquesLibres(nodoAComparar)>bloquesLibres(nodoMasVacio)) && nodoAComparar->estado==1){
 			nodoMasVacio = list_get(nodos,count);
 			extraCount = count;
 		}
+
 		count++;
 	}
 	return extraCount;

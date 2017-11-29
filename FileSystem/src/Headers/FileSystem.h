@@ -39,6 +39,7 @@
 
 Semaphore *SEMAFORODN;
 Semaphore *SEMAFOROYAMA;
+Semaphore *SEMAFOROESTADO;
 
 //tabla de directorios
 
@@ -106,6 +107,7 @@ int cantArchivos;
 
 typedef struct bloques_nodo{
 	int idNodo;
+	int estado; //0 desconectado, 1 conectado
 	int bloquesTotales;
 	int bloquesLibres;
 	int bitmap[160];
@@ -114,7 +116,7 @@ typedef struct bloques_nodo{
 typedef struct tabla_nodos {
 	int tamanio; //cantidad de bloques TOTAL ENTRE TODOS LOS NODOS
 	int bloqueslibres; //cantidad de bloques libres entre todos los nodos
-	t_list* listaNodos; //nodo1, nodo2, nodo3
+	t_list* listaNodos; //[1,2,3]
 	t_list* listaCapacidadNodos; //bloques_nodo
 }tabla_nodos;
 

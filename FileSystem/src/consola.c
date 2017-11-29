@@ -376,6 +376,7 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], CPFROM)){
 					compararComando=false;
 
+
 					int status=0;
 
 					int indiceArchivo = newArchivo();

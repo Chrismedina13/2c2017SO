@@ -118,7 +118,7 @@ typedef struct SetBloque{
 
 typedef struct Info_Workers{
 	int puerto;
-	char * ipWorker;
+	char* ipWorker;
 }Info_Workers;
 
 typedef struct datos_Reduccion{

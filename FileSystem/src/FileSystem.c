@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
 
 	SEMAFORODN = make_semaphore(0);
 	SEMAFOROYAMA = make_semaphore(0);
+	SEMAFOROESTADO = make_semaphore(0);
 
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
@@ -35,25 +36,6 @@ int main(int argc, char *argv[]) {
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
-
-
-
-	//Creando threads
-
-	logInfo("Creando el hilo para comunicarme con Data Node");
-	logInfo("Creando el hilo para comunicarme con YAMA");
-	logInfo("Creando el hilo para comunicarme con WORKER");
-
-	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
-
-	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
-
-	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
-	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
-	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
-	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
-
-
 
 	//Recuperacion FileSystem
 
@@ -78,6 +60,21 @@ int main(int argc, char *argv[]) {
 			logInfo("FILE SYSTEM SE RECUPERO CORRECTAMENTE");
 		}
 	}
+
+	//Creando threads
+
+	logInfo("Creando el hilo para comunicarme con Data Node");
+	logInfo("Creando el hilo para comunicarme con YAMA");
+	logInfo("Creando el hilo para comunicarme con WORKER");
+
+	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
+
+	pthread_t hiloConsola, hiloDN, hiloYAMA,hiloWorker;
+
+	pthread_create(&hiloDN, NULL, (void*) comunicacionDN, parametros);
+	pthread_create(&hiloConsola, NULL, (void*) consolaFileSystem, NULL);
+	pthread_create(&hiloYAMA, NULL, (void*) comunicacionYAMA, parametros);
+	pthread_create(&hiloWorker, NULL, (void*) comunicacionWorker, parametros);
 
 
 

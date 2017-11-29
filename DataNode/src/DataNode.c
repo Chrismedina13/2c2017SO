@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 
 	//char bufferBloque[4];
 	char buffer[4];
+	char buffer2[4];
 
 
 
@@ -56,18 +57,14 @@ int main(int argc, char *argv[]) {
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 
 
+//while(1){
 
+	recv(FDsocketClienteFileSystem, buffer2,4,0);
+    int codigo2 = deserializarINT(buffer2);
+	logInfo("Recibi de FS el codigo : %i", codigo2);
+	mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
 
-	//recv(FDsocketClienteFileSystem, buffer,4,0);
-	//int codigo = deserializarINT(buffer);
-	//logInfo("Recibi de FS el codigo : %i", codigo);
-	//mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
-
-
-	recv(FDsocketClienteFileSystem, buffer,4, 0);
-	int codigo =deserializarINT(buffer);
-	logInfo("Recibi de FS el codigo : %i", codigo);
-    mensajesRecibidosDeFileSystem(codigo,FDsocketClienteFileSystem);
+//}
 
 
 /*	//ejemplo set_bloque

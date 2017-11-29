@@ -19,6 +19,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 	tabla_de_nodos.listaNodos = list_create();
 	tabla_de_nodos.listaCapacidadNodos = list_create();
 	list_nodos_id_fd = list_create();
+	list_info_workers = list_create();
 
 	int socketFSServidor;
 	socketFSServidor = lib_socketServidor(parametros->puertoFS_dn);
@@ -194,16 +195,18 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
 				        free(mensaje);
-
 				        cargarNodos2(saludo->nombre_nodo, saludo->capacidad_nodo);
+                        infoworker=malloc(sizeof(int)+ strlen(saludo->ip_worker));
+                        //strcpy(infoworker->ipWorker,saludo->ip_worker);
 				        infoworker->ipWorker=saludo->ip_worker;
 				        infoworker->puerto=puerto_worker;
-				        list_add_in_index(list_info_workers,(saludo->nombre_nodo - 1), infoworker);
+				        list_add_in_index(list_info_workers,(saludo->nombre_nodo-1), infoworker);
 
 
+				        nodos= malloc(sizeof(int)*2);
 				        nodos->id_nodo=saludo->nombre_nodo;
 						nodos->nodo_fd=FD_DN;
-				        list_add_in_index(list_nodos_id_fd, (saludo->nombre_nodo - 1), nodos);
+				        list_add_in_index(list_nodos_id_fd, saludo->nombre_nodo, nodos);
 
 
 				        if(cantNodos==list_size(list_nodos_id_fd)){
@@ -226,30 +229,30 @@ char *serialize_int(int value){
 
 void cargarNodos2(int idNodo, int capacidad){
 
+	int count2 =0;
+	int nuevo;
+    nodos_id_fd * nodo2;
+
+	while(count2 < list_size(list_nodos_id_fd)){
+
+		nodo2=list_get(list_nodos_id_fd, count2);
+		if(idNodo==nodo2->id_nodo){
+			logInfo("Se volvio a conectar el nodo %s", idNodo);
+			nuevo=1;
+		}else{
+			logInfo("Nuevo nodo, id:%s", idNodo);
+			nuevo=0;
+		}
+
+		count2++;
+	}
 
 
+	//nuevo nodo
 
-
-
-	/*
-		 * int nodo
-		nodos_id_fd * nodo;
-		list_any_satisfy()
-
-		for(int i=0;list_size(list_nodos_id_fd); i++){
-		nodo=list_get(list_nodos_id_fd, i);
-	      if(idNodo==nodo->id_nodo){
-	    	  logInfo("Se volvio a conectar el nodo %s", idNodo);
-	      }else{
-	    	  logInfo("");
-	      }*/
-
-
-
-
+	if(nuevo==0){
 		tabla_de_nodos.tamanio=tabla_de_nodos.tamanio+capacidad;
-		tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+20;	//FALTA EL CASO DONDE SE DECONECTA EL NODO
-
+		tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+capacidad;
 		//int* numero = idNodo;
 
 		list_add_in_index(tabla_de_nodos.listaNodos,idNodo - 1, idNodo);
@@ -264,10 +267,11 @@ void cargarNodos2(int idNodo, int capacidad){
 	//		count++;
 	//	}
 
-		bloques_nodo* nodo1 = malloc(sizeof(int)*23);
+		bloques_nodo* nodo1 = malloc(sizeof(int)*(capacidad+3));
 		nodo1->idNodo=idNodo;
 		nodo1->bloquesTotales=capacidad;
-		nodo1->bloquesLibres=capacidad; // falta ver q pasa con un nodo viejo
+		nodo1->bloquesLibres=capacidad;
+		nodo1->estado=1;
 		int i=0;
 		while(i<capacidad){
 		nodo1->bitmap[i]=0;
@@ -278,16 +282,31 @@ void cargarNodos2(int idNodo, int capacidad){
 
 
 
-		int resp = crearRegistroArchivoNodos(tabla_de_nodos);
+		int resp = crearRegistroArchivoNodos(tabla_de_nodos); //escribe el registro de nodos nodos.bin (para recuperar fs y nodos anteriores)
 		if(resp==0) printf("\nRegistro de Nodo cargado correctamente.\n");
 		else printf("\nRegistro de Nodo no pudo ser cargado.\n");
+	}
 
+	if(nuevo==1){
+		int count3;
+		bloques_nodo* nodo3;
+		while(count3<cantNodos){
+			nodo3 = list_get(tabla_de_nodos.listaCapacidadNodos, count3);
+			if(nodo3->idNodo==idNodo){
+				break;
+			}
+			count3++;
+		}
+		nodo3->estado=1;
+		logInfo("Se reconecto un nodo. Su id es:%s",idNodo);
 
-	//	int cantNodos = list_size(tabla_de_nodos.listaNodos);
-	//	t_list* lista_nodos;
+	}
 
-		//lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
-		//FIN EJEMPLO NODOS CARGADOS
+//	int cantNodos = list_size(tabla_de_nodos.listaNodos);
+//	t_list* lista_nodos;
+
+	//lista_nodos = tablaNodosToNodos(tabla_de_nodos.listaNodos);
+	//FIN EJEMPLO NODOS CARGADOS
 
 }
 
