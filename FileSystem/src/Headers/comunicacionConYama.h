@@ -10,10 +10,10 @@
 #include "SO_lib/Protocolo.h"
 #include "SO_lib/serializacion.h"
 #include "SO_lib/estructuras.h"
+#include "SO_lib/sem.h"
 
 void comunicacionYAMA(ParametrosComunicacion* parametros);
-//ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA,
-//		int puertoWorker);
+ParametrosComunicacion* setParametrosComunicacion(int puertoDN, int puertoYAMA,	int puertoWorker);
 void mensajesRecibidosDeYama(int codigo, int FDYama);
 
 void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio);

@@ -7,6 +7,7 @@
 #include "Headers/comunicacionConYama.h"
 #include "Headers/comunicacionConDN.h"
 #include "Headers/FileSystem.h"
+#include "SO_lib/sem.h"
 
 
 void comunicacionYAMA(ParametrosComunicacion* parametros) {

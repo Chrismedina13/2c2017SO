@@ -19,12 +19,19 @@ int main(int argc, char *argv[]) {
 	//Configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
+	//semaforos
+	int cantNodos= config->cant_nodos;
+
+	SEMAFORODN = make_semaphore(0);
+	SEMAFOROYAMA = make_semaphore(0);
+
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR DATA NODE : %i \n",
 			config->puerto_dn);
 	logInfo(
 			"Archivo de configuracion PUERTO FILE SYSTEM PARA RECIBIR YAMA : %i \n",
 			config->puerto_yama);
+
 
 
 	//Recuperacion FileSystem
@@ -56,12 +63,6 @@ int main(int argc, char *argv[]) {
 	logInfo("Creando el hilo para comunicarme con WORKER");
 
 	ParametrosComunicacion* parametros = setParametrosComunicacion(config->puerto_dn, config->puerto_yama,config->puerto_worker); // Hay que agregar el Puerto de Worker
-
-	//semaforos
-	int cantNodos= config->cant_nodos;
-
-	SEMAFORODN = make_semaphore(0);
-	SEMAFOROYAMA = make_semaphore(0);
 
 	//incian los hilos
 

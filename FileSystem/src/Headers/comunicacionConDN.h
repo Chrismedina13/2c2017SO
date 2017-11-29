@@ -17,6 +17,7 @@
 #include "SO_lib/estructuras.h"
 #include "SO_lib/Protocolo.h"
 #include <string.h>
+#include "SO_lib/sem.h"
 
 typedef struct ParametrosComunicacion{
 	int puertoFS_dn;
