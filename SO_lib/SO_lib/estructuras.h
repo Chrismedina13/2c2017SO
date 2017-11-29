@@ -152,7 +152,6 @@ typedef struct infoParaWorker{
 	int bloque;
 	int bytesOcupados;
 	char* archivoTemporal;
-	script* scritpTransformacion;
 } infoParaWorker;
 
 

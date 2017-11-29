@@ -28,26 +28,35 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-	/*EJEMPLO DE USO serializarInfoParaWorker
+	//EJEMPLO DE SERIALIZAR Y DESERIALIZAR SCRIPT
+/*
+	char* rutaScript = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Script.sh";
+	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+	script* script1 = malloc(strlen(rutaScript)+strlen(punteroAlContenidoDelScript));
+
+	script1->nombre = rutaScript;
+	script1->contenido = punteroAlContenidoDelScript;
+
+	char* scriptSerializado = serializarScript(script1);
+	logInfo("Script serializado");
+	script* scriptDeserializado = deserilizarScript(scriptSerializado);
+	logInfo("Script deserializado\n\nNombre: %s\nContenido: %s",scriptDeserializado->nombre,scriptDeserializado->contenido);
+*/
+/*
+	//EJEMPLO DE USO serializarInfoParaWorker
+
 	logInfo("empieza el ejemplo serializar info para worker");
 
-	char* rutaScript = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Script.sh";
 	char* rutaArchivoTemporal = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/tmp.dat";
-	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
 
-	logInfo("empieza el ejemplo serializar info para worker2");
-	script* scriptTransformacion = malloc(strlen(rutaScript) + strlen(punteroAlContenidoDelScript));
-	scriptTransformacion->contenido=punteroAlContenidoDelScript;
-	scriptTransformacion->nombre=rutaScript;
-	logInfo("empieza el ejemplo serializar info para worker3");
-	char* infoSerializada = serializarInfoParaWorker(1, 3, 900,rutaArchivoTemporal, scriptTransformacion);
+	char* infoSerializada = serializarInfoParaWorker(1, 3, 900,rutaArchivoTemporal);
 	logInfo("Pasó serializar info para worker");
 
 	infoParaWorker* infoDeserializada = deserializarInfoParaWorker(infoSerializada);
 	logInfo("Pasó deserialziar info para worker");
 
-	logInfo("\nNodo:%d\nBloque:%d\nBytes:%d\nNombre archivo temporal:%s\nNombreDelScript:%s\nContenido del Script\n:%s\n",
-			infoDeserializada->nodo,infoDeserializada->bloque,infoDeserializada->archivoTemporal,infoDeserializada->scritpTransformacion->nombre,infoDeserializada->scritpTransformacion->contenido);
+	logInfo("\nNodo:%d\nBloque:%d\nBytes:%d\nNombre archivo temporal:%s",
+			infoDeserializada->nodo,infoDeserializada->bloque,infoDeserializada->bytesOcupados,infoDeserializada->archivoTemporal);
 
 */
 
