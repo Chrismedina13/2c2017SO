@@ -49,6 +49,15 @@ void asignarNodoEncargadoAJobCompleto(t_list* RRG,int master, int job);
 bool estaNodoEnLaRespuestaDeTransformacion(int nodo,t_list* respuestaTransformacion);
 
 void actualizarCargaDeTrabajoFinalizacionDeJOBYEliminarJOB(int numeroDeJob,int master);
+void actualizarCargaDeTrabajoWorkerPorFinalizacion(JOBCompleto* jc);
+
+
+void elNodoEncargadoEs(int nodo,int master,int job);
+
+bool estaNodoEnlista(t_list* lista, int nodo);
+int cantidadDeNodosEnLaRespuestaTransformacion(t_list* respuestaTransformacionYama);
+int reducirCargaANodo(int nodo, int cantidadDeCarga);
+int cantidadDeTrasformacionesYReduccionesQueHace(int nodo,t_list* respuestaTransformacionYama);
 
 
 
