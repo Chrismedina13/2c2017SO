@@ -439,7 +439,7 @@ void asignarNodoEncargadoAJobCompleto(t_list* RRG,int master, int job){
 		RespuestaReduccionGlobal* rrg = list_get(RRG,i);
 		if(rrg->encargado == true){
 
-			//elNodoEncargadoEs(rrg->nodo,master,job);
+			elNodoEncargadoEs(rrg->nodo,master,job);
 			i++;
 		}else{
 
@@ -448,15 +448,20 @@ void asignarNodoEncargadoAJobCompleto(t_list* RRG,int master, int job){
 	}
 }
 
-/*
+
 void elNodoEncargadoEs(int nodo,int master,int job){
 
 	int i = 0;
-	while(i < list_size()){
+	while(i < list_size(listaDeJobs)){
 
-
+		JOBCompleto * jc = list_get(listaDeJobs,i);
+		if(jc->job->identificadorJob == job && jc->job->master){
+			JOBCompleto * jcModificar = list_remove(listaDeJobs,i);
+			jcModificar->nodoEncargado = nodo;
+		}
+		i++;
 	}
-}*/
+}
 
 int cargaDeTrabajoDelNodo(int* nodo){
 
@@ -707,10 +712,19 @@ void actualizarCargaDeTrabajoWorkerPorFinalizacion(JOBCompleto* jc){
 		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,i);
 		if(estaNodoEnLaRespuestaDeTransformacion(nodo->nodo,jc->respuestaTransformacion)){
 
+			if(nodo->nodo == jc->nodoEncargado){
+
+			int cantidadAReducirPorSerEncargado = cantidadDeNodosEnLaRespuestaTransformacion(jc->respuestaTransformacion);
+			int cantidadAReducir = cantidadDeTrasformacionesYReduccionesQueHace(nodo->nodo,jc->respuestaTransformacion);
+			reducirCargaANodo(nodo->nodo,(cantidadAReducir + cantidadAReducirPorSerEncargado));
+
+			}else{
+
 			int cantidadAReducir = cantidadDeTrasformacionesYReduccionesQueHace(nodo->nodo,jc->respuestaTransformacion);
 			reducirCargaANodo(nodo->nodo,cantidadAReducir);
 
-
+			}
+			i++;
 		}else{
 			i++;
 		}
@@ -766,4 +780,49 @@ int reducirCargaANodo(int nodo, int cantidadDeCarga){
 	}
 
 	return -1;
+}
+
+int cantidadDeNodosEnLaRespuestaTransformacion(t_list* respuestaTransformacionYama){
+
+	t_list* nodos = list_create();
+	int i = 0;
+	int cantidadDeNodos;
+	while(i < list_size(respuestaTransformacionYama)){
+		RespuestaTransformacionYAMA* rty = list_get(respuestaTransformacionYama,i);
+
+		if(estaNodoEnlista(nodos,rty->nodo)){
+
+			i++;
+		}else{
+
+			list_add(nodos,rty->nodo);
+			i++;
+		}
+	}
+	cantidadDeNodos = list_size(nodos);
+	list_destroy_and_destroy_elements(nodos,free);
+	return cantidadDeNodos;
+
+}
+
+bool estaNodoEnlista(t_list* lista, int nodo){
+
+	if(list_is_empty(lista)){
+
+		return false;
+	}
+	int i = 0;
+	while(i<list_size(lista)){
+		int a = list_get(lista,i);
+
+		if(a == nodo){
+
+			return true;
+		}else{
+
+			i++;
+		}
+	}
+	return false;
+
 }
