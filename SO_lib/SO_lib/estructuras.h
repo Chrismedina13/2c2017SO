@@ -143,7 +143,6 @@ typedef struct replanificacion{
 
 typedef struct script{
 	char* nombre;
-	int tamanio;
 	char* contenido;
 } script;
 
@@ -162,6 +161,7 @@ t_list * list_info_workers;
 t_list * listaUbicaciones;
 
 //funciones
+int tamanioScript(script* script);
 nodoParaPlanificar* crearNodoParaPlanificar(int nodo, int disponibilidad,
 		int carga,int bloque);
 void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo);

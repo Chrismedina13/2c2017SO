@@ -383,10 +383,25 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 
 }
 
+/*EJEMPLO DE USO serializarInfoParaWorker
+char* rutaScript = "/home/utnso/Escritorio/Script.sh";
+char* rutaArchivoTemporal = "/home/utnso/Escritorio/tmp.dat";
+char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+script* scriptTransformacion = malloc(strlen(rutaScript) + strlen(punteroAlContenidoDelScript));
+scriptTransformacion
+*/
+
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal, script* scriptTransformacion) {
-	char* rtaSerializada = malloc((sizeof(int) * 3 + sizeof(char*)));
+
+	int tamanioArchivoTemporal = strlen(archivoTemporal);
+	int tamanioDelScript = tamanioScript(scriptTransformacion);
+	char* rtaSerializada = malloc(sizeof(int) * 5 + tamanioArchivoTemporal + tamanioDelScript);
 	int desplazamiento = 0;
+
+	serializarDato(rtaSerializada, &(tamanioArchivoTemporal), sizeof(int), &desplazamiento);
+
+	serializarDato(rtaSerializada, &(tamanioDelScript), sizeof(int), &desplazamiento);
 
 	serializarDato(rtaSerializada, &(nodo), sizeof(int), &desplazamiento);
 
@@ -396,11 +411,11 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 			&desplazamiento);
 
 	serializarDato(rtaSerializada, &(archivoTemporal),
-			string_length(archivoTemporal), &desplazamiento);
+			tamanioArchivoTemporal, &desplazamiento);
 
 	char* scriptSerializado = serializarScript(scriptTransformacion);
 	serializarDato(rtaSerializada, scriptSerializado,
-			string_length(scriptSerializado), &desplazamiento);
+			tamanioDelScript, &desplazamiento);
 
 	return (rtaSerializada);
 
@@ -408,21 +423,33 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 
 infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 
-	infoParaWorker * respuesta = malloc(
-			sizeof(int) * 3 + sizeof(char*) + sizeof(script));
 
 	int desplazamiento = 0;
+	int tamanioArchivoTemp;
+	int tamanioScript;
 
-	respuesta->nodo = strdup(rtaSerializada + desplazamiento);
+	deserializarDato(&(tamanioArchivoTemp), rtaSerializada, sizeof(int),
+				&desplazamiento);
 
+	deserializarDato(&(tamanioScript), rtaSerializada, sizeof(int),
+					&desplazamiento);
+
+
+	infoParaWorker * respuesta = malloc(tamanioScript+tamanioArchivoTemp+sizeof(int) * 3);
+
+	deserializarDato(&(respuesta->nodo), rtaSerializada, sizeof(int),
+				&desplazamiento);
 	deserializarDato(&(respuesta->bloque), rtaSerializada, sizeof(int),
 			&desplazamiento);
-
 	deserializarDato(&(respuesta->bytesOcupados), rtaSerializada, sizeof(int),
 			&desplazamiento);
 
-	respuesta->archivoTemporal = strdup(rtaSerializada + desplazamiento);
+	respuesta->archivoTemporal = string_substring(rtaSerializada,desplazamiento,tamanioArchivoTemp);
+	desplazamiento=+tamanioArchivoTemp;
+	respuesta->scritpTransformacion = string_substring(rtaSerializada,desplazamiento,tamanioScript);
+	desplazamiento=+tamanioScript;
 
+	free(rtaSerializada);
 	return (respuesta);
 
 }
@@ -430,30 +457,36 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 char* serializarScript(script* script) {
 	char* nombre = script->nombre;
 	char* contenido = script->contenido;
-	int tamanio = script->tamanio;
-	char* scriptSerializado = malloc(
-			strlen(nombre) + strlen(contenido) + sizeof(char) * 2
-					+ sizeof(int));
+	int tamanioContenido = strlen(contenido);
+	int tamanioNombre = strlen(nombre);
+	char* scriptSerializado = malloc(tamanioNombre + tamanioContenido + sizeof(int)*2);
 	int desplazamiento = 0;
-	serializarDato(scriptSerializado, &(tamanio), sizeof(int), &desplazamiento);
-	serializarDato(scriptSerializado, contenido,
-			strlen(contenido) + sizeof(char), &desplazamiento);
-	serializarDato(scriptSerializado, nombre, strlen(nombre) + sizeof(char),
-			&desplazamiento);
+	serializarDato(scriptSerializado, &(tamanioNombre), sizeof(int), &desplazamiento);
+	serializarDato(scriptSerializado, &(tamanioContenido), sizeof(int), &desplazamiento);
+	serializarDato(scriptSerializado, contenido,tamanioContenido, &desplazamiento);
+	serializarDato(scriptSerializado, nombre, tamanioNombre,&desplazamiento);
 
 	return scriptSerializado;
 }
 
 script* deserilizarScript(char* bloqueSerializado) {
-	script* scriptDeserializado = malloc(1024 * 1024 + 4);
+
 	int desplazamiento = 0;
-	deserializarDato(&(scriptDeserializado->tamanio), bloqueSerializado,
-			sizeof(int), &desplazamiento);
-	scriptDeserializado->contenido = string_substring(bloqueSerializado,
-			sizeof(int), scriptDeserializado->tamanio + sizeof(int));
-	scriptDeserializado->nombre = string_substring(bloqueSerializado,
-			sizeof(int) + string_length(scriptDeserializado->contenido),
-			string_length(bloqueSerializado));
+	int tamanioContenido;
+	int tamanioNombre;
+	deserializarDato(&(tamanioNombre), bloqueSerializado,sizeof(int), &desplazamiento);
+	deserializarDato(&(tamanioContenido), bloqueSerializado,sizeof(int), &desplazamiento);
+
+	script* scriptDeserializado = malloc(tamanioContenido+tamanioNombre);
+
+	scriptDeserializado->contenido = string_substring(bloqueSerializado,desplazamiento, tamanioContenido);
+	desplazamiento += tamanioContenido;
+
+	scriptDeserializado->nombre = string_substring(bloqueSerializado,desplazamiento,tamanioNombre);
+	desplazamiento += tamanioNombre;
+
+	free(bloqueSerializado);
+
 	return scriptDeserializado;
 }
 

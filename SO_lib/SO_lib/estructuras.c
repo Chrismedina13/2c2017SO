@@ -223,3 +223,8 @@ respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char
 
 	return RAF;
 }
+
+int tamanioScript(script* script){
+	int tamanioScript = strlen(script->contenido) + strlen(script->nombre);
+	return tamanioScript;
+}
