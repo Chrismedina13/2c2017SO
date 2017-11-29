@@ -28,12 +28,13 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-	//EJEMPLO DE USO serializarInfoParaWorker
+	/*EJEMPLO DE USO serializarInfoParaWorker
 	logInfo("empieza el ejemplo serializar info para worker");
 
-	char* rutaScript = "/home/utnso/prueba/Script.sh";
-	char* rutaArchivoTemporal = "/home/utnso/prueba/tmp.dat";
-	char* punteroAlContenidoDelScript = "prueba";//obtenerPuntero(rutaScript);
+	char* rutaScript = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Script.sh";
+	char* rutaArchivoTemporal = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/tmp.dat";
+	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+
 	logInfo("empieza el ejemplo serializar info para worker2");
 	script* scriptTransformacion = malloc(strlen(rutaScript) + strlen(punteroAlContenidoDelScript));
 	scriptTransformacion->contenido=punteroAlContenidoDelScript;
@@ -45,10 +46,10 @@ int main(int argc, char *argv[]) {
 	infoParaWorker* infoDeserializada = deserializarInfoParaWorker(infoSerializada);
 	logInfo("Pasó deserialziar info para worker");
 
-	logInfo("\nNodo:%d\Bloque:%d\nBytes:%d\nNombre archivo temporal:%s\nNombreDelScript:%s\nContenido del Script\n:%s\n",
+	logInfo("\nNodo:%d\nBloque:%d\nBytes:%d\nNombre archivo temporal:%s\nNombreDelScript:%s\nContenido del Script\n:%s\n",
 			infoDeserializada->nodo,infoDeserializada->bloque,infoDeserializada->archivoTemporal,infoDeserializada->scritpTransformacion->nombre,infoDeserializada->scritpTransformacion->contenido);
 
-
+*/
 
 
 	//Archivo de configuracion

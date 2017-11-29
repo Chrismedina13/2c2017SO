@@ -175,7 +175,11 @@ t_list* deserializarListaYAMA(char* stackSerializado){
 }
 
 int tamanioScript(script* script){
-	int tamanioScript = strlen(script->contenido) + strlen(script->nombre);
+	int contenido = strlen(script->contenido);
+	int nombre = strlen(script->nombre);
+
+	int tamanioScript = contenido + nombre;
+	//logInfo("tamanioScript%i\n",tamanioScript);
 	return tamanioScript;
 }
 
@@ -185,6 +189,10 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 	logInfo("Entró a la serializar una estructua INFOPARAWORKER\n");
 	int tamanioArchivoTemporal = strlen(archivoTemporal);
 	int tamanioDelScript = tamanioScript(scriptTransformacion);
+
+	logInfo("Se obtuvo: tamanioArchivoTemp: %i\n",tamanioArchivoTemporal);
+	logInfo("Se obtuvo: tamanioScript: %i\n",tamanioDelScript);
+
 	char* rtaSerializada = malloc(sizeof(int) * 5 + tamanioArchivoTemporal + tamanioDelScript);
 	int desplazamiento = 0;
 
@@ -204,6 +212,7 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 	char* scriptSerializado = serializarScript(scriptTransformacion);
 
 	serializarDato(rtaSerializada, scriptSerializado,tamanioDelScript, &desplazamiento);
+
 	logInfo("Salgo de serializar una estructua INFOPARAWORKER\n");
 	return (rtaSerializada);
 
@@ -219,7 +228,8 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 	deserializarDato(&(tamanioArchivoTemp), rtaSerializada, sizeof(int),&desplazamiento);
 
 	deserializarDato(&(tamanioScript), rtaSerializada, sizeof(int),	&desplazamiento);
-
+	logInfo("Se obtuvo: tamanioArchivoTemp: %i\n",tamanioArchivoTemp);
+	logInfo("Se obtuvo: tamanioScript: %i\n",tamanioScript);
 
 	infoParaWorker * respuesta = malloc(tamanioScript+tamanioArchivoTemp+sizeof(int) * 3);
 
@@ -230,10 +240,13 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 	respuesta->archivoTemporal = string_substring(rtaSerializada,desplazamiento,tamanioArchivoTemp);
 	desplazamiento=+tamanioArchivoTemp;
 	logInfo("Se obtuvo: Archivo Temporal: %s\n",respuesta->archivoTemporal);
+
 	char scriptSerializado = string_substring(rtaSerializada,desplazamiento,tamanioScript);
 	respuesta->scritpTransformacion = deserilizarScript(scriptSerializado);
+
 	logInfo("Se obtuvo: Script transformcacion: %s\n",respuesta->scritpTransformacion);
 	desplazamiento=+tamanioScript;
+
 	logInfo("DESERIALIZAR COMPLETO INFOPARAWORKER");
 	free(rtaSerializada);
 	return (respuesta);
@@ -245,8 +258,10 @@ char* serializarScript(script* script) {
 	char* contenido = script->contenido;
 	int tamanioContenido = strlen(contenido);
 	int tamanioNombre = strlen(nombre);
+
 	char* scriptSerializado = malloc(tamanioNombre + tamanioContenido + sizeof(int)*2);
 	int desplazamiento = 0;
+
 	serializarDato(scriptSerializado, &(tamanioNombre), sizeof(int), &desplazamiento);
 	serializarDato(scriptSerializado, &(tamanioContenido), sizeof(int), &desplazamiento);
 
