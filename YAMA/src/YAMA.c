@@ -28,18 +28,20 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-	/*EJEMPLO DE USO serializarInfoParaWorker*/
+	//EJEMPLO DE USO serializarInfoParaWorker
 	logInfo("empieza el ejemplo serializar info para worker");
 
 	char* rutaScript = "/home/utnso/prueba/Script.sh";
 	char* rutaArchivoTemporal = "/home/utnso/prueba/tmp.dat";
-	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+	char* punteroAlContenidoDelScript = "prueba";//obtenerPuntero(rutaScript);
+	logInfo("empieza el ejemplo serializar info para worker2");
 	script* scriptTransformacion = malloc(strlen(rutaScript) + strlen(punteroAlContenidoDelScript));
 	scriptTransformacion->contenido=punteroAlContenidoDelScript;
 	scriptTransformacion->nombre=rutaScript;
-
+	logInfo("empieza el ejemplo serializar info para worker3");
 	char* infoSerializada = serializarInfoParaWorker(1, 3, 900,rutaArchivoTemporal, scriptTransformacion);
 	logInfo("Pasó serializar info para worker");
+
 	infoParaWorker* infoDeserializada = deserializarInfoParaWorker(infoSerializada);
 	logInfo("Pasó deserialziar info para worker");
 

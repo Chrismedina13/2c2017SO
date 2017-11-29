@@ -10,12 +10,33 @@
 #include <arpa/inet.h>
 #include "estructuras.h"
 
-//defincion de funciones
+//DEFINICION DE FUNCIONES PROBADAS
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 		int* offset);
-
 void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
 		int* offset);
+
+char* serializarRespuestaTransformacionYAMA(int nodo, int puertoWorker,
+		char* ipWorker, int bloque, int bytesOcupados, char* archivoTemporal);
+RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
+		char* rtaSerializada);
+int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo);
+
+char* serializarListaYAMA(t_list* lista);
+t_list* deserializarListaYAMA(char* stackSerializado);
+
+int tamanioScript(script* script);
+char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
+		char* archivoTemporal,script* scriptTransformacion);
+infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
+
+//char* serializarScript(char* nombre, int tamanio, char* contenido);
+char* serializarScript(script* script);
+script* deserilizarScript(char* bloqueSerializado);
+
+
+//////////////////////////////////////DEFINICION DE FUNCIONES  SIN PROBAR//////////////////////////////////////
+
 
 int deserializarINT(char* stream);
 
@@ -42,37 +63,24 @@ char* serializarInfoWorker(int puerto, char* ipWorker);
 
 Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
 
-int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo);
 
-char * serializarListaRespuestaTransf(t_list * lista);
-
-t_list * deserializarListaRespuestaTransf(char * listaSerializada);
 
 char* serializarFinTransformacion(finTransformacion* fin);
 
 finTransformacion * deserializarFinTransformacion(char* FT);
 
-char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
-		char* archivoTemporal,script* scriptTransformacion);
 
-infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 
 
 char * serializarListaTemp(t_list * lista);
 
-//char* serializarScript(char* nombre, int tamanio, char* contenido);
-char* serializarScript(script* script);
-
-script* deserilizarScript(char* bloqueSerializado);
 
 
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
 
-char* serializarListaYAMA(t_list* lista);
 
-t_list* deserializarListaYAMA(char* stackSerializado);
 
 #endif
 
