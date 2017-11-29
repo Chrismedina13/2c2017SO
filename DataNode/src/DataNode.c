@@ -74,11 +74,14 @@ int main(int argc, char *argv[]) {
 
 	char* bloque = malloc(1024*1024);
 
-	bloque= get_bloque(3);
-	logInfo(bloque);
-     free(bloque);
+	bloque= get_bloque(1);
 
 
+	if (set_bloque(bloque, 4)==0){
+		logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
+	}
+
+	free(bloque);
 
 	free(config);
 

@@ -22,33 +22,36 @@
 const int MB = 1024*1024;
 
 
-		char * get_bloque(int nro_bloque){
-//mmap
+	char * get_bloque(int nro_bloque){
 
-			/*Recibe la ruta de un archivo en fs
-			 *Devuleve una lista de char* con bloques de texto que partio
-			 */
 
 			const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.txt";
 		//	int tamanioBloque = strlen (1024*1024);
 
 			char* p = obtenerPuntero(rutaDelArchivo);
 
-			FILE * fp = fopen(rutaDelArchivo, "r");
-			if (!fp) {
-			  perror("Error al abrir el Archivo \n");
 
-			}
 
-			int tamanio = tamanioArchivo(fp);
+			int tamanio = strlen(p);
 			char* bloque = string_substring(p, nro_bloque* MB, MB);
+
 
 
 			 if (munmap (p, tamanio) == -1) {
 			                printf("Error al cerrar la proyeccion \n");
-			        }
+			 }
+
+
+			// FILE* fd;
+			// fd = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/nombre","w");
+			// 		if (fd==NULL) {
+			// 			printf("Error al abrir el archivo.");
+
+			 //		}
+			// fputs( bloque, fd );
 
             return(bloque);
+
 
 			}
 
@@ -58,19 +61,34 @@ const int MB = 1024*1024;
 		const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data2.txt";
 	//	int tamanioBloque = strlen (1024*1024);
 
-		char* p = obtenerPuntero(rutaDelArchivo);
 
-		FILE * fp = fopen(rutaDelArchivo, "wr");
+		FILE * fp = fopen(rutaDelArchivo, "r+");
 		if (!fp) {
 		  perror("Error al abrir el Archivo");
            return(0);
-		}
+		}else{
 
 
-		fseek(fp, nro_bloque *MB, SEEK_CUR);
-	    fwrite(contenido, 1, strlen(contenido), fp);
+		if(fseek(fp, nro_bloque *MB, SEEK_SET)==0){
+			logInfo("Me ubico en el bloque %i", nro_bloque);
 
+	//	opcion 1
+	//fputs(contenido, fp);
+
+			//opcion 2
+		  //  fwrite(contenido, 1, strlen(contenido), ftell(fp));
+
+			//opcion 3
+		//	 fwrite(contenido, sizeof(char), sizeof(contenido), fp);
+
+		    logInfo("Escribo en el bloque %i", nro_bloque);
+		    return(0);
+
+		}else{
+       logInfo("Fallo set bloque en el bloque %i", nro_bloque);
 	    return(1);
+		}
+	}
 	}
 
 	//	char* arch = string_new();
