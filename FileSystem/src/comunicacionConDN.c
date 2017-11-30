@@ -76,6 +76,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 					//Recibo datos de algun cliente
 					if ((bytesRecibidos = recv(i, buffer2, 4, 0)) <= 0) {
 						if (bytesRecibidos == 0) {
+							desconectarNodoEstado(i);
 							logInfo("Conexion cerrada del FD : %i", i);//VER QUE HACER ACA
 						}
 						close(i);
@@ -310,6 +311,24 @@ void cargarNodos2(int idNodo, int capacidad){
 
 }
 
+int desconectarNodoEstado(idNodo){
+
+	bloques_nodo* nodo;
+	int count = 0;
+
+	while(count<cantNodos){
+
+		nodo = list_get(tabla_de_nodos.listaCapacidadNodos, count);
+		if(nodo->idNodo==idNodo){
+			break;
+		}
+
+		count++;
+	}
+
+	nodo->estado=0;
+	return(1);
+}
 
 
 

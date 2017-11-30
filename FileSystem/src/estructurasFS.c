@@ -350,6 +350,40 @@ int make_directory(const char* ruta) {
     return(1);
 }
 
+int cargarCasoBaseDirectorio(){
+
+	FILE * fp = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios.dat", "w");
+	if (!fp) {
+		perror("Error al abrir el Archivo de directorios");
+		return (-1);
+	}
+
+	FILE * fp2 = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/directorios2.dat", "r");
+	if (!fp2) {
+		perror("Error al abrir el Archivo de directorios2");
+		return (-1);
+	}
+
+	int count = 0;
+
+	while (feof(fp2)){
+
+		fscanf(fp2, "%d %s %d", &tabla_de_directorios[count].index, tabla_de_directorios[count].nombre,
+		  &tabla_de_directorios[count].padre);
+		if(!strcmp(tabla_de_directorios[count].nombre,""))break;
+
+		count++;
+	}
+	cantDir = count;
+	fclose(fp);
+	fclose(fp2);
+	logInfo("Tabla de Directorios base cargada correctamente. \n");
+	actualizarTablaDeDirectorios();
+	return (1);
+
+
+}
+
 //manejo de archivos
 
 //funciones

@@ -1837,3 +1837,159 @@
 [INFO] 15:34:39:937 DATANODE/(17162:17162): se manda a file system el saludo
 [INFO] 15:34:40:416 DATANODE/(17162:17162): Recibi de FS el codigo : 134519259
 [INFO] 15:34:40:416 DATANODE/(17162:17162): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 17:25:03:172 DATANODE/(2894:2894): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion ip fileSystem : 192.164.0.15 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:25:03:175 DATANODE/(2894:2894): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:28:58:250 DATANODE/(2931:2931): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion ip fileSystem : 192.168.0.15 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:28:58:252 DATANODE/(2931:2931): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:29:31:360 DATANODE/(2953:2953): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion ip fileSystem : 192.168.1.101 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:29:31:361 DATANODE/(2953:2953): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:34:48:594 DATANODE/(2319:2319): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion ip fileSystem : 192.168.0.15 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:34:48:595 DATANODE/(2319:2319): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:35:08:589 DATANODE/(2449:2449): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:35:08:589 DATANODE/(2449:2449): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:35:08:589 DATANODE/(2449:2449): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:35:08:589 DATANODE/(2449:2449): Archivo de configuracion ip fileSystem : 192.168.0.15 
+
+[INFO] 17:35:08:590 DATANODE/(2449:2449): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:35:08:590 DATANODE/(2449:2449): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:35:08:590 DATANODE/(2449:2449): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:35:08:590 DATANODE/(2449:2449): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion ip fileSystem : 192.168.1.101 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:35:37:240 DATANODE/(2590:2590): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:36:05:369 DATANODE/(2672:2672): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion ip fileSystem : 192.168.1.101 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:36:05:370 DATANODE/(2672:2672): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:41:34:281 DATANODE/(2706:2706): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:41:34:288 DATANODE/(2706:2706): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:41:34:288 DATANODE/(2706:2706): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:41:34:288 DATANODE/(2706:2706): Archivo de configuracion ip fileSystem : 192.168.1.101 
+
+[INFO] 17:41:34:288 DATANODE/(2706:2706): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:41:34:289 DATANODE/(2706:2706): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:41:34:289 DATANODE/(2706:2706): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:41:34:289 DATANODE/(2706:2706): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:43:41:523 DATANODE/(2706:2706): SocketCliente = -1 
+
+[INFO] 17:43:41:523 DATANODE/(2706:2706): se manda a file system el saludo
+[INFO] 17:43:41:523 DATANODE/(2706:2706): ERROR EN EL ENVIO DE SALUDO
+[INFO] 17:43:41:524 DATANODE/(2706:2706): Recibi de FS el codigo : 134519419
+[INFO] 17:43:41:524 DATANODE/(2706:2706): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 17:45:31:716 DATANODE/(3017:3017): Archivo de configuracion puerto DataNode : 5060 
+
+[INFO] 17:45:31:718 DATANODE/(3017:3017): Archivo de configuracion puerto worker : 5050 
+
+[INFO] 17:45:31:718 DATANODE/(3017:3017): Archivo de configuracion puerto fileSystem : 5002 
+
+[INFO] 17:45:31:719 DATANODE/(3017:3017): Archivo de configuracion ip fileSystem : 192.168.0.15 
+
+[INFO] 17:45:31:719 DATANODE/(3017:3017): Archivo de configuracion nombre nodo : 1 
+
+[INFO] 17:45:31:719 DATANODE/(3017:3017): Archivo de configuracion ruta data.bin : /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin 
+
+[INFO] 17:45:31:719 DATANODE/(3017:3017): Archivo de configuracion ip Worker : 124.0.0.1 
+
+[INFO] 17:45:31:719 DATANODE/(3017:3017): Archivo de configuracion capacidad del nodo : 150 
+
+[INFO] 17:47:38:963 DATANODE/(3017:3017): SocketCliente = -1 
+
+[INFO] 17:47:38:963 DATANODE/(3017:3017): se manda a file system el saludo
+[INFO] 17:47:38:963 DATANODE/(3017:3017): ERROR EN EL ENVIO DE SALUDO
+[INFO] 17:47:38:963 DATANODE/(3017:3017): Recibi de FS el codigo : 134519419
+[INFO] 17:47:38:963 DATANODE/(3017:3017): DATA NODE RECIBE UNA SENIAL QUE NO SABE TRADUCIR
