@@ -9,6 +9,17 @@
 
 /*FUNCION PRINCIPAL*/
 
+t_list* obtenerBloquesTextoBinario(const char* rutaDelArchivo){
+	t_list* bloques = list_create();
+	if(string_ends_with(rutaDelArchivo,".txt")){
+		bloques = obtenerBloquesTexto(rutaDelArchivo);
+	}
+	else if(string_ends_with(rutaDelArchivo,".bin")){
+		bloques = obtenerBloquesBinarios(rutaDelArchivo);
+	}
+	return bloques;
+}
+
 t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 
 
@@ -132,7 +143,7 @@ t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
 		char *nombreArchivo = string_new();
 		FILE* fd;
 		char* numeroDeArchivo = string_itoa(i);
-		string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/bloque");
+		string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/bloque");
 		string_append(&nombreArchivo, numeroDeArchivo); //Le agrego el numero de archivo al nombre
 		string_append(&nombreArchivo, ".txt"); //le agrego la extencion de archivo al nombre
 		fd = fopen(nombreArchivo,"w");
@@ -215,4 +226,9 @@ t_list* listaDeContenidos(t_list* rutasDeArchivos){
 	t_list* listaContenidos = list_create();
 	listaContenidos = list_map(rutasDeArchivos,obtenerContenidoDelArchivo);
 	return listaContenidos;
+}
+
+void mostrarBloque(t_list* listaDeBloques,int index){
+	char* contenido = list_get(listaDeBloques,index);
+	printf("El contenido del bloque %d es:\n\n\n%s",index,contenido);
 }

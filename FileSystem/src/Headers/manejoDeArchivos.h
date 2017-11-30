@@ -20,6 +20,8 @@
 
 const int MB = 1024*1024;
 
+t_list* obtenerBloquesTextoBinario(const char* rutaDelArchivo);
+
 /*
  * t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
  * RECIBE UNA RUTA DE UN ARCHIVO BINARIO A DIVIDIR,
