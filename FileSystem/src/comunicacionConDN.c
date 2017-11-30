@@ -271,7 +271,7 @@ void cargarNodos2(int idNodo, int capacidad){
 		nodo1->idNodo=idNodo;
 		nodo1->bloquesTotales=capacidad;
 		nodo1->bloquesLibres=capacidad;
-		nodo1->estado=1;
+//		nodo1->estado=1;
 		int i=0;
 		while(i<capacidad){
 		nodo1->bitmap[i]=0;
@@ -297,7 +297,7 @@ void cargarNodos2(int idNodo, int capacidad){
 			}
 			count3++;
 		}
-		nodo3->estado=1;
+	//	nodo3->estado=1;
 		logInfo("Se reconecto un nodo. Su id es:%s",idNodo);
 
 	}
