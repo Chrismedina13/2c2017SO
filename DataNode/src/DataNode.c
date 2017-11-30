@@ -57,6 +57,11 @@ int main(int argc, char *argv[]) {
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 
 
+
+     char* bloque =malloc(1024*1024);
+     bloque=get_bloque(3);
+
+    mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 //while(1){
 
 	recv(FDsocketClienteFileSystem, buffer2,4,0);
@@ -111,6 +116,9 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	char * rta_set_bloque;
 	int tamanio_rta_set_bloque;
 
+	char* bloque_obtenido;
+	int tamanio_bloque_obtenido;
+
 	switch (codigo) {
 	case SET_BLOQUE:
 
@@ -121,6 +129,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 
 		recv(FD_FileSystem, pesoMensaje,4,0);
 		tamanio = deserializarINT(pesoMensaje);
+
 		logInfo("tamanio de lo que recibo %i", tamanio);
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
@@ -130,13 +139,17 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	   logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
 
+		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
+			logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
+			malloc(19);
+			mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, "GUARDE OK EL BLOQUE", 19);
+		}
+		else{
+			logInfo("FALLO SET BLOQUE");
+		}
 
       free(mensaje);
-// ir a nodos.bin y guardarlo
 
-    //  rta_set_bloque = "Guarde el ok el contenido en el bloque";
-    //  tamanio_rta_set_bloque= strlen(rta_set_bloque);
- //mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, rta_set_bloque, tamanio_rta_set_bloque);
 
 		break;
 
@@ -155,6 +168,10 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		recv(FD_FileSystem,mensaje, tamanio,0);
 		intRecibido = deserializarINT(mensaje);
 		logInfo("Instruccion 'Get Bloque' en el bloque %i", intRecibido);
+		bloque_obtenido = malloc(1024*1024);
+		bloque_obtenido = get_bloque(intRecibido);
+		tamanio_bloque_obtenido = strlen(bloque_obtenido);
+		mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FD_FileSystem, bloque_obtenido, tamanio_bloque_obtenido);
 
 //IR A NODOS.BIN Y AGARRAR ESE BLOQUE Y MANDARLO
 	//contenido_bloque = funcion que recorra el data.bin y me traiga el mega
