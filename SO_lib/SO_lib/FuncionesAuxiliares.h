@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <commons/collections/list.h>
+#include "estructuras.h"
 
 int generarNumeroAleatorioNoRepetido();
 char* generarNombreArchivoReduccionGlobal(int variableRG);
@@ -25,7 +27,7 @@ char* generarNombreArchivoTransformacion(int variableTransformacion);
 char* obtenerPuntero(const char* rutaArchivo);
 int tamanioEstructuraInfoWorker(Info_Workers* info);
 int tamanioEstructurasListaWorkers(t_list* listaWorkers);
-
+Info_Workers* setInfoWorker(int puerto,char* ipWorker);
 
 
 

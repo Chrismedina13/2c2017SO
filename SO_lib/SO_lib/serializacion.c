@@ -434,7 +434,7 @@ t_list * deserializarLista_info_workers(char * listaWorkersSerializada) {
 
 		// Se deserializa cada elemento
 		deserializarDato(&(tamanio_lista),listaWorkersSerializada,sizeof(int),&desplazamiento);
-		logInfo("tamnio_lista %i",tamanio_lista);
+		//logInfo("tamnio_lista %d",tamanio_lista);
 		int tamanio_contexto = tamanio_lista;
 
 		for (i = 0; i < tamanio_contexto; i++) {
@@ -459,21 +459,32 @@ char* serializarInfoWorker(int puerto, char* ipWorker) {
 	char* infoWorkerSerializado = malloc(
 			strlen(ipWorker) + sizeof(char) + sizeof(int));
 	int desplazamiento = 0;
+	int tamanioIP = strlen(ipWorker);
+	serializarDato(infoWorkerSerializado, &(tamanioIP), sizeof(int), &desplazamiento);
 	serializarDato(infoWorkerSerializado, &(puerto), sizeof(int),
 			&desplazamiento);
 	serializarDato(infoWorkerSerializado, ipWorker,
-			strlen(ipWorker) + sizeof(char), &desplazamiento);
+			strlen(ipWorker)*sizeof(char), &desplazamiento);
+
 
 	return infoWorkerSerializado;
 
 }
 
 Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado) {
-	Info_Workers *infoworker = malloc(11 + sizeof(char) + sizeof(int));
+
+	int tamanioIP = sizeof(malloc(sizeof(int)));
 	int desplazamiento = 0;
+
+	deserializarDato(&(tamanioIP), infoWorkerSerializado, sizeof(int),
+				&desplazamiento);
+
+	Info_Workers *infoworker = malloc(tamanioIP + sizeof(int));
+
 	deserializarDato(&(infoworker->puerto), infoWorkerSerializado, sizeof(int),
 			&desplazamiento);
-	infoworker->ipWorker = strdup(infoWorkerSerializado + desplazamiento);
+	infoworker->ipWorker = string_substring(infoWorkerSerializado,desplazamiento,tamanioIP);
+	desplazamiento+=tamanioIP;
 
 	return infoworker;
 

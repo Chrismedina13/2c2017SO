@@ -7,6 +7,8 @@
 
 #include "FuncionesAuxiliares.h"
 
+
+
 int generarNumeroAleatorioNoRepetido(){
 
 	srand(time(NULL));
@@ -95,4 +97,10 @@ int tamanioEstructurasListaWorkers(t_list* listaWorkers){
 		tamanioListaTotal += tamanioWorker;
 	}
 	return tamanioListaTotal;
+}
+Info_Workers* setInfoWorker(int puerto,char* ipWorker){
+	Info_Workers* info;
+	info->puerto = puerto;
+	info->ipWorker = ipWorker;
+	return info;
 }
