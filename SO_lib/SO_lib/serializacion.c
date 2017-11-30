@@ -269,6 +269,142 @@ script* deserilizarScript(char* bloqueSerializado) {
 
 	return scriptDeserializado;
 }
+
+char * serializarLista_info_workers(t_list * listaWorkers) {
+
+	uint32_t total_size = tamanioEstructurasListaWorkers(listaWorkers);
+	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(listaWorkers)*sizeof(uint32_t))+ sizeof(int));
+	int offset = 0;
+	int i;
+	int tamanio_lista = list_size(listaWorkers);
+	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
+	for (i = 0; i < list_size(listaWorkers); i++) {
+		Info_Workers* info = list_get(listaWorkers,i);
+		char* contextoSerializado = serializarInfoWorker(info->puerto,info->ipWorker);
+
+		uint32_t size_contexto = tamanioEstructuraInfoWorker(list_get(listaWorkers,i));
+		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
+		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto
+		free(contextoSerializado);
+
+	}
+
+	return listaSerializada;
+}
+
+t_list * deserializarLista_info_workers(char * listaWorkersSerializada) {
+	int tamanio_lista= malloc(sizeof(int));
+
+		int desplazamiento = 0;
+		t_list* lista = list_create();
+		int i;
+
+		// Se deserializa cada elemento
+		deserializarDato(&(tamanio_lista),listaWorkersSerializada,sizeof(int),&desplazamiento);
+		//logInfo("tamnio_lista %d",tamanio_lista);
+		int tamanio_contexto = tamanio_lista;
+
+		for (i = 0; i < tamanio_contexto; i++) {
+
+			uint32_t size_contexto;
+			deserializarDato(&(size_contexto),listaWorkersSerializada,sizeof(uint32_t),&desplazamiento);
+
+			char* infoWorkerSerializado = malloc(sizeof(char)*size_contexto);
+			deserializarDato(infoWorkerSerializado,listaWorkersSerializada,size_contexto,&desplazamiento);
+
+			RespuestaTransformacionYAMA* auxiliar = deserializarInfoWorker(infoWorkerSerializado);
+			list_add(lista,auxiliar);
+
+			//free(auxiliar);
+
+			free(infoWorkerSerializado);
+		}
+		//free(tamanio_lista);
+		return lista;}
+
+char* serializarInfoWorker(int puerto, char* ipWorker) {
+	char* infoWorkerSerializado = malloc(
+			strlen(ipWorker) + sizeof(char) + sizeof(int));
+	int desplazamiento = 0;
+	int tamanioIP = strlen(ipWorker);
+	serializarDato(infoWorkerSerializado, &(tamanioIP), sizeof(int), &desplazamiento);
+	serializarDato(infoWorkerSerializado, &(puerto), sizeof(int),
+			&desplazamiento);
+	serializarDato(infoWorkerSerializado, ipWorker,
+			strlen(ipWorker)*sizeof(char), &desplazamiento);
+
+
+	return infoWorkerSerializado;
+
+}
+
+Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado) {
+
+	int tamanioIP = sizeof(malloc(sizeof(int)));
+	int desplazamiento = 0;
+
+	deserializarDato(&(tamanioIP), infoWorkerSerializado, sizeof(int),
+				&desplazamiento);
+
+	Info_Workers *infoworker = malloc(tamanioIP + sizeof(int));
+
+	deserializarDato(&(infoworker->puerto), infoWorkerSerializado, sizeof(int),
+			&desplazamiento);
+	infoworker->ipWorker = string_substring(infoWorkerSerializado,desplazamiento,tamanioIP);
+	desplazamiento+=tamanioIP;
+
+	return infoworker;
+
+}
+
+
+char * serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura) {
+	char* estructuraSerializada = malloc(sizeof(int) * 6);
+	int desplazamiento = 0;
+
+	serializarDato(estructuraSerializada, &(estructura->parteDelArchivo), sizeof(int), &desplazamiento);
+	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),	sizeof(int), &desplazamiento);
+	char* ubicacion1serializada = sizeof(int)*2;
+	ubicacion1serializada =serializarUbicacionBloque(estructura->ubicacionCopia1);
+	char* ubicacion2serializada = sizeof(int)*2;
+		ubicacion2serializada = serializarUbicacionBloque(estructura->ubicacionCopia2);
+	serializarDato(estructuraSerializada,ubicacion1serializada,sizeof(int)*2, &desplazamiento);
+	serializarDato(estructuraSerializada,ubicacion2serializada,sizeof(int)*2, &desplazamiento);
+
+	return estructuraSerializada;
+}
+
+UbicacionBloquesArchivo *deserializarUbicacionArchivo(char* UbicacionSerializada) {
+	UbicacionBloquesArchivo * ubicacionbloquesarchivos = malloc(sizeof(int) * 6);
+	int desplazamientoF = 0;
+
+	deserializarDato(&(ubicacionbloquesarchivos->parteDelArchivo),UbicacionSerializada, sizeof(int), &desplazamientoF);
+	deserializarDato(&(ubicacionbloquesarchivos->bytesOcupados),UbicacionSerializada, sizeof(int), &desplazamientoF);
+	deserializarDato(&(ubicacionbloquesarchivos->ubicacionCopia1.nodo),UbicacionSerializada, sizeof(int), &desplazamientoF);
+	deserializarDato(&(ubicacionbloquesarchivos->ubicacionCopia1.desplazamiento),UbicacionSerializada, sizeof(int), &desplazamientoF);
+	deserializarDato(&(ubicacionbloquesarchivos->ubicacionCopia2.nodo),UbicacionSerializada, sizeof(int), &desplazamientoF);
+	deserializarDato(&(ubicacionbloquesarchivos->ubicacionCopia2.desplazamiento),UbicacionSerializada, sizeof(int), &desplazamientoF);
+
+	return ubicacionbloquesarchivos;
+}
+
+char* serializarUbicacionBloque(UbicacionBloque ubicacionbloque) {
+	char* ubicacionBloqueSerializado = malloc(sizeof(int) * 2);
+	int desplazamiento = 0;
+	serializarDato(ubicacionBloqueSerializado, &(ubicacionbloque.nodo),	sizeof(int), &desplazamiento);
+	serializarDato(ubicacionBloqueSerializado,&(ubicacionbloque.desplazamiento), sizeof(int), &desplazamiento);
+	return ubicacionBloqueSerializado;
+}
+
+UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado) {
+	UbicacionBloque ubicacionbloque;
+	int desplazamiento = 0;
+	deserializarDato(&(ubicacionbloque.nodo), ubicacionbloqueserializado,sizeof(int), &desplazamiento);
+	deserializarDato(&(ubicacionbloque.desplazamiento),	ubicacionbloqueserializado, sizeof(int), &desplazamiento);
+
+	return ubicacionbloque;
+
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 
 int deserializarINT(char* stream) {
@@ -310,187 +446,6 @@ SetBloque* deserilizarBloque(char* bloqueSerializado) {
 
 	return setbloque;
 }
-
-char* serializarUbicacionBloque(UbicacionBloque ubicacionbloque) {
-	char* ubicacionBloqueSerializado = malloc(sizeof(int) * 2);
-	int desplazamiento = 0;
-	serializarDato(ubicacionBloqueSerializado, &(ubicacionbloque.nodo),
-			sizeof(int), &desplazamiento);
-	serializarDato(ubicacionBloqueSerializado,
-			&(ubicacionbloque.desplazamiento), sizeof(int), &desplazamiento);
-	return ubicacionBloqueSerializado;
-}
-
-char * serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura) {
-	char* estructuraSerializada = malloc(sizeof(int) * 6);
-	int desplazamiento = 0;
-	serializarDato(estructuraSerializada, &(estructura->parteDelArchivo),
-			sizeof(int), &desplazamiento);
-	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),
-			sizeof(int), &desplazamiento);
-
-	strcat(estructuraSerializada,
-			serializarUbicacionBloque(estructura->ubicacionCopia1));
-	strcat(estructuraSerializada,
-			serializarUbicacionBloque(estructura->ubicacionCopia2));
-
-	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),
-			sizeof(int), &desplazamiento);
-	return estructuraSerializada;
-}
-
-UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado) {
-	UbicacionBloque ubicacionbloque;
-	int desplazamiento = 0;
-	deserializarDato(&(ubicacionbloque.nodo), ubicacionbloqueserializado,
-			sizeof(int), &desplazamiento);
-	deserializarDato(&(ubicacionbloque.desplazamiento),
-			ubicacionbloqueserializado, sizeof(int), &desplazamiento);
-
-	return ubicacionbloque;
-
-}
-
-UbicacionBloquesArchivo *deserializarUbicacionArchivo(
-		char* UbicacionSerializada) {
-	UbicacionBloquesArchivo * ubicacionbloquesarchivos = malloc(
-			sizeof(int) * 6);
-	int desplazamiento = 0;
-	deserializarDato(&(ubicacionbloquesarchivos->parteDelArchivo),
-			UbicacionSerializada, sizeof(int), &desplazamiento);
-	deserializarDato(&(ubicacionbloquesarchivos->bytesOcupados),
-			UbicacionSerializada, sizeof(int), &desplazamiento);
-	ubicacionbloquesarchivos->ubicacionCopia1 = deserializarUbicacionBloque(
-			UbicacionSerializada);
-	ubicacionbloquesarchivos->ubicacionCopia2 = deserializarUbicacionBloque(
-			UbicacionSerializada);
-
-	return ubicacionbloquesarchivos;
-}
-
-char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones) {
-	int i;
-	char* listaSerializada;
-	UbicacionBloquesArchivo * nodo;
-
-	for (i = 0; list_size(listaUbicaciones); i++) {
-		nodo = list_get((listaUbicaciones), i);
-		listaSerializada = strcat(listaSerializada,
-				serializarUblicacionBloqueArchivo(nodo));
-
-	}
-	return listaSerializada;
-
-}
-
-
-
-
-
-t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada) {
-	int i;
-	t_list * Lista;
-	UbicacionBloquesArchivo * ubicacionbloquearchivo;
-	char * despl;
-
-	for (i = 0; sizeof(ListaUbicacionesSerializada);
-			(i + sizeof(UbicacionBloquesArchivo))) {
-		despl = string_substring(ListaUbicacionesSerializada, i,
-				sizeof(UbicacionBloquesArchivo));
-		ubicacionbloquearchivo = deserializarUbicacionArchivo(despl);
-		list_add(Lista, ubicacionbloquearchivo);
-	}
-	return (Lista);
-}
-
-char * serializarLista_info_workers(t_list * listaWorkers) {
-
-	uint32_t total_size = tamanioEstructurasListaWorkers(listaWorkers);
-	char *listaSerializada = malloc((sizeof(char)*total_size) + list_size(listaWorkers)*sizeof(uint32_t)+ sizeof(int));
-	int offset = 0;
-	int i;
-	int tamanio_lista = list_size(listaWorkers);
-	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
-	for (i = 0; i < list_size(listaWorkers); i++) {
-		Info_Workers* info = list_get(listaWorkers,i);
-		char* contextoSerializado = serializarInfoWorker(info->puerto,info->ipWorker);
-		uint32_t size_contexto = tamanioEstructuraInfoWorker(list_get(listaWorkers,i)) +sizeof(int);
-		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
-		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto
-	//    free(contextoSerializado);
-
-	}
-
-	return listaSerializada;
-}
-
-t_list * deserializarLista_info_workers(char * listaWorkersSerializada) {
-	int tamanio_lista= malloc(sizeof(int));
-
-		int desplazamiento = 0;
-		t_list* lista = list_create();
-		int i;
-
-		// Se deserializa cada elemento
-		deserializarDato(&(tamanio_lista),listaWorkersSerializada,sizeof(int),&desplazamiento);
-		//logInfo("tamnio_lista %d",tamanio_lista);
-		int tamanio_contexto = tamanio_lista;
-
-		for (i = 0; i < tamanio_contexto; i++) {
-
-			uint32_t size_contexto;
-			deserializarDato(&(size_contexto),listaWorkersSerializada,sizeof(uint32_t),&desplazamiento);
-
-			char* infoWorkerSerializado = malloc(sizeof(char)*size_contexto);
-			deserializarDato(infoWorkerSerializado,listaWorkersSerializada,size_contexto,&desplazamiento);
-
-			Info_Workers* auxiliar = deserializarInfoWorker(infoWorkerSerializado);
-			list_add(lista,auxiliar);
-
-			//free(auxiliar);
-
-			//free(infoWorkerSerializado);
-		}
-		//free(tamanio_lista);
-		return lista;}
-
-char* serializarInfoWorker(int puerto, char* ipWorker) {
-	char* infoWorkerSerializado = malloc(
-			strlen(ipWorker) + sizeof(int)*2);
-	int desplazamiento = 0;
-	int tamanioIP = strlen(ipWorker);
-	serializarDato(infoWorkerSerializado, &(tamanioIP), sizeof(int), &desplazamiento);
-	serializarDato(infoWorkerSerializado, &(puerto), sizeof(int),
-			&desplazamiento);
-	serializarDato(infoWorkerSerializado, ipWorker,
-			strlen(ipWorker)*sizeof(char), &desplazamiento);
-
-
-	return infoWorkerSerializado;
-
-}
-
-Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado) {
-
-	int tamanioIP = malloc(sizeof(int));
-	int desplazamiento = 0;
-
-	deserializarDato(&(tamanioIP), infoWorkerSerializado, sizeof(int),
-				&desplazamiento);
-
-	Info_Workers *infoworker = malloc(tamanioIP + sizeof(int));
-
-	deserializarDato(&(infoworker->puerto), infoWorkerSerializado, sizeof(int),
-			&desplazamiento);
-	infoworker->ipWorker = string_substring(infoWorkerSerializado,desplazamiento,tamanioIP);
-	desplazamiento+=tamanioIP;
-
-	//free(tamanioIP);
-	free(infoWorkerSerializado);
-	return infoworker;
-
-}
-
 
 char* serializarFinTransformacion(finTransformacion* fin) {
 

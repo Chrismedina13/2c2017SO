@@ -34,7 +34,20 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 char* serializarScript(script* script);
 script* deserilizarScript(char* bloqueSerializado);
 
+char * serializarLista_info_workers(t_list * listaWorkers);
 
+t_list * deserializarLista_info_workers(char * listaWorkersSerializada);
+
+char* serializarInfoWorker(int puerto, char* ipWorker);
+
+Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
+
+char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
+
+UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializado);
+
+char * serializarUbicacionBloque(UbicacionBloque ubicacionbloque);
+UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
 //////////////////////////////////////DEFINICION DE FUNCIONES  SIN PROBAR//////////////////////////////////////
 
 
@@ -44,24 +57,12 @@ char* serializarBloque(int numeroBloque, char* contenidoBloque);
 
 //SetBloque* deserilizarBloque(char* bloqueSerializado);
 
-char * serializarUbicacionBloque(UbicacionBloque ubicacionbloque);
-UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
-
-char* serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura);
-UbicacionBloquesArchivo * deserializarUbicacionArchivo(
-		char* UbicacionSerializado);
 
 char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
 
 t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
-char * serializarLista_info_workers(t_list * listaWorkers);
 
-t_list * deserializarLista_info_workers(char * listaWorkersSerializada);
-
-char* serializarInfoWorker(int puerto, char* ipWorker);
-
-Info_Workers *deserializarInfoWorker(char * infoWorkerSerializado);
 
 
 
