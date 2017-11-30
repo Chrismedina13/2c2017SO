@@ -37,6 +37,7 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list* listaDeWorkerAPlanificar);
 int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar);
 int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAPlanificar);
+bool* dev_mayor_disponib(nodoParaPlanificar* nodo1,nodoParaPlanificar* nodo2);
 
 
 

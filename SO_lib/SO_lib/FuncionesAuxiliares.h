@@ -17,7 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <commons/collections/list.h>
+#include "estructuras.h"
 int generarNumeroAleatorioNoRepetido();
 char* generarNombreArchivoReduccionGlobal(int variableRG);
 char* generarNombreArchivoReduccionLocal(int variableRL);

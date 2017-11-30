@@ -72,15 +72,23 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	logInfo("Creando Planificacion de prueba");
 
 	t_list* listaDeWorkersAPlanificar = list_create();
-	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(0, 12, 1, 12,
-			2, 13);
-	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1, 100, 3, 20,
-			1, 19);
-	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(2, 100, 2, 20,
-			3, 19);
+	UbicacionBloquesArchivo* ubi0 = crearUbicacionBloquesArchivos(0, 500, 1, 12, 2, 13);
+	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(1, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(2, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(3, 100, 1, 20, 2, 19);
+	UbicacionBloquesArchivo* ubi4 = crearUbicacionBloquesArchivos(4, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi5 = crearUbicacionBloquesArchivos(5, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi6 = crearUbicacionBloquesArchivos(6, 100, 1, 20, 2, 19);
+
+
+	list_add(listaDeWorkersAPlanificar, ubi0);
 	list_add(listaDeWorkersAPlanificar, ubi1);
 	list_add(listaDeWorkersAPlanificar, ubi2);
 	list_add(listaDeWorkersAPlanificar, ubi3);
+	list_add(listaDeWorkersAPlanificar, ubi4);
+	list_add(listaDeWorkersAPlanificar, ubi5);
+	list_add(listaDeWorkersAPlanificar, ubi6);
+
 
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
