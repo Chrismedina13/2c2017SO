@@ -81,3 +81,18 @@ char* obtenerPuntero(const char* rutaArchivo){
 
 	return p;
 }
+
+int tamanioEstructuraInfoWorker(Info_Workers* info){
+	int tamanio = sizeof(int) + strlen(info->ipWorker);
+	return tamanio;
+}
+int tamanioEstructurasListaWorkers(t_list* listaWorkers){
+	int tamanioWorker;
+	int tamanioListaTotal=0;
+	int i;
+	for(i=0;i<list_size(listaWorkers);i++){
+		tamanioWorker = tamanioEstructuraInfoWorker(list_get(listaWorkers,i));
+		tamanioListaTotal += tamanioWorker;
+	}
+	return tamanioListaTotal;
+}

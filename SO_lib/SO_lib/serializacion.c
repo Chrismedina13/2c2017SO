@@ -328,6 +328,7 @@ char * serializarUblicacionBloqueArchivo(UbicacionBloquesArchivo * estructura) {
 			sizeof(int), &desplazamiento);
 	serializarDato(estructuraSerializada, &(estructura->bytesOcupados),
 			sizeof(int), &desplazamiento);
+
 	strcat(estructuraSerializada,
 			serializarUbicacionBloque(estructura->ubicacionCopia1));
 	strcat(estructuraSerializada,
@@ -403,32 +404,56 @@ t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada)
 }
 
 char * serializarLista_info_workers(t_list * listaWorkers) {
-	int i;
-	char* ListaSerializada;
-	Info_Workers * nodo;
 
-	for (i = 0; list_size(listaWorkers); i++) {
-		nodo = list_get(listaWorkers, i);
-		strcat(ListaSerializada,
-				serializarInfoWorker(nodo->puerto, nodo->ipWorker));
+	uint32_t total_size = tamanioEstructurasListaWorkers(listaWorkers);
+	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(listaWorkers)*sizeof(uint32_t))+ sizeof(int));
+	int offset = 0;
+	int i;
+	int tamanio_lista = list_size(listaWorkers);
+	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
+	for (i = 0; i < list_size(listaWorkers); i++) {
+		Info_Workers* info = list_get(listaWorkers,i);
+		char* contextoSerializado = serializarInfoWorker(info->puerto,info->ipWorker);
+
+		uint32_t size_contexto = tamanioEstructuraInfoWorker(list_get(listaWorkers,i));
+		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
+		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto
+		free(contextoSerializado);
+
 	}
-	return (ListaSerializada);
+
+	return listaSerializada;
 }
 
 t_list * deserializarLista_info_workers(char * listaWorkersSerializada) {
-	int i;
-	t_list * Lista;
-	Info_Workers * infoworkers;
-	char * despl;
-	for (i = 0; sizeof(listaWorkersSerializada); (i + sizeof(Info_Workers))) {
-		despl = string_substring(listaWorkersSerializada, i,
-				sizeof(Info_Workers));
-		infoworkers = deserializarInfoWorker(despl);
-		list_add(Lista, infoworkers);
-	}
+	int tamanio_lista= malloc(sizeof(int));
 
-	return (Lista);
-}
+		int desplazamiento = 0;
+		t_list* lista = list_create();
+		int i;
+
+		// Se deserializa cada elemento
+		deserializarDato(&(tamanio_lista),listaWorkersSerializada,sizeof(int),&desplazamiento);
+		logInfo("tamnio_lista %i",tamanio_lista);
+		int tamanio_contexto = tamanio_lista;
+
+		for (i = 0; i < tamanio_contexto; i++) {
+
+			uint32_t size_contexto;
+			deserializarDato(&(size_contexto),listaWorkersSerializada,sizeof(uint32_t),&desplazamiento);
+
+			char* infoWorkerSerializado = malloc(sizeof(char)*size_contexto);
+			deserializarDato(infoWorkerSerializado,listaWorkersSerializada,size_contexto,&desplazamiento);
+
+			RespuestaTransformacionYAMA* auxiliar = deserializarInfoWorker(infoWorkerSerializado);
+			list_add(lista,auxiliar);
+
+			//free(auxiliar);
+
+			free(infoWorkerSerializado);
+		}
+		//free(tamanio_lista);
+		return lista;}
 
 char* serializarInfoWorker(int puerto, char* ipWorker) {
 	char* infoWorkerSerializado = malloc(

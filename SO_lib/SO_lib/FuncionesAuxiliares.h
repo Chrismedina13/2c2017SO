@@ -23,7 +23,8 @@ char* generarNombreArchivoReduccionGlobal(int variableRG);
 char* generarNombreArchivoReduccionLocal(int variableRL);
 char* generarNombreArchivoTransformacion(int variableTransformacion);
 char* obtenerPuntero(const char* rutaArchivo);
-
+int tamanioEstructuraInfoWorker(Info_Workers* info);
+int tamanioEstructurasListaWorkers(t_list* listaWorkers);
 
 
 
