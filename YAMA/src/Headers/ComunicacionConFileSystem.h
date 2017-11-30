@@ -13,6 +13,7 @@
 #include "SO_lib/Protocolo.h"
 #include "ComunicacionConMaster.h"
 
+
 typedef struct ParametrosComunicacionConFileSystem {
 	int puerto;
 	int ip;
@@ -20,7 +21,9 @@ typedef struct ParametrosComunicacionConFileSystem {
 	int disponibilidadBase;
 } ParametrosComunicacionConFileSystem;
 
-void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* parametros);
+ParametrosComunicacionConFileSystem* parametrosFileSystem;
+
+void comunicacionConFileSystem();
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
 		int puerto, char* ip,char* algoritmo,int disponiblidadBase);
 void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem);

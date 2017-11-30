@@ -509,7 +509,7 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 	}
 
 }
-bool* dev_mayor_disponib(nodoParaPlanificar* nodo1,
+bool dev_mayor_disponib(nodoParaPlanificar* nodo1,
 		nodoParaPlanificar* nodo2) {
 	if (nodo1->disponibilidad >= nodo2->disponibilidad) {
 
@@ -533,15 +533,13 @@ void nodoConMayorDisponibilidadClock(t_list* nodos) {
 	list_sort(nodos, dev_mayor_disponib);
 }
 
-int nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
+void nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
 
-	return 0;
-
+	list_sort(nodos, dev_mayor_disponib);
 }
 
 bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
 
-	logInfo("%i",nodo->nodo);
 
 	int posicionPartesDelArchivo = 0;
 	while(posicionPartesDelArchivo < list_size(nodo->partesDelArchivo)){
@@ -558,36 +556,6 @@ bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
 	}
 
 	return false;
-}
-
-int moverPunteroAuxiliar1(nodoParaPlanificar* punteroClockAuxiliar,
-		t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte) {
-
-	int desplazamiento = desplazamientoPuntero + 1;
-
-	while (desplazamiento < list_size(nodosFinalesAPLanificar)
-			&& desplazamiento != desplazamientoPuntero) {
-
-		punteroClockAuxiliar = list_get(nodosFinalesAPLanificar,
-				desplazamiento);
-		if (estaParteEnNodo(parte, punteroClockAuxiliar)) {
-
-			return desplazamiento;
-		} else {
-
-			if (desplazamiento == (list_size(nodosFinalesAPLanificar) - 1)) {
-
-				desplazamiento = 0;
-
-			} else {
-
-				desplazamiento++;
-			}
-		}
-
-	}
-	return -1;
-
 }
 
 int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,

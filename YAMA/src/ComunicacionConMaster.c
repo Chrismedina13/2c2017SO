@@ -166,7 +166,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		//enviarAMasterElnumeroDejob
 
 		agregarJObACola(job);
-		sem_post(&semaforoYAMA);
+		//sem_post(&semaforoYAMA);
+
+		atenderJOB();
+
+
 		break;
 
 	case FIN_TRANSFORMACION:

@@ -25,7 +25,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 void agregarPartedeArchivoANodo(int nodoBUscado, int bloque);
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,int disponibilidadBase);
 bool estaNodorEnLaListaDeTotales(int nodo);
-int nodoConMayorDisponibilidadW_Clock(t_list* nodos);
+void nodoConMayorDisponibilidadW_Clock(t_list* nodos);
 void nodoConMayorDisponibilidadClock(t_list* nodos);
 t_list* dev_nodos_a_planificar(void);
 int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte);
@@ -37,7 +37,7 @@ void actualizarCargaDeTrabajoDeWorkersPLanificados(t_list* nodosFinalesAPLanific
 t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list* listaDeWorkerAPlanificar);
 int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar);
 int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAPlanificar);
-bool* dev_mayor_disponib(nodoParaPlanificar* nodo1,nodoParaPlanificar* nodo2);
+bool dev_mayor_disponib(nodoParaPlanificar* nodo1,nodoParaPlanificar* nodo2);
 
 
 
