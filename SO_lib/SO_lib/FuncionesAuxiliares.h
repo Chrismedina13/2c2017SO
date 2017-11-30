@@ -27,7 +27,7 @@ char* generarNombreArchivoTransformacion(int variableTransformacion);
 char* obtenerPuntero(const char* rutaArchivo);
 int tamanioEstructuraInfoWorker(Info_Workers* info);
 int tamanioEstructurasListaWorkers(t_list* listaWorkers);
-Info_Workers* setInfoWorker(int puerto,char* ipWorker);
+void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 
 
 

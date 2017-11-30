@@ -94,13 +94,12 @@ int tamanioEstructurasListaWorkers(t_list* listaWorkers){
 	int i;
 	for(i=0;i<list_size(listaWorkers);i++){
 		tamanioWorker = tamanioEstructuraInfoWorker(list_get(listaWorkers,i));
-		tamanioListaTotal += tamanioWorker;
+		tamanioListaTotal = tamanioListaTotal+tamanioWorker;
 	}
 	return tamanioListaTotal;
 }
-Info_Workers* setInfoWorker(int puerto,char* ipWorker){
-	Info_Workers* info;
+void setInfoWorker(Info_Workers* info, int puerto,char* ipWorker){
+	info = malloc(sizeof(int) + strlen(ipWorker) * sizeof(char));
 	info->puerto = puerto;
 	info->ipWorker = ipWorker;
-	return info;
 }
