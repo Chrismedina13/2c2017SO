@@ -2,13 +2,10 @@
 #include "Headers/logYAMA.h"
 #include "SO_lib/estructuras.h"
 
-void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
+void comunicacionConFileSystem(){
 	//socketClienteParaFileSystem
-	Job* jobAEjecutar;
-	char pesoCodigo[4];
 
-	int FDsocketClienteFileSystem;
-	FDsocketClienteFileSystem = lib_SocketCliente(param->ip, param->puerto);
+	FDsocketClienteFileSystem = lib_SocketCliente(parametrosFileSystem->ip, parametrosFileSystem->puerto);
 	logInfo("SocketCliente = %d \n", FDsocketClienteFileSystem);
 	char buffer[13];
 	if (recv(FDsocketClienteFileSystem, buffer, 13, 0) != -1) {
@@ -16,14 +13,33 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 	}
 
-	sem_wait(&semaforoYAMA);
+	while(1){
+
+		//recibiria un codigo de mensaje y hace lo que tiene que hacer
+
+		recv(FDsocketClienteFileSystem,buffer,4,0);
+		int codigo = deserializarINT(buffer);
+		mensajesRecibidosDeFS(codigo,FDsocketClienteFileSystem);
+
+	}
+
+
+}
+
+void atenderJOB(){
+
+	Job* jobAEjecutar;
+	char pesoCodigo[4];
+
+	//sem_wait(&semaforoYAMA);
 	jobAEjecutar = retirarJobDeLista();
 	logInfo("el job a ejecutar es: %s", jobAEjecutar->nombreDelArchivo);
 
 	logInfo("Envio De JOB a FS");
 	int tamanioJOB = strlen(jobAEjecutar->nombreDelArchivo);
 	Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,jobAEjecutar->nombreDelArchivo);
-	if (enviarPaquete(FDsocketClienteFileSystem, paqueteDeEnvioDeJOB) == -1) {
+	if (enviarPaquete(FDsocketClienteFileSystem
+, paqueteDeEnvioDeJOB) == -1) {
 		logInfo("Error en envio de job");
 	}else{
 		logInfo("Envio correcto de nombre de job a FS");
@@ -41,12 +57,14 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	 Recibiria
 	 BLOQUE | copia  | copia 2 | bytes ocupados
 	 */
-	recv(FDsocketClienteFileSystem, pesoCodigo, 4, 0);
+	recv(FDsocketClienteFileSystem
+, pesoCodigo, 4, 0);
 	int codigo = deserializarINT(pesoCodigo);
 
 	logInfo("Recibi de FS: %i", codigo);
 
-	mensajesRecibidosDeFS(codigo, FDsocketClienteFileSystem);
+	mensajesRecibidosDeFS(codigo, FDsocketClienteFileSystem
+);
 
 	/*int tamanioEstructura, tamanio;
 	 char* estructura;
@@ -72,23 +90,33 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	logInfo("Creando Planificacion de prueba");
 
 	t_list* listaDeWorkersAPlanificar = list_create();
-	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(0, 12, 1, 12,
-			2, 13);
-	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(1, 100, 3, 20,
-			1, 19);
-	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(2, 100, 2, 20,
-			3, 19);
+	UbicacionBloquesArchivo* ubi0 = crearUbicacionBloquesArchivos(0, 500, 1, 12, 2, 13);
+	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(1, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(2, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(3, 100, 1, 20, 2, 19);
+	UbicacionBloquesArchivo* ubi4 = crearUbicacionBloquesArchivos(4, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi5 = crearUbicacionBloquesArchivos(5, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo* ubi6 = crearUbicacionBloquesArchivos(6, 100, 1, 20, 2, 19);
+
+
+	list_add(listaDeWorkersAPlanificar, ubi0);
 	list_add(listaDeWorkersAPlanificar, ubi1);
 	list_add(listaDeWorkersAPlanificar, ubi2);
 	list_add(listaDeWorkersAPlanificar, ubi3);
+	list_add(listaDeWorkersAPlanificar, ubi4);
+	list_add(listaDeWorkersAPlanificar, ubi5);
+	list_add(listaDeWorkersAPlanificar, ubi6);
+
 
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
 	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,
-			param->algoritmo, param->disponibilidadBase, jobAEjecutar);
+			parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
 	/*en esta parte se serializaria el mensaje y se mandaria al master
 	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
+
+	logInfo("Se crea JOB Completo");
 
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
 			listaDeWorkersAPlanificar, planificacionDelJOb);
@@ -116,6 +144,7 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 
 
 	list_add(listaDeJobs, jobCompleto);
+
 
 }
 

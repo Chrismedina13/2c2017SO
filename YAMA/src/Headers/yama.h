@@ -23,7 +23,6 @@
 #include "tabla_estados.h"
 #include "SO_lib/estructuras.h"
 
-
 t_queue* jobsAPlanificar; // VARIABLE GLOBAL TIPO LISTA DONDE SE GUARDAN LOS JOBS A PLANIFICAR
 sem_t semaforoYAMA; //Espera que llegue el job de MASTER para ejecutar la pate de comunicacion con FS
 t_list* listaDeWorkerTotales;
@@ -33,7 +32,7 @@ int variableGlobalIdentificador;
 int variableNombreTransformacion;
 int VariableReduccionLocal;
 int variableReduciionGlobal;
-
+int FDsocketClienteFileSystem;
 
 Job* crearJOB(int FDMAster,char* nombreDelJob);
 

@@ -57,12 +57,14 @@ int main(int argc, char *argv[]) {
      mensajesEnviadosAFileSystem(SALUDO, FDsocketClienteFileSystem, saludoSerializado,tamanioSaludo);
 
 
+//prueba mandar un get bloque
+  //   char* bloque =malloc(1024*1024);
+    // bloque=get_bloque(3);
 
-     char* bloque =malloc(1024*1024);
-     bloque=get_bloque(3);
+    //mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 
-    mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
-//while(1){
+
+    //while(1){
 
 	recv(FDsocketClienteFileSystem, buffer2,4,0);
     int codigo2 = deserializarINT(buffer2);

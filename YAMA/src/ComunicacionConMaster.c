@@ -160,12 +160,17 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		logInfo("Se recibio el nombre del archivo: %s de tamanio %i", mensaje,
 				tamanio);
 
+
 		Job* job = crearJOB(FDMaster,mensaje);
 
 		//enviarAMasterElnumeroDejob
 
 		agregarJObACola(job);
-		sem_post(&semaforoYAMA);
+		//sem_post(&semaforoYAMA);
+
+		atenderJOB();
+
+
 		break;
 
 	case FIN_TRANSFORMACION:

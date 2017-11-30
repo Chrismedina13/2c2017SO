@@ -128,6 +128,11 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 				list_add_in_index(nodosFinalesAPLanificar,desplazamientoPuntero, nodoParaActuaizar);
 				t++; // se analiza la otra parte
 				desplazamientoPuntero++; // avanza el puntero a la otra posicion de los nodos
+				if(desplazamientoPuntero == list_size(nodosFinalesAPLanificar)){
+
+					desplazamientoPuntero = 0;
+
+				}
 
 			} else {
 
@@ -142,7 +147,6 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodoAActualizar->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
 					t ++;
-					desplazamientoPuntero ++;
 
 				}else{
 					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
@@ -150,8 +154,6 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodo->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
 					t ++;
-					desplazamientoPuntero ++;
-
 				}
 			}
 
@@ -165,6 +167,10 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 				list_add_in_index(nodosFinalesAPLanificar,desplazamientoPuntero, nodoParaActuaizar);
 				t++;
 				desplazamientoPuntero++;
+				if(desplazamientoPuntero == list_size(nodosFinalesAPLanificar)){
+					desplazamientoPuntero = 0;
+
+				}
 			} else {
 
 				indexParaActualizar = moverPunteroAuxiliar(punteroClockAuxiliar,nodosFinalesAPLanificar, desplazamientoPuntero,parte); // me devuelve el index del lugar donde tiene la parte
@@ -176,7 +182,6 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodoAActualizar->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodoAActualizar);
 					t ++;
-					desplazamientoPuntero ++;
 
 				}else{
 					nodoParaPlanificar* nodo = list_remove(nodosFinalesAPLanificar,indexParaActualizar);
@@ -184,8 +189,6 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,
 					list_add(nodo->partesAplanificar,parte);
 					list_add_in_index(nodosFinalesAPLanificar,indexParaActualizar,nodo);
 					t ++;
-					desplazamientoPuntero ++;
-
 				}
 			}
 
@@ -284,6 +287,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 	while(t < list_size(partesDelArchivo)){
 
 		int parte = list_get(partesDelArchivo, t);
+
 		punteroClock = list_get(nodosFinalesAPLanificar, desplazamientoPuntero);
 		if (punteroClock->disponibilidad != 0) {
 			if (estaParteEnNodo(parte, punteroClock)) {
@@ -295,6 +299,11 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 						desplazamientoPuntero, nodoParaActuaizar);
 				t++; // se analiza la otra parte
 				desplazamientoPuntero++; // avanza el puntero a la otra posicion de los nodos
+				if(desplazamientoPuntero == list_size(nodosFinalesAPLanificar)){
+
+					desplazamientoPuntero = 0;
+
+				}
 			} else {
 
 				indexParaActualizar = moverPunteroAuxiliar(punteroClockAuxiliar,
@@ -332,6 +341,11 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,
 						desplazamientoPuntero, nodoParaActuaizar);
 				t++;
 				desplazamientoPuntero++;
+				if(desplazamientoPuntero == list_size(nodosFinalesAPLanificar)){
+
+					desplazamientoPuntero = 0;
+
+				}
 			} else {
 
 				indexParaActualizar = moverPunteroAuxiliar(punteroClockAuxiliar,
@@ -495,21 +509,21 @@ bool estaNodorEnLaListaDeTotales(int nodo) {
 	}
 
 }
-nodoParaPlanificar* dev_mayor_disponib(nodoParaPlanificar* nodo1,
+bool dev_mayor_disponib(nodoParaPlanificar* nodo1,
 		nodoParaPlanificar* nodo2) {
 	if (nodo1->disponibilidad >= nodo2->disponibilidad) {
 
 		if (nodo1->disponibilidad == nodo2->disponibilidad) {
 			if (nodo1->carga <= nodo2->carga) {
-				return nodo1;
+				return true;
 			} else {
-				return nodo2;
+				return false;
 			}
 		}
-		return nodo1;
+		return true;
 
 	} else {
-		return nodo2;
+		return false;
 	}
 }
 
@@ -519,15 +533,13 @@ void nodoConMayorDisponibilidadClock(t_list* nodos) {
 	list_sort(nodos, dev_mayor_disponib);
 }
 
-int nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
+void nodoConMayorDisponibilidadW_Clock(t_list* nodos) {
 
-	return 0;
-
+	list_sort(nodos, dev_mayor_disponib);
 }
 
 bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
 
-	logInfo("%i",nodo->nodo);
 
 	int posicionPartesDelArchivo = 0;
 	while(posicionPartesDelArchivo < list_size(nodo->partesDelArchivo)){
@@ -547,31 +559,25 @@ bool estaParteEnNodo(int parte, nodoParaPlanificar* nodo){
 }
 
 int moverPunteroAuxiliar(nodoParaPlanificar* punteroClockAuxiliar,
-		t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte) {
+		t_list* nodosFinalesAPLanificar, int desplazamientoPuntero, int parte){
 
 	int desplazamiento = desplazamientoPuntero + 1;
+	while(desplazamiento != desplazamientoPuntero){
+		if(desplazamiento == list_size(nodosFinalesAPLanificar)){
 
-	while (desplazamiento < list_size(nodosFinalesAPLanificar)
-			&& desplazamiento != desplazamientoPuntero) {
-
-		punteroClockAuxiliar = list_get(nodosFinalesAPLanificar,
-				desplazamiento);
-		if (estaParteEnNodo(parte, punteroClockAuxiliar)) {
-
-			return desplazamiento;
-		} else {
-
-			if (desplazamiento == (list_size(nodosFinalesAPLanificar) - 1)) {
-
-				desplazamiento = 0;
-
-			} else {
-
-				desplazamiento++;
-			}
+			desplazamiento = 0;
 		}
 
+		punteroClockAuxiliar = list_get(nodosFinalesAPLanificar,desplazamiento);
+		if(estaParteEnNodo(parte,punteroClockAuxiliar)){
+
+			return desplazamiento;
+		}else{
+
+			desplazamiento ++;
+		}
 	}
+
 	return -1;
 
 }
