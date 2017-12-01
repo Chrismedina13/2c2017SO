@@ -19,13 +19,14 @@ typedef struct ParametrosComunicacionConFileSystem {
 	int ip;
 	char* algoritmo;
 	int disponibilidadBase;
+	int retardo;
 } ParametrosComunicacionConFileSystem;
 
 ParametrosComunicacionConFileSystem* parametrosFileSystem;
 
 void comunicacionConFileSystem();
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
-		int puerto, char* ip,char* algoritmo,int disponiblidadBase);
+		int puerto, char* ip,char* algoritmo,int disponiblidadBase, int retardo);
 void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem);
 
 #endif /* HEADERS_COMUNICACIONCONFILESYSTEM_H_ */

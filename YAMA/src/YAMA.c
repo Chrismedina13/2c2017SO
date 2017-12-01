@@ -10,7 +10,6 @@
 #include "Headers/yama.h"
 
 
-
 int main(int argc, char *argv[]) {
 
 	jobsAPlanificar = queue_create();
@@ -170,10 +169,10 @@ int main(int argc, char *argv[]) {
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	parametrosFileSystem = setParametrosComunicacionConFileSystem(
-			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase);
+			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase,config->retardo);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
 
-
+	signal(SIGUSR1,rutina);
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");
 
@@ -205,3 +204,22 @@ Job* crearJOB(int FDMAster,char* nombreDelJob){
 
 
 }
+
+
+void rutina(int senial){
+
+	if(senial == SIGUSR1){
+
+		int numero;
+		char* algoritmo;
+		printf("INGRESE EL NUEVO RETARDO DE PLANIFICACION: ");
+		scanf("%d", &numero);
+
+		printf("INGRESE W-CLOCK o CLOCK:");
+		scanf("%s",&algoritmo);
+
+		parametrosFileSystem->algoritmo = algoritmo;
+		parametrosFileSystem->retardo = numero;
+	}
+}
+
