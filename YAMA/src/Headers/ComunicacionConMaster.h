@@ -58,6 +58,7 @@ bool estaNodoEnlista(t_list* lista, int nodo);
 int cantidadDeNodosEnLaRespuestaTransformacion(t_list* respuestaTransformacionYama);
 int reducirCargaANodo(int nodo, int cantidadDeCarga);
 int cantidadDeTrasformacionesYReduccionesQueHace(int nodo,t_list* respuestaTransformacionYama);
+void darDeBajaUnNodoCaido(int nodoCaido);
 
 
 

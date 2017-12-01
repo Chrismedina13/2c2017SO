@@ -28,6 +28,7 @@ sem_t semaforoYAMA; //Espera que llegue el job de MASTER para ejecutar la pate d
 t_list* listaDeWorkerTotales;
 t_list* listaDeJobs;
 t_list* ipYPuertoWoerkers;
+t_list* nodosCaidos;
 int variableGlobalIdentificador;
 int variableNombreTransformacion;
 int VariableReduccionLocal;

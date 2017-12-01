@@ -180,7 +180,7 @@ int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta){
 JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes,t_list* respuestaTransformacion){
 
 	JOBCompleto* jobCompleto = malloc(tamanioJOB(job)
-			+ 24*list_size(listaDeUbicacionPartes) + tamanioRespuestaTransformacionYAMA(respuestaTransformacion + sizeof(int)));
+			+ 24*list_size(listaDeUbicacionPartes) + tamanioRespuestaTransformacionYAMA(respuestaTransformacion ) + sizeof(int));
 
 	jobCompleto->job = job; // Ya reserve memoria antes en crear job sfijarse al probar
 	jobCompleto->ubicacionDeLasPartesDelJOB = listaDeUbicacionPartes;

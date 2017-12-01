@@ -1,6 +1,7 @@
 #include "Headers/ComunicacionConFileSystem.h"
 #include "Headers/logYAMA.h"
 #include "SO_lib/estructuras.h"
+#include "SO_lib/serializacion.h"
 
 void comunicacionConFileSystem(){
 	//socketClienteParaFileSystem
@@ -16,7 +17,7 @@ void comunicacionConFileSystem(){
 	while(1){
 
 		//recibiria un codigo de mensaje y hace lo que tiene que hacer
-
+		//hacer el if para recibir los bloques de archivos
 		recv(FDsocketClienteFileSystem,buffer,4,0);
 		int codigo = deserializarINT(buffer);
 		mensajesRecibidosDeFS(codigo,FDsocketClienteFileSystem);
@@ -110,16 +111,10 @@ void atenderJOB(){
 
 	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
-	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,
-			parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
-
-	/*en esta parte se serializaria el mensaje y se mandaria al master
-	 * si esta todo ok en el envio se crea el jobCompleto , se guarda y actualiza la tabla global*/
+	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
 	logInfo("Se crea JOB Completo");
-
-	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,
-			listaDeWorkersAPlanificar, planificacionDelJOb);
+	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
 
 	logInfo("Actualizar Tabla Global");
 	//probar//ingresarDatosATablaGlobal(jobCompleto);
@@ -128,10 +123,6 @@ void atenderJOB(){
 
 	int tamanioRespuesta = (tamanioRespuestaTransformacionYAMA(planificacionDelJOb) +
 			((sizeof(int)*2)*list_size(planificacionDelJOb)) + (2*list_size(planificacionDelJOb)));
-
-	/*lo que esta despues
-			del primer mas es por los dos int que le aagregue para el tamnio y despues del ultimo mas es por los +1 a los char**/
-
 
 	char* respuesta = serializarListaYAMA(planificacionDelJOb);
 
@@ -182,7 +173,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 			logInfo(
 					"Error en la recepcion de la lista de Bloques que componen el archivo.");
 		} else {
-	            lista_ubicaciones=list_create();
+	        /*    lista_ubicaciones=list_create();
 	            lista_ubicaciones= deserializarUbicacionBloquesArchivos(mensaje);
 	            //prueba para ver si llego bien la lista
 	      for(i=0;list_size(lista_ubicaciones);i++){
@@ -190,7 +181,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	    	  logInfo("Se recibio la parte del archivo: %s", ubicacionb->parteDelArchivo);
 	    	  logInfo("Se recibio q hay que guardar el nodo %i en el bloque %i", ubicacionb->ubicacionCopia1.nodo,
 	    			  ubicacionb->ubicacionCopia1.desplazamiento);
-	      }
+	      } */
 
 			logInfo("Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",
 					tamanio);

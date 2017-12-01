@@ -139,6 +139,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		parametrosReplanif = deserializarReplanificacion(mensaje);
 
+		darDeBajaUnNodoCaido(parametrosReplanif);
+
 		nuevaPlanificacion = replanificacion(parametrosReplanif,FDMaster);
 
 		actualizarNodosCaidosReplanificacion(parametrosReplanif,FDMaster);
@@ -169,7 +171,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		//sem_post(&semaforoYAMA);
 
 		atenderJOB();
-
 
 		break;
 
@@ -829,5 +830,25 @@ bool estaNodoEnlista(t_list* lista, int nodo){
 		}
 	}
 	return false;
+
+}
+
+void darDeBajaUnNodoCaido(int nodoCaido){
+
+	int i;
+	while(i < list_size(listaDeWorkerTotales)){
+
+		nodoParaPlanificar* nodo = list_get(listaDeWorkerTotales,i);
+
+		if(nodo->nodo == nodoCaido){
+
+			nodoParaPlanificar* nodoASacar = list_remove(listaDeWorkerTotales,i);
+			list_add(nodosCaidos,nodoASacar);
+			i++;
+		}
+		else{
+			i++;
+		}
+	}
 
 }
