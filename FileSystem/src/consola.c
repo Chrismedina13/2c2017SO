@@ -10,6 +10,8 @@
 #include "SO_lib/estructuras.h"
 #include <stdio.h>
 
+
+
 char** getComandos(){
 	char* buffer = getStdinString();
 	char** commands = string_split(buffer, " ");
@@ -583,7 +585,20 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], MD5)){
 					compararComando=false;
-					//hacer el comando
+
+                   char* comand = string_new();
+                  string_append(&comand, comandos[0]);
+                  string_append(&comand," ");
+                  string_append(&comand,comandos[1]);
+
+                    system(comand);
+
+
+
+					}
+
+
+
 				}
 			}
 
@@ -633,6 +648,6 @@ liberarComandos(comandos);
 		}
 
 	}
-}
+
 
 

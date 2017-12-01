@@ -58,10 +58,10 @@ int main(int argc, char *argv[]) {
 
 
 //prueba mandar un get bloque
-  //   char* bloque =malloc(1024*1024);
-    // bloque=get_bloque(3);
+//    char* bloque =malloc(1024*1024 + sizeof(char));
+  //  bloque=get_bloque(3);
 
-    //mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
+//  mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 
 
     //while(1){
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 	free(config);
 
 
-
+//free(bloque);
 
 	return EXIT_SUCCESS;
 }
