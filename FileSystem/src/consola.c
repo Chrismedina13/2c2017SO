@@ -641,6 +641,15 @@ void consolaFileSystem(){
 								comandos[0], HELP);
 			}
 
+			//pruebas de comandos
+
+			if(*comandos!=NULL && compararComando){
+					if(string_equals_ignore_case(comandos[0], "prueba")){
+					compararComando=false;
+
+				}
+			 }
+
 
 liberarComandos(comandos);
 
