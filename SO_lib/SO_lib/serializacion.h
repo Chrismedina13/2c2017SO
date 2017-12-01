@@ -48,37 +48,29 @@ UbicacionBloquesArchivo * deserializarUbicacionArchivo(char* UbicacionSerializad
 
 char * serializarUbicacionBloque(UbicacionBloque ubicacionbloque);
 UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado);
+
+char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
+
+t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
+
 //////////////////////////////////////DEFINICION DE FUNCIONES  SIN PROBAR//////////////////////////////////////
-
-
 int deserializarINT(char* stream);
 
 char* serializarBloque(int numeroBloque, char* contenidoBloque);
 
 //SetBloque* deserilizarBloque(char* bloqueSerializado);
 
-
-
 char* serializarFinTransformacion(finTransformacion* fin);
-
 finTransformacion * deserializarFinTransformacion(char* FT);
 
-
-
-
 char * serializarListaTemp(t_list * lista);
-
-
-
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
 
 //FALTAN HACER LAS DE ABAJO
 
-char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
 
-t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
 
 

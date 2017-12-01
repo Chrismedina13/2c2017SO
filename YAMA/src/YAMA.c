@@ -28,6 +28,58 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+	/*PRUEBA DE LISTAUBICACIONESBLOQUESARCHIVOS
+
+		UbicacionBloquesArchivo* u1 = malloc(sizeof(int)*6);
+		u1->bytesOcupados=10;
+		u1->parteDelArchivo=3;
+		u1->ubicacionCopia1.desplazamiento=10;
+		u1->ubicacionCopia1.nodo=1;
+		u1->ubicacionCopia2.desplazamiento=20;
+		u1->ubicacionCopia2.nodo=2;
+
+		UbicacionBloquesArchivo* u2 = malloc(sizeof(int)*6);
+		u2->bytesOcupados=900;
+		u2->parteDelArchivo=1;
+		u2->ubicacionCopia1.desplazamiento=4;
+		u2->ubicacionCopia1.nodo=4;
+		u2->ubicacionCopia2.desplazamiento=5;
+		u2->ubicacionCopia2.nodo=5;
+
+		UbicacionBloquesArchivo* u3 = malloc(sizeof(int)*6);
+		u3->bytesOcupados=123;
+		u3->parteDelArchivo=1;
+		u3->ubicacionCopia1.desplazamiento=4;
+		u3->ubicacionCopia1.nodo=4;
+		u3->ubicacionCopia2.desplazamiento=5;
+		u3->ubicacionCopia2.nodo=5;
+
+		UbicacionBloquesArchivo* u4 = malloc(sizeof(int)*6);
+			u4->bytesOcupados=456;
+			u4->parteDelArchivo=1;
+			u4->ubicacionCopia1.desplazamiento=477;
+			u4->ubicacionCopia1.nodo=4;
+			u4->ubicacionCopia2.desplazamiento=58888;
+			u4->ubicacionCopia2.nodo=56789;
+		t_list* lista = list_create();
+		list_add(lista,u1);
+		list_add(lista,u2);
+		list_add(lista,u3);
+		list_add(lista,u4);
+
+		char* listaSerializada =serializarListaUbicacionBloquesArchivos(lista);
+		t_list* listaDeserializada = deserializarUbicacionBloquesArchivos(listaSerializada);
+		int i;
+		for(i=0;i<list_size(listaDeserializada);i++){
+			UbicacionBloquesArchivo* u = list_get(listaDeserializada,i);
+			logInfo("\nBytes Ocupados: %i\nParte del archivo: %i\nCopia 1 nodo: %i\nCopia 1 desplazamiento: %i\n,Copia 2 nodo: %i\nCopia 2 desplazamiento: %i\n",
+					u->bytesOcupados,u->parteDelArchivo,
+					u->ubicacionCopia1.nodo,u->ubicacionCopia1.desplazamiento,
+					u->ubicacionCopia2.nodo,u->ubicacionCopia2.desplazamiento);
+		}
+
+*/
+
 	//EJEMPLO SERIALZIAR UBICACION BLOQUES ARCHIVOS
 /*
 	UbicacionBloquesArchivo* info = malloc (sizeof(int)*6);
