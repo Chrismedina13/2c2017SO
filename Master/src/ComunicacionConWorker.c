@@ -4,42 +4,34 @@
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;
 	FDServidorWORKER = lib_SocketCliente(parametros->ipWoker,parametros->puertoWoker);
+	logInfo("%i",FDServidorWORKER);
 
-		/*printf("Se conecto un Worker su FD es el  = %d\n", FDServidorWORKER);
-
-		logInfo("FD del Worker : %i \n", FDServidorWORKER);
-
-		if (send(FDServidorWORKER, "Hola WORKER", 13, 0) != -1) {
-
-
-				logInfo("Comunicacion con WORKER establecida, Mensaje enviado correctamente");
-
-
-			} else {
-
-				logInfo("Error en la comunicacion con WORKER ");
-
-			}*/
-	/* //Se serializaria la lista serializarRespuestaTransformacionYAMA()solo los 4 parametros; */
+	logInfo("Trato de comunicar con worker");
 
 	infoParaWorker* mensaje;
+	mensaje= malloc(sizeof(int) * 3+ strlen(mensaje->archivoTemporal));
 
-	mensaje -> nodo = parametros ->nodo;
-	mensaje -> bloque = parametros->bloque;
-	mensaje -> bytesOcupados = parametros->bytesOcupados;
-	mensaje -> archivoTemporal = parametros ->archivoTemporal;
+	mensaje-> nodo = parametros->nodo;
+	logInfo("nodo: %i",mensaje->nodo);
+	mensaje-> bloque = parametros->bloque;
+	logInfo("bloque: %i",mensaje->bloque);
+	mensaje-> bytesOcupados = parametros->bytesOcupados;
+	logInfo("bytesOcupados: %i",mensaje->bytesOcupados);
+	mensaje-> archivoTemporal = parametros->archivoTemporal;
+	logInfo("archivoTemporal: %s",mensaje->archivoTemporal);
 
-	char* respuesta = serializarInfoParaWorker(mensaje);
+	logInfo("Antes de serializar info para worker");
+	char* respuesta = serializarInfoParaWorker(mensaje->nodo, mensaje-> bloque, mensaje-> bytesOcupados,mensaje->archivoTemporal);
+	logInfo("Despues de serializar info para worker");
 
-	int tamanioRespuesta = (sizeof(int) * 3+ sizeof(char*));
+	int tamanioRespuesta = sizeof(int) * 3+ strlen(mensaje->archivoTemporal);
 
 	mensajesEnviadosAWorker(TAREA_WORKER,FDServidorWORKER,respuesta, tamanioRespuesta);
 
 }
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados ,int bloque) {
 
-	ParametrosComunicacionWoker* parametros = malloc(
-			sizeof(ParametrosComunicacionWoker));
+	ParametrosComunicacionWoker* parametros = malloc(sizeof(int)*4+strlen(ip)*sizeof(char)+strlen(archivo)*sizeof(char));
 
 	parametros->ipWoker = ip;
 	parametros->puertoWoker = puerto;

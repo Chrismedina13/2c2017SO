@@ -161,15 +161,12 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 				pthread_t hiloWorker;
 
-				ParametrosComunicacionWoker* parametrosWorker =	setParametrosComunicacionConWoker(respuesta->ipWorkwer,
-																									respuesta->puertoWorker,
-																									respuesta->nodo,
-																									respuesta->bloque,
-																									respuesta->bytesOcupados,
-																									respuesta->archivoTemporal);
+				ParametrosComunicacionWoker* parametrosWorker =	setParametrosComunicacionConWoker(respuesta->puertoWorker,respuesta->ipWorkwer,
+																									respuesta->nodo,respuesta->archivoTemporal,
+																									respuesta->bytesOcupados,respuesta->bloque
+																									);
 
-				pthread_create(&hiloWorker, NULL, (void*) comunicacionWorkers,
-						parametrosWorker);
+				pthread_create(&hiloWorker, NULL, (void*) comunicacionWorkers,parametrosWorker);
 
 				pthread_join(hiloWorker, NULL);
 
