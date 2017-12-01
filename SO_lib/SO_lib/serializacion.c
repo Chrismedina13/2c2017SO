@@ -516,7 +516,9 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 
 }
 
+//char* serializarListaUbicacionBloquesArchivos(t_list* ubicaciones){
 
+//}
 
 
 

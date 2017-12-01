@@ -27,8 +27,9 @@ int main(int argc, char *argv[]) {
 
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
-	//ejemplo serializarUblicacionBloqueArchivo
 
+	//EJEMPLO SERIALZIAR UBICACION BLOQUES ARCHIVOS
+/*
 	UbicacionBloquesArchivo* info = malloc (sizeof(int)*6);
 		info->parteDelArchivo = 1500;
 		info->bytesOcupados =120;
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
 			logInfo("Pasó deserializarUbicacionArchivo ");
 			logInfo("Script deserializado\nNodo: %i\nDesplazamiento: %i",infoDes->ubicacionCopia1.nodo,infoDes->ubicacionCopia1.desplazamiento);
 			logInfo("Script deserializado\nNODO: %i\nDesplazamiento %i",infoDes->ubicacionCopia2.nodo,infoDes->ubicacionCopia2.desplazamiento);
-
+*/
 	//EJEMPLO DE SERIALIZAR Y DESERIALIZAR SCRIPT
 /*
 	char* rutaScript = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Script.sh";

@@ -58,13 +58,6 @@ char* serializarBloque(int numeroBloque, char* contenidoBloque);
 //SetBloque* deserilizarBloque(char* bloqueSerializado);
 
 
-char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
-
-t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
-
-
-
-
 
 char* serializarFinTransformacion(finTransformacion* fin);
 
@@ -80,6 +73,12 @@ char * serializarListaTemp(t_list * lista);
 saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
+
+//FALTAN HACER LAS DE ABAJO
+
+char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
+
+t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
 
 
