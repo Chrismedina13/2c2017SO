@@ -103,3 +103,18 @@ void setInfoWorker(Info_Workers* info, int puerto,char* ipWorker){
 	info->puerto = puerto;
 	info->ipWorker = ipWorker;
 }
+
+int tamanioEstructuraUbicacionBloquesArchivo(UbicacionBloquesArchivo* info){
+	int tamanio = sizeof(int)*6;
+	return tamanio;
+}
+int tamanioEstructurasListaUbicacionBloquesArchivo(t_list* listaUbicaciones){
+	int tamanioUbicacion;
+	int tamanioListaTotal=0;
+	int i;
+	for(i=0;i<list_size(listaUbicaciones);i++){
+		tamanioUbicacion = tamanioEstructuraUbicacionBloquesArchivo(list_get(listaUbicaciones,i));
+		tamanioListaTotal = tamanioListaTotal+tamanioUbicacion;
+	}
+	return tamanioListaTotal;
+}

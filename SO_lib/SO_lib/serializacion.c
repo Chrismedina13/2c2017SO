@@ -516,10 +516,59 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 
 }
 
-//char* serializarListaUbicacionBloquesArchivos(t_list* ubicaciones){
+char* serializarListaUbicacionBloquesArchivos(t_list* ubicaciones){
 
-//}
+	uint32_t total_size = tamanioEstructurasListaUbicacionBloquesArchivo(ubicaciones);
+	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(ubicaciones)*sizeof(uint32_t))+ sizeof(int));
+	int offset = 0;
+	int i;
+	int tamanio_lista = list_size(ubicaciones);
+	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
+	for (i = 0; i < list_size(ubicaciones); i++) {
+		UbicacionBloquesArchivo* nodo = list_get(ubicaciones,i);
+		char* contextoSerializado = serializarUblicacionBloqueArchivo(nodo);
 
+		uint32_t size_contexto = tamanioEstructuraUbicacionBloquesArchivo(list_get(ubicaciones,i));
+		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);
+		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);
+		free(contextoSerializado);
+
+	}
+
+	return listaSerializada;
+}
+
+t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada){
+	int tamanio_lista= malloc(sizeof(int));
+
+	int desplazamiento = 0;
+	t_list* lista = list_create();//malloc(sizeof(contexto) * tamanio_contexto);
+	int i;
+
+	// Se deserializa cada elemento del Stack
+	deserializarDato(&(tamanio_lista),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+	logInfo("tamnio_lista %i",tamanio_lista);
+	int tamanio_contexto = tamanio_lista;
+
+	for (i = 0; i < tamanio_contexto; i++) {
+
+		uint32_t size_contexto;
+		deserializarDato(&(size_contexto),ListaUbicacionesSerializada,sizeof(uint32_t),&desplazamiento);
+
+		char* contextoSerializado = malloc(sizeof(char)*size_contexto);
+		deserializarDato(contextoSerializado,ListaUbicacionesSerializada,size_contexto,&desplazamiento);
+
+		RespuestaTransformacionYAMA* auxiliar = deserializarUbicacionBloquesArchivos(contextoSerializado);
+		list_add(lista,auxiliar);
+
+		//free(auxiliar);
+
+		free(contextoSerializado);
+	}
+	//free(tamanio_lista);
+	return lista;
+
+}
 
 
 
