@@ -1,6 +1,7 @@
 #include "Headers/ComunicacionConYama.h"
 #include "Headers/ComunicacionConWorker.h"
 #include "SO_lib/estructuras.h"
+#include "pthread.h"
 
 void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
@@ -146,15 +147,10 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			 listaDeWorkers = deserializarListaYAMA(mensaje);
 
 			 logInfo("Terminada la deserializacion");
-			 /*logInfo(
-			 "Se recibió de forma correcta la a Estructura Respuesta Transf .",
-			 tamanio);*7
-			 /*una vez que MASTER recibe los workers a planificar crea un hilo
-			 por cada nodo de la lista, es decir por cada woker */
 			int i;
 			RespuestaTransformacionYAMA* respuesta;
-
-			for (i = 0; list_size(listaDeWorkers); i++) {
+			int tamanioLista = list_size(listaDeWorkers);
+			for (i = 0; i<tamanioLista; i++) {
 				respuesta = list_get(listaDeWorkers, i);
 
 				logInfo("Creando hilos para comunicacion con WORKERS.");

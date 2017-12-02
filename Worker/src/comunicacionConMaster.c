@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "pthread.h"
 #define MAX 100
 
 void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
@@ -57,7 +58,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 				} else {
 
 					//Recibo datos de algun cliente
-					if ((bytesRecibidos = recv(i, buffer, 5, 0)) <= 0) {
+					if ((bytesRecibidos = recv(i, buffer,4 , 0)) <= 0) {
 						if (bytesRecibidos == 0) {
 							logInfo("Conexion cerrada del FD : %i", i);
 
@@ -66,9 +67,10 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						FD_CLR(i, &master);
 
 					} else {
+						logInfo("HOLA");
 						int codigo = deserializarINT(buffer);
-						logInfo(" Worker Recibe de Master: %s", codigo);
-
+						//logInfo(" Worker Recibe de Master: %d", codigo);
+						printf(" Worker Recibe de Master: %d", codigo);
 
 						char pesoMensaje[4];
 						int tamanio;
@@ -81,7 +83,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 							tamanio = deserializarINT(pesoMensaje);
 
-							logInfo("Tamanio de lo que recibo %i", tamanio);
+							//logInfo("Tamanio de lo que recibo %i", tamanio);
+							printf("Tamanio de lo que recibo %i", tamanio);
 
 							mensaje = malloc(tamanio + 1);
 
@@ -93,8 +96,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 							} else {
 								infoParaWorker* info = deserializarInfoParaWorker(mensaje);
-								logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
-
+								//logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
+								printf("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
 							}
 							break;
 						case REDUCCION_TEMPORALES:

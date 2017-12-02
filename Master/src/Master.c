@@ -13,10 +13,8 @@
 
 int main(int argc, char *argv[]) {
 
-	//Archivo de Logs
 	crearLog("Master.log", "MASTER", 1, log_level_from_string("INFO"));
 
-	//Archivo de configuracion
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	logInfo("Archivo de configuracion IP YAMA : %s \n", config->ipYama);
