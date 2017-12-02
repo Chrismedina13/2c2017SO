@@ -1,12 +1,12 @@
 /*
- * manejoDataBin.h
+ * bloques.h
  *
- *  Created on: 24/11/2017
+ *  Created on: 2/12/2017
  *      Author: utnso
  */
 
-#ifndef HEADERS_MANEJODATABIN_H_
-#define HEADERS_MANEJODATABIN_H_
+#ifndef SO_LIB_BLOQUES_H_
+#define SO_LIB_BLOQUES_H_
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -25,4 +25,5 @@ int set_bloque(char * contenido, int nro_bloque);
 
 int tamanioArchivo(int fp);
 
-#endif /* HEADERS_MANEJODATABIN_H_ */
+
+#endif /* SO_LIB_BLOQUES_H_ */

@@ -7,21 +7,18 @@ C_SRCS += \
 ../src/DataNode.c \
 ../src/configuracionDN.c \
 ../src/logDataNode.c \
-../src/manejoDataBin.c \
 ../src/prueb.c 
 
 OBJS += \
 ./src/DataNode.o \
 ./src/configuracionDN.o \
 ./src/logDataNode.o \
-./src/manejoDataBin.o \
 ./src/prueb.o 
 
 C_DEPS += \
 ./src/DataNode.d \
 ./src/configuracionDN.d \
 ./src/logDataNode.d \
-./src/manejoDataBin.d \
 ./src/prueb.d 
 
 
