@@ -1699,3 +1699,34 @@ ARchivo: arc
 
 [INFO] 19:10:20:280 MASTER/(10006:10006): Creando el hilo para comunicarme con Yama
 [INFO] 19:10:20:281 MASTER/(10006:10008): Ingrese JOB a Ejecutar
+[INFO] 03:59:53:977 MASTER/(20392:20392): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 03:59:53:987 MASTER/(20392:20392): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 03:59:53:987 MASTER/(20392:20392): Creando el hilo para comunicarme con Yama
+[INFO] 03:59:53:990 MASTER/(20392:20396): Ingrese JOB a Ejecutar
+[INFO] 04:01:22:111 MASTER/(20891:20891): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:01:22:118 MASTER/(20891:20891): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:01:22:118 MASTER/(20891:20891): Creando el hilo para comunicarme con Yama
+[INFO] 04:01:22:126 MASTER/(20891:20896): Ingrese JOB a Ejecutar
+[INFO] 04:01:26:137 MASTER/(20891:20896): Se va a ejecutar asad
+[INFO] 04:01:26:138 MASTER/(20891:20896): 4
+[INFO] 04:01:26:145 MASTER/(20891:20896): Recibi de YAMA: 2
+[INFO] 04:01:26:145 MASTER/(20891:20896): Master recibe de Yama solicitud de transformación.
+[INFO] 04:01:26:145 MASTER/(20891:20896): Tamanio de lo que recibo 73
+[INFO] 04:01:26:145 MASTER/(20891:20896): Recibo corecctamente la respuesta
+[INFO] 04:01:26:145 MASTER/(20891:20896): tamnio_lista 1
+[INFO] 04:01:26:145 MASTER/(20891:20896): Entro a 5
+Bloque: 12
+[INFO] 04:01:26:145 MASTER/(20891:20896): Terminada la deserializacion
+[INFO] 04:01:26:145 MASTER/(20891:20896): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:01:26:151 MASTER/(20891:20898): Trato de comunicar con worker
+[INFO] 04:01:26:152 MASTER/(20891:20898): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:01:26:152 MASTER/(20891:20898): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:01:26:152 MASTER/(20891:20898): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:01:26:152 MASTER/(20891:20898): Despues de serializar info para worker

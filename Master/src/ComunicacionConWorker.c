@@ -9,7 +9,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	//logInfo("%i",FDServidorWORKER);
 	script* scriptReductor = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/reductor.py");
 	int tamanioScriptReductor = tamanioScript(scriptReductor);
-	script* scriptTransformador = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
+		script* scriptTransformador = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
 	int tamanioScriptTransformador = tamanioScript(scriptTransformador);
 	script* scriptTransformadorIniciales = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
 	int tamanioScriptTransformadorIniciales = tamanioScript(scriptTransformadorIniciales);
@@ -17,9 +17,17 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int tamanioScriptTransformadorAnuales = tamanioScript(scriptTransformadorAnuales);
 
 	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptReductor,tamanioScriptReductor);
+	logInfo("Se envia script reductor");
+
 	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformador, tamanioScriptTransformador);
+	logInfo("Se envia script transformador ");
+
 	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorIniciales, tamanioScriptTransformadorIniciales);
+	logInfo("Se envia script reductor");
+
 	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorAnuales, tamanioScriptTransformadorAnuales);
+	logInfo("Se envia script reductor");
+
 	logInfo("Trato de comunicar con worker");
 
 	infoParaWorker* mensaje;
