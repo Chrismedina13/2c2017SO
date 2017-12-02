@@ -159,7 +159,7 @@ void rearmar_script(script* script,int codigo){
 	fclose(fd);
 }
 
-void ejecutarScript(char* rutaScript,char* rutaArchivo){
+void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
   int SIZE = 1024;
   int pipe_padreAHijo[2];
   int pipe_hijoAPadre[2];
@@ -182,7 +182,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivo){
 	close( pipe_padreAHijo[0]);
       char *argv[] = {NULL};
       char *envp[] = {NULL};
-      execve("./script_transformacion.py", argv, envp);
+      execve(rutaScript, argv, envp);
     	exit(1);
   }else{
 	close( pipe_padreAHijo[0] ); //Lado de lectura de lo que el padre le pasa al hijo.
@@ -196,7 +196,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivo){
   	read( pipe_hijoAPadre[0], buffer, SIZE );
     	close( pipe_hijoAPadre[0]);
   }
-  FILE* fd = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/resultado","w");
+  FILE* fd = fopen("rutaArchivoAGuardar","w");
   fputs(buffer,fd);
   fclose(fd);
 
