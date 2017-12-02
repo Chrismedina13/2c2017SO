@@ -165,7 +165,9 @@ void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchiv
   int pipe_padreAHijo[2];
   int pipe_hijoAPadre[2];
 
-  system("chmod +x script_transformacion.py");
+  char* contenidoDelArchivoAEjecutar = obtenerPuntero(rutaArchivoAEjecutar);
+
+  system("chmod +x transformar.py");
   pipe(pipe_padreAHijo);
   pipe(pipe_hijoAPadre);
   pid_t pid;
@@ -189,7 +191,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchiv
 	close( pipe_padreAHijo[0] ); //Lado de lectura de lo que el padre le pasa al hijo.
     	close( pipe_hijoAPadre[1] ); //Lado de escritura de lo que hijo le pasa al padre.
 
-    	write( pipe_padreAHijo[1],"hola pepe",strlen("hola pepe"));
+    	write( pipe_padreAHijo[1],contenidoDelArchivoAEjecutar,strlen(contenidoDelArchivoAEjecutar));
 
     	close( pipe_padreAHijo[1]);
 
@@ -197,7 +199,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchiv
   	read( pipe_hijoAPadre[0], buffer, SIZE );
     	close( pipe_hijoAPadre[0]);
   }
-  FILE* fd = fopen("rutaArchivoAGuardar","w");
+  FILE* fd = fopen(rutaArchivoAGuardar,"w");
   fputs(buffer,fd);
   fclose(fd);
 
