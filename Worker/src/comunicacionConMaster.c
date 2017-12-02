@@ -93,6 +93,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 								rearmar_script(script,SCRIPT_TRANSFORMADOR_INICIAL);
 
+								printf("recibo script tranformacion inicial");
+
+
 							}
 							break;
 						case SCRIPT_TRANSFORMADOR_ANUAL:
@@ -109,6 +112,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 								rearmar_script(script,SCRIPT_TRANSFORMADOR_ANUAL);
 
+								printf("recibo script tranformacion anual");
+
+
 							}
 							break;
 						case SCRIPT_TRANSFORMADOR:
@@ -119,12 +125,15 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							mensaje[tamanio] = '\0';
 							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 
-								logInfo("Error en la recepcion de Info de Master.");
+								printf("Error en la recepcion de Info de Master.");
 							}else{
 
 								script* script = deserilizarScript(mensaje);
 
 								rearmar_script(script,SCRIPT_TRANSFORMADOR);
+
+								printf("recibo script tranformador");
+
 
 							}
 							break;
@@ -142,6 +151,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								script* script = deserilizarScript(mensaje);
 
 								rearmar_script(script,SCRIPT_REDUCCION);
+
+								printf("recibo script tranformador");
 
 							}
 							break;

@@ -132,19 +132,20 @@ void rearmar_script(script* script,int codigo){
 	FILE* fd;
 	char* nombreArchivo = string_new();
 	char* contenidoDelBloque = string_new();
-	nombreArchivo = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts";
+	string_append(&nombreArchivo,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts/");
+
 	switch(codigo){
 	case SCRIPT_REDUCCION:
-		string_append(nombreArchivo,"Reduccion.py");
+		string_append(&nombreArchivo,"Reduccion.py");
 		break;
 	case SCRIPT_TRANSFORMADOR:
-		string_append(nombreArchivo,"Transformador.py");
+		string_append(&nombreArchivo,"Transformador.py");
 		break;
 	case SCRIPT_TRANSFORMADOR_ANUAL:
-		string_append(nombreArchivo,"Transformador_Anual.py");
+		string_append(&nombreArchivo,"Transformador_Anual.py");
 		break;
 	case SCRIPT_TRANSFORMADOR_INICIAL:
-		string_append(nombreArchivo,"Transformador_Inicial.py");
+		string_append(&nombreArchivo,"Transformador_Inicial.py");
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
