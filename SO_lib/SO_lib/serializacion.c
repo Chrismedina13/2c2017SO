@@ -295,7 +295,6 @@ char * serializarLista_info_workers(t_list * listaWorkers) {
 		uint32_t size_contexto = tamanioEstructuraInfoWorker(list_get(listaWorkers,i));
 		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
 		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto
-		free(contextoSerializado);
 
 	}
 
