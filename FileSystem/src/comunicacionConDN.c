@@ -148,6 +148,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     saludo_datanode * saludo;
     nodos_id_fd * nodos;
     char* get_bloque;
+    int tamaniorecv=0;
 
 
 	switch (codigo) {
@@ -172,9 +173,24 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 						logInfo("tamanio de lo que recibo %i", tamanio);
 						mensaje = malloc(tamanio + 1);
 						mensaje[tamanio] = '\0';
-						recv(FD_DN, mensaje,tamanio,0);
-						logInfo("Se reibio el contenido de bloque: %s",  mensaje);
+						//tamaniorecv = recv(FD_DN, mensaje,tamanio,0);
 
+					    mensaje=recv_timeout(FD_DN, 5,2046);
+					    logInfo("%s", mensaje);
+					/*	logInfo("tamanio del recv %i", tamaniorecv);
+						if(tamaniorecv==strlen(mensaje)){
+							logInfo("Recibi el contenido OK");
+						}
+
+						if(tamaniorecv == tamanio){
+							logInfo("Ahora si recibi OK");
+
+						}else {
+							logInfo("En realidad no lo recibi tan bien");
+							logInfo("tamanio del recv %i", tamaniorecv);
+						}
+						//logInfo("Se reibio el contenido de bloque: %s",  mensaje);
+*/
 
    //no hay que deseralizar por que el contenido es un *char
    //ver como seguir planificando con el bloque recibido

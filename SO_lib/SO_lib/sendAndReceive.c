@@ -41,18 +41,9 @@ int receive_basic(int fd_dn, int tamanio_parcial)
 }
 
 
-int receive_correct(int FD_DN)
+char* recv_timeout(int FD_DN , int timeout, int CHUNK_SIZE)
 {
-
-	int total_recv = recv_timeout(FD_DN, 4); //hay que jugar con el timeout
-
-	printf("Recibi un total de: %d bytes\n\n" , total_recv);
-	return 0;
-	}
-
-int recv_timeout(int FD_DN , int timeout)
-{
-	int CHUNK_SIZE = 1024;
+	char* bloque=string_new();
     int size_recv , total_size= 0;
     struct timeval begin , now;
     char chunk[CHUNK_SIZE];
@@ -92,11 +83,11 @@ int recv_timeout(int FD_DN , int timeout)
         else
         {
             total_size += size_recv;
-            printf("%FD_DN" , chunk);
+            string_append(&bloque,chunk);
             //reset beginning time
             gettimeofday(&begin , NULL);
         }
     }
 
-    return total_size;
+    return bloque;
 }
