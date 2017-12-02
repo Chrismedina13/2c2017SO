@@ -16,17 +16,23 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	script* scriptTransformadorAnuales = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
 	int tamanioScriptTransformadorAnuales = tamanioScript(scriptTransformadorAnuales);
 
-	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptReductor,tamanioScriptReductor);
+	char* respuestaScriptReductor = serializarScript(scriptReductor);
+	char* respuestaScriptTransformador = serializarScript(scriptTransformador);
+	char* respuestaScriptIniciales = serializarScript(scriptTransformadorIniciales);
+	char* respuestaScriptAnuales = serializarScript(scriptTransformadorAnuales);
+
+
+	mensajesEnviadosAWorker(SCRIPT_REDUCCION,FDServidorWORKER,respuestaScriptReductor,tamanioScriptReductor);
 	logInfo("Se envia script reductor");
 
-	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformador, tamanioScriptTransformador);
+	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,respuestaScriptTransformador, tamanioScriptTransformador);
 	logInfo("Se envia script transformador ");
 
-	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorIniciales, tamanioScriptTransformadorIniciales);
-	logInfo("Se envia script reductor");
+	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR_INICIAL,FDServidorWORKER,respuestaScriptIniciales, tamanioScriptTransformadorIniciales);
+	logInfo("Se envia script scriptTransformadorIniciales");
 
-	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorAnuales, tamanioScriptTransformadorAnuales);
-	logInfo("Se envia script reductor");
+	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR_ANUAL,FDServidorWORKER,respuestaScriptAnuales, tamanioScriptTransformadorAnuales);
+	logInfo("Se envia script scriptTransformadorAnuales");
 
 	logInfo("Trato de comunicar con worker");
 
@@ -79,5 +85,42 @@ case TAREA_WORKER:
 
 		destruirPaquete(paqueteDeEnvio);
 		break;
+case SCRIPT_REDUCCION:
+	paqueteDeEnvio = crearPaquete(SCRIPT_REDUCCION, tamanio, mensaje);
+
+		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+			logInfo("Error en envio de  INFOPARAWORKERS");
+		}
+
+		destruirPaquete(paqueteDeEnvio);
+		break;
+case SCRIPT_TRANSFORMADOR:
+	paqueteDeEnvio = crearPaquete(SCRIPT_TRANSFORMADOR, tamanio, mensaje);
+
+		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+			logInfo("Error en envio de  INFOPARAWORKERS");
+		}
+
+		destruirPaquete(paqueteDeEnvio);
+		break;
+case SCRIPT_TRANSFORMADOR_INICIAL:
+	paqueteDeEnvio = crearPaquete(SCRIPT_TRANSFORMADOR_INICIAL, tamanio, mensaje);
+
+		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+			logInfo("Error en envio de  INFOPARAWORKERS");
+		}
+
+		destruirPaquete(paqueteDeEnvio);
+		break;
+case SCRIPT_TRANSFORMADOR_ANUAL:
+	paqueteDeEnvio = crearPaquete(SCRIPT_TRANSFORMADOR_ANUAL, tamanio, mensaje);
+
+		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+			logInfo("Error en envio de  INFOPARAWORKERS");
+		}
+
+		destruirPaquete(paqueteDeEnvio);
+		break;
+
 	}
 }

@@ -19,7 +19,10 @@ int main(int argc, char *argv[]) {
 
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
-	ejecutarScript("","");
+	//char* puntero = obtenerPuntero("/home/utnso/SO-Nombres-Dataset/nombres.csv");
+	//logInfo("%s",puntero);
+
+	ejecutarScript("","/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/nombres.csv","/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/Resultado.txt");
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);

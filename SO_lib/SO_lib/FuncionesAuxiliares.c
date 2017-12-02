@@ -132,19 +132,20 @@ void rearmar_script(script* script,int codigo){
 	FILE* fd;
 	char* nombreArchivo = string_new();
 	char* contenidoDelBloque = string_new();
-	nombreArchivo = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts";
+	string_append(&nombreArchivo,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts/");
+
 	switch(codigo){
 	case SCRIPT_REDUCCION:
-		string_append(nombreArchivo,"Reduccion.py");
+		string_append(&nombreArchivo,"Reduccion.py");
 		break;
 	case SCRIPT_TRANSFORMADOR:
-		string_append(nombreArchivo,"Transformador.py");
+		string_append(&nombreArchivo,"Transformador.py");
 		break;
 	case SCRIPT_TRANSFORMADOR_ANUAL:
-		string_append(nombreArchivo,"Transformador_Anual.py");
+		string_append(&nombreArchivo,"Transformador_Anual.py");
 		break;
 	case SCRIPT_TRANSFORMADOR_INICIAL:
-		string_append(nombreArchivo,"Transformador_Inicial.py");
+		string_append(&nombreArchivo,"Transformador_Inicial.py");
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
@@ -159,12 +160,14 @@ void rearmar_script(script* script,int codigo){
 	fclose(fd);
 }
 
-void ejecutarScript(char* rutaScript,char* rutaArchivo){
+void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
   int SIZE = 1024;
   int pipe_padreAHijo[2];
   int pipe_hijoAPadre[2];
 
-  system("chmod +x script_transformacion.py");
+  char* contenidoDelArchivoAEjecutar = obtenerPuntero(rutaArchivoAEjecutar);
+
+  system("chmod +x transformar.py");
   pipe(pipe_padreAHijo);
   pipe(pipe_hijoAPadre);
   pid_t pid;
@@ -182,13 +185,13 @@ void ejecutarScript(char* rutaScript,char* rutaArchivo){
 	close( pipe_padreAHijo[0]);
       char *argv[] = {NULL};
       char *envp[] = {NULL};
-      execve("./script_transformacion.py", argv, envp);
+      execve(rutaScript, argv, envp);
     	exit(1);
   }else{
 	close( pipe_padreAHijo[0] ); //Lado de lectura de lo que el padre le pasa al hijo.
     	close( pipe_hijoAPadre[1] ); //Lado de escritura de lo que hijo le pasa al padre.
 
-    	write( pipe_padreAHijo[1],"hola pepe",strlen("hola pepe"));
+    	write( pipe_padreAHijo[1],contenidoDelArchivoAEjecutar,strlen(contenidoDelArchivoAEjecutar));
 
     	close( pipe_padreAHijo[1]);
 
@@ -196,7 +199,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivo){
   	read( pipe_hijoAPadre[0], buffer, SIZE );
     	close( pipe_hijoAPadre[0]);
   }
-  FILE* fd = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/resultado","w");
+  FILE* fd = fopen(rutaArchivoAGuardar,"w");
   fputs(buffer,fd);
   fclose(fd);
 
