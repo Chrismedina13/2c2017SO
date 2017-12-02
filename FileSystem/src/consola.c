@@ -128,6 +128,10 @@ void consolaFileSystem(){
 					cantArchivos = 0;
 					cargarDirectorios();
 
+					int resp = crearRegistroArchivoNodos(tabla_de_nodos); //escribe el registro de nodos nodos.bin (para recuperar fs y nodos anteriores)
+						if(resp==0) printf("\nRegistro de Nodo cargado correctamente.\n");
+						else printf("\nRegistro de Nodo no pudo ser cargado.\n");
+
 				}
 			}
 
