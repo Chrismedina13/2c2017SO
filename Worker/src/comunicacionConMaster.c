@@ -78,7 +78,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						 int FDMaster = i;
 
 						switch (codigo) {
-						case SCRIPT:
+						case SCRIPT_TRANSFORMADOR_INICIAL:
 
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
@@ -89,14 +89,13 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
 
-								script* script = deserializarScript(mensaje);
+								script* script = deserilizarScript(mensaje);
 
-								rearmar_script(script);
+								rearmar_script(script,SCRIPT_TRANSFORMADOR_INICIAL);
 
 							}
 							break;
-						case SCRIPT:
-
+						case SCRIPT_TRANSFORMADOR_ANUAL:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
@@ -106,13 +105,13 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
 
-								script* script = deserializarScript(mensaje);
+								script* script = deserilizarScript(mensaje);
 
-								rearmar_script(script);
+								rearmar_script(script,SCRIPT_TRANSFORMADOR_ANUAL);
 
 							}
 							break;
-						case SCRIPT:
+						case SCRIPT_TRANSFORMADOR:
 
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
@@ -123,13 +122,13 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
 
-								script* script = deserializarScript(mensaje);
+								script* script = deserilizarScript(mensaje);
 
-								rearmar_script(script);
+								rearmar_script(script,SCRIPT_TRANSFORMADOR);
 
 							}
 							break;
-						case SCRIPT:
+						case SCRIPT_REDUCCION:
 
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
@@ -140,9 +139,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
 
-								script* script = deserializarScript(mensaje);
+								script* script = deserilizarScript(mensaje);
 
-								rearmar_script(script);
+								rearmar_script(script,SCRIPT_REDUCCION);
 
 							}
 							break;
