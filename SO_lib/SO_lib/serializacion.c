@@ -2,6 +2,16 @@
 #include "estructuras.h"
 #include "commons/string.h"
 
+char* serializeInt(int value){
+
+	size_t size = sizeof(int);
+	char* stream = calloc(1,size);
+	memcpy(stream,&value,size);
+	return stream;
+}
+
+
+
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 		int* offset) {
 	memcpy(buffer + *offset, datoASerializar, tamanio);

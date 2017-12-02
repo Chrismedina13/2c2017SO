@@ -11,6 +11,9 @@
 #include "estructuras.h"
 
 //DEFINICION DE FUNCIONES PROBADAS
+char* serializeInt(int value);
+
+
 void serializarDato(char* buffer, void* datoASerializar, int tamanio,
 		int* offset);
 void deserializarDato(void* datoSerializado, char* buffer, int tamanio,
