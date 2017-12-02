@@ -1,6 +1,7 @@
 #include "Headers/ComunicacionConWorker.h"
 #include "SO_lib/estructuras.h"
 #include "SO_lib/FuncionesAuxiliares.h"
+#include "SO_lib/Protocolo.h"
 
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;
@@ -15,10 +16,10 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	script* scriptTransformadorAnuales = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
 	int tamanioScriptTransformadorAnuales = tamanioScript(scriptTransformadorAnuales);
 
-	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,scriptReductor, tamanioScriptReductor);
-	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,scriptTransformador, tamanioScriptTransformador);
-	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,scriptTransformadorIniciales, tamanioScriptTransformadorIniciales);
-	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,script, tamanioScriptTransformadorAnuales);
+	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptReductor,tamanioScriptReductor);
+	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformador, tamanioScriptTransformador);
+	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorIniciales, tamanioScriptTransformadorIniciales);
+	mensajesEnviadosAWorker(SCRIPT,FDServidorWORKER,scriptTransformadorAnuales, tamanioScriptTransformadorAnuales);
 	logInfo("Trato de comunicar con worker");
 
 	infoParaWorker* mensaje;

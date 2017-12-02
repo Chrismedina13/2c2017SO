@@ -67,7 +67,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						FD_CLR(i, &master);
 
 					} else {
-						logInfo("HOLA");
+						//logInfo("HOLA");1
 						int codigo = deserializarINT(buffer);
 						//logInfo(" Worker Recibe de Master: %d", codigo);
 						printf(" Worker Recibe de Master: %d", codigo);
@@ -78,6 +78,74 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						 int FDMaster = i;
 
 						switch (codigo) {
+						case SCRIPT:
+
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+
+								script* script = deserializarScript(mensaje);
+
+								rearmar_script(script);
+
+							}
+							break;
+						case SCRIPT:
+
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+
+								script* script = deserializarScript(mensaje);
+
+								rearmar_script(script);
+
+							}
+							break;
+						case SCRIPT:
+
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+
+								script* script = deserializarScript(mensaje);
+
+								rearmar_script(script);
+
+							}
+							break;
+						case SCRIPT:
+
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+
+								script* script = deserializarScript(mensaje);
+
+								rearmar_script(script);
+
+							}
+							break;
 						case TAREA_WORKER:
 							recv(FDMaster, pesoMensaje, 4, 0);
 
@@ -86,7 +154,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							//logInfo("Tamanio de lo que recibo %i", tamanio);
 							printf("Tamanio de lo que recibo %i", tamanio);
 
-							mensaje = malloc(tamanio + 1);
+							mensaje = malloc(tamanio);
 
 							mensaje[tamanio] = '\0';
 
@@ -97,7 +165,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							} else {
 								infoParaWorker* info = deserializarInfoParaWorker(mensaje);
 								//logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
-								printf("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
+								logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
+
 							}
 							break;
 						case REDUCCION_TEMPORALES:

@@ -420,7 +420,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	t_list* respuestaAMaster = list_create(); //;armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
 	//faltaLLenarLaTablaDeNodos
 
-	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"archivoTransformacion1");
+	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"/home/utnso/SO-Nombres-Dataset");
 	/*RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
 	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(4,31,"44.4343",44,44144,"archivoTransformacion4");
 	RespuestaTransformacionYAMA* respuestaTrans4 = setRespuestaTransformacionYAMA(5,31,"55.55543",55,55155,"arch");

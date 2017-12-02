@@ -159,7 +159,7 @@ void rearmar_script(script* script,int codigo){
 	fclose(fd);
 }
 
-int ejecutarScript(char* rutaScript,char* rutaArchivo){
+void ejecutarScript(char* rutaScript,char* rutaArchivo){
   int SIZE = 1024;
 
   int pipe_padreAHijo[2];
@@ -201,6 +201,5 @@ int ejecutarScript(char* rutaScript,char* rutaArchivo){
   fclose(fd);
 
   free(buffer);
-  return 0;
 
 }
