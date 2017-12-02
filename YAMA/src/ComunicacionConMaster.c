@@ -84,11 +84,30 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 }
 
 void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio) {
+
+	Paquete* paqueteSolicitudTransf;
+
 	switch (codigo) {
+
+	case NUMERO_DE_JOB:
+		logInfo("YAMA se prepara para enviar a Master el identificador de job.");
+
+		paqueteSolicitudTransf = crearPaquete(codigo,
+				tamanio, mensaje);
+
+		if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
+			logInfo("Error en envio de solicitud de transformación a MASTER");
+		}
+
+		destruirPaquete(paqueteSolicitudTransf);
+
+		logInfo("YAMA envia a Master el identificador de job.");
+
+		break;
 	case SOL_TRANSFORMACION:
 		logInfo("YAMA envia a Master solicitud de transformación.");
 
-		Paquete* paqueteSolicitudTransf = crearPaquete(codigo,
+		paqueteSolicitudTransf = crearPaquete(codigo,
 				tamanio, mensaje);
 
 		if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
@@ -165,7 +184,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		Job* job = crearJOB(FDMaster,mensaje);
 
-		//enviarAMasterElnumeroDejob
+		char* numeroDeJob;
+		int a = 0;
+
+		numeroDeJob = serializeInt(job->identificadorJob);
+		mensajesEnviadosAMaster(NUMERO_DE_JOB,FDMaster,numeroDeJob,4);
 
 		logInfo("Envio De JOB a FS");
 		int tamanioJOB = strlen(job->nombreDelArchivo);
@@ -260,9 +283,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		//serializarRespuestaAlmacenadoFinal(RAF);
 		//mensajesEnviadosAMaster
 		crearEntradasAlmacenamientoFinal(RAF,finRG,FDMaster);
-
-
-
 
 		break;
 	case SOL_ALMACENADO_FINAL:

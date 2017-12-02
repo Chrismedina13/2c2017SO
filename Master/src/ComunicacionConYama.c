@@ -31,6 +31,18 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 	mensajesRecibidosDeYama(codigo, FDsocketClienteYAMA);
 
+
+	char peso[4];
+	recv(FDsocketClienteYAMA, peso, 4, 0);
+
+		int cod = deserializarINT(peso);
+
+		logInfo("Recibi de YAMA: %i", cod);
+
+	mensajesRecibidosDeYama(cod, FDsocketClienteYAMA);
+
+
+
 	free(job);
 }
 ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) {
@@ -122,6 +134,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 	int tamanio;
 	char* mensaje;
 	t_list* listaDeWorkers = list_create();
+	int numeroDeJob;
 
 	switch (codigo) {
 	case SOL_TRANSFORMACION:
@@ -174,6 +187,29 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 		logInfo("Master recibe de Yama solicitud de Reducción Local.");
 
 		break;
+	case NUMERO_DE_JOB:
+		logInfo("Master recibe el numero De JOB.");
+
+		recv(FDsocketClienteYAMA, pesoMsj, 4, 0);
+
+		tamanio = deserializarINT(pesoMsj);
+
+		mensaje = malloc(tamanio + 1);
+
+		logInfo("Tamanio de lo que recibo %i", tamanio);
+
+		if (recv(FDsocketClienteYAMA, mensaje, tamanio, 0) == -1) {
+
+		logInfo("Error en la recepcion de la Estructura Respuesta Transf.");
+
+		} else {
+
+			numeroDeJob = deserializarINT(mensaje);
+			logInfo("El job asignado es %i",numeroDeJob);
+		}
+
+		break;
+
 	case SOL_REDUCCION_GLOBAL:
 		logInfo("Master recibe de Yama solicitud de Reducción Global");
 

@@ -12,7 +12,7 @@
 
 void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
-	semaphore_wait(SEMAFOROYAMA);
+	//semaphore_wait(SEMAFOROYAMA);
 
 
 	char codigoRecibido[4];
@@ -30,6 +30,29 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 		logInfo("Error en la comunicacion con YAMA ");
 
 	}
+
+	char* ip1 = "127.0.1";
+	char* ip2 = "129.0.1";
+
+	t_list* listaworkers = list_create();
+	Info_Workers* info1 = malloc(sizeof(int) + strlen(ip1));
+	Info_Workers* info2 = malloc(sizeof(int) + strlen(ip2));
+	info1->ipWorker = ip1;
+	info2->puerto = 100;
+
+	info1->ipWorker = ip2;
+	info2->puerto = 150;
+
+	list_add(listaworkers,info1);
+	list_add(listaworkers,info2);
+
+	int tamanioListaIW = tamanioEstructurasListaWorkers(listaworkers);
+	char* infoSerializada = serializarLista_info_workers(listaworkers);
+
+	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,infoSerializada,tamanioListaIW);
+
+
+
 
 
 	//fs manda la lista de workers

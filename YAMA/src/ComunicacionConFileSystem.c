@@ -195,6 +195,16 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 			recv(FDsocketClienteFileSystem, mensaje, tamanio, 0);
 			logInfo("Se recibio la lista de workers: %s ", mensaje);
 
+			t_list* lista = deserializarInfoWorker(mensaje);
+			while(i < list_size(lista)){
+				Info_Workers* info = list_get(lista,i);
+				logInfo("puerto de nodo = %i ",info->puerto);
+				logInfo("ip de nodo  = %s ",info->ipWorker);
+
+				i++;
+			}
+
+
 
 
 			break;
