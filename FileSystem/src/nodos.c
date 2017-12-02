@@ -95,10 +95,11 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		bitMapNodo1 = list_get(mapa_de_bits,indexList1);
 		index1 = bitMapNodo1->idNodo;
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+
 		if(desplazamiento1==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-
+		logInfo("Bloque: %d, nodo %d, desplazamiento %d",count, index1,desplazamiento1);
 		list_remove(mapa_de_bits,indexList1);
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
@@ -107,10 +108,11 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		bitMapNodo2 = list_get(mapa_de_bits,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
+
 		if(desplazamiento2==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-
+		logInfo("Bloque: %d, nodo %d, desplazamiento %d",count, index2,desplazamiento2);
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
 		list_add(mapa_de_bits,bitMapNodo1);
@@ -124,8 +126,8 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		ubicacionBloquesArchivo->ubicacionCopia1.nodo = index1;
 		ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento = desplazamiento2;
 		ubicacionBloquesArchivo->ubicacionCopia2.nodo = index2;
-		//printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
-		//		desplazamiento1,index2, desplazamiento2);
+		printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
+				desplazamiento1,index2, desplazamiento2);
 		//list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
 		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);//empieza a cargar el vector de archivos
 
@@ -272,11 +274,17 @@ int elegirNodo(t_list* nodos){
 		nodoMasVacio= list_get(nodos,count);
 		if(nodoMasVacio->estado==1){
 			flag=1;
+			if(list_size(nodos)==1){
+				return(count);
+			}
 		}
+
 		count++;
 	}
 
 	count = 0;
+
+
 
 	while(count<list_size(nodos)){
 
@@ -294,7 +302,7 @@ int elegirNodo(t_list* nodos){
 
 int bloquesLibres(bloques_nodo* nodo){
 	int i,libres=0;
-	for(i=0;i<nodo->bloquesTotales;i++){
+	for(i=0;i<(nodo->bloquesTotales);i++){
 		if(nodo->bitmap[i] == 0) libres++;
 	}
 	return libres;
@@ -319,7 +327,7 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 	 */
 
 	int count = 0;
-	while(count<nodo->bloquesTotales){
+	while(count<(nodo->bloquesTotales)){
 		if(nodo->bitmap[count]==0){
 			nodo->bitmap[count]=1;
 			return(count);

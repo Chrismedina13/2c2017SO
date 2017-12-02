@@ -406,7 +406,7 @@ int newArchivo(){
 		else return(count);
 	}
 
-	return(count);
+	return(-1);
 
 }
 
@@ -694,5 +694,27 @@ t_list* nombreToUbicaciones(char* nombre){
 	perror("error");
 }
 
+int inciarTablaDeArchivos(){
+
+	/*typedef struct tabla_archivos {
+	char* nombre;
+	int tamanio; //en bytes
+	char* tipo;
+	int directorio; //index del directorio
+	//UbicacionBloquesArchivo* bloques;
+	t_list* bloques;//char *
+	t_list* ubicaciones;//ubicacionBloquesArchivo
+}tabla_archivos;
+	 *
+	 */
+	int i;
+	for(i=0; i<100; i++){
+		tabla_de_archivos[i].nombre="deleted";
+		tabla_de_archivos[i].tamanio=-1;
+		tabla_de_archivos[i].tipo="";
+		tabla_de_archivos[i].directorio=-1;
+	}
+	return(1);
+}
 
 
