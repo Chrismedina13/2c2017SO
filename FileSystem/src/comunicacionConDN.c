@@ -238,11 +238,11 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 								count2++;
 							}
 							if(nuevo==0){
-								logInfo("Nuevo nodo, id:%s", idNodo);
+								logInfo("Nuevo nodo, id:%d", idNodo);
 								nuevo=0;
 
 							}
-							free(nodo2);
+							//free(nodo2);
 						}
 
 						//nodo viejo
@@ -269,7 +269,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 								count3++;
 							}
 
-							free(nodo3);
+							//free(nodo3);
 						}
 
 						//nodo nuevo
@@ -303,7 +303,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 							list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
 
-							free(nodo1);
+							//free(nodo1);
 
 							//actualizo info worker
 
@@ -314,17 +314,17 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
 							logInfo("Se cargo la informacion de los workers para enviar a yama");
 
-							free(infoworker);
+							//free(infoworker);
 
 							//actualizo list nodos id fd
 
 							nodos_id_fd * nodos = malloc(sizeof(int)*2);
 
-							nodos->id_nodo=saludo->nombre_nodo;
+							nodos->id_nodo=idNodo;
 							nodos->nodo_fd=FD_DN;
 							list_add(list_nodos_id_fd, nodos);
 
-							free(nodos);
+							//free(nodos);
 
 						}
 
@@ -333,7 +333,11 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							if(cantNodos==list_size(list_nodos_id_fd)){ //nodos necesarios para arrancar
 								logInfo("Se conectaron todos los nodos");
 								semaphore_signal(SEMAFORODN);
-
+								/*free(nodo2);
+								free(nodo3);
+								free(nodo1);
+								free(infoWorker);
+								free(nodos);*/
 							}
 
 							break;

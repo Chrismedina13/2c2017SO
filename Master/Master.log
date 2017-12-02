@@ -1730,3 +1730,421 @@ Bloque: 12
 [INFO] 04:01:26:152 MASTER/(20891:20898): Salgo de serializar una estructua INFOPARAWORKER
 
 [INFO] 04:01:26:152 MASTER/(20891:20898): Despues de serializar info para worker
+[INFO] 04:18:37:17 MASTER/(22041:22041): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:18:37:24 MASTER/(22041:22041): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:18:37:24 MASTER/(22041:22041): Creando el hilo para comunicarme con Yama
+[INFO] 04:18:37:27 MASTER/(22041:22043): Ingrese JOB a Ejecutar
+[INFO] 04:19:36:792 MASTER/(22469:22469): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:19:36:792 MASTER/(22469:22469): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:19:36:792 MASTER/(22469:22469): Creando el hilo para comunicarme con Yama
+[INFO] 04:19:36:793 MASTER/(22469:22472): Ingrese JOB a Ejecutar
+[INFO] 04:19:40:309 MASTER/(22469:22472): Se va a ejecutar hhjjh
+[INFO] 04:19:40:310 MASTER/(22469:22472): 5
+[INFO] 04:19:40:312 MASTER/(22469:22472): Recibi de YAMA: 2
+[INFO] 04:19:40:312 MASTER/(22469:22472): Master recibe de Yama solicitud de transformación.
+[INFO] 04:19:40:312 MASTER/(22469:22472): Tamanio de lo que recibo 73
+[INFO] 04:19:40:312 MASTER/(22469:22472): Recibo corecctamente la respuesta
+[INFO] 04:19:40:312 MASTER/(22469:22472): tamnio_lista 1
+[INFO] 04:19:40:312 MASTER/(22469:22472): Entro a 5
+Bloque: 12
+[INFO] 04:19:40:312 MASTER/(22469:22472): Terminada la deserializacion
+[INFO] 04:19:40:312 MASTER/(22469:22472): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:19:40:318 MASTER/(22469:22476): Se envia script reductor
+[INFO] 04:19:40:318 MASTER/(22469:22476): Se envia script transformador 
+[INFO] 04:19:40:318 MASTER/(22469:22476): Se envia script scriptTransformadorIniciales
+[INFO] 04:19:40:318 MASTER/(22469:22476): Se envia script scriptTransformadorAnuales
+[INFO] 04:19:40:318 MASTER/(22469:22476): Trato de comunicar con worker
+[INFO] 04:19:40:318 MASTER/(22469:22476): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:19:40:319 MASTER/(22469:22476): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:19:40:319 MASTER/(22469:22476): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:19:40:319 MASTER/(22469:22476): Despues de serializar info para worker
+[INFO] 04:23:02:369 MASTER/(23348:23348): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:23:02:373 MASTER/(23348:23348): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:23:02:373 MASTER/(23348:23348): Creando el hilo para comunicarme con Yama
+[INFO] 04:23:02:383 MASTER/(23348:23352): Ingrese JOB a Ejecutar
+[INFO] 04:23:18:766 MASTER/(23348:23352): Se va a ejecutar ,n,mn,mn,mn
+[INFO] 04:23:18:767 MASTER/(23348:23352): 11
+[INFO] 04:23:18:770 MASTER/(23348:23352): Recibi de YAMA: 2
+[INFO] 04:23:18:770 MASTER/(23348:23352): Master recibe de Yama solicitud de transformación.
+[INFO] 04:23:18:770 MASTER/(23348:23352): Tamanio de lo que recibo 73
+[INFO] 04:23:18:770 MASTER/(23348:23352): Recibo corecctamente la respuesta
+[INFO] 04:23:18:770 MASTER/(23348:23352): tamnio_lista 1
+[INFO] 04:23:18:770 MASTER/(23348:23352): Entro a 5
+Bloque: 12
+[INFO] 04:23:18:770 MASTER/(23348:23352): Terminada la deserializacion
+[INFO] 04:23:18:770 MASTER/(23348:23352): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:23:18:782 MASTER/(23348:23355): Se envia script reductor
+[INFO] 04:23:18:782 MASTER/(23348:23355): Se envia script transformador 
+[INFO] 04:23:18:782 MASTER/(23348:23355): Se envia script scriptTransformadorIniciales
+[INFO] 04:23:18:783 MASTER/(23348:23355): Se envia script scriptTransformadorAnuales
+[INFO] 04:23:18:783 MASTER/(23348:23355): Trato de comunicar con worker
+[INFO] 04:23:18:783 MASTER/(23348:23355): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:23:18:783 MASTER/(23348:23355): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:23:18:783 MASTER/(23348:23355): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:23:18:783 MASTER/(23348:23355): Despues de serializar info para worker
+[INFO] 04:36:17:674 MASTER/(24029:24029): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:36:17:674 MASTER/(24029:24029): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:36:17:674 MASTER/(24029:24029): Creando el hilo para comunicarme con Yama
+[INFO] 04:36:17:687 MASTER/(24029:24032): Ingrese JOB a Ejecutar
+[INFO] 04:36:21:850 MASTER/(24029:24032): Se va a ejecutar jhhjhj
+[INFO] 04:36:21:851 MASTER/(24029:24032): 6
+[INFO] 04:36:21:857 MASTER/(24029:24032): Recibi de YAMA: 2
+[INFO] 04:36:21:857 MASTER/(24029:24032): Master recibe de Yama solicitud de transformación.
+[INFO] 04:36:21:857 MASTER/(24029:24032): Tamanio de lo que recibo 73
+[INFO] 04:36:21:857 MASTER/(24029:24032): Recibo corecctamente la respuesta
+[INFO] 04:36:21:857 MASTER/(24029:24032): tamnio_lista 1
+[INFO] 04:36:21:857 MASTER/(24029:24032): Entro a 5
+Bloque: 12
+[INFO] 04:36:21:857 MASTER/(24029:24032): Terminada la deserializacion
+[INFO] 04:36:21:857 MASTER/(24029:24032): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:36:21:866 MASTER/(24029:24036): Se envia script reductor
+[INFO] 04:36:21:866 MASTER/(24029:24036): Se envia script transformador 
+[INFO] 04:36:21:866 MASTER/(24029:24036): Se envia script scriptTransformadorIniciales
+[INFO] 04:36:21:866 MASTER/(24029:24036): Se envia script scriptTransformadorAnuales
+[INFO] 04:36:21:866 MASTER/(24029:24036): Trato de comunicar con worker
+[INFO] 04:36:21:866 MASTER/(24029:24036): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:36:21:866 MASTER/(24029:24036): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:36:21:866 MASTER/(24029:24036): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:36:21:866 MASTER/(24029:24036): Despues de serializar info para worker
+[INFO] 04:39:51:834 MASTER/(24742:24742): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:39:51:840 MASTER/(24742:24742): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:39:51:840 MASTER/(24742:24742): Creando el hilo para comunicarme con Yama
+[INFO] 04:39:51:843 MASTER/(24742:24745): Ingrese JOB a Ejecutar
+[INFO] 04:39:53:714 MASTER/(24742:24745): Se va a ejecutar sdsd
+[INFO] 04:39:53:715 MASTER/(24742:24745): 4
+[INFO] 04:39:53:720 MASTER/(24742:24745): Recibi de YAMA: 2
+[INFO] 04:39:53:720 MASTER/(24742:24745): Master recibe de Yama solicitud de transformación.
+[INFO] 04:39:53:720 MASTER/(24742:24745): Tamanio de lo que recibo 73
+[INFO] 04:39:53:720 MASTER/(24742:24745): Recibo corecctamente la respuesta
+[INFO] 04:39:53:721 MASTER/(24742:24745): tamnio_lista 1
+[INFO] 04:39:53:721 MASTER/(24742:24745): Entro a 5
+Bloque: 12
+[INFO] 04:39:53:721 MASTER/(24742:24745): Terminada la deserializacion
+[INFO] 04:39:53:721 MASTER/(24742:24745): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:39:53:731 MASTER/(24742:24749): Se envia script reductor
+[INFO] 04:39:53:732 MASTER/(24742:24749): Se envia script transformador 
+[INFO] 04:39:53:732 MASTER/(24742:24749): Se envia script scriptTransformadorIniciales
+[INFO] 04:39:53:732 MASTER/(24742:24749): Se envia script scriptTransformadorAnuales
+[INFO] 04:39:53:732 MASTER/(24742:24749): Trato de comunicar con worker
+[INFO] 04:39:53:732 MASTER/(24742:24749): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:39:53:732 MASTER/(24742:24749): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:39:53:732 MASTER/(24742:24749): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:39:53:732 MASTER/(24742:24749): Despues de serializar info para worker
+[INFO] 04:43:13:134 MASTER/(25332:25332): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:43:13:145 MASTER/(25332:25332): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:43:13:145 MASTER/(25332:25332): Creando el hilo para comunicarme con Yama
+[INFO] 04:43:13:151 MASTER/(25332:25337): Ingrese JOB a Ejecutar
+[INFO] 04:43:16:247 MASTER/(25332:25337): Se va a ejecutar lkljjlk
+[INFO] 04:43:16:248 MASTER/(25332:25337): 7
+[INFO] 04:43:16:250 MASTER/(25332:25337): Recibi de YAMA: 2
+[INFO] 04:43:16:250 MASTER/(25332:25337): Master recibe de Yama solicitud de transformación.
+[INFO] 04:43:16:250 MASTER/(25332:25337): Tamanio de lo que recibo 73
+[INFO] 04:43:16:250 MASTER/(25332:25337): Recibo corecctamente la respuesta
+[INFO] 04:43:16:250 MASTER/(25332:25337): tamnio_lista 1
+[INFO] 04:43:16:250 MASTER/(25332:25337): Entro a 5
+Bloque: 12
+[INFO] 04:43:16:251 MASTER/(25332:25337): Terminada la deserializacion
+[INFO] 04:43:16:251 MASTER/(25332:25337): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:45:50:746 MASTER/(25908:25908): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:45:50:755 MASTER/(25908:25908): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:45:50:755 MASTER/(25908:25908): Creando el hilo para comunicarme con Yama
+[INFO] 04:45:50:759 MASTER/(25908:25912): Ingrese JOB a Ejecutar
+[INFO] 04:45:53:629 MASTER/(25908:25912): Se va a ejecutar jkjkjk
+[INFO] 04:45:53:630 MASTER/(25908:25912): 6
+[INFO] 04:45:53:633 MASTER/(25908:25912): Recibi de YAMA: 2
+[INFO] 04:45:53:633 MASTER/(25908:25912): Master recibe de Yama solicitud de transformación.
+[INFO] 04:45:53:633 MASTER/(25908:25912): Tamanio de lo que recibo 73
+[INFO] 04:45:53:633 MASTER/(25908:25912): Recibo corecctamente la respuesta
+[INFO] 04:45:53:633 MASTER/(25908:25912): tamnio_lista 1
+[INFO] 04:45:53:633 MASTER/(25908:25912): Entro a 5
+Bloque: 12
+[INFO] 04:45:53:633 MASTER/(25908:25912): Terminada la deserializacion
+[INFO] 04:45:53:633 MASTER/(25908:25912): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:45:53:646 MASTER/(25908:25915): Se envia script reductor
+[INFO] 04:45:53:646 MASTER/(25908:25915): Se envia script transformador 
+[INFO] 04:45:53:646 MASTER/(25908:25915): Se envia script scriptTransformadorIniciales
+[INFO] 04:45:53:646 MASTER/(25908:25915): Se envia script scriptTransformadorAnuales
+[INFO] 04:45:53:646 MASTER/(25908:25915): Trato de comunicar con worker
+[INFO] 04:45:53:646 MASTER/(25908:25915): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:45:53:646 MASTER/(25908:25915): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:45:53:646 MASTER/(25908:25915): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:45:53:646 MASTER/(25908:25915): Despues de serializar info para worker
+[INFO] 04:49:16:247 MASTER/(26539:26539): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:49:16:259 MASTER/(26539:26539): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:49:16:259 MASTER/(26539:26539): Creando el hilo para comunicarme con Yama
+[INFO] 04:49:16:267 MASTER/(26539:26543): Ingrese JOB a Ejecutar
+[INFO] 04:49:45:779 MASTER/(26539:26543): Se va a ejecutar dfdgf
+[INFO] 04:49:45:779 MASTER/(26539:26543): 5
+[INFO] 04:49:45:781 MASTER/(26539:26543): Recibi de YAMA: 2
+[INFO] 04:49:45:781 MASTER/(26539:26543): Master recibe de Yama solicitud de transformación.
+[INFO] 04:49:45:781 MASTER/(26539:26543): Tamanio de lo que recibo 73
+[INFO] 04:49:45:781 MASTER/(26539:26543): Recibo corecctamente la respuesta
+[INFO] 04:49:45:781 MASTER/(26539:26543): tamnio_lista 1
+[INFO] 04:49:45:782 MASTER/(26539:26543): Entro a 5
+Bloque: 12
+[INFO] 04:49:45:782 MASTER/(26539:26543): Terminada la deserializacion
+[INFO] 04:49:45:782 MASTER/(26539:26543): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:49:45:795 MASTER/(26539:26549): Se envia script reductor
+[INFO] 04:49:45:795 MASTER/(26539:26549): Se envia script transformador 
+[INFO] 04:49:45:795 MASTER/(26539:26549): Se envia script scriptTransformadorIniciales
+[INFO] 04:49:45:795 MASTER/(26539:26549): Se envia script scriptTransformadorAnuales
+[INFO] 04:49:45:796 MASTER/(26539:26549): Trato de comunicar con worker
+[INFO] 04:49:45:796 MASTER/(26539:26549): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:49:45:796 MASTER/(26539:26549): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:49:45:796 MASTER/(26539:26549): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:49:45:796 MASTER/(26539:26549): Despues de serializar info para worker
+[INFO] 04:55:40:770 MASTER/(27170:27170): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:55:40:784 MASTER/(27170:27170): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:55:40:784 MASTER/(27170:27170): Creando el hilo para comunicarme con Yama
+[INFO] 04:55:40:788 MASTER/(27170:27174): Ingrese JOB a Ejecutar
+[INFO] 04:55:44:19 MASTER/(27170:27174): Se va a ejecutar sfs
+[INFO] 04:55:44:19 MASTER/(27170:27174): 3
+[INFO] 04:55:44:41 MASTER/(27170:27174): Recibi de YAMA: 2
+[INFO] 04:55:44:41 MASTER/(27170:27174): Master recibe de Yama solicitud de transformación.
+[INFO] 04:55:44:42 MASTER/(27170:27174): Tamanio de lo que recibo 73
+[INFO] 04:55:44:42 MASTER/(27170:27174): Recibo corecctamente la respuesta
+[INFO] 04:55:44:42 MASTER/(27170:27174): tamnio_lista 1
+[INFO] 04:55:44:42 MASTER/(27170:27174): Entro a 5
+Bloque: 12
+[INFO] 04:55:44:42 MASTER/(27170:27174): Terminada la deserializacion
+[INFO] 04:55:44:42 MASTER/(27170:27174): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:55:44:49 MASTER/(27170:27177): Se envia script reductor
+[INFO] 04:55:44:49 MASTER/(27170:27177): Se envia script transformador 
+[INFO] 04:55:44:49 MASTER/(27170:27177): Se envia script scriptTransformadorIniciales
+[INFO] 04:55:44:49 MASTER/(27170:27177): Se envia script scriptTransformadorAnuales
+[INFO] 04:55:44:49 MASTER/(27170:27177): Trato de comunicar con worker
+[INFO] 04:55:44:49 MASTER/(27170:27177): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:55:44:49 MASTER/(27170:27177): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:55:44:50 MASTER/(27170:27177): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:55:44:50 MASTER/(27170:27177): Despues de serializar info para worker
+[INFO] 04:57:23:142 MASTER/(27619:27619): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:57:23:160 MASTER/(27619:27619): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:57:23:160 MASTER/(27619:27619): Creando el hilo para comunicarme con Yama
+[INFO] 04:57:23:170 MASTER/(27619:27622): Ingrese JOB a Ejecutar
+[INFO] 04:58:31:103 MASTER/(28108:28108): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 04:58:31:108 MASTER/(28108:28108): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 04:58:31:108 MASTER/(28108:28108): Creando el hilo para comunicarme con Yama
+[INFO] 04:58:31:115 MASTER/(28108:28112): Ingrese JOB a Ejecutar
+[INFO] 04:58:37:355 MASTER/(28108:28112): Se va a ejecutar nnmn
+[INFO] 04:58:37:355 MASTER/(28108:28112): 4
+[INFO] 04:58:37:358 MASTER/(28108:28112): Recibi de YAMA: 2
+[INFO] 04:58:37:359 MASTER/(28108:28112): Master recibe de Yama solicitud de transformación.
+[INFO] 04:58:37:359 MASTER/(28108:28112): Tamanio de lo que recibo 73
+[INFO] 04:58:37:359 MASTER/(28108:28112): Recibo corecctamente la respuesta
+[INFO] 04:58:37:359 MASTER/(28108:28112): tamnio_lista 1
+[INFO] 04:58:37:359 MASTER/(28108:28112): Entro a 5
+Bloque: 12
+[INFO] 04:58:37:359 MASTER/(28108:28112): Terminada la deserializacion
+[INFO] 04:58:37:359 MASTER/(28108:28112): Creando hilos para comunicacion con WORKERS.
+[INFO] 04:58:37:369 MASTER/(28108:28115): Se envia script reductor
+[INFO] 04:58:37:369 MASTER/(28108:28115): Se envia script transformador 
+[INFO] 04:58:37:370 MASTER/(28108:28115): Se envia script scriptTransformadorIniciales
+[INFO] 04:58:37:370 MASTER/(28108:28115): Se envia script scriptTransformadorAnuales
+[INFO] 04:58:37:371 MASTER/(28108:28115): Trato de comunicar con worker
+[INFO] 04:58:37:371 MASTER/(28108:28115): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 04:58:37:371 MASTER/(28108:28115): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 04:58:37:371 MASTER/(28108:28115): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 04:58:37:371 MASTER/(28108:28115): Despues de serializar info para worker
+[INFO] 05:02:35:646 MASTER/(28623:28623): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:02:35:663 MASTER/(28623:28623): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:02:35:663 MASTER/(28623:28623): Creando el hilo para comunicarme con Yama
+[INFO] 05:02:35:674 MASTER/(28623:28627): Ingrese JOB a Ejecutar
+[INFO] 05:02:39:73 MASTER/(28623:28627): Se va a ejecutar jhhj
+[INFO] 05:02:39:73 MASTER/(28623:28627): 4
+[INFO] 05:02:39:75 MASTER/(28623:28627): Recibi de YAMA: 2
+[INFO] 05:02:39:75 MASTER/(28623:28627): Master recibe de Yama solicitud de transformación.
+[INFO] 05:02:39:76 MASTER/(28623:28627): Tamanio de lo que recibo 73
+[INFO] 05:02:39:76 MASTER/(28623:28627): Recibo corecctamente la respuesta
+[INFO] 05:02:39:76 MASTER/(28623:28627): tamnio_lista 1
+[INFO] 05:02:39:76 MASTER/(28623:28627): Entro a 5
+Bloque: 12
+[INFO] 05:02:39:76 MASTER/(28623:28627): Terminada la deserializacion
+[INFO] 05:02:39:76 MASTER/(28623:28627): Creando hilos para comunicacion con WORKERS.
+[INFO] 05:02:39:90 MASTER/(28623:28630): Se envia script reductor
+[INFO] 05:02:39:91 MASTER/(28623:28630): Se envia script transformador 
+[INFO] 05:02:39:91 MASTER/(28623:28630): Se envia script scriptTransformadorIniciales
+[INFO] 05:02:39:91 MASTER/(28623:28630): Se envia script scriptTransformadorAnuales
+[INFO] 05:02:39:91 MASTER/(28623:28630): Trato de comunicar con worker
+[INFO] 05:02:39:91 MASTER/(28623:28630): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 05:02:39:91 MASTER/(28623:28630): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 05:02:39:91 MASTER/(28623:28630): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 05:02:39:91 MASTER/(28623:28630): Despues de serializar info para worker
+[INFO] 05:06:16:590 MASTER/(29387:29387): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:06:16:603 MASTER/(29387:29387): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:06:16:603 MASTER/(29387:29387): Creando el hilo para comunicarme con Yama
+[INFO] 05:06:16:611 MASTER/(29387:29391): Ingrese JOB a Ejecutar
+[INFO] 05:06:25:902 MASTER/(29387:29391): Se va a ejecutar mmm
+[INFO] 05:06:25:903 MASTER/(29387:29391): 3
+[INFO] 05:06:25:905 MASTER/(29387:29391): Recibi de YAMA: 2
+[INFO] 05:06:25:905 MASTER/(29387:29391): Master recibe de Yama solicitud de transformación.
+[INFO] 05:06:25:905 MASTER/(29387:29391): Tamanio de lo que recibo 73
+[INFO] 05:06:25:905 MASTER/(29387:29391): Recibo corecctamente la respuesta
+[INFO] 05:06:25:905 MASTER/(29387:29391): tamnio_lista 1
+[INFO] 05:06:25:906 MASTER/(29387:29391): Entro a 5
+Bloque: 12
+[INFO] 05:06:25:906 MASTER/(29387:29391): Terminada la deserializacion
+[INFO] 05:06:25:906 MASTER/(29387:29391): Creando hilos para comunicacion con WORKERS.
+[INFO] 05:06:25:920 MASTER/(29387:29394): Se envia script reductor
+[INFO] 05:06:25:920 MASTER/(29387:29394): Se envia script transformador 
+[INFO] 05:06:25:920 MASTER/(29387:29394): Se envia script scriptTransformadorIniciales
+[INFO] 05:06:25:920 MASTER/(29387:29394): Se envia script scriptTransformadorAnuales
+[INFO] 05:06:25:920 MASTER/(29387:29394): Trato de comunicar con worker
+[INFO] 05:06:25:920 MASTER/(29387:29394): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 05:06:25:920 MASTER/(29387:29394): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 05:06:25:920 MASTER/(29387:29394): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 05:06:25:920 MASTER/(29387:29394): Despues de serializar info para worker
+[INFO] 05:09:52:932 MASTER/(29764:29764): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:09:52:932 MASTER/(29764:29764): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:09:52:932 MASTER/(29764:29764): Creando el hilo para comunicarme con Yama
+[INFO] 05:09:52:936 MASTER/(29764:29768): Ingrese JOB a Ejecutar
+[INFO] 05:10:17:318 MASTER/(30083:30083): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:10:17:326 MASTER/(30083:30083): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:10:17:327 MASTER/(30083:30083): Creando el hilo para comunicarme con Yama
+[INFO] 05:10:17:335 MASTER/(30083:30087): Ingrese JOB a Ejecutar
+[INFO] 05:10:22:647 MASTER/(30083:30087): Se va a ejecutar nnkkkjj
+[INFO] 05:10:22:647 MASTER/(30083:30087): 7
+[INFO] 05:10:22:651 MASTER/(30083:30087): Recibi de YAMA: 2
+[INFO] 05:10:22:651 MASTER/(30083:30087): Master recibe de Yama solicitud de transformación.
+[INFO] 05:10:22:651 MASTER/(30083:30087): Tamanio de lo que recibo 73
+[INFO] 05:10:22:651 MASTER/(30083:30087): Recibo corecctamente la respuesta
+[INFO] 05:10:22:651 MASTER/(30083:30087): tamnio_lista 1
+[INFO] 05:10:22:651 MASTER/(30083:30087): Entro a 5
+Bloque: 12
+[INFO] 05:10:22:651 MASTER/(30083:30087): Terminada la deserializacion
+[INFO] 05:10:22:651 MASTER/(30083:30087): Creando hilos para comunicacion con WORKERS.
+[INFO] 05:10:22:663 MASTER/(30083:30090): Se envia script reductor
+[INFO] 05:10:22:663 MASTER/(30083:30090): Se envia script transformador 
+[INFO] 05:10:22:664 MASTER/(30083:30090): Se envia script scriptTransformadorIniciales
+[INFO] 05:10:22:664 MASTER/(30083:30090): Se envia script scriptTransformadorAnuales
+[INFO] 05:10:22:664 MASTER/(30083:30090): Trato de comunicar con worker
+[INFO] 05:10:22:664 MASTER/(30083:30090): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 05:10:22:664 MASTER/(30083:30090): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 05:10:22:664 MASTER/(30083:30090): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 05:10:22:664 MASTER/(30083:30090): Despues de serializar info para worker
+[INFO] 05:14:25:753 MASTER/(30448:30448): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:14:25:754 MASTER/(30448:30448): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:14:25:755 MASTER/(30448:30448): Creando el hilo para comunicarme con Yama
+[INFO] 05:14:25:762 MASTER/(30448:30452): Ingrese JOB a Ejecutar
+[INFO] 05:14:55:560 MASTER/(30767:30767): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:14:55:561 MASTER/(30767:30767): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:14:55:567 MASTER/(30767:30767): Creando el hilo para comunicarme con Yama
+[INFO] 05:14:55:567 MASTER/(30767:30769): Ingrese JOB a Ejecutar
+[INFO] 05:14:59:112 MASTER/(30767:30769): Se va a ejecutar klkl
+[INFO] 05:14:59:114 MASTER/(30767:30769): 4
+[INFO] 05:14:59:117 MASTER/(30767:30769): Recibi de YAMA: 2
+[INFO] 05:14:59:117 MASTER/(30767:30769): Master recibe de Yama solicitud de transformación.
+[INFO] 05:14:59:117 MASTER/(30767:30769): Tamanio de lo que recibo 73
+[INFO] 05:14:59:117 MASTER/(30767:30769): Recibo corecctamente la respuesta
+[INFO] 05:14:59:118 MASTER/(30767:30769): tamnio_lista 1
+[INFO] 05:14:59:118 MASTER/(30767:30769): Entro a 5
+Bloque: 12
+[INFO] 05:14:59:118 MASTER/(30767:30769): Terminada la deserializacion
+[INFO] 05:14:59:118 MASTER/(30767:30769): Creando hilos para comunicacion con WORKERS.
+[INFO] 05:14:59:130 MASTER/(30767:30774): Se envia script reductor
+[INFO] 05:14:59:130 MASTER/(30767:30774): Se envia script transformador 
+[INFO] 05:14:59:130 MASTER/(30767:30774): Se envia script scriptTransformadorIniciales
+[INFO] 05:14:59:131 MASTER/(30767:30774): Se envia script scriptTransformadorAnuales
+[INFO] 05:14:59:131 MASTER/(30767:30774): Trato de comunicar con worker
+[INFO] 05:14:59:131 MASTER/(30767:30774): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 05:14:59:131 MASTER/(30767:30774): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 05:14:59:131 MASTER/(30767:30774): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 05:14:59:131 MASTER/(30767:30774): Despues de serializar info para worker
+[INFO] 05:19:06:155 MASTER/(31445:31445): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 05:19:06:155 MASTER/(31445:31445): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 05:19:06:155 MASTER/(31445:31445): Creando el hilo para comunicarme con Yama
+[INFO] 05:19:06:162 MASTER/(31445:31449): Ingrese JOB a Ejecutar
+[INFO] 05:19:09:312 MASTER/(31445:31449): Se va a ejecutar kjhkjh
+[INFO] 05:19:09:313 MASTER/(31445:31449): 6
+[INFO] 05:19:09:315 MASTER/(31445:31449): Recibi de YAMA: 2
+[INFO] 05:19:09:315 MASTER/(31445:31449): Master recibe de Yama solicitud de transformación.
+[INFO] 05:19:09:315 MASTER/(31445:31449): Tamanio de lo que recibo 73
+[INFO] 05:19:09:315 MASTER/(31445:31449): Recibo corecctamente la respuesta
+[INFO] 05:19:09:315 MASTER/(31445:31449): tamnio_lista 1
+[INFO] 05:19:09:315 MASTER/(31445:31449): Entro a 5
+Bloque: 12
+[INFO] 05:19:09:315 MASTER/(31445:31449): Terminada la deserializacion
+[INFO] 05:19:09:315 MASTER/(31445:31449): Creando hilos para comunicacion con WORKERS.
+[INFO] 05:19:09:326 MASTER/(31445:31452): Se envia script reductor
+[INFO] 05:19:09:326 MASTER/(31445:31452): Se envia script transformador 
+[INFO] 05:19:09:326 MASTER/(31445:31452): Se envia script scriptTransformadorIniciales
+[INFO] 05:19:09:326 MASTER/(31445:31452): Se envia script scriptTransformadorAnuales
+[INFO] 05:19:09:326 MASTER/(31445:31452): Trato de comunicar con worker
+[INFO] 05:19:09:326 MASTER/(31445:31452): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 05:19:09:326 MASTER/(31445:31452): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 05:19:09:326 MASTER/(31445:31452): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 05:19:09:327 MASTER/(31445:31452): Despues de serializar info para worker
