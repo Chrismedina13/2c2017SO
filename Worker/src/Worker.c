@@ -10,6 +10,7 @@
 
 #include "Headers/Worker.h"
 #include "Headers/comunicacionConMaster.h"
+#include "SO_lib/FuncionesAuxiliares.h"
 
 int main(int argc, char *argv[]) {
 
@@ -18,6 +19,7 @@ int main(int argc, char *argv[]) {
 
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
+	ejecutarScript("","");
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);

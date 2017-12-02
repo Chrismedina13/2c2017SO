@@ -161,10 +161,10 @@ void rearmar_script(script* script,int codigo){
 
 void ejecutarScript(char* rutaScript,char* rutaArchivo){
   int SIZE = 1024;
-
   int pipe_padreAHijo[2];
   int pipe_hijoAPadre[2];
 
+  system("chmod +x script_transformacion.py");
   pipe(pipe_padreAHijo);
   pipe(pipe_hijoAPadre);
   pid_t pid;
@@ -196,7 +196,7 @@ void ejecutarScript(char* rutaScript,char* rutaArchivo){
   	read( pipe_hijoAPadre[0], buffer, SIZE );
     	close( pipe_hijoAPadre[0]);
   }
-  FILE* fd = fopen("/tmp/resultado","w");
+  FILE* fd = fopen("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/resultado","w");
   fputs(buffer,fd);
   fclose(fd);
 
