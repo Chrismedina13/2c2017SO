@@ -33,6 +33,6 @@ int tamanioEstructurasListaWorkers(t_list* listaWorkers);
 void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 script* setScript(char* rutaScript);
 void rearmar_script(script* script,int codigo);
-void ejecutarScript(char* rutaScript,char* rutaArchivo); //Le paso la ruta del script y el archivo al que quiero aplicar el script;
+int ejecutarScript(char* rutaScript,char* rutaArchivo)//Le paso la ruta del script y el archivo al que quiero aplicar el script;
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
