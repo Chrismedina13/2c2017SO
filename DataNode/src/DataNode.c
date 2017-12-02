@@ -58,10 +58,11 @@ int main(int argc, char *argv[]) {
 
 
 //prueba mandar un get bloque
-//    char* bloque =malloc(1024*1024 + sizeof(char));
-  //  bloque=get_bloque(3);
+ //  char* bloque =malloc(1024*1024 + sizeof(char));
+ //bloque=get_bloque(3);
+ //logInfo("el tamanio del bloque es  %i", strlen(bloque));
 
-//  mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
+// mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 
 
     //while(1){
@@ -135,7 +136,10 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		logInfo("tamanio de lo que recibo %i", tamanio);
 		mensaje = malloc(tamanio + 1);
 		mensaje[tamanio] = '\0';
-		recv(FD_FileSystem,mensaje, tamanio,0 );
+		mensaje=recv_timeout(FD_FileSystem, 5,2046);
+
+
+		//recv(FD_FileSystem,mensaje, tamanio,0 );
     	bloque=deserilizarBloque(mensaje);
 	   logInfo("Recibi el nro de bloque %i", bloque->nrobloque);
 	   logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
@@ -155,11 +159,11 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 
 		break;
 
-	case GET_BLOQUE: //ESTARIA TERMINADO
+	case GET_BLOQUE:
 
 		logInfo("DataNode Recibe la instruccion 'GetBloque' de FileSystem");
 
-				// ese mensaje tiene que ser un buffer no un char*
+
 
 		recv(FD_FileSystem,pesoMensaje,4,0);
 
@@ -170,16 +174,10 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		recv(FD_FileSystem,mensaje, tamanio,0);
 		intRecibido = deserializarINT(mensaje);
 		logInfo("Instruccion 'Get Bloque' en el bloque %i", intRecibido);
-		bloque_obtenido = malloc(1024*1024);
+		bloque_obtenido = malloc(1024*1024 + sizeof(char));
 		bloque_obtenido = get_bloque(intRecibido);
 		tamanio_bloque_obtenido = strlen(bloque_obtenido);
 		mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FD_FileSystem, bloque_obtenido, tamanio_bloque_obtenido);
-
-//IR A NODOS.BIN Y AGARRAR ESE BLOQUE Y MANDARLO
-	//contenido_bloque = funcion que recorra el data.bin y me traiga el mega
-		//tamanio_contenido= sizeof(char) + strlen(contenido_bloque);
-      //mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FD_FileSystem,contenido_bloque, tamanio_contenido );
-
 
 free(mensaje);
 		break;

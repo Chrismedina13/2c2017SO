@@ -23,8 +23,7 @@ int receive_basic(int fd_dn, int tamanio_parcial);
 
 
 //Receiving function
-int recv_timeout(int s, int timeout);
-
-int receive_correct(int FD_DN);
+char* recv_timeout(int FD_DN , int timeout, int CHUNK_SIZE);
+char* receive_correct(int FD_DN, int CHUNK_SIZE);
 
 #endif /* SO_LIB_SENDANDRECEIVE_H_ */
