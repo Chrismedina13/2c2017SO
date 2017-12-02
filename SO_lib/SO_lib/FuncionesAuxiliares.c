@@ -128,11 +128,28 @@ script* setScript(char* rutaScript){
 	return script1;
 }
 
-void rearmar_script(script* script){
+void rearmar_script(script* script,int codigo){
 	FILE* fd;
 	char* nombreArchivo = string_new();
 	char* contenidoDelBloque = string_new();
-	nombreArchivo = script->nombre;
+	nombreArchivo = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts";
+	switch(codigo){
+	case SCRIPT_REDUCCION:
+		string_append(nombreArchivo,"Reduccion.py");
+		break;
+	case SCRIPT_TRANSFORMADOR:
+		string_append(nombreArchivo,"Transformador.py");
+		break;
+	case SCRIPT_TRANSFORMADOR_ANUAL:
+		string_append(nombreArchivo,"Transformador_Anual.py");
+		break;
+	case SCRIPT_TRANSFORMADOR_INICIAL:
+		string_append(nombreArchivo,"Transformador_Inicial.py");
+		break;
+	default:
+		logInfo("Error codigo incorrecto");
+		break;
+	}
 	fd = fopen(nombreArchivo,"w");
 	if (fd==NULL) {
 		printf("Error al abrir el archivo.");
@@ -140,4 +157,49 @@ void rearmar_script(script* script){
 	contenidoDelBloque = script->contenido;
 	fputs(contenidoDelBloque,fd);
 	fclose(fd);
+}
+
+void ejecutarScript(char* rutaScript,char* rutaArchivo){
+  int SIZE = 1024;
+
+  int pipe_padreAHijo[2];
+  int pipe_hijoAPadre[2];
+
+  pipe(pipe_padreAHijo);
+  pipe(pipe_hijoAPadre);
+  pid_t pid;
+  int status;
+  char* buffer=malloc(SIZE);
+
+  if ((pid=fork()) == 0 )
+  {
+
+  	dup2(pipe_padreAHijo[0],STDIN_FILENO);
+  	dup2(pipe_hijoAPadre[1],STDOUT_FILENO);
+   	close( pipe_padreAHijo[1] );
+  	close( pipe_hijoAPadre[0] );
+	close( pipe_hijoAPadre[1]);
+	close( pipe_padreAHijo[0]);
+      char *argv[] = {NULL};
+      char *envp[] = {NULL};
+      execve("./script_transformacion.py", argv, envp);
+    	exit(1);
+  }else{
+	close( pipe_padreAHijo[0] ); //Lado de lectura de lo que el padre le pasa al hijo.
+    	close( pipe_hijoAPadre[1] ); //Lado de escritura de lo que hijo le pasa al padre.
+
+    	write( pipe_padreAHijo[1],"hola pepe",strlen("hola pepe"));
+
+    	close( pipe_padreAHijo[1]);
+
+    	waitpid(pid,&status,0);
+  	read( pipe_hijoAPadre[0], buffer, SIZE );
+    	close( pipe_hijoAPadre[0]);
+  }
+  FILE* fd = fopen("/tmp/resultado","w");
+  fputs(buffer,fd);
+  fclose(fd);
+
+  free(buffer);
+
 }

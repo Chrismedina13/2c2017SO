@@ -19,6 +19,9 @@
 #include <time.h>
 #include <commons/collections/list.h>
 #include "estructuras.h"
+#include "Protocolo.h"
+
+
 
 int generarNumeroAleatorioNoRepetido();
 char* generarNombreArchivoReduccionGlobal(int variableRG);
@@ -29,7 +32,7 @@ int tamanioEstructuraInfoWorker(Info_Workers* info);
 int tamanioEstructurasListaWorkers(t_list* listaWorkers);
 void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 script* setScript(char* rutaScript);
-void rearmar_script(script* script);
-
+void rearmar_script(script* script,int codigo);
+void ejecutarScript(char* rutaScript,char* rutaArchivo);
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
