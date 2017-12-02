@@ -209,41 +209,139 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        mensaje[tamanio] = '\0';
 				        recv(FD_DN, mensaje,tamanio,0);
 				        saludo = deserializar_saludo_datanode(mensaje);
+				        int idNodo=saludo->nombre_nodo;
 				        logInfo("ID NODO: %i " , saludo->nombre_nodo);
+				    	int capacidad = saludo->capacidad_nodo;
 				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
 
-				        cargarNodos2(saludo->nombre_nodo, saludo->capacidad_nodo);
-                        infoworker=malloc(sizeof(int)+ strlen(saludo->ip_worker));
-                        //strcpy(infoworker->ipWorker,saludo->ip_worker);
-				        infoworker->ipWorker=saludo->ip_worker;
-				        infoworker->puerto=puerto_worker;
 
-				        list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
-				    	  logInfo("Se cargo la informacion de los workers para enviar a yama");
+				    	//me fijo si es uno nuevo o si ya se conecto
 
+						int nuevo =0;
 
-				        nodos= malloc(sizeof(int)*2);
-				        nodos->id_nodo=saludo->nombre_nodo;
-						nodos->nodo_fd=FD_DN;
-				        list_add(list_nodos_id_fd, nodos);
+						nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
 
-                      //  count ++;
-                      //  if(cantNodos==count){
-                       // 	 semaphore_signal(SEMAFORODN);
-                       // }
+						if(!list_is_empty(list_nodos_id_fd)){
 
-				      if(cantNodos==list_size(list_nodos_id_fd)){
-				    	  logInfo("Se conectaron todos los nodos");
-				       semaphore_signal(SEMAFORODN);
-				        }
-				      free(nodos);
-				        free(mensaje);
-				      free(infoworker);
-				        break;
+							int count2 =0;
+
+							while(count2 < list_size(list_nodos_id_fd)){
+
+								nodo2=list_get(list_nodos_id_fd, count2);
+								if(idNodo==nodo2->id_nodo){
+									logInfo("Se volvio a conectar el nodo %s", idNodo);
+									nuevo=1;
+
+									break;
+								}
+								count2++;
+							}
+							if(nuevo==0){
+								logInfo("Nuevo nodo, id:%s", idNodo);
+								nuevo=0;
+
+							}
+							free(nodo2);
+						}
+
+						//nodo viejo
+
+						if(nuevo==1){
+
+							int count3=0;
+
+							bloques_nodo* nodo3 = malloc(sizeof(int)*164);
+
+							while(count3<list_size(list_nodos_id_fd)){
+
+								nodo3 = list_get(tabla_de_nodos.listaCapacidadNodos, count3);
+
+								if(nodo3->idNodo==idNodo){
+
+									logInfo("Se reconecto un nodo. Su id es:%s",idNodo);
+									nodo3->estado=1;
+
+									break;
+
+								}
+
+								count3++;
+							}
+
+							free(nodo3);
+						}
+
+						//nodo nuevo
+
+						if(nuevo==0){
+
+							//actualizo la tabla de nodos
+
+							tabla_de_nodos.tamanio=tabla_de_nodos.tamanio+capacidad;
+							tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+capacidad;
+
+							//actualizo la lista de nodos
+
+							list_add(tabla_de_nodos.listaNodos,idNodo);
+
+							int cantidad = list_size(tabla_de_nodos.listaNodos);
+							int count = 0;
+
+							//actualizo lista capadidad nodos
+
+							bloques_nodo* nodo1 = malloc(sizeof(int)*(capacidad+4));
+							nodo1->idNodo=idNodo;
+							nodo1->bloquesTotales=capacidad;
+							nodo1->bloquesLibres=capacidad;
+							nodo1->estado=1;
+							int i=0;
+							while(i<capacidad){
+							nodo1->bitmap[i]=0;
+							i++;
+							}
+
+							list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
+
+							free(nodo1);
+
+							//actualizo info worker
+
+							infoworker=malloc(sizeof(int)+ strlen(saludo->ip_worker));
+							infoworker->ipWorker=saludo->ip_worker;
+							infoworker->puerto=puerto_worker;
+
+							list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
+							logInfo("Se cargo la informacion de los workers para enviar a yama");
+
+							free(infoworker);
+
+							//actualizo list nodos id fd
+
+							nodos_id_fd * nodos = malloc(sizeof(int)*2);
+
+							nodos->id_nodo=saludo->nombre_nodo;
+							nodos->nodo_fd=FD_DN;
+							list_add(list_nodos_id_fd, nodos);
+
+							free(nodos);
+
+						}
+
+							//checkeo cantidad de nodos para seguir con la ejecucion de FS
+
+							if(cantNodos==list_size(list_nodos_id_fd)){ //nodos necesarios para arrancar
+								logInfo("Se conectaron todos los nodos");
+								semaphore_signal(SEMAFORODN);
+
+							}
+
+							break;
 
 	    default:
-		break;
+
+						logInfo("Llego un mensaje que FS no sabe traducir.");
+						break;
 	}
 }
 
@@ -258,8 +356,8 @@ char *serialize_int(int value){
 void cargarNodos2(int idNodo, int capacidad){
 
 	int count2 =0;
-	int nuevo;
-    nodos_id_fd * nodo2;
+	int nuevo =0;
+    nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
 
 	while(count2 < list_size(list_nodos_id_fd)){
 
@@ -312,6 +410,8 @@ void cargarNodos2(int idNodo, int capacidad){
 
 
 	}
+
+	//nodo viejo
 
 	if(nuevo==1){
 		int count3;
