@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 	//Semaforos
 
 	int cantNodos= config->cant_nodos;
+	logInfo("La cantidad de nodos que vamos a administrar es: %i", cantNodos);
 
 	SEMAFORODN = make_semaphore(0);
 	SEMAFOROYAMA = make_semaphore(0);

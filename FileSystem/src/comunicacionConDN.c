@@ -149,6 +149,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     nodos_id_fd * nodos;
     char* get_bloque;
     int tamaniorecv=0;
+    int count=0;
 
 
 	switch (codigo) {
@@ -211,24 +212,34 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				        logInfo("ID NODO: %i " , saludo->nombre_nodo);
 				        logInfo("CAPACIDAD : %i " , saludo->capacidad_nodo);
 				    	logInfo("IP DEL WORKER: %s " , saludo->ip_worker);
-				        free(mensaje);
+
 				        cargarNodos2(saludo->nombre_nodo, saludo->capacidad_nodo);
                         infoworker=malloc(sizeof(int)+ strlen(saludo->ip_worker));
                         //strcpy(infoworker->ipWorker,saludo->ip_worker);
 				        infoworker->ipWorker=saludo->ip_worker;
 				        infoworker->puerto=puerto_worker;
-				        list_add_in_index(list_info_workers,(saludo->nombre_nodo-1), infoworker);
+
+				        list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
+				    	  logInfo("Se cargo la informacion de los workers para enviar a yama");
 
 
 				        nodos= malloc(sizeof(int)*2);
 				        nodos->id_nodo=saludo->nombre_nodo;
 						nodos->nodo_fd=FD_DN;
-				        list_add_in_index(list_nodos_id_fd, saludo->nombre_nodo, nodos);
+				        list_add(list_nodos_id_fd, nodos);
 
+                      //  count ++;
+                      //  if(cantNodos==count){
+                       // 	 semaphore_signal(SEMAFORODN);
+                       // }
 
-				        if(cantNodos==list_size(list_nodos_id_fd)){
-				        semaphore_signal(SEMAFORODN);
+				      if(cantNodos==list_size(list_nodos_id_fd)){
+				    	  logInfo("Se conectaron todos los nodos");
+				       semaphore_signal(SEMAFORODN);
 				        }
+				      free(nodos);
+				        free(mensaje);
+				      free(infoworker);
 				        break;
 
 	    default:
@@ -272,7 +283,7 @@ void cargarNodos2(int idNodo, int capacidad){
 		tabla_de_nodos.bloqueslibres=tabla_de_nodos.bloqueslibres+capacidad;
 		//int* numero = idNodo;
 
-		list_add_in_index(tabla_de_nodos.listaNodos,idNodo - 1, idNodo);
+		list_add(tabla_de_nodos.listaNodos,idNodo);
 
 		int* nodos;
 		int cantidad = list_size(tabla_de_nodos.listaNodos);
@@ -284,11 +295,11 @@ void cargarNodos2(int idNodo, int capacidad){
 	//		count++;
 	//	}
 
-		bloques_nodo* nodo1 = malloc(sizeof(int)*(capacidad+3));
+		bloques_nodo* nodo1 = malloc(sizeof(int)*(capacidad+4));
 		nodo1->idNodo=idNodo;
 		nodo1->bloquesTotales=capacidad;
 		nodo1->bloquesLibres=capacidad;
-//		nodo1->estado=1;
+     	nodo1->estado=1;
 		int i=0;
 		while(i<capacidad){
 		nodo1->bitmap[i]=0;
@@ -299,9 +310,7 @@ void cargarNodos2(int idNodo, int capacidad){
 
 
 
-		int resp = crearRegistroArchivoNodos(tabla_de_nodos); //escribe el registro de nodos nodos.bin (para recuperar fs y nodos anteriores)
-		if(resp==0) printf("\nRegistro de Nodo cargado correctamente.\n");
-		else printf("\nRegistro de Nodo no pudo ser cargado.\n");
+
 	}
 
 	if(nuevo==1){
@@ -314,7 +323,7 @@ void cargarNodos2(int idNodo, int capacidad){
 			}
 			count3++;
 		}
-	//	nodo3->estado=1;
+		nodo3->estado=1;
 		logInfo("Se reconecto un nodo. Su id es:%s",idNodo);
 
 	}
