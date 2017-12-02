@@ -420,17 +420,17 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	t_list* respuestaAMaster = list_create(); //;armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
 	//faltaLLenarLaTablaDeNodos
 
-	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,11,"12.111",12,1212,"archivoTransformacion1");
-	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
+	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"archivoTransformacion1");
+	/*RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
 	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(4,31,"44.4343",44,44144,"archivoTransformacion4");
 	RespuestaTransformacionYAMA* respuestaTrans4 = setRespuestaTransformacionYAMA(5,31,"55.55543",55,55155,"arch");
-	RespuestaTransformacionYAMA* respuestaTrans5 = setRespuestaTransformacionYAMA(6,31,"6.6665",66,66166,"arc");
+	RespuestaTransformacionYAMA* respuestaTrans5 = setRespuestaTransformacionYAMA(6,31,"6.6665",66,66166,"arc");*/
 
 	list_add(respuestaAMaster,respuestaTrans1);
-	list_add(respuestaAMaster,respuestaTrans2);
+	/*list_add(respuestaAMaster,respuestaTrans2);
 	list_add(respuestaAMaster,respuestaTrans3);
 	list_add(respuestaAMaster,respuestaTrans4);
-	list_add(respuestaAMaster,respuestaTrans5);
+	list_add(respuestaAMaster,respuestaTrans5);*/
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);

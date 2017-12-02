@@ -67,13 +67,52 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 					} else {
 						int codigo = deserializarINT(buffer);
-						logInfo("Recibi de Master: %s", codigo);
-						infoParaWorker* info = mensajesRecibidosDeMaster(codigo,i);
+						logInfo(" Worker Recibe de Master: %s", codigo);
+
+
+						char pesoMensaje[4];
+						int tamanio;
+						char* mensaje;
+						 int FDMaster = i;
+
+						switch (codigo) {
+						case TAREA_WORKER:
+							recv(FDMaster, pesoMensaje, 4, 0);
+
+							tamanio = deserializarINT(pesoMensaje);
+
+							logInfo("Tamanio de lo que recibo %i", tamanio);
+
+							mensaje = malloc(tamanio + 1);
+
+							mensaje[tamanio] = '\0';
+
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+
+							} else {
+								infoParaWorker* info = deserializarInfoParaWorker(mensaje);
+								logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
+
+							}
+							break;
+						case REDUCCION_TEMPORALES:
+							break;
+						case SOL_REDUCCION_GLOBAL:
+							break;
+						case SOL_ALMACENADO_FINAL:
+							break;
+
+						}
+
+
+
 						//deberia divir la info 3 cosas:el cod a ejecutar,el origen de datos y el destino
-						int v_origen;
+					/*	int v_origen;
 						char* v_destino;
 						v_origen = info->bloque;
-						v_destino = info->archivoTemporal;
+						v_destino = info->archivoTemporal;*/
 						//crear_script(info->script);crear el archivo de transformacion
 						/////////////////////////////////////////hay que hacer forkkkkkk
 
@@ -126,45 +165,7 @@ parametros->puertoWorker = puerto;
 return parametros;
 }
 
-infoParaWorker* mensajesRecibidosDeMaster(int codigo, int FDMaster) {
-//Worker recibe de master
-char pesoMensaje[4];
-int tamanio;
-char* mensaje;
 
-switch (codigo) {
-case TAREA_WORKER:
-	recv(FDMaster, pesoMensaje, 4, 0);
-
-	tamanio = deserializarINT(pesoMensaje);
-
-	logInfo("Tamanio de lo que recibo %i", tamanio);
-
-	mensaje = malloc(tamanio + 1);
-
-	mensaje[tamanio] = '\0';
-
-	if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
-
-		logInfo("Error en la recepcion de Info de Master.");
-
-	} else {
-//falta desereaalizar
-
-		infoParaWorker* info = deserializarInfoParaWorker(mensaje);
-		logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
-		return info;
-	}
-	break;
-case REDUCCION_TEMPORALES:
-	break;
-case SOL_REDUCCION_GLOBAL:
-	break;
-case SOL_ALMACENADO_FINAL:
-	break;
-
-}
-}
 
 void mensajesEnviadosAMaster(int codigo, int FDMaster) {
 //Worker recibe de master

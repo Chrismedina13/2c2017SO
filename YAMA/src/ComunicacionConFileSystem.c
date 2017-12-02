@@ -81,17 +81,17 @@ void atenderJOB(){
 
 	list_add(listaDeJobs, jobCompleto);
 
-
 }
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
-		int puerto, char* ip, char* algoritmo, int disponiblidadBase) {
+		int puerto, char* ip, char* algoritmo, int disponiblidadBase,int retardo) {
 	ParametrosComunicacionConFileSystem* parametros = malloc(
 			sizeof(ParametrosComunicacionConFileSystem));
 	parametros->ip = ip;
 	parametros->puerto = puerto;
 	parametros->algoritmo = algoritmo;
 	parametros->disponibilidadBase = disponiblidadBase;
+	parametros->retardo = retardo;
 	return parametros;
 }
 
@@ -117,8 +117,8 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 					if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
 						logInfo(
 					"Error en la recepcion de la lista de Bloques que componen el archivo.");
-					} else /* {
-	        /*  	  lista_ubicaciones=list_create();
+					} else  {
+	         	  	  lista_ubicaciones=list_create();
 	            	  lista_ubicaciones= deserializarUbicacionBloquesArchivos(mensaje);
 	            	//prueba para ver si llego bien la lista
 	      	  	  	  for(i=0;list_size(lista_ubicaciones);i++){
@@ -126,7 +126,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	    	  	  	  logInfo("Se recibio la parte del archivo: %s", ubicacionb->parteDelArchivo);
 	    	  	  	  logInfo("Se recibio q hay que guardar el nodo %i en el bloque %i", ubicacionb->ubicacionCopia1.nodo,
 	    			  ubicacionb->ubicacionCopia1.desplazamiento);
-	      } */
+	      }
 
 			sem_wait(&semaforoYAMA);
 			Job* jobAEjecutar = retirarJobDeLista();
@@ -204,3 +204,4 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 	}
 
+}
