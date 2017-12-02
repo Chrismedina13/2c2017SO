@@ -27,7 +27,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 
 
 
-	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
+
 
 
 
@@ -102,6 +102,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 void mensajesEnviadosADataNode(int codigo, int FD_DataNode, char* mensaje,int tamanio) {
 	Paquete * paqueteEnvioDeBloque;
 	Paquete* paqueteGetBloque;
+	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
 	switch (codigo) {
 
@@ -150,6 +151,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     char* get_bloque;
     int tamaniorecv=0;
     int count=0;
+    int cantNodos= config->cant_nodos;
 
 
 	switch (codigo) {
@@ -230,7 +232,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 								nodo2=list_get(list_nodos_id_fd, count2);
 								if(idNodo==nodo2->id_nodo){
-									logInfo("Se volvio a conectar el nodo %s", idNodo);
+									logInfo("Se volvio a conectar el nodo %d", idNodo);
 									nuevo=1;
 
 									break;
@@ -259,7 +261,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 								if(nodo3->idNodo==idNodo){
 
-									logInfo("Se reconecto un nodo. Su id es:%s",idNodo);
+									logInfo("Se reconecto un nodo. Su id es:%d",idNodo);
 									nodo3->estado=1;
 
 									break;
@@ -324,23 +326,26 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							nodos->nodo_fd=FD_DN;
 							list_add(list_nodos_id_fd, nodos);
 
+							logInfo("%d",list_size(list_nodos_id_fd));
+
 							//free(nodos);
 
 						}
 
 							//checkeo cantidad de nodos para seguir con la ejecucion de FS
 
-							if(cantNodos==list_size(list_nodos_id_fd)){ //nodos necesarios para arrancar
-								logInfo("Se conectaron todos los nodos");
-								semaphore_signal(SEMAFORODN);
-								/*free(nodo2);
-								free(nodo3);
-								free(nodo1);
-								free(infoWorker);
-								free(nodos);*/
-							}
+						if(cantNodos==list_size(list_nodos_id_fd)){ //nodos necesarios para arrancar
+							logInfo("Se conectaron todos los nodos");
+							semaphore_signal(SEMAFORODN);
 
-							break;
+							free(nodo2);
+							//free(nodo3);
+							//free(nodo1);
+							free(infoworker);
+							free(nodos);
+						}
+
+						break;
 
 	    default:
 
