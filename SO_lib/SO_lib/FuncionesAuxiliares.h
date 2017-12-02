@@ -28,7 +28,8 @@ char* obtenerPuntero(const char* rutaArchivo);
 int tamanioEstructuraInfoWorker(Info_Workers* info);
 int tamanioEstructurasListaWorkers(t_list* listaWorkers);
 void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
-
+script* setScript(char* rutaScript);
+void rearmar_script(script* script);
 
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */

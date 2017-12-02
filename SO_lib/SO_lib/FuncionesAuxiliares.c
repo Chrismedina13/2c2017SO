@@ -118,3 +118,26 @@ int tamanioEstructurasListaUbicacionBloquesArchivo(t_list* listaUbicaciones){
 	}
 	return tamanioListaTotal;
 }
+
+script* setScript(char* rutaScript){
+	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+	script* script1 = malloc(strlen(rutaScript)+strlen(punteroAlContenidoDelScript));
+	script1->nombre = rutaScript;
+	script1->contenido = punteroAlContenidoDelScript;
+
+	return script1;
+}
+
+void rearmar_script(script* script){
+	FILE* fd;
+	char* nombreArchivo = string_new();
+	char* contenidoDelBloque = string_new();
+	nombreArchivo = script->nombre;
+	fd = fopen(nombreArchivo,"w");
+	if (fd==NULL) {
+		printf("Error al abrir el archivo.");
+	}
+	contenidoDelBloque = script->contenido;
+	fputs(contenidoDelBloque,fd);
+	fclose(fd);
+}
