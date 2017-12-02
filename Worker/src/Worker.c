@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
 
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);
 
-	system("gcc /home/utnso/ejemplo_correr-script_so/ejemplo_fork-pipe.c -o fork | ./fork");
+
+	system("gcc ejemplo_fork-pipe.c -o fork");
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
 
