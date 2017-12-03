@@ -101,8 +101,10 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	char* mensaje; //en este caso el mensaje es la lista de bloques del archivo
 	char pesoMensaje[4];
 	t_list * lista_ubicaciones;
-	int i;
+	int i = 0;
 	UbicacionBloquesArchivo * ubicacionb;
+	t_list* lista;
+
 
 
 	switch (codigo) {
@@ -193,13 +195,20 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 			mensaje = malloc(tamanio + 1);
 			mensaje[tamanio] = '\0';
 			recv(FDsocketClienteFileSystem, mensaje, tamanio, 0);
-			logInfo("Se recibio la lista de workers: %s ", mensaje);
 
-			t_list* lista = deserializarInfoWorker(mensaje);
+			logInfo("Se recibe la lista de los ips y puertos de los workers");
+
+			lista = deserializarLista_info_workers(mensaje);
+
+			logInfo("Se deserializo la lista de ips y puertos de los workers");
+
+			logInfo("Hay conectados %i", list_size(lista));
+
 			while(i < list_size(lista)){
 				Info_Workers* info = list_get(lista,i);
-				logInfo("puerto de nodo = %i ",info->puerto);
-				logInfo("ip de nodo  = %s ",info->ipWorker);
+
+				logInfo("puerto de nodo = %i \n ", info->puerto);
+				logInfo("ip de nodo  = %s \n ", info->ipWorker);
 
 				i++;
 			}

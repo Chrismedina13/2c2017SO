@@ -31,26 +31,31 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 	}
 
-	char* ip1 = "127.0.1";
-	char* ip2 = "129.0.1";
+	char* ipWorker1 = "43.2.2.4";
+	int puerto1 = 2;
+	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
+	char* ipWorker2 = "100.23.12.4";
+	int puerto2 = 21;
+	Info_Workers* info2 = malloc(sizeof(ipWorker2)+ sizeof(int));
+	char* ipWorker3 = "167.23.2.1";
+	int puerto3 = 100;
+	Info_Workers* info3 = malloc(sizeof(ipWorker3)+ sizeof(int));
 
-	t_list* listaworkers = list_create();
-	Info_Workers* info1 = malloc(sizeof(int) + strlen(ip1));
-	Info_Workers* info2 = malloc(sizeof(int) + strlen(ip2));
-	info1->ipWorker = ip1;
-	info2->puerto = 100;
+	info1->ipWorker = ipWorker1;
+	info1->puerto = puerto1;
+	info2->ipWorker = ipWorker2;
+	info2->puerto = puerto2;
+	info3->ipWorker = ipWorker3;
+	info3->puerto = puerto3;
 
-	info1->ipWorker = ip2;
-	info2->puerto = 150;
+	t_list* lista = list_create();
+	list_add(lista,info1);
+	list_add(lista,info2);
+	list_add(lista,info3);
 
-	list_add(listaworkers,info1);
-	list_add(listaworkers,info2);
-
-	int tamanioListaIW = tamanioEstructurasListaWorkers(listaworkers);
-	char* infoSerializada = serializarLista_info_workers(listaworkers);
-
-	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,infoSerializada,tamanioListaIW);
-
+	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(lista) + ((sizeof(int)* list_size(lista))*2) + sizeof(int));
+	char* listaSerializada = serializarLista_info_workers(lista);
+	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
 
 

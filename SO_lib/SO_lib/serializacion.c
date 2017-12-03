@@ -283,52 +283,51 @@ script* deserilizarScript(char* bloqueSerializado) {
 char * serializarLista_info_workers(t_list * listaWorkers) {
 
 	uint32_t total_size = tamanioEstructurasListaWorkers(listaWorkers);
-	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(listaWorkers)*sizeof(uint32_t))+ sizeof(int));
+	char *listaSerializada = malloc((sizeof(char)*total_size) + ((list_size(listaWorkers)*sizeof(uint32_t))*2)+ sizeof(int));
 	int offset = 0;
 	int i;
 	int tamanio_lista = list_size(listaWorkers);
 	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
 	for (i = 0; i < list_size(listaWorkers); i++) {
 		Info_Workers* info = list_get(listaWorkers,i);
-		char* contextoSerializado = serializarInfoWorker(info->puerto,info->ipWorker);
-		uint32_t size_contexto = tamanioEstructuraInfoWorker(list_get(listaWorkers,i)) + sizeof(int);
-		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);//size contexto
-		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);//contexto
+		int tamanioInfoWorker = tamanioEstructuraInfoWorker(info);
+		int tamanioIP = strlen(info->ipWorker);
+		serializarDato(listaSerializada,&(tamanioInfoWorker),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(info->puerto),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(tamanioIP),sizeof(int),&offset);
+		serializarDato(listaSerializada,info->ipWorker,tamanioIP,&offset);
 	}
 
 	return listaSerializada;
 }
 
+
+
 t_list * deserializarLista_info_workers(char * listaWorkersSerializada) {
-	int tamanio_lista= malloc(sizeof(int));
+		int tamanio_lista;
 
 		int desplazamiento = 0;
 		t_list* lista = list_create();
 		int i;
 
-		// Se deserializa cada elemento
 		deserializarDato(&(tamanio_lista),listaWorkersSerializada,sizeof(int),&desplazamiento);
-		//logInfo("tamnio_lista %d",tamanio_lista);
-		int tamanio_contexto = tamanio_lista;
 
-		for (i = 0; i < tamanio_contexto; i++) {
+		for (i = 0; i < tamanio_lista; i++) {
 
-			uint32_t size_contexto = malloc(sizeof(uint32_t));
-			deserializarDato(&(size_contexto),listaWorkersSerializada,sizeof(uint32_t),&desplazamiento);
+			int tamanioInfoWorker;
+			deserializarDato(&(tamanioInfoWorker),listaWorkersSerializada,sizeof(int),&desplazamiento);
+			Info_Workers* info = malloc(tamanioInfoWorker);
+			deserializarDato(&(info->puerto),listaWorkersSerializada,sizeof(int),&desplazamiento);
+			int tamanioIP ;
+			deserializarDato(&(tamanioIP),listaWorkersSerializada,sizeof(int),&desplazamiento);
+			info->ipWorker = string_substring(listaWorkersSerializada,desplazamiento,tamanioIP);
+			desplazamiento += tamanioIP;
+			list_add(lista,info);
 
-			char* infoWorkerSerializado = malloc(sizeof(char)*size_contexto);
-			deserializarDato(infoWorkerSerializado,listaWorkersSerializada,size_contexto,&desplazamiento);
-
-			RespuestaTransformacionYAMA* auxiliar = deserializarInfoWorker(infoWorkerSerializado);
-			list_add(lista,auxiliar);
-
-			//free(auxiliar);
-
-			free(infoWorkerSerializado);
 		}
-		//free(tamanio_lista);
 		return lista;
 }
+
 
 char* serializarInfoWorker(int puerto, char* ipWorker) {
 	char* infoWorkerSerializado = malloc(
