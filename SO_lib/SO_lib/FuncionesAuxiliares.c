@@ -161,48 +161,40 @@ void rearmar_script(script* script,int codigo){
 }
 
 void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
-  int SIZE = 1024;
-  int pipe_padreAHijo[2];
-  int pipe_hijoAPadre[2];
 
-  char* contenidoDelArchivoAEjecutar = obtenerPuntero(rutaArchivoAEjecutar);
+	char* command = string_new();
+	//malloc(strlen(rutaScript)+strlen(rutaArchivoAEjecutar)+strlen(rutaArchivoAGuardar)+sizeof(char)*15);
+	string_append(&command,"/bin/cat ");
+	string_append(&command, rutaArchivoAEjecutar);
+	string_append(&command, " | ");
+	string_append(&command, rutaScript);
+	string_append(&command, " > ");
+	string_append(&command, rutaArchivoAGuardar);
 
-  system("chmod +x transformar.py");
-  pipe(pipe_padreAHijo);
-  pipe(pipe_hijoAPadre);
-  pid_t pid;
-  int status;
-  char* buffer=malloc(SIZE);
+    system(command);
 
-  if ((pid=fork()) == 0 )
-  {
+    /*
 
-  	dup2(pipe_padreAHijo[0],STDIN_FILENO);
-  	dup2(pipe_hijoAPadre[1],STDOUT_FILENO);
-   	close( pipe_padreAHijo[1] );
-  	close( pipe_hijoAPadre[0] );
-	close( pipe_hijoAPadre[1]);
-	close( pipe_padreAHijo[0]);
-      char *argv[] = {NULL};
-      char *envp[] = {NULL};
-      execve(rutaScript, argv, envp);
-    	exit(1);
-  }else{
-	close( pipe_padreAHijo[0] ); //Lado de lectura de lo que el padre le pasa al hijo.
-    	close( pipe_hijoAPadre[1] ); //Lado de escritura de lo que hijo le pasa al padre.
+    pid_t pid;
+    int status;
 
-    	write( pipe_padreAHijo[1],contenidoDelArchivoAEjecutar,strlen(contenidoDelArchivoAEjecutar));
+     if ( (pid=fork()) == 0 )
+    { //hijo
 
-    	close( pipe_padreAHijo[1]);
+    	char *args[] = { "chmod","+x", "/home/utnso/ejemplo_correr-script_so/script_transformacion.py",0 };
+    	execv("/bin/chmod", args);
 
-    	waitpid(pid,&status,0);
-  	read( pipe_hijoAPadre[0], buffer, SIZE );
-    	close( pipe_hijoAPadre[0]);
-  }
-  FILE* fd = fopen(rutaArchivoAGuardar,"w");
-  fputs(buffer,fd);
-  fclose(fd);
+    	// EJEMPLO DE EJECV
+    	char *args[] = { "cat", "/home/utnso/SO-Nombres-Dataset/nombres.csv" ,"|", "/home/utnso/SO-Nombres-Dataset/transformador.py > /home/utnso/SO-Nombres-Dataset/CantidadPersonas.txt", NULL };
+    	execv("/bin/cat", args);
+    	    printf("Se ha producido un error al ejecutar execv.\n");
 
-  free(buffer);
-
+    	printf("Soy el hijo (%d, hijo de %d)\n", getpid(), getppid());
+    }
+    else
+    { // padre
+    	waitpid(pid, &status, 0);
+        printf("Soy el padre (%d, hijo de %d)\n", getpid(),getppid());
+    }
+    */
 }

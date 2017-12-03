@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 	//char* puntero = obtenerPuntero("/home/utnso/SO-Nombres-Dataset/nombres.csv");
 	//logInfo("%s",puntero);
 
-	ejecutarScript("","/home/utnso/SO-Nombres-Dataset/nombres.csv","/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/SO_lib/SO_lib/Resultado.txt");
+	ejecutarScript("/home/utnso/SO-Nombres-Dataset/transformador.py","/home/utnso/SO-Nombres-Dataset/nombres.csv","/home/utnso/SO-Nombres-Dataset/Resultado.txt");
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
