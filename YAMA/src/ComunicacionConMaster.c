@@ -191,8 +191,10 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		mensajesEnviadosAMaster(NUMERO_DE_JOB,FDMaster,numeroDeJob,4);
 
 		logInfo("Envio De JOB a FS");
+
 		int tamanioJOB = strlen(job->nombreDelArchivo);
 		Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,job->nombreDelArchivo);
+
 		if (enviarPaquete(FDsocketClienteFileSystem, paqueteDeEnvioDeJOB) == -1) {
 				logInfo("Error en envio de job");
 			}else{
@@ -206,7 +208,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 
 
-		agregarJObACola(job);
+		//agregarJObACola(job);
 
 		atenderJOB();
 		sem_post(&semaforoYAMA);

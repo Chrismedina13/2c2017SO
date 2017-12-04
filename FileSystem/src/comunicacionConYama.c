@@ -57,14 +57,34 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	char* listaSerializada = serializarLista_info_workers(lista);
 	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
+    logInfo(" Armando lista ubicaciones");
+
+    t_list* lista_ubicaciones = list_create();
+	UbicacionBloquesArchivo * ubicaciones1 = crearUbicacionBloquesArchivos(0,1,12,23,34,45);
+	list_add(lista_ubicaciones, ubicaciones1);
+	UbicacionBloquesArchivo * ubicaciones2 = crearUbicacionBloquesArchivos(2,50,60,45,322,125454);
+	list_add(lista_ubicaciones, ubicaciones2);
+	UbicacionBloquesArchivo * ubicaciones3 = crearUbicacionBloquesArchivos(3,4545,02323,3434,33434,5555555);
+	list_add(lista_ubicaciones, ubicaciones3);
+
+    logInfo("Lista ubicaciones armada");
+
+	char* lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
+	int tamanio_lista_serializada= (24*list_size(lista_ubicaciones)) + sizeof(int)+ (sizeof(int)*list_size(lista_ubicaciones)) ;
+
+    logInfo(" todo serializado listo para mandar");
+
+    mensajesEnviadosAYama(UBICACION_BLOQUES,FDServidorYAMA,lista_serializada,tamanio_lista_serializada);
+
+    logInfo("Se va a enviar a YAMA las ubicaciones ");
 
 
 
-	//fs manda la lista de workers
-//	char * lista_workers = malloc((11+sizeof(char) + sizeof(int))*list_size(list_info_workers));
-	//       lista_workers=serializarLista_info_workers(list_info_workers);
-		//   int tamanio_lista_workers = (11+sizeof(char) + sizeof(int))*list_size(list_info_workers);
-	//mensajesEnviadosAYama(INFO_WORKER, FDServidorYAMA, lista_workers, tamanio_lista_workers);
+
+
+
+
+
 
 
 	//cm:recibe de yama el nombre del archivo
