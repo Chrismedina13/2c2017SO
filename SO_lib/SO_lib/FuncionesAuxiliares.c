@@ -137,15 +137,19 @@ void rearmar_script(script* script,int codigo){
 	switch(codigo){
 	case SCRIPT_REDUCCION:
 		string_append(&nombreArchivo,"Reduccion.py");
+		rutaScriptReduccion = nombreArchivo; //variable global
 		break;
 	case SCRIPT_TRANSFORMADOR:
 		string_append(&nombreArchivo,"Transformador.py");
+		rutaScriptTransformador = nombreArchivo; //variable global
 		break;
 	case SCRIPT_TRANSFORMADOR_ANUAL:
 		string_append(&nombreArchivo,"Transformador_Anual.py");
+		rutaScriptTransformadorAnual = nombreArchivo; //variable global
 		break;
 	case SCRIPT_TRANSFORMADOR_INICIAL:
 		string_append(&nombreArchivo,"Transformador_Inicial.py");
+		rutaScriptTransformadorInicial = nombreArchivo; //variable global
 		break;
 	default:
 		logInfo("Error codigo incorrecto");

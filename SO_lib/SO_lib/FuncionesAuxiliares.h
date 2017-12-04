@@ -21,7 +21,10 @@
 #include "estructuras.h"
 #include "Protocolo.h"
 
-
+char* rutaScriptReduccion;
+char* rutaScriptTransformador;
+char* rutaScriptTransformadorInicial;
+char* rutaScriptTransformadorAnual;
 
 int generarNumeroAleatorioNoRepetido();
 char* generarNombreArchivoReduccionGlobal(int variableRG);
