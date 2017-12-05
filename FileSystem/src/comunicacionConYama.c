@@ -57,6 +57,21 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	char* listaSerializada = serializarLista_info_workers(lista);
 	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
+    logInfo("creando Respuesta Almacenado Final de prueba ");
+
+    respuestaAlmacenadoFinal* RAF = crearRespuestaAlmacenadoFinal(5,200,"20.121.21.33","hola.txt");
+
+    int tamanioRAFaMandar = sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker);
+
+    char* rafSerializada = serializarRespuestaAlmacenadoFinal(RAF);
+
+    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
+
+    logInfo("Respuesta Almacenado Final de prueba listo para enviar ");
+
+
+
+
     logInfo(" Armando lista ubicaciones");
 
     t_list* lista_ubicaciones = list_create();
@@ -81,13 +96,7 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 
 
-
-
-
-
-
-
-	//cm:recibe de yama el nombre del archivo
+    //cm:recibe de yama el nombre del archivo
 	char buffer[4];
 	recv(FDServidorYAMA,buffer,4,0);
 	codigo = deserializarINT(buffer);
@@ -172,6 +181,19 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	Paquete* paqueteEnvioUbicacionBloque;
 
 	switch (codigo) {
+		case PRUEBAS:
+
+			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);
+
+			if (enviarPaquete(FD_YAMA, paqueteEnvioUbicacionBloque) == -1) {
+				logInfo("Error en envio de la prueba RAF");
+				}else{
+
+				logInfo("Enviado correctamente la prueba");
+								}
+			    destruirPaquete(paqueteEnvioUbicacionBloque);
+
+			break;
 		case UBICACION_BLOQUES:
 
 			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);

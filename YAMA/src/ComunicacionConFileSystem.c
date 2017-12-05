@@ -104,9 +104,28 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	int i = 0;
 	t_list* lista;
 
-
-
 	switch (codigo) {
+	case PRUEBAS:
+		logInfo("RECIBIENOD Pruebas de serializacion");
+				recv(FDsocketClienteFileSystem,pesoMensaje,4,0);
+				tamanio = deserializarINT(pesoMensaje);
+				logInfo("tamanio de lo que recibo %i", tamanio);
+				mensaje = malloc(tamanio + 1);
+				mensaje[tamanio] = '\0';
+				if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
+					logInfo("Error en la recepcion pruebas de serializacion.");
+				}
+
+				respuestaAlmacenadoFinal * RAF = deserializarRespuestaAlmacenadoFinal(mensaje);
+
+				logInfo("nodo del RAF = %i", RAF->nodo);
+				logInfo("puerto del RAF = %i", RAF->puertoWorker);
+				logInfo("ip del RAF = %s", RAF->ipWorker);
+				logInfo("archivo del RAF = %s", RAF->archivoDeReduccionGlobal);
+
+
+
+		break;
 	case UBICACION_BLOQUES:
 				logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
