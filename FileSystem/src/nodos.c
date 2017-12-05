@@ -62,34 +62,19 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 
 	int cantBloques = list_size(bloques);
 	int indiceBloque = 0;
-	//t_list* listaUbicacionesBloquesArchivos = list_create();
 	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
 
 	while(indiceBloque<cantBloques){
-
-		//carga el bloque a guardar (char*)
 
 		char* bloque = list_get(bloques,indiceBloque);
 
 		//elije los 2 nodos mas vacios
 
-/*		int indiceOriginal = elegirNodo(nodos);
-		bitMap* nodoConOriginal = list_remove(nodos,indiceOriginal);
-		int indiceConCopia = elegirNodo(nodos);
-		bitMap* nodoConCopia = list_remove(nodos,indiceConCopia);
-		int parteDelNodoDelOriginal = actualizarBitmapDelNodo(&nodoConOriginal);
-		int parteDelNodoDeLaCopia = actualizarBitmapDelNodo(&nodoConCopia);
-		printf("Parte del nodo del original: %d\n",parteDelNodoDelOriginal);
-		printf("Parte del nodo de la copia: %d\n", parteDelNodoDeLaCopia);
-		list_add(nodos,nodoConOriginal);
-		list_add(nodos,nodoConCopia);
-*/
-
 		int count = 0;
 		int index1, indexList1, index2, indexList2;
 		int desplazamiento1, desplazamiento2;
-		bloques_nodo* bitMapNodo1 = malloc(sizeof(bloques_nodo));
-		bloques_nodo* bitMapNodo2 = malloc(sizeof(bloques_nodo));
+		bloques_nodo* bitMapNodo1 = malloc(sizeof(bloques_nodo)+160);
+		bloques_nodo* bitMapNodo2 = malloc(sizeof(bloques_nodo)+160);
 
 		indexList1 = elegirNodo(mapa_de_bits);
 		bitMapNodo1 = list_get(mapa_de_bits,indexList1);
@@ -99,7 +84,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		if(desplazamiento1==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		logInfo("Bloque: %d, nodo %d, desplazamiento %d",count, index1,desplazamiento1);
+		logInfo("Ubico la copia 1 en el  bloque: %d, en el nodo %d, desplazamiento %d",count, index1,desplazamiento1);
 		list_remove(mapa_de_bits,indexList1);
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
@@ -112,7 +97,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		if(desplazamiento2==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		logInfo("Bloque: %d, nodo %d, desplazamiento %d",count, index2,desplazamiento2);
+		logInfo("Ubico la copia 2 en el bloque: %d, en el nodo %d, desplazamiento %d",count, index2,desplazamiento2);
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
 		list_add(mapa_de_bits,bitMapNodo1);
@@ -263,7 +248,7 @@ t_list* copyList(t_list* mapa_de_bits_original){
 int elegirNodo(t_list* nodos){
 
 	int count = 0;
-	int flag;
+	int flag=0;
 	int extraCount = 0;
 
 	bloques_nodo* nodoMasVacio;
@@ -301,9 +286,17 @@ int elegirNodo(t_list* nodos){
 }
 
 int bloquesLibres(bloques_nodo* nodo){
-	int i,libres=0;
+	/*int i,libres=0;
 	for(i=0;i<(nodo->bloquesTotales);i++){
 		if(nodo->bitmap[i] == 0) libres++;
+	}
+	return libres;
+	*/
+	int count=0;
+	int libres=0;
+	while(count<(nodo->bloquesTotales)){
+		if(nodo->bitmap[count]==0)libres++;
+		count++;
 	}
 	return libres;
 }
@@ -330,6 +323,7 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 	while(count<(nodo->bloquesTotales)){
 		if(nodo->bitmap[count]==0){
 			nodo->bitmap[count]=1;
+			nodo->bloquesLibres = nodo->bloquesLibres-1;
 			return(count);
 		}
 	count++;
@@ -474,6 +468,7 @@ int liberarBloqueBitMap(nodo, desplazamiento){
 	while(count<cantNodos){
 		if(bloquesNodo->idNodo==nodo){
 		bloquesNodo->bitmap[desplazamiento]=0;
+		bloquesNodo->bloquesLibres=bloquesNodo->bloquesLibres+1;
 		return(1);
 		}
 	count++;

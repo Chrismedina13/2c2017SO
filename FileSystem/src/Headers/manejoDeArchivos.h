@@ -39,7 +39,7 @@ int cantidadDeBloques(int tamanio);
 char* obtenerPuntero(const char* rutaArchivo);
 int tamanioArchivoCerrado(const char* rutaArchivo);
 t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques);
-t_list* dividirArchivoTxt(char* p);
+t_list* dividirArchivoTexto(char* p, char* nombreArchivo);
 char* obtenerContenidoDelArchivo(const char* rutaArchivo);
 t_list* listaDeContenidos(t_list* rutasDeArchivos);
 

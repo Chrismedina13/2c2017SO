@@ -326,7 +326,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							nodos->nodo_fd=FD_DN;
 							list_add(list_nodos_id_fd, nodos);
 
-							logInfo("%d",list_size(list_nodos_id_fd));
+							//logInfo("%d",list_size(list_nodos_id_fd));
 
 							//free(nodos);
 

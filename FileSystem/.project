@@ -3,6 +3,8 @@
 	<name>FileSystem</name>
 	<comment></comment>
 	<projects>
+		<project>DataNode</project>
+		<project>RemoteSystemsTempFiles</project>
 		<project>SO_lib</project>
 	</projects>
 	<buildSpec>
