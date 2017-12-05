@@ -79,81 +79,89 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 						switch (codigo) {
 						case SCRIPT_TRANSFORMADOR_INICIAL:
+							if(scriptTransfI == 0){
+								scriptTransfI = 1;
+								recv(FDMaster, pesoMensaje, 4, 0);
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 
-							recv(FDMaster, pesoMensaje, 4, 0);
-							tamanio = deserializarINT(pesoMensaje);
-							mensaje = malloc(tamanio);
-							mensaje[tamanio] = '\0';
-							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+									logInfo("Error en la recepcion de Info de Master.");
+								}else{
 
-								logInfo("Error en la recepcion de Info de Master.");
-							}else{
+									script* script = deserilizarScript(mensaje);
 
-								script* script = deserilizarScript(mensaje);
+									rearmar_script(script,SCRIPT_TRANSFORMADOR_INICIAL);
 
-								rearmar_script(script,SCRIPT_TRANSFORMADOR_INICIAL);
-
-								printf("recibo script tranformacion inicial");
+									printf("recibo script tranformacion inicial");
 
 
+								}
 							}
 							break;
 						case SCRIPT_TRANSFORMADOR_ANUAL:
-							recv(FDMaster, pesoMensaje, 4, 0);
-							tamanio = deserializarINT(pesoMensaje);
-							mensaje = malloc(tamanio);
-							mensaje[tamanio] = '\0';
-							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+							if(scriptTransfA == 0){
+								scriptTransfA=1;
+								precv(FDMaster, pesoMensaje, 4, 0);
 
-								logInfo("Error en la recepcion de Info de Master.");
-							}else{
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 
-								script* script = deserilizarScript(mensaje);
+									logInfo("Error en la recepcion de Info de Master.");
+								}else{
 
-								rearmar_script(script,SCRIPT_TRANSFORMADOR_ANUAL);
+									script* script = deserilizarScript(mensaje);
 
-								printf("recibo script tranformacion anual");
+									rearmar_script(script,SCRIPT_TRANSFORMADOR_ANUAL);
 
-
+									printf("recibo script tranformacion anual");
+								}
 							}
 							break;
 						case SCRIPT_TRANSFORMADOR:
+							if(scriptTransf == 0){
+								scriptTransf = 1;
+								recv(FDMaster, pesoMensaje, 4, 0);
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 
-							recv(FDMaster, pesoMensaje, 4, 0);
-							tamanio = deserializarINT(pesoMensaje);
-							mensaje = malloc(tamanio);
-							mensaje[tamanio] = '\0';
-							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+									printf("Error en la recepcion de Info de Master.");
+								}else{
 
-								printf("Error en la recepcion de Info de Master.");
-							}else{
+									script* script = deserilizarScript(mensaje);
 
-								script* script = deserilizarScript(mensaje);
+									rearmar_script(script,SCRIPT_TRANSFORMADOR);
 
-								rearmar_script(script,SCRIPT_TRANSFORMADOR);
-
-								printf("recibo script tranformador");
+									printf("recibo script tranformador");
 
 
+								}
 							}
 							break;
 						case SCRIPT_REDUCCION:
+							if(scriptReducc == 0){
+								scriptReducc = 1;
+								recv(FDMaster, pesoMensaje, 4, 0);
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 
-							recv(FDMaster, pesoMensaje, 4, 0);
-							tamanio = deserializarINT(pesoMensaje);
-							mensaje = malloc(tamanio);
-							mensaje[tamanio] = '\0';
-							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+									logInfo("Error en la recepcion de Info de Master.");
+								}else{
 
-								logInfo("Error en la recepcion de Info de Master.");
-							}else{
+									script* script = deserilizarScript(mensaje);
 
-								script* script = deserilizarScript(mensaje);
+									rearmar_script(script,SCRIPT_REDUCCION);
 
-								rearmar_script(script,SCRIPT_REDUCCION);
+									printf("recibo script tranformador");
 
-								printf("recibo script tranformador");
-
+								}
 							}
 							break;
 						case TAREA_WORKER:
@@ -189,47 +197,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						}
 
 
-
-						//deberia divir la info 3 cosas:el cod a ejecutar,el origen de datos y el destino
-					/*	int v_origen;
-						char* v_destino;
-						v_origen = info->bloque;
-						v_destino = info->archivoTemporal;*/
-						//crear_script(info->script);crear el archivo de transformacion
-						/////////////////////////////////////////hay que hacer forkkkkkk
-
-						/*int pid;
-						 int i;
-						 int estado;
-
-						 pid = fork();
-
-						 switch(pid)
-						 {
-						 case -1: // Si pid es -1 quiere decir que ha habido un error
-						 perror("No se ha podido crear el proceso hijo\n");
-						 break;
-						 case 0: // Cuando pid es cero quiere decir que es el proceso hijo
-						 for(i=0; i&lt;10; i++)
-						 printf("Soy el hijo\n");
-						 /*ejecuto el script de transformacion
-						 crear_script(info->script);
-
-						 ejecutar_script(v_origen,v_destino);
-						 break;
-						 default: // Cuando es distinto de cero es el padre
-						 for(i=0; i&lt;10; i++)
-						 printf("Soy el padre\n");
-						 // La función wait detiene el proceso padre y se queda esperando hasta
-						 // que termine el hijo
-						 wait(estado);
-						 printf("Mi proceso hijo ya ha terminado.\n");
-						 break;
-						 }*/
-
 					}
-
-					////////////////////////////////////////////////////////////
 				}
 			}
 
