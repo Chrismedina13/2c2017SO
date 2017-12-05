@@ -16,11 +16,6 @@
 #include "comunicacionConMaster.h"
 #include "configuracionW.h"
 
-int scriptTransf = 0;
-int scriptTransfA = 0;
-int scriptTransfI = 0;
-int scriptReducc = 0;
-
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf"
 
 

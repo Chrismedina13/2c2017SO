@@ -7,7 +7,8 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;
 	FDServidorWORKER = lib_SocketCliente(parametros->ipWoker,parametros->puertoWoker);
 	//logInfo("%i",FDServidorWORKER);
-	script* scriptReductor = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/reductor.py");
+
+	/*script* scriptReductor = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/reductor.py");
 	int tamanioScriptReductor = tamanioScript(scriptReductor);
 		script* scriptTransformador = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
 	int tamanioScriptTransformador = tamanioScript(scriptTransformador);
@@ -33,6 +34,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR_ANUAL,FDServidorWORKER,respuestaScriptAnuales, tamanioScriptTransformadorAnuales);
 	logInfo("Se envia script scriptTransformadorAnuales");
+*/
 
 	logInfo("Trato de comunicar con worker");
 
