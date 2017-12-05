@@ -200,14 +200,9 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 	RRG->puertoWorker = puertoWorker;
 	RRG->ipWorker = ipWorker;
 	RRG->archivoReduccionLocal = archivoReduccionLocal;
-	if(encargado == true){
+	RRG->archivoReduccionGlobal = archivoReduccionGlobal;
+	RRG->encargado = encargado;
 
-		RRG->archivoReduccionGlobal = archivoReduccionGlobal;
-		RRG->encargado = true;
-	}else{
-		RRG->archivoReduccionGlobal = NULL;
-		RRG->encargado = false;
-		}
 
 	return RRG;
 }
@@ -223,5 +218,4 @@ respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char
 
 	return RAF;
 }
-
 

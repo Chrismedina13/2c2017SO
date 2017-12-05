@@ -102,14 +102,32 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	char pesoMensaje[4];
 	t_list * lista_ubicaciones;
 	int i = 0;
-	UbicacionBloquesArchivo * ubicacionb;
 	t_list* lista;
 
-
-
 	switch (codigo) {
-	case UBICACION_BLOQUES:
+	case PRUEBAS:
+		logInfo("RECIBIENOD Pruebas de serializacion");
+				recv(FDsocketClienteFileSystem,pesoMensaje,4,0);
+				tamanio = deserializarINT(pesoMensaje);
+				logInfo("tamanio de lo que recibo %i", tamanio);
+				mensaje = malloc(tamanio + 1);
+				mensaje[tamanio] = '\0';
+				if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
+					logInfo("Error en la recepcion pruebas de serializacion.");
+				}
 
+				respuestaAlmacenadoFinal * RAF = deserializarRespuestaAlmacenadoFinal(mensaje);
+
+				logInfo("nodo del RAF = %i", RAF->nodo);
+				logInfo("puerto del RAF = %i", RAF->puertoWorker);
+				logInfo("ip del RAF = %s", RAF->ipWorker);
+				logInfo("archivo del RAF = %s", RAF->archivoDeReduccionGlobal);
+
+
+
+		break;
+	case UBICACION_BLOQUES:
+				logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
 					tamanio = deserializarINT(pesoMensaje);
 					logInfo("tamanio de lo que recibo %i", tamanio);
@@ -117,17 +135,21 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 					mensaje[tamanio] = '\0';
 
 					if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
-						logInfo(
-					"Error en la recepcion de la lista de Bloques que componen el archivo.");
+						logInfo("Error en la recepcion de la lista de Bloques que componen el archivo.");
 					} else  {
-	         	  	  lista_ubicaciones=list_create();
+
 	            	  lista_ubicaciones= deserializarUbicacionBloquesArchivos(mensaje);
-	            	//prueba para ver si llego bien la lista
-	      	  	  	  for(i=0;list_size(lista_ubicaciones);i++){
-	    	  	  	  ubicacionb = list_get(lista_ubicaciones,i);
-	    	  	  	  logInfo("Se recibio la parte del archivo: %s", ubicacionb->parteDelArchivo);
-	    	  	  	  logInfo("Se recibio q hay que guardar el nodo %i en el bloque %i", ubicacionb->ubicacionCopia1.nodo,
-	    			  ubicacionb->ubicacionCopia1.desplazamiento);
+
+					logInfo("se RECIBIO LA LISTA DE UBICACIONES CON %i PARTES DEL ARCHIVO", list_size(lista_ubicaciones));
+
+
+	            	  for(i=0;list_size(lista_ubicaciones);i++){
+
+	      	  	  	  UbicacionBloquesArchivo*ubicacionb = list_get(lista_ubicaciones,i);
+	    	  	  	  logInfo("Se recibio la parte del archivo: %i", ubicacionb->parteDelArchivo);
+	    	  	  	  logInfo("Se recibio el ubi 1 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia1.nodo, ubicacionb->ubicacionCopia1.desplazamiento);
+	    	  	  	  logInfo("Se recibio el ubi 2 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia2.nodo, ubicacionb->ubicacionCopia2.desplazamiento);
+	    	  	  	  logInfo("Con la cantidad de bytes Ocupados: %i", ubicacionb->bytesOcupados);
 	      }
 
 			sem_wait(&semaforoYAMA);

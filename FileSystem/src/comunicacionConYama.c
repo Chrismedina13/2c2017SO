@@ -57,17 +57,46 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	char* listaSerializada = serializarLista_info_workers(lista);
 	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
+    logInfo("creando Respuesta Almacenado Final de prueba ");
+
+    respuestaAlmacenadoFinal* RAF = crearRespuestaAlmacenadoFinal(5,200,"20.121.21.33","hola.txt");
+
+    int tamanioRAFaMandar = sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker);
+
+    char* rafSerializada = serializarRespuestaAlmacenadoFinal(RAF);
+
+    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
+
+    logInfo("Respuesta Almacenado Final de prueba listo para enviar ");
 
 
 
-	//fs manda la lista de workers
-//	char * lista_workers = malloc((11+sizeof(char) + sizeof(int))*list_size(list_info_workers));
-	//       lista_workers=serializarLista_info_workers(list_info_workers);
-		//   int tamanio_lista_workers = (11+sizeof(char) + sizeof(int))*list_size(list_info_workers);
-	//mensajesEnviadosAYama(INFO_WORKER, FDServidorYAMA, lista_workers, tamanio_lista_workers);
+
+    logInfo(" Armando lista ubicaciones");
+
+    t_list* lista_ubicaciones = list_create();
+	UbicacionBloquesArchivo * ubicaciones1 = crearUbicacionBloquesArchivos(0,1,12,23,34,45);
+	list_add(lista_ubicaciones, ubicaciones1);
+	UbicacionBloquesArchivo * ubicaciones2 = crearUbicacionBloquesArchivos(2,50,60,45,322,125454);
+	list_add(lista_ubicaciones, ubicaciones2);
+	UbicacionBloquesArchivo * ubicaciones3 = crearUbicacionBloquesArchivos(3,4545,02323,3434,33434,5555555);
+	list_add(lista_ubicaciones, ubicaciones3);
+
+    logInfo("Lista ubicaciones armada");
+
+	char* lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
+	int tamanio_lista_serializada= (24*list_size(lista_ubicaciones)) + sizeof(int)+ (sizeof(int)*list_size(lista_ubicaciones)) ;
+
+    logInfo(" todo serializado listo para mandar");
+
+    mensajesEnviadosAYama(UBICACION_BLOQUES,FDServidorYAMA,lista_serializada,tamanio_lista_serializada);
+
+    logInfo("Se va a enviar a YAMA las ubicaciones ");
 
 
-	//cm:recibe de yama el nombre del archivo
+
+
+    //cm:recibe de yama el nombre del archivo
 	char buffer[4];
 	recv(FDServidorYAMA,buffer,4,0);
 	codigo = deserializarINT(buffer);
@@ -152,6 +181,19 @@ void mensajesEnviadosAYama(int codigo,int FD_YAMA, char* mensaje,int tamanio){
 	Paquete* paqueteEnvioUbicacionBloque;
 
 	switch (codigo) {
+		case PRUEBAS:
+
+			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);
+
+			if (enviarPaquete(FD_YAMA, paqueteEnvioUbicacionBloque) == -1) {
+				logInfo("Error en envio de la prueba RAF");
+				}else{
+
+				logInfo("Enviado correctamente la prueba");
+								}
+			    destruirPaquete(paqueteEnvioUbicacionBloque);
+
+			break;
 		case UBICACION_BLOQUES:
 
 			paqueteEnvioUbicacionBloque = crearPaquete(codigo, tamanio,mensaje);

@@ -415,57 +415,52 @@ UbicacionBloque deserializarUbicacionBloque(char* ubicacionbloqueserializado) {
 
 char* serializarListaUbicacionBloquesArchivos(t_list* ubicaciones){
 
-	uint32_t total_size = tamanioEstructurasListaUbicacionBloquesArchivo(ubicaciones);
-	logInfo("total_size %i",total_size);
-	char *listaSerializada = malloc((sizeof(char)*total_size) + (list_size(ubicaciones)*sizeof(uint32_t))+ sizeof(int));
+	char *listaSerializada = malloc((24*list_size(ubicaciones)) + sizeof(int)+ (sizeof(int)*list_size(ubicaciones)) );
 	int offset = 0;
 	int i;
 	int tamanio_lista = list_size(ubicaciones);
 	logInfo("tamanio_lista %i",tamanio_lista);
 
 	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
+
 	for (i = 0; i < list_size(ubicaciones); i++) {
 		UbicacionBloquesArchivo* nodo = list_get(ubicaciones,i);
-		char* contextoSerializado = serializarUblicacionBloqueArchivo(nodo);
+		int tamanioDeUnaUbicacion = 24;
+		serializarDato(listaSerializada,&(tamanioDeUnaUbicacion),sizeof(int),&offset);
 
-		uint32_t size_contexto = tamanioEstructuraUbicacionBloquesArchivo(list_get(ubicaciones,i));
-		serializarDato(listaSerializada,&(size_contexto),sizeof(uint32_t),&offset);
-		serializarDato(listaSerializada,contextoSerializado,sizeof(char)*size_contexto,&offset);
-		free(contextoSerializado);
-
+		serializarDato(listaSerializada,&(nodo->parteDelArchivo),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->ubicacionCopia1.nodo),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->ubicacionCopia1.desplazamiento),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->ubicacionCopia2.nodo),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->ubicacionCopia2.desplazamiento),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->bytesOcupados),sizeof(int),&offset);
 	}
-	logInfo("Salgo de la serializacion");
 	return listaSerializada;
 }
-
 t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada){
-	int tamanio_lista= malloc(sizeof(int));
-
+	int tamanio_lista;
 	int desplazamiento = 0;
-	t_list* lista = list_create();//malloc(sizeof(contexto) * tamanio_contexto);
+	t_list* lista = list_create();
 	int i;
 
-	// Se deserializa cada elemento del Stack
 	deserializarDato(&(tamanio_lista),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
 	logInfo("tamnio_lista %i",tamanio_lista);
-	int tamanio_contexto = tamanio_lista;
 
-	for (i = 0; i < tamanio_contexto; i++) {
+	for (i = 0; i < tamanio_lista; i++) {
 
-		uint32_t size_contexto;
-		deserializarDato(&(size_contexto),ListaUbicacionesSerializada,sizeof(uint32_t),&desplazamiento);
+		int tamanioUbi;
+		deserializarDato(&(tamanioUbi),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		UbicacionBloquesArchivo* ubi = malloc(tamanioUbi);
+		deserializarDato(&(ubi->parteDelArchivo),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->ubicacionCopia1.nodo),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->ubicacionCopia1.desplazamiento),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->ubicacionCopia2.nodo),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->ubicacionCopia2.desplazamiento),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->bytesOcupados),ListaUbicacionesSerializada,sizeof(int),&desplazamiento);
 
-		char* contextoSerializado = malloc(sizeof(char)*size_contexto);
-		deserializarDato(contextoSerializado,ListaUbicacionesSerializada,size_contexto,&desplazamiento);
+		list_add(lista,ubi);
 
-		UbicacionBloquesArchivo* auxiliar = deserializarUbicacionArchivo(contextoSerializado);
-		list_add(lista,auxiliar);
-
-		//free(auxiliar);
-
-		free(contextoSerializado);
 	}
-	//free(tamanio_lista);
 	return lista;
 
 }
@@ -583,10 +578,145 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado) {
 
 }
 
+//Respuesta ALmacenado Final
+
+char* serializarRespuestaAlmacenadoFinal(respuestaAlmacenadoFinal* RAF){
+
+	char* RAFSerializado = malloc(sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker));
+	int desplazamiento = 0;
+	int TamanioRAF = (sizeof(int)*2 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker));
+
+	serializarDato(RAFSerializado, &(TamanioRAF), sizeof(int),&desplazamiento);
+	serializarDato(RAFSerializado, &(RAF->nodo), sizeof(int),&desplazamiento);
+	serializarDato(RAFSerializado, &(RAF->puertoWorker), sizeof(int),&desplazamiento);
+	int tamanioArchivoReduccionglobal = strlen(RAF->archivoDeReduccionGlobal);
+	serializarDato(RAFSerializado, &(tamanioArchivoReduccionglobal), sizeof(int),&desplazamiento);
+	serializarDato(RAFSerializado, RAF->archivoDeReduccionGlobal, tamanioArchivoReduccionglobal,&desplazamiento);
+	int tamanioIP = strlen(RAF->ipWorker);
+	serializarDato(RAFSerializado, &(tamanioIP), sizeof(int),&desplazamiento);
+	serializarDato(RAFSerializado, RAF->ipWorker, tamanioIP,&desplazamiento);
+
+	return RAFSerializado;
 
 
+}
 
 
+respuestaAlmacenadoFinal* deserializarRespuestaAlmacenadoFinal(char* almacenadoFinalSerializado) {
+	int desplazamiento = 0;
+	int tamanioRespuesta;
 
+	deserializarDato(&(tamanioRespuesta), almacenadoFinalSerializado, sizeof(int),&desplazamiento);
+	respuestaAlmacenadoFinal* RAF = malloc(tamanioRespuesta);
+
+	deserializarDato(&(RAF->nodo), almacenadoFinalSerializado, sizeof(int),&desplazamiento);
+	deserializarDato(&(RAF->puertoWorker), almacenadoFinalSerializado, sizeof(int),&desplazamiento);
+	int tamanioArchivo;
+	deserializarDato(&(tamanioArchivo), almacenadoFinalSerializado, sizeof(int),&desplazamiento);
+	RAF->archivoDeReduccionGlobal = string_substring(almacenadoFinalSerializado,desplazamiento,tamanioArchivo);
+	desplazamiento += tamanioArchivo;
+
+	int tamanioIP;
+	deserializarDato(&(tamanioIP), almacenadoFinalSerializado, sizeof(int),&desplazamiento);
+	RAF->ipWorker = string_substring(almacenadoFinalSerializado,desplazamiento,tamanioIP);
+	desplazamiento += tamanioIP;
+
+	return RAF;
+
+}
+
+//Respuesta Reduccion Global
+int tamanioListareduccionGlobal(t_list* listaRRG){
+
+	int i = 0;
+	int tamanio = 0;
+
+	while(i< list_size(listaRRG)){
+		RespuestaReduccionGlobal* RRG = list_get(listaRRG,i);
+		tamanio += sizeof(int)*2 + sizeof(bool);
+		tamanio += strlen(RRG->ipWorker);
+		tamanio += strlen(RRG->archivoReduccionGlobal);
+		tamanio += strlen(RRG->archivoReduccionLocal);
+		i++;
+	}
+	return tamanio;
+}
+
+
+char* serializarListaRespuestaReduccionGlobal(t_list* listaRRG){
+
+	char *listaSerializada = malloc(tamanioListareduccionGlobal(listaRRG) + sizeof(int) + (sizeof(int)*list_size(listaRRG)*4) );
+	int offset = 0;
+	int i;
+	int tamanio_lista = list_size(listaRRG);
+
+	serializarDato(listaSerializada,&(tamanio_lista),sizeof(int),&offset);
+
+	for (i = 0; i < list_size(listaRRG); i++){
+
+		RespuestaReduccionGlobal* nodo = list_get(listaRRG,i);
+		int tamanioDeNodo = sizeof(int)*2 + sizeof(bool) + strlen(nodo->archivoReduccionGlobal) + strlen(nodo->archivoReduccionLocal) + strlen(nodo->ipWorker) ;
+		serializarDato(listaSerializada,&(tamanioDeNodo),sizeof(int),&offset);
+
+		serializarDato(listaSerializada,&(nodo->nodo),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->puertoWorker),sizeof(int),&offset);
+		serializarDato(listaSerializada,&(nodo->encargado),sizeof(bool),&offset);
+
+		int tamanioArchivoReduccionLocal = strlen(nodo->archivoReduccionLocal);
+		serializarDato(listaSerializada,&(tamanioArchivoReduccionLocal),sizeof(int),&offset);
+		serializarDato(listaSerializada,nodo->archivoReduccionLocal,tamanioArchivoReduccionLocal,&offset);
+
+		int tamanioArchivoReduccionGlobal = strlen(nodo->archivoReduccionGlobal);
+		serializarDato(listaSerializada,&(tamanioArchivoReduccionGlobal),sizeof(int),&offset);
+		serializarDato(listaSerializada,nodo->archivoReduccionGlobal,tamanioArchivoReduccionLocal,&offset);
+
+
+		int tamanioIP = strlen(nodo->ipWorker);
+		serializarDato(listaSerializada,&(tamanioIP),sizeof(int),&offset);
+		serializarDato(listaSerializada,nodo->archivoReduccionGlobal,tamanioIP,&offset);
+	}
+	return listaSerializada;
+}
+
+t_list * deserializarListaRespuesReduccionGlobal(char* ListaRRGSerializada){
+
+	int tamanio_lista;
+	int desplazamiento = 0;
+	t_list* lista = list_create();
+	int i;
+
+	deserializarDato(&(tamanio_lista),ListaRRGSerializada,sizeof(int),&desplazamiento);
+
+	for (i = 0; i < tamanio_lista; i++) {
+
+		int tamanioDelNodo;
+		deserializarDato(&(tamanioDelNodo),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		RespuestaReduccionGlobal* RRG = malloc(tamanioDelNodo);
+
+		deserializarDato(&(RRG->nodo),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(RRG->puertoWorker),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		deserializarDato(&(RRG->encargado),ListaRRGSerializada,sizeof(bool),&desplazamiento);
+
+		int tamanioArchivoLocal;
+		deserializarDato(&(tamanioArchivoLocal),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		RRG->archivoReduccionLocal = string_substring(ListaRRGSerializada,desplazamiento,tamanioArchivoLocal);
+		desplazamiento += tamanioArchivoLocal;
+
+		int tamanioArchivoGlobal;
+		deserializarDato(&(tamanioArchivoGlobal),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		RRG->archivoReduccionGlobal = string_substring(ListaRRGSerializada,desplazamiento,tamanioArchivoGlobal);
+		desplazamiento += tamanioArchivoGlobal;
+
+		int tamanioIP;
+		deserializarDato(&(tamanioIP),ListaRRGSerializada,sizeof(int),&desplazamiento);
+		RRG->archivoReduccionGlobal = string_substring(ListaRRGSerializada,desplazamiento,tamanioIP);
+		desplazamiento += tamanioIP;
+
+		list_add(lista,RRG);
+
+	}
+	return lista;
+
+}
 
 

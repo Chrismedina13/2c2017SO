@@ -71,9 +71,9 @@ saludo_datanode *deserializar_saludo_datanode(char* saludoSerializado);
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker );
 
-//FALTAN HACER LAS DE ABAJO
+char* serializarRespuestaAlmacenadoFinal(respuestaAlmacenadoFinal* RAF);
 
-
+respuestaAlmacenadoFinal* deserializarRespuestaAlmacenadoFinal(char* almacenadoFinalSerializado);
 
 
 
