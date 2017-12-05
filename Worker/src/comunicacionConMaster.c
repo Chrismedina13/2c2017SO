@@ -78,7 +78,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						 int FDMaster = i;
 
 						switch (codigo) {
-						case SCRIPT_TRANSFORMADOR_INICIAL:
+
+						//SCRIPT TRANSF -INICIAL- ANUAL Y REDUCCION BORRAR!!!
+						/*case SCRIPT_TRANSFORMADOR_INICIAL:
 							if(scriptTransfI == 0){
 								scriptTransfI = 1;
 								recv(FDMaster, pesoMensaje, 4, 0);
@@ -186,6 +188,33 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Nodo %i\nBloque %i\n,BytesOcupados %i\n,ArchivoTemporal %s",info->nodo,info->bloque,info->bytesOcupados,info->archivoTemporal);
 
 							}
+							break;
+						*/
+						case REDUCCION_LOCAL:
+
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+
+								script* script = deserilizarScript(mensaje);
+
+								rearmar_script(script,SCRIPT_REDUCCION);
+
+								printf("recibo script tranformador");
+
+							}
+
+
+
+							break;
+						case REDUCCION_GLOBAL:
+							break;
+						case TRANSFORMADOR:
 							break;
 						case REDUCCION_TEMPORALES:
 							break;
