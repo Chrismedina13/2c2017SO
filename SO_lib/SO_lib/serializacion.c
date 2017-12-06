@@ -182,14 +182,6 @@ t_list* deserializarListaYAMA(char* stackSerializado){
 
 }
 
-int tamanioScript(script* script){
-	int contenido = strlen(script->contenido);
-	int nombre = strlen(script->nombre);
-
-	int tamanioScript = contenido + nombre;
-	//logInfo("tamanioScript%i\n",tamanioScript);
-	return tamanioScript;
-}
 
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal) {

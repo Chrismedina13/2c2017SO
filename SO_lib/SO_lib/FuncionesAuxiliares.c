@@ -177,28 +177,23 @@ void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchiv
 
     system(command);
 
-    /*
+}
 
-    pid_t pid;
-    int status;
+int tamanioListaDeArchivos(t_list* lista){
+	int tamanio = 0;
+	int i = 0;
+	while(i<list_size(lista)){
+		tamanio += strlen(list_get(lista,i));
+		i++;
+	}
+	return tamanio;
+}
 
-     if ( (pid=fork()) == 0 )
-    { //hijo
+int tamanioScript(script* script){
+	int contenido = strlen(script->contenido);
+	int nombre = strlen(script->nombre);
 
-    	char *args[] = { "chmod","+x", "/home/utnso/ejemplo_correr-script_so/script_transformacion.py",0 };
-    	execv("/bin/chmod", args);
-
-    	// EJEMPLO DE EJECV
-    	char *args[] = { "cat", "/home/utnso/SO-Nombres-Dataset/nombres.csv" ,"|", "/home/utnso/SO-Nombres-Dataset/transformador.py > /home/utnso/SO-Nombres-Dataset/CantidadPersonas.txt", NULL };
-    	execv("/bin/cat", args);
-    	    printf("Se ha producido un error al ejecutar execv.\n");
-
-    	printf("Soy el hijo (%d, hijo de %d)\n", getpid(), getppid());
-    }
-    else
-    { // padre
-    	waitpid(pid, &status, 0);
-        printf("Soy el padre (%d, hijo de %d)\n", getpid(),getppid());
-    }
-    */
+	int tamanioScript = contenido + nombre;
+	//logInfo("tamanioScript%i\n",tamanioScript);
+	return tamanioScript;
 }

@@ -37,5 +37,7 @@ void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 script* setScript(char* rutaScript);
 void rearmar_script(script* script,int codigo);
 void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
+int tamanioListaDeArchivos(t_list* lista);
+int tamanioScript(script* script);
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */

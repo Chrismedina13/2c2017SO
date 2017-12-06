@@ -28,7 +28,6 @@ int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo);
 char* serializarListaYAMA(t_list* lista);
 t_list* deserializarListaYAMA(char* stackSerializado);
 
-int tamanioScript(script* script);
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal);
 infoTransformacionParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
