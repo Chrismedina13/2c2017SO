@@ -660,12 +660,12 @@ char* serializarListaRespuestaReduccionGlobal(t_list* listaRRG){
 
 		int tamanioArchivoReduccionGlobal = strlen(nodo->archivoReduccionGlobal);
 		serializarDato(listaSerializada,&(tamanioArchivoReduccionGlobal),sizeof(int),&offset);
-		serializarDato(listaSerializada,nodo->archivoReduccionGlobal,tamanioArchivoReduccionLocal,&offset);
+		serializarDato(listaSerializada,nodo->archivoReduccionGlobal,tamanioArchivoReduccionGlobal,&offset);
 
 
 		int tamanioIP = strlen(nodo->ipWorker);
 		serializarDato(listaSerializada,&(tamanioIP),sizeof(int),&offset);
-		serializarDato(listaSerializada,nodo->archivoReduccionGlobal,tamanioIP,&offset);
+		serializarDato(listaSerializada,nodo->ipWorker,tamanioIP,&offset);
 	}
 	return listaSerializada;
 }
@@ -701,7 +701,7 @@ t_list * deserializarListaRespuesReduccionGlobal(char* ListaRRGSerializada){
 
 		int tamanioIP;
 		deserializarDato(&(tamanioIP),ListaRRGSerializada,sizeof(int),&desplazamiento);
-		RRG->archivoReduccionGlobal = string_substring(ListaRRGSerializada,desplazamiento,tamanioIP);
+		RRG->ipWorker = string_substring(ListaRRGSerializada,desplazamiento,tamanioIP);
 		desplazamiento += tamanioIP;
 
 		list_add(lista,RRG);

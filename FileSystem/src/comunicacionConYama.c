@@ -31,6 +31,8 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 	}
 
+	logInfo("Creando mensaje de ubicacion de nodos");
+
 	char* ipWorker1 = "43.2.2.4";
 	int puerto1 = 2;
 	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
@@ -48,16 +50,16 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	info3->ipWorker = ipWorker3;
 	info3->puerto = puerto3;
 
-	t_list* lista = list_create();
-	list_add(lista,info1);
-	list_add(lista,info2);
-	list_add(lista,info3);
+	t_list* LISTARRG = list_create();
+	list_add(LISTARRG,info1);
+	list_add(LISTARRG,info2);
+	list_add(LISTARRG,info3);
 
-	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(lista) + ((sizeof(int)* list_size(lista))*2) + sizeof(int));
-	char* listaSerializada = serializarLista_info_workers(lista);
+	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
+	char* listaSerializada = serializarLista_info_workers(LISTARRG);
 	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
-    logInfo("creando Respuesta Almacenado Final de prueba ");
+/*    logInfo("creando Respuesta Almacenado Final de prueba ");
 
     respuestaAlmacenadoFinal* RAF = crearRespuestaAlmacenadoFinal(5,200,"20.121.21.33","hola.txt");
 
@@ -67,10 +69,28 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
     mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
 
-    logInfo("Respuesta Almacenado Final de prueba listo para enviar ");
+    logInfo("Respuesta Almacenado Final de prueba listo para enviar "); */
+    logInfo("Creando lista respuesta reduccion global");
 
+    RespuestaReduccionGlobal* RRG1 = crearRespuestaReduccionGlobal(1,2,"20.120.1212","reduccionLocal1.txt","reduccionGlobal1.txt",false);
+    RespuestaReduccionGlobal* RRG2 = crearRespuestaReduccionGlobal(2,3,"30.320.3232","reduccionLocal2.txt","reduccionGlobal2.txt",false);
+    RespuestaReduccionGlobal* RRG3 = crearRespuestaReduccionGlobal(3,4,"1230.120.11231212","reduccionLocal3.txt","reduccionGlobal3.txt",false);
+    RespuestaReduccionGlobal* RRG4 = crearRespuestaReduccionGlobal(4,5,"54540.120.31212","reduccionLocal4.txt","reduccionGlobal4.txt",true);
 
+    t_list* LRRG = list_create();
 
+    list_add(LRRG,RRG1);
+    list_add(LRRG,RRG2);
+    list_add(LRRG,RRG3);
+    list_add(LRRG,RRG4);
+
+    int tamanioAmandar = tamanioListareduccionGlobal(LRRG) + sizeof(int) + (sizeof(int)*list_size(LRRG)*4);
+
+    char* listaSerializadaRRG = serializarListaRespuestaReduccionGlobal(LRRG);
+
+    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,listaSerializadaRRG,tamanioAmandar);
+
+    logInfo("Mandando lista serializada de prueba");
 
     logInfo(" Armando lista ubicaciones");
 
