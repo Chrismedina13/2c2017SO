@@ -164,14 +164,14 @@ typedef struct infoReduccionLocalParaWorker{
 typedef struct infoReduccionGlobalDeMasterParaWorker{
 	t_list* listaArchivosReduccionLocal; //Lista de estructura infoParaReduccionGLobal;
 	char* archivoTemporalReduccionGlobal;
-	script* scritpReduccionGlobal;
+	script* scriptReduccionGlobal;
 } infoReduccionGlobalDeMasterParaWorker;
 
 typedef struct infoParaReduccionGlobal{
 	char* ipWorker;
 	int puerto;
 	char* archivoTemporalReduccionLocal;
-};
+}infoParaReduccionGlobal;
 
 //INFO QUE LE MANDA EL WORKER ENCARGADO A WORKERS
 typedef struct infoReduccionGlobalDeWorkerParaWorker{
@@ -214,6 +214,11 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
 respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script* scriptReduccionLocal);
+infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal);
+infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
+infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);
+almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal);
 
 
 #endif /* SO_LIB_ESTRUCTURAS_H_ */
