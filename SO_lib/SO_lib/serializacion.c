@@ -218,7 +218,7 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 
 }
 
-infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
+infoTransformacionParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 
 	logInfo("ENTRO A DESERIALIZAR INFOPARAWORKER");
 	int desplazamiento = 0;
@@ -226,7 +226,7 @@ infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada) {
 
 	deserializarDato(&(tamanioArchivoTemp), rtaSerializada, sizeof(int),&desplazamiento);
 
-	infoParaWorker * respuesta = malloc(tamanioArchivoTemp+sizeof(int) * 3);
+	infoTransformacionParaWorker * respuesta = malloc(tamanioArchivoTemp+sizeof(int) * 3);
 
 	deserializarDato(&(respuesta->nodo), rtaSerializada, sizeof(int),&desplazamiento);
 	deserializarDato(&(respuesta->bloque), rtaSerializada, sizeof(int),&desplazamiento);

@@ -38,7 +38,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 	logInfo("Trato de comunicar con worker");
 
-	infoParaWorker* mensaje;
+	infoTransformacionParaWorker* mensaje;
 	int tamanio = strlen(parametros->archivoTemporal);
 	mensaje= malloc(sizeof(int) * 3 + tamanio * sizeof(char));
 

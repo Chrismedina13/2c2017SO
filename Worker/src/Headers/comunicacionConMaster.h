@@ -27,7 +27,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametros);
 
 ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
 
-infoParaWorker* mensajesRecibidosDeMaster(int codigo, int FDMaster);
+infoTransformacionParaWorker* mensajesRecibidosDeMaster(int codigo, int FDMaster);
 
 void mensajesEnviadosAMaster(int codigo, int FDMaster);
 

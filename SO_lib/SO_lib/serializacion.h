@@ -31,7 +31,7 @@ t_list* deserializarListaYAMA(char* stackSerializado);
 int tamanioScript(script* script);
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal);
-infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
+infoTransformacionParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 
 //char* serializarScript(char* nombre, int tamanio, char* contenido);
 char* serializarScript(script* script);

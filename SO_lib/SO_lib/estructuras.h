@@ -146,12 +146,44 @@ typedef struct script{
 } script;
 
 //Info que le manda el Master a Worker
-typedef struct infoParaWorker{
+typedef struct infoTransformacionParaWorker{
 	int nodo;
 	int bloque;
 	int bytesOcupados;
 	char* archivoTemporal;
-} infoParaWorker;
+} infoTransformacionParaWorker;
+
+//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION LOCAL
+typedef struct infoReduccionLocalParaWorker{
+	t_list* listaDeArchivosTemporales;
+	char* archivoTemporalReduccionLocal;
+	script* scriptReduccionLocal;
+} infoReduccionLocalParaWorker;
+
+//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION GLOBAL
+typedef struct infoReduccionGlobalDeMasterParaWorker{
+	t_list* listaArchivosReduccionLocal; //Lista de estructura infoParaReduccionGLobal;
+	char* archivoTemporalReduccionGlobal;
+	script* scritpReduccionGlobal;
+} infoReduccionGlobalDeMasterParaWorker;
+
+typedef struct infoParaReduccionGlobal{
+	char* ipWorker;
+	int puerto;
+	char* archivoTemporalReduccionLocal;
+};
+
+//INFO QUE LE MANDA EL WORKER ENCARGADO A WORKERS
+typedef struct infoReduccionGlobalDeWorkerParaWorker{
+	char* archivoTemporalLocalRequerido;
+} infoReduccionGlobalDeWorkerParaWorker;
+
+//ALMACENADO FINAL
+typedef struct almacenadoFinal{
+	char* archivoTemporalReduccionGlobal;
+} almacenadoFinal;
+
+
 
 
 
