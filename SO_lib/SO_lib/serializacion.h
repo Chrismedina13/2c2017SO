@@ -9,6 +9,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include "estructuras.h"
+#include "FuncionesAuxiliares.h"
 
 //DEFINICION DE FUNCIONES PROBADAS
 char* serializeInt(int value);
@@ -74,7 +75,16 @@ char* serializarRespuestaAlmacenadoFinal(respuestaAlmacenadoFinal* RAF);
 
 respuestaAlmacenadoFinal* deserializarRespuestaAlmacenadoFinal(char* almacenadoFinalSerializado);
 
+char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info);
 
+infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializada);
 
+char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMasterParaWorker* info);
+
+infoReduccionGlobalDeMasterParaWorker* deserializarInfoReduccionGlobalDeMasterParaWorker(char* infoSerializada);
+
+t_list* deserializarListaArchivos(char* listaSerializada);
+
+char * serializarListaArchivos(t_list * lista);
 #endif
 
