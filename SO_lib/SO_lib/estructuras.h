@@ -184,9 +184,6 @@ typedef struct almacenadoFinal{
 } almacenadoFinal;
 
 
-
-
-
 t_list * list_info_workers;
 t_list * listaUbicaciones;
 
