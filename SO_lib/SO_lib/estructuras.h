@@ -183,6 +183,10 @@ typedef struct almacenadoFinal{
 	char* archivoTemporalReduccionGlobal;
 } almacenadoFinal;
 
+typedef struct vectorConIndice{
+	char** vector;
+	int indice;
+}vectorConIndice;
 
 t_list * list_info_workers;
 t_list * listaUbicaciones;
