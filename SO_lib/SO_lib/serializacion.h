@@ -56,6 +56,11 @@ char* serializarListaUbicacionBloquesArchivos(t_list * listaUbicaciones);
 
 t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada);
 
+char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info);
+
+infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializada);
+
+
 //////////////////////////////////////DEFINICION DE FUNCIONES  SIN PROBAR//////////////////////////////////////
 int deserializarINT(char* stream);
 
@@ -75,9 +80,7 @@ char* serializarRespuestaAlmacenadoFinal(respuestaAlmacenadoFinal* RAF);
 
 respuestaAlmacenadoFinal* deserializarRespuestaAlmacenadoFinal(char* almacenadoFinalSerializado);
 
-char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info);
 
-infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializada);
 
 char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMasterParaWorker* info);
 
