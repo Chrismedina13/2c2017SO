@@ -102,6 +102,9 @@ infoReduccionGlobalDeWorkerParaWorker* deserializarinfoReduccionGlobalDeWorkerPa
 
 char* serializaralmacenadoFinal(almacenadoFinal* AF);
 
+almacenadoFinal* deserializaralmacenadoFinal(char* serializado);
+
+
 
 
 
