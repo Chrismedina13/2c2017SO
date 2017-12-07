@@ -809,3 +809,151 @@ char * serializarListaArchivos(t_list * lista) {
 
 
 
+int tamanioinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info){
+
+	int tamanio = 0;
+	int i = 0;
+	while(i < list_size(info->listaDeArchivosTemporales)){
+
+		char* archivo = list_get(info->listaDeArchivosTemporales,i);
+		tamanio += strlen(archivo);
+		i++;
+	}
+
+	tamanio += strlen(info->archivoTemporalReduccionLocal);
+	tamanio += tamanioScript(info->scriptReduccionLocal);
+
+	return tamanio;
+}
+
+
+
+char* serializarinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info){
+
+	int desplazamiento = 0;
+	char* infoRLPWSerializada = tamanioinfoReduccionLocalParaWorker(info) + sizeof(int) * list_size(info->listaDeArchivosTemporales) + (sizeof(int)*5);
+	int i = 0;
+
+	int tamanioDelinfoReduccionLocalParaWorkerAMandar = tamanioinfoReduccionLocalParaWorker(info);
+	serializarDato(infoRLPWSerializada,&(tamanioDelinfoReduccionLocalParaWorkerAMandar),sizeof(int),&desplazamiento);
+
+	int tamanioDeLaListaDeArchivosTemporales = list_size(info->listaDeArchivosTemporales);
+	serializarDato(infoRLPWSerializada,&(tamanioDeLaListaDeArchivosTemporales),sizeof(int),&desplazamiento);
+
+	while(i< list_size(info->listaDeArchivosTemporales)){
+
+		char* archivo = list_get(info->listaDeArchivosTemporales,i);
+		int tamanioArchivo = strlen(archivo);
+		serializarDato(infoRLPWSerializada,&(tamanioArchivo),sizeof(int),&desplazamiento);
+		serializarDato(infoRLPWSerializada,archivo,tamanioArchivo,&desplazamiento);
+		i++;
+	}
+
+	int tamanioArchivoTemporalDeReduccionLocal = strlen(info->archivoTemporalReduccionLocal);
+	serializarDato(infoRLPWSerializada,&(tamanioArchivoTemporalDeReduccionLocal),sizeof(int),&desplazamiento);
+	serializarDato(infoRLPWSerializada,info->archivoTemporalReduccionLocal,tamanioArchivoTemporalDeReduccionLocal,&desplazamiento);
+
+	int tamanioContenidoDelScrip = strlen(info->scriptReduccionLocal->contenido);
+	serializarDato(infoRLPWSerializada,&(tamanioContenidoDelScrip),sizeof(int),&desplazamiento);
+	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal->contenido,tamanioContenidoDelScrip,&desplazamiento);
+
+	int tamanioNombreDelScrip = strlen(info->scriptReduccionLocal->nombre);
+	serializarDato(infoRLPWSerializada,&(tamanioNombreDelScrip),sizeof(int),&desplazamiento);
+	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal->nombre,tamanioNombreDelScrip,&desplazamiento);
+
+	return infoRLPWSerializada;
+}
+
+infoReduccionLocalParaWorker* deserializarinfoReduccionLocalParaWorker(char* IRLPWSerializado){
+
+	int desplazamiento = 0;
+	int i = 0;
+
+	int tamanioDeLaInfo;
+	deserializarDato(&(tamanioDeLaInfo),IRLPWSerializado,sizeof(int),&desplazamiento);
+
+	infoReduccionLocalParaWorker* info = malloc(tamanioDeLaInfo);
+
+	int tamanioDeLaListaDeArchivosTemporales;
+	deserializarDato(&(tamanioDeLaListaDeArchivosTemporales),IRLPWSerializado,sizeof(int),&desplazamiento);
+
+	while(i < tamanioDeLaListaDeArchivosTemporales){
+
+		int tamanioDelarchivoTemporal;
+		deserializarDato(&(tamanioDelarchivoTemporal),IRLPWSerializado,sizeof(int),&desplazamiento);
+		char* archivo1 = string_substring(IRLPWSerializado,desplazamiento,tamanioDelarchivoTemporal);
+		desplazamiento += tamanioDelarchivoTemporal;
+		list_add(info->listaDeArchivosTemporales,archivo1);
+		i++;
+	}
+
+	int tamanioArchivoTemporalDeReduccionLocal;
+	deserializarDato(&(tamanioArchivoTemporalDeReduccionLocal),IRLPWSerializado,sizeof(int),&desplazamiento);
+	info->archivoTemporalReduccionLocal = string_substring(IRLPWSerializado,desplazamiento,tamanioArchivoTemporalDeReduccionLocal);
+	desplazamiento += tamanioArchivoTemporalDeReduccionLocal;
+
+	int tamanioContenidoScrip;
+	deserializarDato(&(tamanioContenidoScrip),IRLPWSerializado,sizeof(int),&desplazamiento);
+	info->archivoTemporalReduccionLocal = string_substring(IRLPWSerializado,desplazamiento,tamanioContenidoScrip);
+	desplazamiento += tamanioContenidoScrip;
+
+	int tamanioNombreScrip;
+	deserializarDato(&(tamanioNombreScrip),IRLPWSerializado,sizeof(int),&desplazamiento);
+	info->archivoTemporalReduccionLocal = string_substring(IRLPWSerializado,desplazamiento,tamanioNombreScrip);
+	desplazamiento += tamanioNombreScrip;
+
+	return info;
+}
+
+char* serializarInfoReduccionLocalDeWorkerParaWorker(infoReduccionGlobalDeWorkerParaWorker* info){
+
+	int desplazamiento = 0;
+	char* serializado = malloc(sizeof(int) + strlen(info->archivoTemporalLocalRequerido));
+
+	int Tamanio = strlen(info->archivoTemporalLocalRequerido);
+	serializarDato(serializado,&(Tamanio),sizeof(int),&desplazamiento);
+	serializarDato(serializado,info->archivoTemporalLocalRequerido, Tamanio,&desplazamiento);
+
+	return serializado;
+
+}
+
+infoReduccionGlobalDeWorkerParaWorker* deserializarinfoReduccionGlobalDeWorkerParaWorker(char* serializado){
+
+	int desplazamiento = 0;
+	int tamanioDelMensaje = 0;
+
+	deserializarDato(&(tamanioDelMensaje),serializado,sizeof(int),&desplazamiento);
+	infoReduccionGlobalDeWorkerParaWorker* info = malloc(tamanioDelMensaje);
+
+	info->archivoTemporalLocalRequerido = string_substring(serializado,desplazamiento,tamanioDelMensaje);
+
+	return info;
+}
+
+
+char* serializaralmacenadoFinal(almacenadoFinal* AF){
+
+	int desplazamiento = 0;
+	char* serializado = malloc(sizeof(int) + strlen(AF->archivoTemporalReduccionGlobal));
+
+	int Tamanio = strlen(AF->archivoTemporalReduccionGlobal);
+	serializarDato(serializado,&(Tamanio),sizeof(int),&desplazamiento);
+	serializarDato(serializado,AF->archivoTemporalReduccionGlobal, Tamanio,&desplazamiento);
+
+	return serializado;
+
+}
+
+almacenadoFinal* deserializaralmacenadoFinal(char* serializado){
+
+	int desplazamiento = 0;
+	int tamanioDelMensaje = 0;
+
+	deserializarDato(&(tamanioDelMensaje),serializado,sizeof(int),&desplazamiento);
+	almacenadoFinal* info = malloc(tamanioDelMensaje);
+
+	info->archivoTemporalReduccionGlobal = string_substring(serializado,desplazamiento,tamanioDelMensaje);
+
+	return info;
+}

@@ -89,5 +89,22 @@ infoReduccionGlobalDeMasterParaWorker* deserializarInfoReduccionGlobalDeMasterPa
 t_list* deserializarListaArchivos(char* listaSerializada);
 
 char * serializarListaArchivos(t_list * lista);
+
+int tamanioinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info);
+
+char* serializarinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info);
+
+infoReduccionLocalParaWorker* deserializarinfoReduccionLocalParaWorker(char* IRLPWSerializado);
+
+char* serializarInfoReduccionLocalDeWorkerParaWorker(infoReduccionGlobalDeWorkerParaWorker* info);
+
+infoReduccionGlobalDeWorkerParaWorker* deserializarinfoReduccionGlobalDeWorkerParaWorker(char* serializado);
+
+char* serializaralmacenadoFinal(almacenadoFinal* AF);
+
+
+
+
+
 #endif
 
