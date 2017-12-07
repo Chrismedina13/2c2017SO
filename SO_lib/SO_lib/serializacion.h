@@ -9,6 +9,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include "estructuras.h"
+#include "FuncionesAuxiliares.h"
 
 //DEFINICION DE FUNCIONES PROBADAS
 char* serializeInt(int value);
@@ -28,10 +29,9 @@ int tamanioEstructuraRespuestaTransf(RespuestaTransformacionYAMA* nodo);
 char* serializarListaYAMA(t_list* lista);
 t_list* deserializarListaYAMA(char* stackSerializado);
 
-int tamanioScript(script* script);
 char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 		char* archivoTemporal);
-infoParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
+infoTransformacionParaWorker *deserializarInfoParaWorker(char* rtaSerializada);
 
 //char* serializarScript(char* nombre, int tamanio, char* contenido);
 char* serializarScript(script* script);
@@ -75,7 +75,16 @@ char* serializarRespuestaAlmacenadoFinal(respuestaAlmacenadoFinal* RAF);
 
 respuestaAlmacenadoFinal* deserializarRespuestaAlmacenadoFinal(char* almacenadoFinalSerializado);
 
+char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info);
 
+infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializada);
 
+char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMasterParaWorker* info);
+
+infoReduccionGlobalDeMasterParaWorker* deserializarInfoReduccionGlobalDeMasterParaWorker(char* infoSerializada);
+
+t_list* deserializarListaArchivos(char* listaSerializada);
+
+char * serializarListaArchivos(t_list * lista);
 #endif
 

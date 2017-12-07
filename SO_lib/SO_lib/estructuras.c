@@ -219,3 +219,42 @@ respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char
 	return RAF;
 }
 
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script* scriptReduccionLocal){
+	infoReduccionLocalParaWorker* info = malloc(tamanioListaDeArchivos(listaArchivosTemporales) + strlen(archivoTemporal) + tamanioScript(scriptReduccionLocal));
+	info->archivoTemporalReduccionLocal = archivoTemporal;
+	info->listaDeArchivosTemporales = listaArchivosTemporales;
+	info->scriptReduccionLocal = scriptReduccionLocal;
+
+	return info;
+}
+infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal){
+	infoReduccionGlobalDeMasterParaWorker* info = malloc(tamanioListaDeArchivos(listaArchivosReduccionLocal)+strlen(archivoTemporalReduccionGlobal) + tamanioScript(scritpReduccionGlobal));
+	info->archivoTemporalReduccionGlobal=archivoTemporalReduccionGlobal;
+	info->listaArchivosReduccionLocal = listaArchivosReduccionLocal;
+	info->scriptReduccionGlobal = scritpReduccionGlobal;
+
+	return info;
+}
+
+infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal){
+	infoParaReduccionGlobal* info = malloc(strlen(ipWorker)+ sizeof(int) + strlen(archivoTemporalReduccionLocal));
+	info->archivoTemporalReduccionLocal = archivoTemporalReduccionLocal;
+	info->ipWorker = ipWorker;
+	info->puerto = puerto;
+
+	return info;
+}
+
+infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido){
+	infoReduccionGlobalDeWorkerParaWorker* info = malloc(strlen(archivoTemporalLocalRequerido));
+	info->archivoTemporalLocalRequerido = archivoTemporalLocalRequerido;
+
+	return info;
+}
+
+almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal){
+	almacenadoFinal* archivo = malloc(strlen(archivoTemporalReduccionGlobal));
+	archivo->archivoTemporalReduccionGlobal = archivoTemporalReduccionGlobal;
+
+	return archivo;
+}

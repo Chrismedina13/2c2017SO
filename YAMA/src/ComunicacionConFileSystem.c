@@ -102,11 +102,12 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	char pesoMensaje[4];
 	t_list * lista_ubicaciones;
 	int i = 0;
+	int a = 0;
 	t_list* lista;
 
 	switch (codigo) {
 	case PRUEBAS:
-		logInfo("RECIBIENOD Pruebas de serializacion");
+		logInfo("RECIBIENDO Pruebas de serializacion");
 				recv(FDsocketClienteFileSystem,pesoMensaje,4,0);
 				tamanio = deserializarINT(pesoMensaje);
 				logInfo("tamanio de lo que recibo %i", tamanio);
@@ -115,13 +116,22 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 				if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
 					logInfo("Error en la recepcion pruebas de serializacion.");
 				}
+				logInfo("Recibiendo respuesta de la prueba");
 
-				respuestaAlmacenadoFinal * RAF = deserializarRespuestaAlmacenadoFinal(mensaje);
+				t_list* respuestaAlmacenamientoGlobal = deserializarListaRespuesReduccionGlobal(mensaje);
 
-				logInfo("nodo del RAF = %i", RAF->nodo);
-				logInfo("puerto del RAF = %i", RAF->puertoWorker);
-				logInfo("ip del RAF = %s", RAF->ipWorker);
-				logInfo("archivo del RAF = %s", RAF->archivoDeReduccionGlobal);
+				while(i < list_size(respuestaAlmacenamientoGlobal)){
+					RespuestaReduccionGlobal* respuesta = list_get(respuestaAlmacenamientoGlobal,i);
+					logInfo("Agarro el nodo %i",i);
+					logInfo("EL NODO ES %i",respuesta->nodo);
+					logInfo("EL PUERTO ES %i",respuesta->puertoWorker);
+					logInfo("EL IP ES %s",respuesta->ipWorker);
+					logInfo("EL ARCHIVO DE REDUCCION LOCAL ES %s",respuesta->archivoReduccionLocal);
+					logInfo("EL ARCHIVO DE REDUCCION global ES %s",respuesta->archivoReduccionGlobal);
+					logInfo("ES EL NODO ENCARGADO %i",respuesta->encargado);
+					logInfo("-------------------------------------");
+					i++;
+				}
 
 
 
@@ -226,13 +236,14 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 			logInfo("Hay conectados %i", list_size(lista));
 
-			while(i < list_size(lista)){
-				Info_Workers* info = list_get(lista,i);
+			while(a < list_size(lista)){
+				Info_Workers* info = list_get(lista,a);
+				logInfo("tomo el nodo %i", a);
 
 				logInfo("puerto de nodo = %i \n ", info->puerto);
 				logInfo("ip de nodo  = %s \n ", info->ipWorker);
 
-				i++;
+				a++;
 			}
 
 

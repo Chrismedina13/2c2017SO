@@ -54,79 +54,78 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 	return parametros;
 }
 
-void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,
-		int tamanio) {
+void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio) {
 	switch (codigo) {
 	Paquete* paqueteDeEnvioDeJOB;
-case NOMBRE_ARCHIVO:
-	paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
+	case NOMBRE_ARCHIVO:
+		paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
 
-	if (enviarPaquete(FDsocketClienteYAMA, paqueteDeEnvioDeJOB) == -1) {
-		logInfo("Error en envio de job");
-	}
+		if (enviarPaquete(FDsocketClienteYAMA, paqueteDeEnvioDeJOB) == -1) {
+			logInfo("Error en envio de job");
+		}
 
-	destruirPaquete(paqueteDeEnvioDeJOB);
-	break;
+		destruirPaquete(paqueteDeEnvioDeJOB);
+		break;
 
-case FIN_TRANSFORMACION:
-	logInfo(
-			"Master envia señal de finalización de Transformación(EXITO o FRACASO)");
-	Paquete* paqueteTranf = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
+	case FIN_TRANSFORMACION:
+		logInfo(
+				"Master envia señal de finalización de Transformación(EXITO o FRACASO)");
+		Paquete* paqueteTranf = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
 
-	if (enviarPaquete(FDsocketClienteYAMA, paqueteTranf) == -1) {
-		logInfo("Error en envio de respuesta de Transformacion.");
-	}
+		if (enviarPaquete(FDsocketClienteYAMA, paqueteTranf) == -1) {
+			logInfo("Error en envio de respuesta de Transformacion.");
+		}
 
-	destruirPaquete(paqueteTranf);
+		destruirPaquete(paqueteTranf);
 
-	break;
+		break;
 
-case FIN_REDUCCION_LOCAL:
-	logInfo(
-			"Master envia señal de finalización de Reducción Local(EXITO o FRACASO)");
-	Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
+	case FIN_REDUCCION_LOCAL:
+		logInfo(
+				"Master envia señal de finalización de Reducción Local(EXITO o FRACASO)");
+		Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
 
-	if (enviarPaquete(FDsocketClienteYAMA, paqueteRedLocal) == -1) {
-		logInfo("Error en envio de respuesta de Red.Local.");
-	}
+		if (enviarPaquete(FDsocketClienteYAMA, paqueteRedLocal) == -1) {
+			logInfo("Error en envio de respuesta de Red.Local.");
+		}
 
-	destruirPaquete(paqueteRedLocal);
+		destruirPaquete(paqueteRedLocal);
 
-	break;
+		break;
 
-case FIN_REDUCCION_GLOBAL:
-	logInfo(
-			"Master envia señal de finalización de Reducción Global(EXITO o FRACASO)");
+	case FIN_REDUCCION_GLOBAL:
+		logInfo(
+				"Master envia señal de finalización de Reducción Global(EXITO o FRACASO)");
 
-	Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
+		Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
 
-	if (enviarPaquete(FDsocketClienteYAMA, paqueteRedGlobal) == -1) {
-		logInfo("Error en envio de respuesta de Red.Global.");
-	}
+		if (enviarPaquete(FDsocketClienteYAMA, paqueteRedGlobal) == -1) {
+			logInfo("Error en envio de respuesta de Red.Global.");
+		}
 
-	destruirPaquete(paqueteRedGlobal);
+		destruirPaquete(paqueteRedGlobal);
 
-	break;
+		break;
 
-case ALMACENADO_FINAL:
-	logInfo(
-			"Master envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
+	case ALMACENADO_FINAL:
+		logInfo(
+				"Master envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
 
-	Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
+		Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
 
-	if (enviarPaquete(FDsocketClienteYAMA, paqueteAlmacenado) == -1) {
-		logInfo("Error en envio de respuesta de Almacenado Final");
-	}
+		if (enviarPaquete(FDsocketClienteYAMA, paqueteAlmacenado) == -1) {
+			logInfo("Error en envio de respuesta de Almacenado Final");
+		}
 
-	destruirPaquete(paqueteAlmacenado);
+		destruirPaquete(paqueteAlmacenado);
 
-	break;
+		break;
 
-default:
-	break;
+	default:
+		break;
 	}
 }
 void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {

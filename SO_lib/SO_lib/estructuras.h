@@ -146,13 +146,42 @@ typedef struct script{
 } script;
 
 //Info que le manda el Master a Worker
-typedef struct infoParaWorker{
+typedef struct infoTransformacionParaWorker{
 	int nodo;
 	int bloque;
 	int bytesOcupados;
 	char* archivoTemporal;
-} infoParaWorker;
+} infoTransformacionParaWorker;
 
+//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION LOCAL
+typedef struct infoReduccionLocalParaWorker{
+	t_list* listaDeArchivosTemporales;
+	char* archivoTemporalReduccionLocal;
+	script* scriptReduccionLocal;
+} infoReduccionLocalParaWorker;
+
+//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION GLOBAL
+typedef struct infoReduccionGlobalDeMasterParaWorker{
+	t_list* listaArchivosReduccionLocal; //Lista de estructura infoParaReduccionGLobal;
+	char* archivoTemporalReduccionGlobal;
+	script* scriptReduccionGlobal;
+} infoReduccionGlobalDeMasterParaWorker;
+
+typedef struct infoParaReduccionGlobal{
+	char* ipWorker;
+	int puerto;
+	char* archivoTemporalReduccionLocal;
+}infoParaReduccionGlobal;
+
+//INFO QUE LE MANDA EL WORKER ENCARGADO A WORKERS
+typedef struct infoReduccionGlobalDeWorkerParaWorker{
+	char* archivoTemporalLocalRequerido;
+} infoReduccionGlobalDeWorkerParaWorker;
+
+//ALMACENADO FINAL
+typedef struct almacenadoFinal{
+	char* archivoTemporalReduccionGlobal;
+} almacenadoFinal;
 
 
 t_list * list_info_workers;
@@ -185,6 +214,11 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
 respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script* scriptReduccionLocal);
+infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal);
+infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
+infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);
+almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal);
 
 
 #endif /* SO_LIB_ESTRUCTURAS_H_ */
