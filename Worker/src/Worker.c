@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	list_add(lista,archivo1);
 	list_add(lista,archivo2);
 
-	char* contenidoApareado = apareoDeArchivos(lista);
+	apareoDeArchivos(lista);
 
 
 	//ejecutarScript("/home/utnso/SO-Nombres-Dataset/transformador.py","/home/utnso/SO-Nombres-Dataset/nombres.csv","/home/utnso/SO-Nombres-Dataset/Resultado.txt");
