@@ -233,7 +233,7 @@ void apareoDeArchivos(t_list* lista){
 	int j = i;
 	int indicePalabraMasChica;
 
-	while(list_size(listaDeContenidos) =! 0){//verifiacmos que la lista siga teniendo elementos
+	while(list_size(listaDeContenidos) != 0){//verifiacmos que la lista siga teniendo elementos
 		if(cantidadElementosLista>1){
 			vectorConIndice* nodoConPalabraMasChica = list_get(listaDeContenidos,i);
 			indicePalabraMasChica = i;
@@ -241,7 +241,7 @@ void apareoDeArchivos(t_list* lista){
 							j++;
 							vectorConIndice* aux = list_get(listaDeContenidos,j);
 							nodoConPalabraMasChica = LApalabra(nodoConPalabraMasChica,aux);
-							if(strcmp(aux->vector[aux->indice] == nodoConPalabraMasChica->vector[nodoConPalabraMasChica->indice])){
+							if(strcmp(aux->vector[aux->indice], nodoConPalabraMasChica->vector[nodoConPalabraMasChica->indice])){
 								indicePalabraMasChica = j;
 							}
 							i++;
