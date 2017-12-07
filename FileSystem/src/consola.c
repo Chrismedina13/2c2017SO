@@ -382,7 +382,6 @@ void consolaFileSystem(){
 				if(string_equals_ignore_case(comandos[0], CPFROM)){
 					compararComando=false;
 
-
 					int status=0;
 
 					int indiceArchivo = newArchivo();
@@ -398,7 +397,7 @@ void consolaFileSystem(){
 
 					//parte el archivo en bloques
 
-					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1]); //quedan cargados en bloques
+					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1], indiceArchivo); //quedan cargados en bloques
 
 					int cantBloques = list_size(bloquesDeTexto);
 					logInfo("Parti el archivo en %d bloques.", cantBloques);
@@ -412,12 +411,12 @@ void consolaFileSystem(){
 						logInfo("No hay lugar suficiente para almacenar el archivo y sus copias");
 						status = -1;
 					}
-					/*
-					if(lugarEnNodos(bloquesArchivo)==-1){
-						logInfo("La distribucion de los bloques en Nodos no permite almacenar el archivo");
-						status = -1;
-					}
-					*/
+
+					//if(lugarEnNodos(bloquesArchivo)==-1){
+					//	logInfo("La distribucion de los bloques en Nodos no permite almacenar el archivo");
+					//	status = -1;
+					//}
+
 
 
 					if(status==0){
@@ -426,7 +425,7 @@ void consolaFileSystem(){
 
 						t_list* ubicaciones; //tipo ubicacionBloquesArchivo
 						ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
-						logInfo("Distribui los bloques en los Nodos conectados.");
+						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
 
 						int count = 0;
 
@@ -441,7 +440,8 @@ void consolaFileSystem(){
 							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
 							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
 							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
-							mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia1.nodo, mensaje, tamanioSetBloque);
+							int fileDescriptor1=nodoToFD(ubicacion->ubicacionCopia1.nodo);
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, mensaje, tamanioSetBloque);
 
 							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
 							setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
@@ -449,7 +449,8 @@ void consolaFileSystem(){
 							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
 							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
 							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
-							mensajesEnviadosADataNode(SET_BLOQUE, ubicacion->ubicacionCopia2.nodo, mensaje2, tamanioSetBloque2);
+							int fileDescriptor2=nodoToFD(ubicacion->ubicacionCopia2.nodo);
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque2);
 
 
 							logInfo("numero de bloque dataNode1: %d", setbloque1->nrobloque);
@@ -477,6 +478,7 @@ void consolaFileSystem(){
 						}
 					}
 				}
+
 			}
 
 			if(*comandos!=NULL && compararComando){

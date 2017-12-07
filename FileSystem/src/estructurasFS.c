@@ -32,7 +32,7 @@ int pathToIndex(char* path){
 		directorio = atoi(directorioString);
 	}
 
-	if(string_ends_with(path, ".txt") || string_ends_with(path, ".bin")){
+	if(string_ends_with(path, ".txt") || string_ends_with(path, ".bin") || string_ends_with(path, ".csv")){
 
 		char** secciones = string_split(path, "/");
 		directorio = atoi(secciones[7]);
@@ -428,7 +428,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int in
 
 	tamArchivo = tamanioArchivo(fp);
 
-	char* tipo = pathToType(rutaLocal);
+	char* tipo = pathToType(ruta);
 
 	//termina de cargar el vector de archivos
 
@@ -443,7 +443,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int in
 
 	//creo mi registro de archivo local
 
-	FILE * fp2 = fopen(rutaLocal, "w+");
+	FILE * fp2 = fopen(rutaLocal, "w");
 	if (!fp2){
 	  perror("Error al crear el registro de Archivo");
 	  return (-1);
@@ -521,11 +521,12 @@ char* pathToType(char* path){
 
 	if(string_ends_with(path, ".txt"))	return("texto");
 	if(string_ends_with(path, ".bin"))	return("binario");
+	if(string_ends_with(path, ".csv"))	return("texto");
 	return("error");
 
 }
 
-char* pathToFile(char* path){
+char* pathToFile(char* path){ //solo para yamafs
 
 	/*Recibe un path de yamafs (/yamafs/metadata/archivos/3/ejemplo.txt)
 	 * Devuelve el filename y su tipo (ejemplo.txt)
@@ -717,4 +718,22 @@ int inciarTablaDeArchivos(){
 	return(1);
 }
 
+//nodos
 
+//funciones
+
+int nodoToFD(int nodo){
+
+	int count=0;
+	nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
+
+	while(count < list_size(list_nodos_id_fd)){
+
+		nodo2=list_get(list_nodos_id_fd, count);
+		if(nodo==nodo2->id_nodo){
+			return(nodo2->nodo_fd);
+		}
+		count++;
+	}
+	return(-1);
+}
