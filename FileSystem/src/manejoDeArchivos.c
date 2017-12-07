@@ -11,8 +11,9 @@
 
 t_list* obtenerBloquesTextoBinario(const char* rutaDelArchivo){
 	t_list* bloques = list_create();
+	int indiceArchivo = pathToIndiceArchivo(rutaDelArchivo);
 	if(string_ends_with(rutaDelArchivo,".txt")){
-		bloques = obtenerBloquesTexto(rutaDelArchivo);
+		bloques = obtenerBloquesTexto(rutaDelArchivo, indiceArchivo);
 	}
 	else if(string_ends_with(rutaDelArchivo,".bin")){
 		bloques = obtenerBloquesBinarios(rutaDelArchivo);
@@ -47,14 +48,13 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 
 /*FUNCION PRINCIPAL*/
 
-t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
+t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 		/*Recibe la ruta de un archivo en fs
 		 *Devuleve una lista de char* con bloques de texto que partio
 		 */
 
 		char* p = obtenerPuntero(rutaDelArchivo);
-		char* archivoNombre = pathToFile(rutaDelArchivo);
 
 		FILE * fp = fopen(rutaDelArchivo, "r");
 		if (!fp) {
@@ -66,7 +66,7 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo){
 
 		fclose(fp);
 
-		t_list* lista = dividirArchivoTexto(p, archivoNombre);
+		t_list* lista = dividirArchivoTexto(p, indiceArchivo);
 
         //LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
         if (munmap (p, tamanio) == -1) {
@@ -160,7 +160,7 @@ t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
 	return lista;
 }
 
-t_list* dividirArchivoTexto(char* p, char* archivoNombre){
+t_list* dividirArchivoTexto(char* p, int indiceDeArchivo){
 
 	/*la lista que devuleve es una lista con las rutas de los archivos en los que lo divide
 	 * del estilio .../FileSystem/ArchivosADividir/Bloque(numeroArchivo).(tipoDeDato)
@@ -168,7 +168,7 @@ t_list* dividirArchivoTexto(char* p, char* archivoNombre){
 
 	char** parrafos =  string_split(p, "\n");
 	char* contenidoDelBloque = string_new(); //SE VA A IR GUARDANDO LOS PARRAFOS EN EL BLOQUE HASTA QUE PASE EL ESPACIO REQUERIDO
-	//int numeroDeArchivo = 0; //A LA HORA DE GUARDAR EN UN ARCHIVO SE INCREMENTA PARA EL SIGUIENTE ARCHIVO
+	int numeroDeArchivo = 0; //A LA HORA DE GUARDAR EN UN ARCHIVO SE INCREMENTA PARA EL SIGUIENTE ARCHIVO
 	int i = 0; //NUMERO DE PARRAFO
 	int k; // NUMERO DE PARRAFO SIGUIENTE (k = i+1);
 	int longitudParrafo; //PARA VER EL TAMAÑO DEL PARRAFO
@@ -188,30 +188,33 @@ t_list* dividirArchivoTexto(char* p, char* archivoNombre){
 		else{
 			if(parrafos[k]=='\0') {
 				string_append(&contenidoDelBloque, parrafo); //agrego el parrafo faltante al bloque
+				//string_append(&contenidoDelBloque,"\n"); //le agrego el salto de linea final
 				i++; //PARA QUE EL WHILE TERMINE
 			}
-			/*FILE* fd;
+			FILE* fd;
 			char* nombreArchivo = string_new();
 			char* numeroArchivo = string_itoa(numeroDeArchivo); //paso el numero de archivo de int a char*
-			string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/");
-			string_append(&nombreArchivo, archivoNombre);
-			string_append(&nombreArchivo, ".bloque");
+			char* indiceArchivo = string_itoa(indiceDeArchivo);
+			string_append(&nombreArchivo, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/indiceArchivo");
+			string_append(&nombreArchivo, indiceArchivo);
+			string_append(&nombreArchivo, "-bloque");
 			string_append(&nombreArchivo, numeroArchivo); //Le agrego el numero de archivo al nombre
-			string_append(&nombreArchivo, ".csv"); //le agrego la extencion de archivo al nombre
+			string_append(&nombreArchivo, ".txt"); //le agrego la extencion de archivo al nombre
 			fd = fopen(nombreArchivo,"w");
 			if (fd==NULL) {
 				printf("Error al abrir el archivo.");
 			}
-			string_append(&contenidoDelBloque,"\n"); //le agrego el salto de linea final
+
 			fputs(contenidoDelBloque,fd);
 			list_add(lista,nombreArchivo);
 			fclose(fd);
 
-			*/
+
 
 			contenidoDelBloque = '\0'; //vacio el contenido del bloque para poder volver a meterle parrafos
 			totalEspacioLlenado=0; //reseteo el espacio que ocupan los parrafos
-			//numeroDeArchivo++; //sirve para que me escriba otro archivo.
+			numeroDeArchivo++; //sirve para que me escriba otro archivo.
+			contenidoDelBloque = string_new();
 		}
 	}
 
