@@ -702,11 +702,15 @@ char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info){
 	int tamanioArchivo =strlen(info->archivoTemporalReduccionLocal);
 	char* infoSerializada = malloc(tamanioIpWorker+sizeof(int)+tamanioArchivo);
 	int offset = 0;
+	char* ip = malloc(strlen(info->ipWorker));
+	char* archivo = malloc(strlen(info->archivoTemporalReduccionLocal));
+	ip = info->ipWorker;
+	archivo = info->archivoTemporalReduccionLocal;
 	serializarDato(infoSerializada,&(tamanioArchivo),sizeof(int),&offset);
 	serializarDato(infoSerializada,&(tamanioIpWorker),sizeof(int),&offset);
 	serializarDato(infoSerializada,&(info->puerto),sizeof(int),&offset);
-	serializarDato(infoSerializada,info->archivoTemporalReduccionLocal,tamanioArchivo,&offset);
-	serializarDato(infoSerializada,info->ipWorker,tamanioIpWorker,&offset);
+	serializarDato(infoSerializada,(archivo),tamanioArchivo,&offset);
+	serializarDato(infoSerializada,(ip),tamanioIpWorker,&offset);
 
 	return infoSerializada;
 }

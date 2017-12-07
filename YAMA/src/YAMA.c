@@ -27,6 +27,12 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+
+	infoParaReduccionGlobal* info = crearInfoParaReduccionGlobal("123.412.4.2",4040,"hola.txt");
+	char* infoSerializada =  serializarInfoParaReduccionGlobal(info);
+	infoParaReduccionGlobal* i = deserializarInfoParaReduccionGlobal(infoSerializada);
+	printf("\nIP: %s\nPUERTO: %d\nARCHIVO: %s\n",i->ipWorker,i->puerto,i->archivoTemporalReduccionLocal);
+
 	/*PRUEBA DE LISTAUBICACIONESBLOQUESARCHIVOS
 
 		UbicacionBloquesArchivo* u1 = malloc(sizeof(int)*6);

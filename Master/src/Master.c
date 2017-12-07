@@ -22,7 +22,8 @@ int main(int argc, char *argv[]) {
 
 	logInfo("Creando el hilo para comunicarme con Yama");
 
-	ParametrosComunicacionYAMA* parametrosYAMA = setParametrosComunicacionYAMA(config->puertoYama,config->ipYama);
+ 	ParametrosComunicacionYAMA* parametrosYAMA = setParametrosComunicacionYAMA(config->puertoYama,config->ipYama);
+
 
 	pthread_t hiloYama;
 	pthread_create(&hiloYama, NULL, (void*) comunicacionYama, parametrosYAMA);
