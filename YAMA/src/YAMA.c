@@ -27,12 +27,45 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+	//PROBANDO SERIALIZAR INFO REDUCCION GLOBAL DE MASTER PARA WORKER
+	char* archivoG = "archivoTemporalGlobal";
+	char* archivo1 = "archivotemplocal1";
+	char* archivo2 = "archivotemporallocal2";
+	char* archivo3 = "arclocal2";
+	t_list* lista = list_create();
 
+	list_add(lista,archivo1);
+	list_add(lista,archivo2);
+	list_add(lista,archivo3);
+
+	char* listaS = serializarListaArchivos(lista);
+	t_list* l = deserializarListaArchivos(listaS);
+	int i =0;
+	while(i<list_size(l)){
+		char* contenido =list_get(l,i);
+		printf("%s\n\n",contenido);
+		i++;
+	}
+/*
+	char* rutaScript = "/home/utnso/Escritorio/Serializar";
+	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
+	script* script = malloc(strlen(rutaScript)+strlen(punteroAlContenidoDelScript));
+
+	script->nombre = rutaScript;
+	script->contenido = punteroAlContenidoDelScript;
+
+
+ 	infoReduccionGlobalDeMasterParaWorker* info = crearInfoReduccionGlobalDeMasterParaWorker(lista,archivoG,script);
+	char* infoS =  serializarInfoReduccionGlobalDeMasterParaWorker(info);
+	infoReduccionGlobalDeMasterParaWorker* i = deserializarInfoReduccionGlobalDeMasterParaWorker(infoS);
+*/
+	//PRUEBA DE INFOPARAREDUCCIONGLOBAL
+/*
 	infoParaReduccionGlobal* info = crearInfoParaReduccionGlobal("123.412.4.2",4040,"hola.txt");
 	char* infoSerializada =  serializarInfoParaReduccionGlobal(info);
 	infoParaReduccionGlobal* i = deserializarInfoParaReduccionGlobal(infoSerializada);
 	printf("\nIP: %s\nPUERTO: %d\nARCHIVO: %s\n",i->ipWorker,i->puerto,i->archivoTemporalReduccionLocal);
-
+*/
 	/*PRUEBA DE LISTAUBICACIONESBLOQUESARCHIVOS
 
 		UbicacionBloquesArchivo* u1 = malloc(sizeof(int)*6);

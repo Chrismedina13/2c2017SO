@@ -734,7 +734,7 @@ char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMaste
 	int tamanioArchivoTemporal=strlen(info->archivoTemporalReduccionGlobal);
 	int tamanioLista=tamanioListaDeArchivos(info->listaArchivosReduccionLocal);
 	int tamanioDelScript=tamanioScript(info->scriptReduccionGlobal);
-	char* infoSerializada = malloc(tamanioArchivoTemporal+tamanioLista+tamanioDelScript);
+	char* infoSerializada = malloc(tamanioArchivoTemporal+tamanioLista+tamanioDelScript+sizeof(int)*3);
 	int offset = 0;
 
 	char* listaSerializada = serializarListaArchivos(info->listaArchivosReduccionLocal);
@@ -776,10 +776,10 @@ t_list* deserializarListaArchivos(char* listaSerializada){
 	int tamanioDeLaListaDeArchivosTemporales;
 	int i = 0;
 	int desplazamiento = 0;
+	int tamanioDelarchivoTemporal = malloc(sizeof(int));
 	t_list* lista = list_create();
 	deserializarDato(&(tamanioDeLaListaDeArchivosTemporales),listaSerializada,sizeof(int),&desplazamiento);
 	while(i < tamanioDeLaListaDeArchivosTemporales){
-		int tamanioDelarchivoTemporal = malloc(sizeof(int));
 		deserializarDato(&(tamanioDelarchivoTemporal),listaSerializada,sizeof(int),&desplazamiento);
 		char* archivo = string_substring(listaSerializada,desplazamiento,tamanioDelarchivoTemporal);
 		desplazamiento += tamanioDelarchivoTemporal;
@@ -790,17 +790,17 @@ t_list* deserializarListaArchivos(char* listaSerializada){
 }
 
 char * serializarListaArchivos(t_list * lista) {
-	int i;
-	char* listaSerializada = string_new();
-	int offset = 0;
+	int tamanioAchivo = malloc(sizeof(int));
 	int tamanioLista = list_size(lista);
-
+	int i;
+	char* listaSerializada = malloc(tamanioListaDeArchivos(lista)+sizeof(int)+sizeof(int)*tamanioLista);
+	int offset = 0;
 	serializarDato(listaSerializada,&(tamanioLista),sizeof(int),&offset);
 
 	for (i = 0; i < list_size(lista); i++) {
 		char * archivo = list_get(lista, i);
-		int tamanioAchivo = strlen(archivo);
-		serializarDato(listaSerializada,tamanioAchivo,sizeof(int),&offset);
+		tamanioAchivo = strlen(archivo);
+		serializarDato(listaSerializada,&(tamanioAchivo),sizeof(int),&offset);
 		serializarDato(listaSerializada,archivo,tamanioAchivo,&offset);
 
 	}
