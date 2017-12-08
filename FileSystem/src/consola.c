@@ -677,6 +677,11 @@ void consolaFileSystem(){
 					if(string_equals_ignore_case(comandos[0], "prueba")){
 					compararComando=false;
 
+					int fileDescriptor1=nodoToFD(1);
+					int fileDescriptor2=nodoToFD(2);
+
+					logInfo("EL FD DEL NODO 1 es %d, EL FD DEL NODO 2 es %d",fileDescriptor1, fileDescriptor2);
+
 				}
 			 }
 

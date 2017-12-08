@@ -737,5 +737,6 @@ int nodoToFD(int nodo){
 		}
 		count++;
 	}
+	free(nodo2);
 	return(-1);
 }
