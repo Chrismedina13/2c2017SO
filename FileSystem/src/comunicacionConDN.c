@@ -87,6 +87,7 @@ void comunicacionDN(ParametrosComunicacion* parametros){
 						int codigo = deserializarINT(buffer2);
 						logInfo("Recibi de DATA NODE: %i", codigo);
 						mensajesRecibidosDeDN(codigo, i);
+
 					}
 				}
 
@@ -320,15 +321,18 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 							//actualizo list nodos id fd
 
-							nodos_id_fd * nodos = malloc(sizeof(int)*2);
+							nodo2->id_nodo=idNodo;
+							nodo2->nodo_fd=FD_DN;
+							list_add(list_nodos_id_fd, nodo2);
 
-							nodos->id_nodo=idNodo;
-							nodos->nodo_fd=FD_DN;
-							list_add(list_nodos_id_fd, nodos);
+							logInfo("Nuevo nodo conectado: Nodo%d, su FD es %d.", nodo2->id_nodo,nodo2->nodo_fd);
+							logInfo("Cantidad de Nodos al momento: %d",list_size(list_nodos_id_fd));
 
-							//logInfo("%d",list_size(list_nodos_id_fd));
+							//ahora pruebo con la fun nueva
 
-							//free(nodos);
+							int fileDescriptor=nodoToFD(idNodo);
+							logInfo("EL FD DEL NODO %d es %d",idNodo,fileDescriptor);
+
 
 						}
 
@@ -339,10 +343,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							semaphore_signal(SEMAFORODN);
 
 							free(nodo2);
-							//free(nodo3);
-							//free(nodo1);
 							free(infoworker);
-							free(nodos);
 						}
 
 						break;
@@ -362,6 +363,7 @@ char *serialize_int(int value){
 	return stream;
 }
 
+/*
 void cargarNodos2(int idNodo, int capacidad){
 
 	int count2 =0;
@@ -444,6 +446,7 @@ void cargarNodos2(int idNodo, int capacidad){
 	//FIN EJEMPLO NODOS CARGADOS
 
 }
+*/
 
 int desconectarNodoEstado(idNodo){
 

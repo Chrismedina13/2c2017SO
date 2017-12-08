@@ -55,6 +55,8 @@ int main(int argc, char *argv[]) {
 	t_list* l = deserializarListaArchivos(listaS);
 	int i =0;
 
+
+	/*
 	char* rutaScript = "/home/utnso/Escritorio/Serializar";
 	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
 	script* script = malloc(strlen(rutaScript)+strlen(punteroAlContenidoDelScript));

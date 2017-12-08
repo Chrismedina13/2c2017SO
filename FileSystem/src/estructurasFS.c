@@ -725,15 +725,18 @@ int inciarTablaDeArchivos(){
 int nodoToFD(int nodo){
 
 	int count=0;
+	int retorno;
 	nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
 
 	while(count < list_size(list_nodos_id_fd)){
 
 		nodo2=list_get(list_nodos_id_fd, count);
 		if(nodo==nodo2->id_nodo){
-			return(nodo2->nodo_fd);
+			retorno = nodo2->nodo_fd;
+			return(retorno);
 		}
 		count++;
 	}
+	free(nodo2);
 	return(-1);
 }

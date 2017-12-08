@@ -145,7 +145,7 @@ typedef struct script{
 	char* contenido;
 } script;
 
-//Info que le manda el Master a Worker
+//Info que le manda el Master a Worker //serializacion y deserializacion probada y andando
 typedef struct infoTransformacionParaWorker{
 	int nodo;
 	int bloque;
@@ -153,7 +153,7 @@ typedef struct infoTransformacionParaWorker{
 	char* archivoTemporal;
 } infoTransformacionParaWorker;
 
-//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION LOCAL
+//INFO QUE LE MANDA MASTER A WORKER EN REDUCCION LOCAL //probando
 typedef struct infoReduccionLocalParaWorker{
 	t_list* listaDeArchivosTemporales;
 	char* archivoTemporalReduccionLocal;

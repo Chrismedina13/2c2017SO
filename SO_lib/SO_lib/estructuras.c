@@ -193,8 +193,8 @@ JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes,t_list* r
 RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWorker, char* ipWorker,
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado){
 
-	RespuestaReduccionGlobal* RRG = malloc((sizeof(int)*2) + strlen(ipWorker + strlen(archivoReduccionLocal) +
-		strlen(archivoReduccionGlobal) + sizeof(bool)));
+	RespuestaReduccionGlobal* RRG = malloc((sizeof(int)*2) + strlen(ipWorker) + strlen(archivoReduccionLocal) +
+		strlen(archivoReduccionGlobal) + sizeof(bool));
 
 	RRG->nodo = nodo;
 	RRG->puertoWorker = puertoWorker;
