@@ -118,22 +118,16 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 				}
 				logInfo("Recibiendo respuesta de la prueba");
 
-				t_list* respuestaAlmacenamientoGlobal = deserializarListaRespuesReduccionGlobal(mensaje);
+				infoReduccionLocalParaWorker* info = deserializarinfoReduccionLocalParaWorker(mensaje);
 
-				while(i < list_size(respuestaAlmacenamientoGlobal)){
-					RespuestaReduccionGlobal* respuesta = list_get(respuestaAlmacenamientoGlobal,i);
-					logInfo("Agarro el nodo %i",i);
-					logInfo("EL NODO ES %i",respuesta->nodo);
-					logInfo("EL PUERTO ES %i",respuesta->puertoWorker);
-					logInfo("EL IP ES %s",respuesta->ipWorker);
-					logInfo("EL ARCHIVO DE REDUCCION LOCAL ES %s",respuesta->archivoReduccionLocal);
-					logInfo("EL ARCHIVO DE REDUCCION global ES %s",respuesta->archivoReduccionGlobal);
-					logInfo("ES EL NODO ENCARGADO %i",respuesta->encargado);
-					logInfo("-------------------------------------");
+				while(i < list_size(info->listaDeArchivosTemporales)){
+					char* archivo = list_get(info->listaDeArchivosTemporales,i);
+					logInfo("Archivo Temporal : %s",archivo);
 					i++;
 				}
-
-
+				logInfo("Archivo Reduccion local : %s",info->archivoTemporalReduccionLocal);
+				logInfo("nombre del script : %s",info->scriptReduccionLocal->nombre);
+				logInfo("contenido del script : %s",info->scriptReduccionLocal->contenido );
 
 		break;
 	case UBICACION_BLOQUES:
@@ -246,12 +240,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 				a++;
 			}
 
-
-
-
 			break;
-
-
 		}
 
 	}

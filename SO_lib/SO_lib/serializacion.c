@@ -858,7 +858,7 @@ int tamanioinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info){
 char* serializarinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info){
 
 	int desplazamiento = 0;
-	char* infoRLPWSerializada = tamanioinfoReduccionLocalParaWorker(info) + sizeof(int) * list_size(info->listaDeArchivosTemporales) + (sizeof(int)*5);
+	char* infoRLPWSerializada = malloc(tamanioinfoReduccionLocalParaWorker(info) + sizeof(int) * list_size(info->listaDeArchivosTemporales) + (sizeof(int)*5));
 	int i = 0;
 
 	int tamanioDelinfoReduccionLocalParaWorkerAMandar = tamanioinfoReduccionLocalParaWorker(info);

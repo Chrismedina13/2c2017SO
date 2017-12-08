@@ -70,25 +70,33 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
     mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
 
     logInfo("Respuesta Almacenado Final de prueba listo para enviar "); */
-    logInfo("Creando lista respuesta reduccion global");
 
-    RespuestaReduccionGlobal* RRG1 = crearRespuestaReduccionGlobal(1,2,"20.120.1212","reduccionLocal1.txt","reduccionGlobal1.txt",false);
-    RespuestaReduccionGlobal* RRG2 = crearRespuestaReduccionGlobal(2,3,"30.320.3232","reduccionLocal2.txt","reduccionGlobal2.txt",false);
-    RespuestaReduccionGlobal* RRG3 = crearRespuestaReduccionGlobal(3,4,"1230.120.11231212","reduccionLocal3.txt","reduccionGlobal3.txt",false);
-    RespuestaReduccionGlobal* RRG4 = crearRespuestaReduccionGlobal(4,5,"54540.120.31212","reduccionLocal4.txt","reduccionGlobal4.txt",true);
+	logInfo("Creando info reduccion local para worker");
+    t_list* listaArchivosTemporales = list_create();
+    char* archivo0 = "archivoTemporal0.txt";
+    char* archivo1 = "archivoTemporal1.txt";
+    char* archivo2 = "archivoTemporal2.txt";
+    char* archivo3 = "archivoTemporal3.txt";
+    list_add(listaArchivosTemporales,archivo0);
+    list_add(listaArchivosTemporales,archivo1);
+    list_add(listaArchivosTemporales,archivo2);
+    list_add(listaArchivosTemporales,archivo3);
 
-    t_list* LRRG = list_create();
+    char* contenido = "Soy un script creado para la prueba, ojala llegue bien a yama para probar que mando bien la estructura reduccion local para worker";
+    char* nombre = "HOLA soy un script";
 
-    list_add(LRRG,RRG1);
-    list_add(LRRG,RRG2);
-    list_add(LRRG,RRG3);
-    list_add(LRRG,RRG4);
+    script* scriptAMandar = malloc(strlen(contenido) + strlen(nombre));
+    scriptAMandar->nombre = nombre;
+    scriptAMandar->contenido = contenido;
 
-    int tamanioAmandar = tamanioListareduccionGlobal(LRRG) + sizeof(int) + (sizeof(int)*list_size(LRRG)*4);
 
-    char* listaSerializadaRRG = serializarListaRespuestaReduccionGlobal(LRRG);
+    infoReduccionLocalParaWorker* info = crearInfoReduccionLocalParaWorker(listaArchivosTemporales,"archivoDeReduccionLocal",scriptAMandar);
 
-    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,listaSerializadaRRG,tamanioAmandar);
+	int tamanioAMandar = tamanioinfoReduccionLocalParaWorker(info) + (sizeof(int) * list_size(info->listaDeArchivosTemporales)) + (sizeof(int)*5);
+
+    char* infoSerializado = serializarinfoReduccionLocalParaWorker(info);
+
+    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,infoSerializado,tamanioAMandar);
 
     logInfo("Mandando lista serializada de prueba");
 
