@@ -70,7 +70,6 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 
 		//elije los 2 nodos mas vacios
 
-		int count = 0;
 		int index1, indexList1, index2, indexList2;
 		int desplazamiento1, desplazamiento2;
 		bloques_nodo* bitMapNodo1 = malloc(sizeof(bloques_nodo)+160);
@@ -84,7 +83,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		if(desplazamiento1==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		logInfo("Ubico la copia 1 en el  bloque: %d, en el nodo %d, desplazamiento %d",count, index1,desplazamiento1);
+		logInfo("Ubico la copia 1 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index1,desplazamiento1);
 		list_remove(mapa_de_bits,indexList1);
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
@@ -97,7 +96,7 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		if(desplazamiento2==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		logInfo("Ubico la copia 2 en el bloque: %d, en el nodo %d, desplazamiento %d",count, index2,desplazamiento2);
+		logInfo("Ubico la copia 2 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index2,desplazamiento2);
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
 		list_add(mapa_de_bits,bitMapNodo1);
@@ -111,8 +110,9 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 		ubicacionBloquesArchivo->ubicacionCopia1.nodo = index1;
 		ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento = desplazamiento2;
 		ubicacionBloquesArchivo->ubicacionCopia2.nodo = index2;
-		printf("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados, indiceBloque,index1,
-				desplazamiento1,index2, desplazamiento2);
+		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados,
+				ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->ubicacionCopia1.nodo,
+				ubicacionBloquesArchivo->ubicacionCopia1.desplazamiento,ubicacionBloquesArchivo->ubicacionCopia2.nodo, ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento);
 		//list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
 		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);//empieza a cargar el vector de archivos
 

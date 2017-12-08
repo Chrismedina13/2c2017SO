@@ -431,31 +431,44 @@ void consolaFileSystem(){
 
 						while(count<cantBloques){
 
-							char* bloque = list_get(bloquesDeTexto,count);
+
+							char* bloque = malloc(1024*1024);
+							bloque = list_get(bloquesDeTexto,count);
 							UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
 
-							SetBloque *setbloque1= malloc(sizeof(char)*1024+sizeof(int));
+
+
+							SetBloque *setbloque1= malloc(sizeof(char)+1024*1024+sizeof(int));
 							setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
 							setbloque1->contenidoBloque=bloque;
 							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
+
 							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
+
 							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
 							int fileDescriptor1=nodoToFD(ubicacion->ubicacionCopia1.nodo);
+
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
+									tamanioSetBloque,string_substring(mensaje,0,255));
 							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, mensaje, tamanioSetBloque);
 
-							SetBloque *setbloque2= malloc(sizeof(char)*1024+sizeof(int));
+							logInfo("Copia1 esta en dataNode%d:desplazamiento%d", ubicacion->ubicacionCopia1.nodo, setbloque1->nrobloque);
+
+
+
+							SetBloque *setbloque2= malloc(sizeof(char)+1024*1024+sizeof(int));
 							setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
 							setbloque2->contenidoBloque=bloque;
 							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
 							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
 							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
 							int fileDescriptor2=nodoToFD(ubicacion->ubicacionCopia2.nodo);
+
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
+															tamanioSetBloque,string_substring(mensaje,0,255));
 							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque2);
 
-
-							logInfo("numero de bloque dataNode1: %d", setbloque1->nrobloque);
-							logInfo("numero de bloque dataNode2: %d", setbloque2->nrobloque);
-							logInfo("contenido del bloque: %s", string_substring(setbloque1->contenidoBloque, 0, 255));
+							logInfo("Copia2 esta en dataNode%d:desplazamiento%d", ubicacion->ubicacionCopia2.nodo, setbloque2->nrobloque);
 
 							count++;
 
