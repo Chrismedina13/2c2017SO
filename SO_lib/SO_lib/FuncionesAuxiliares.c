@@ -197,3 +197,74 @@ int tamanioScript(script* script){
 	//logInfo("tamanioScript%i\n",tamanioScript);
 	return tamanioScript;
 }
+
+// me devuelve la palabra mas chica alfabeticamente
+vectorConIndice* LApalabra(vectorConIndice* nodo1,vectorConIndice* nodo2) {
+	if(nodo1->vector[nodo1->indice] < nodo2->vector[nodo2->indice]){
+		return nodo1;
+	}else{
+		return nodo2;
+	}
+}
+
+void apareoDeArchivos(t_list* lista){
+	t_list* listaDeContenidos = list_create();
+	int cantidadElementosLista = list_size(lista);
+	int i = 0;
+	//obtengo la lista ocn los contenidos
+	while(i<cantidadElementosLista){
+		char* contenido = obtenerPuntero(list_get(lista,i));
+		char** vectorDeRegistros = string_split(contenido,"\n");
+		vectorConIndice* nodo;
+		nodo->indice = 0;
+		nodo->vector = vectorDeRegistros;
+		list_add(listaDeContenidos,nodo);
+		i++;
+	}
+	//Creamos el archivo apareado
+	FILE* fd;
+	fd = fopen("/home/utnso/Escritorio/archivoApareado.txt","w");
+	if (fd==NULL) {
+		printf("Error al abrir el archivo.");
+	}
+
+	//Comparo los contenidos
+	i=0;
+	int j = i;
+	int indicePalabraMasChica;
+
+	while(list_size(listaDeContenidos) != 0){//verifiacmos que la lista siga teniendo elementos
+		if(cantidadElementosLista>1){
+			vectorConIndice* nodoConPalabraMasChica = list_get(listaDeContenidos,i);
+			indicePalabraMasChica = i;
+			while(i<(cantidadElementosLista-1)){
+							j++;
+							vectorConIndice* aux = list_get(listaDeContenidos,j);
+							nodoConPalabraMasChica = LApalabra(nodoConPalabraMasChica,aux);
+							if(strcmp(aux->vector[aux->indice], nodoConPalabraMasChica->vector[nodoConPalabraMasChica->indice])){
+								indicePalabraMasChica = j;
+							}
+							i++;
+						}
+						//mete la palabra en el nuevo archivo y verifia que el indice del nodo no sea el final del archivo
+						//y actualizamos la cantidad de elementos lista
+
+						fputs(nodoConPalabraMasChica->vector[nodoConPalabraMasChica->indice],fd);
+						nodoConPalabraMasChica->indice++;
+						if(nodoConPalabraMasChica->vector[nodoConPalabraMasChica->indice] == '\0'){
+							list_remove(listaDeContenidos,indicePalabraMasChica);
+						}
+		}
+		else{
+			//Este es el caso en qe slo me quede un nodo en la lista, hay que meter todo el contenido que le queda en el archivo apareado
+			vectorConIndice* aux = list_remove(listaDeContenidos,0);
+			while(aux->vector[aux->indice] != '\0'){
+				fputs(aux->vector[aux->indice],fd);
+				aux->indice++;
+			}
+		}
+
+	}
+	fclose(fd);
+}
+

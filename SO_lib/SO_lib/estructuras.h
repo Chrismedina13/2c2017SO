@@ -162,7 +162,7 @@ typedef struct infoReduccionLocalParaWorker{
 
 //INFO QUE LE MANDA MASTER A WORKER EN REDUCCION GLOBAL
 typedef struct infoReduccionGlobalDeMasterParaWorker{
-	t_list* listaArchivosReduccionLocal; //Lista de estructura infoParaReduccionGLobal;
+	t_list* listaInfoParaReduccionGlobal; //Lista de estructura infoParaReduccionGLobal;
 	char* archivoTemporalReduccionGlobal;
 	script* scriptReduccionGlobal;
 } infoReduccionGlobalDeMasterParaWorker;
@@ -183,6 +183,10 @@ typedef struct almacenadoFinal{
 	char* archivoTemporalReduccionGlobal;
 } almacenadoFinal;
 
+typedef struct vectorConIndice{
+	char** vector;
+	int indice;
+}vectorConIndice;
 
 t_list * list_info_workers;
 t_list * listaUbicaciones;

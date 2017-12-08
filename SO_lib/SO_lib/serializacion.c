@@ -730,22 +730,37 @@ infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializa
 	return infoDeserializada;
 }
 
+
 char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMasterParaWorker* info){
 	int tamanioArchivoTemporal=strlen(info->archivoTemporalReduccionGlobal);
-	int tamanioLista=tamanioListaDeArchivos(info->listaArchivosReduccionLocal);
-	int tamanioDelScript=tamanioScript(info->scriptReduccionGlobal);
-	char* infoSerializada = malloc(tamanioArchivoTemporal+tamanioLista+tamanioDelScript+sizeof(int)*3);
+	int tamanioLista=tamanioListaDeArchivos(info->listaInfoParaReduccionGlobal);
+	int tamanioNombreScript=strlen(info->scriptReduccionGlobal->nombre);
+	int tamanioContenidoScript=strlen(info->scriptReduccionGlobal->contenido);
+	int cantidadElementosLista = list_size(info->listaInfoParaReduccionGlobal);
+
+
+	char* infoSerializada = malloc(tamanioArchivoTemporal+tamanioLista+tamanioNombreScript+tamanioContenidoScript+sizeof(int)*5 + sizeof(int)*cantidadElementosLista);
 	int offset = 0;
 
-	char* listaSerializada = serializarListaArchivos(info->listaArchivosReduccionLocal);
-	char* scriptSerializado = serializarScript(info->scriptReduccionGlobal);
 
 	serializarDato(infoSerializada,&(tamanioArchivoTemporal),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(tamanioNombreScript),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(tamanioContenidoScript),sizeof(int),&offset);
 	serializarDato(infoSerializada,&(tamanioLista),sizeof(int),&offset);
-	serializarDato(infoSerializada,&(tamanioDelScript),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(cantidadElementosLista),sizeof(int),&offset);
+
 	serializarDato(infoSerializada,info->archivoTemporalReduccionGlobal,tamanioArchivoTemporal,&offset);
-	serializarDato(infoSerializada,listaSerializada,tamanioLista,&offset);
-	serializarDato(infoSerializada,scriptSerializado,tamanioDelScript,&offset);
+	serializarDato(infoSerializada,info->scriptReduccionGlobal->nombre,tamanioNombreScript,&offset);
+	serializarDato(infoSerializada,info->scriptReduccionGlobal->contenido,tamanioContenidoScript,&offset);
+
+	int i = 0;
+	while(i<cantidadElementosLista){
+		char* contenido = list_get(info->listaInfoParaReduccionGlobal,i);
+		int tamanioContenido = strlen(contenido);
+		serializarDato(infoSerializada,&(tamanioContenido),sizeof(int),&offset);
+		serializarDato(infoSerializada,contenido,tamanioContenido,&offset);
+		i++;
+	}
 
 	return infoSerializada;
 }
@@ -753,20 +768,34 @@ char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMaste
 infoReduccionGlobalDeMasterParaWorker* deserializarInfoReduccionGlobalDeMasterParaWorker(char* infoSerializada){
 	int tamanioArchivoTemporal;
 	int tamanioLista;
-	int tamanioDelScript;
+	int tamanioNombreScript;
+	int tamanioContenidoScript;
+	int cantidadElementosLista;
+	int tamanioContenido;
 	int offset = 0;
+
 	deserializarDato(&(tamanioArchivoTemporal),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(tamanioNombreScript),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(tamanioContenidoScript),infoSerializada,sizeof(int),&offset);
 	deserializarDato(&(tamanioLista),infoSerializada,sizeof(int),&offset);
-	deserializarDato(&(tamanioDelScript),infoSerializada,sizeof(int),&offset);
-	infoReduccionGlobalDeMasterParaWorker* info = malloc(tamanioArchivoTemporal+tamanioLista+tamanioDelScript);
+	deserializarDato(&(cantidadElementosLista),infoSerializada,sizeof(int),&offset);
+
+	infoReduccionGlobalDeMasterParaWorker* info = malloc(tamanioArchivoTemporal+tamanioLista+tamanioNombreScript+tamanioContenidoScript);
 	info->archivoTemporalReduccionGlobal=string_substring(infoSerializada,offset,tamanioArchivoTemporal);
 	offset+=tamanioArchivoTemporal;
-	char* listaSerializada = string_substring(infoSerializada,offset,tamanioLista);
-	offset+=tamanioLista;
-	info->listaArchivosReduccionLocal = deserializarListaArchivos(listaSerializada);
-	char* scriptSerializado = string_substring(infoSerializada,offset,tamanioDelScript);
-	offset+=tamanioDelScript;
-	info->scriptReduccionGlobal = deserilizarScript(scriptSerializado);
+	char* nombre = string_substring(infoSerializada,offset,tamanioNombreScript);
+	info->scriptReduccionGlobal->nombre= nombre;
+	offset+=tamanioNombreScript;
+	char* contenido = string_substring(infoSerializada,offset,tamanioContenidoScript);
+	info->scriptReduccionGlobal->contenido = contenido;
+	offset+=tamanioContenidoScript;
+	int i=0;
+	while(i<cantidadElementosLista){
+		deserializarDato(&(tamanioContenido),infoSerializada,sizeof(int),&offset);
+		char* contenido = string_substring(infoSerializada,offset,tamanioContenido);
+		offset+=tamanioContenido;
+		list_add(info->listaInfoParaReduccionGlobal,contenido);
+	}
 
 	return info;
 
@@ -806,8 +835,6 @@ char * serializarListaArchivos(t_list * lista) {
 	}
 	return (listaSerializada);
 }
-
-
 
 int tamanioinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info){
 
