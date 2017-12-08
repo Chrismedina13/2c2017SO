@@ -27,8 +27,21 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+	char* archivo1="/home/utnso/Escritorio/archivo1";
+	char* archivo2="/home/utnso/Escritorio/archivo2";
+	char* archivo3="/home/utnso/Escritorio/archivo3";
+	char* rutaArchivoReduccionLocal = "/home/utnso/Escritorio/";
+	t_list* lista = list_create();
+	list_add(lista,archivo1);
+	list_add(lista,archivo2);
+	list_add(lista,archivo3);
+
+	apareoDeArchivosVectores(lista);
+
+
+
 	//PROBANDO SERIALIZAR INFO REDUCCION GLOBAL DE MASTER PARA WORKER
-	char* archivoG = "archivoTemporalGlobal";
+	/*char* archivoG = "archivoTemporalGlobal";
 	char* archivo1 = "archivotemplocal1";
 	char* archivo2 = "archivotemporallocal2";
 	char* archivo3 = "arclocal2";
@@ -38,14 +51,9 @@ int main(int argc, char *argv[]) {
 	list_add(lista,archivo2);
 	list_add(lista,archivo3);
 
-	/*char* listaS = serializarListaArchivos(lista);
+	char* listaS = serializarListaArchivos(lista);
 	t_list* l = deserializarListaArchivos(listaS);
 	int i =0;
-	while(i<list_size(l)){
-		char* contenido =list_get(l,i);
-		printf("%s\n\n",contenido);
-		i++;
-	}*/
 
 	char* rutaScript = "/home/utnso/Escritorio/Serializar";
 	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
@@ -65,7 +73,7 @@ int main(int argc, char *argv[]) {
 			printf("%s\n\n",contenido);
 			j++;
 		}
-
+*/
 	//PRUEBA DE INFOPARAREDUCCIONGLOBAL
 /*
 	infoParaReduccionGlobal* info = crearInfoParaReduccionGlobal("123.412.4.2",4040,"hola.txt");

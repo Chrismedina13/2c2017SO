@@ -41,5 +41,8 @@ int tamanioListaDeArchivos(t_list* lista);
 int tamanioScript(script* script);
 vectorConIndice* LApalabra(vectorConIndice* nodo1,vectorConIndice* nodo2);
 void apareoDeArchivos(t_list* lista);
-
+void apareoDeArchivosVectores(t_list* lista);
+int indiceDelVectorQueQuedanLecturas(vectorConIndice vectorNodos[],int cantidadElementosLista);
+int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementosLista);
+char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2);
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */

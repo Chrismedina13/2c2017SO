@@ -186,6 +186,7 @@ typedef struct almacenadoFinal{
 typedef struct vectorConIndice{
 	char** vector;
 	int indice;
+	int pasoDeDatosCompleto; //0 si no esta completo, 1 si esta completo.
 }vectorConIndice;
 
 t_list * list_info_workers;
