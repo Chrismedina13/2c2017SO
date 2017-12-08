@@ -189,9 +189,9 @@ int tamanioListaDeArchivos(t_list* lista){
 	return tamanio;
 }
 
-int tamanioScript(script* script){
-	int contenido = strlen(script->contenido);
-	int nombre = strlen(script->nombre);
+int tamanioScript(script script){
+	int contenido = strlen(script.contenido);
+	int nombre = strlen(script.nombre);
 
 	int tamanioScript = contenido + nombre;
 	//logInfo("tamanioScript%i\n",tamanioScript);

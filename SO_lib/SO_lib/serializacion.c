@@ -880,13 +880,13 @@ char* serializarinfoReduccionLocalParaWorker(infoReduccionLocalParaWorker* info)
 	serializarDato(infoRLPWSerializada,&(tamanioArchivoTemporalDeReduccionLocal),sizeof(int),&desplazamiento);
 	serializarDato(infoRLPWSerializada,info->archivoTemporalReduccionLocal,tamanioArchivoTemporalDeReduccionLocal,&desplazamiento);
 
-	int tamanioContenidoDelScrip = strlen(info->scriptReduccionLocal->contenido);
+	int tamanioContenidoDelScrip = strlen(info->scriptReduccionLocal.contenido);
 	serializarDato(infoRLPWSerializada,&(tamanioContenidoDelScrip),sizeof(int),&desplazamiento);
-	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal->contenido,tamanioContenidoDelScrip,&desplazamiento);
+	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal.contenido,tamanioContenidoDelScrip,&desplazamiento);
 
-	int tamanioNombreDelScrip = strlen(info->scriptReduccionLocal->nombre);
+	int tamanioNombreDelScrip = strlen(info->scriptReduccionLocal.nombre);
 	serializarDato(infoRLPWSerializada,&(tamanioNombreDelScrip),sizeof(int),&desplazamiento);
-	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal->nombre,tamanioNombreDelScrip,&desplazamiento);
+	serializarDato(infoRLPWSerializada,info->scriptReduccionLocal.nombre,tamanioNombreDelScrip,&desplazamiento);
 
 	return infoRLPWSerializada;
 }
@@ -921,13 +921,16 @@ infoReduccionLocalParaWorker* deserializarinfoReduccionLocalParaWorker(char* IRL
 
 	int tamanioContenidoScrip;
 	deserializarDato(&(tamanioContenidoScrip),IRLPWSerializado,sizeof(int),&desplazamiento);
-	info->scriptReduccionLocal->contenido = string_substring(IRLPWSerializado,desplazamiento,tamanioContenidoScrip);
+	char* contenidoScript = string_substring(IRLPWSerializado,desplazamiento,tamanioContenidoScrip);
 	desplazamiento += tamanioContenidoScrip;
 
 	int tamanioNombreScrip;
 	deserializarDato(&(tamanioNombreScrip),IRLPWSerializado,sizeof(int),&desplazamiento);
-	info->scriptReduccionLocal->nombre = string_substring(IRLPWSerializado,desplazamiento,tamanioNombreScrip);
+	char* nombreArchivo = string_substring(IRLPWSerializado,desplazamiento,tamanioNombreScrip);
 	desplazamiento += tamanioNombreScrip;
+
+	info->scriptReduccionLocal.contenido = contenidoScript;
+	info->scriptReduccionLocal.nombre = nombreArchivo;
 
 	return info;
 }

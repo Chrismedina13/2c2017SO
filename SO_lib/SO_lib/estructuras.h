@@ -157,7 +157,7 @@ typedef struct infoTransformacionParaWorker{
 typedef struct infoReduccionLocalParaWorker{
 	t_list* listaDeArchivosTemporales;
 	char* archivoTemporalReduccionLocal;
-	script* scriptReduccionLocal;
+	script scriptReduccionLocal;
 } infoReduccionLocalParaWorker;
 
 //INFO QUE LE MANDA MASTER A WORKER EN REDUCCION GLOBAL
@@ -218,7 +218,7 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
 respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
-infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script* scriptReduccionLocal);
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script scriptReduccionLocal);
 infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal);
 infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
 infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);

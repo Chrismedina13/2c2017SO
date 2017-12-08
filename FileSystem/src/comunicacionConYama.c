@@ -85,9 +85,9 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
     char* contenido = "Soy un script creado para la prueba, ojala llegue bien a yama para probar que mando bien la estructura reduccion local para worker";
     char* nombre = "HOLA soy un script";
 
-    script* scriptAMandar = malloc(strlen(contenido) + strlen(nombre));
-    scriptAMandar->nombre = nombre;
-    scriptAMandar->contenido = contenido;
+    script scriptAMandar;
+    scriptAMandar.nombre = nombre;
+    scriptAMandar.contenido = contenido;
 
 
     infoReduccionLocalParaWorker* info = crearInfoReduccionLocalParaWorker(listaArchivosTemporales,"archivoDeReduccionLocal",scriptAMandar);

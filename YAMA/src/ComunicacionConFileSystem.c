@@ -120,13 +120,13 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 				infoReduccionLocalParaWorker* info = deserializarinfoReduccionLocalParaWorker(mensaje);
 
-				printf("Archivo Reduccion local : %s \n",info->archivoTemporalReduccionLocal);
-				printf("nombre del script : %s\n",info->scriptReduccionLocal->nombre);
-				printf("contenido del script : %s\n",info->scriptReduccionLocal->contenido );
+				logInfo("Archivo Reduccion local : %s \n",info->archivoTemporalReduccionLocal);
+				logInfo("nombre del script : %s\n",info->scriptReduccionLocal.nombre);
+				logInfo("contenido del script : %s\n",info->scriptReduccionLocal.contenido );
 
 				while(i < list_size(info->listaDeArchivosTemporales)){
 							char* archivo = list_get(info->listaDeArchivosTemporales,i);
-							printf("Archivo Temporal : %s\n",archivo);
+							logInfo("Archivo Temporal : %s\n",archivo);
 							i++;
 				}
 		break;

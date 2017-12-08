@@ -38,7 +38,7 @@ script* setScript(char* rutaScript);
 void rearmar_script(script* script,int codigo);
 void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
 int tamanioListaDeArchivos(t_list* lista);
-int tamanioScript(script* script);
+int tamanioScript(script script);
 vectorConIndice* LApalabra(vectorConIndice* nodo1,vectorConIndice* nodo2);
 void apareoDeArchivos(t_list* lista);
 
