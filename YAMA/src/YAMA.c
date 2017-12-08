@@ -47,6 +47,8 @@ int main(int argc, char *argv[]) {
 		i++;
 	}*/
 
+
+	/*
 	char* rutaScript = "/home/utnso/Escritorio/Serializar";
 	char* punteroAlContenidoDelScript = obtenerPuntero(rutaScript);
 	script* script = malloc(strlen(rutaScript)+strlen(punteroAlContenidoDelScript));
@@ -65,7 +67,7 @@ int main(int argc, char *argv[]) {
 			printf("%s\n\n",contenido);
 			j++;
 		}
-
+*/
 	//PRUEBA DE INFOPARAREDUCCIONGLOBAL
 /*
 	infoParaReduccionGlobal* info = crearInfoParaReduccionGlobal("123.412.4.2",4040,"hola.txt");
