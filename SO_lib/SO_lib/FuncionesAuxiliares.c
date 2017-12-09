@@ -401,7 +401,8 @@ int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElemento
 
 char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2){
 	int i = 0;
-	while(palabraAux1[i]==palabraAux2[i]){
+
+	while(tolower(palabraAux1[i])==tolower(palabraAux2[i])){
 		i++;
 		if(palabraAux1[i]=='\0') return palabraAux1;
 		if(palabraAux2[i]=='\0') return palabraAux1;

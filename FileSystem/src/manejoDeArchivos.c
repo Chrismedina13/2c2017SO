@@ -54,6 +54,8 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 		 *Devuleve una lista de char* con bloques de texto que partio
 		 */
 
+		int desplazamiento=0;
+
 		char* p = obtenerPuntero(rutaDelArchivo);
 
 		FILE * fp = fopen(rutaDelArchivo, "r");
@@ -66,7 +68,15 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 		fclose(fp);
 
-		t_list* lista = dividirArchivoTexto(p, indiceArchivo);
+		t_list* lista = list_create();
+		char* bloque = malloc(MB);
+
+		while (desplazamiento < tamanio) {
+
+		bloque = dividirArchivoTextoMemoria(p,&desplazamiento,indiceArchivo);
+		list_add(lista, bloque);
+
+		}
 
         //LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
         if (munmap (p, tamanio) == -1) {
@@ -75,9 +85,9 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
         //DEBERIAMOS BORRAR EL ARCHIVO PRINCIPAL**********
 
-        t_list* bloques = listaDeContenidos(lista);
+        //t_list* bloques = listaDeContenidos(lista);
 
-        return bloques;
+        return lista;
 
 }
 
@@ -158,6 +168,84 @@ t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques){
 		fclose(fd);
 	}
 	return lista;
+}
+
+char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceArchivo) {
+
+	int tamArchivo = strlen(texto);
+
+	int tamRestante = tamArchivo - *desplazamiento;
+
+	char * buffer = string_new();
+
+	int tamBuffer = 0;
+
+	//Genero el bloque
+	char * bloqueAGurdar = armarBloqueTamRestante(texto + *desplazamiento,
+			tamRestante);
+	int tamBloqueAGuardar = strlen(bloqueAGurdar);
+
+	//Pregunto si es el ultimo bloque
+	if ((tamRestante - tamBloqueAGuardar) != 0) {
+		tamBloqueAGuardar++;
+	}
+
+	while (tamRestante > 0 && (tamBuffer + tamBloqueAGuardar) < MB) {
+		//Guardo el bloque al buffer
+		string_append(&buffer, bloqueAGurdar);
+
+		//Pregunto si es el ultimo bloque
+		if ((tamRestante - tamBloqueAGuardar) != 0) {
+			string_append(&buffer, "\n");
+		}
+
+		tamRestante -= tamBloqueAGuardar;
+
+		*desplazamiento = *desplazamiento + tamBloqueAGuardar;
+
+		tamBuffer += tamBloqueAGuardar;
+
+		free(bloqueAGurdar);
+
+		//Genero el bloque
+		bloqueAGurdar = armarBloqueTamRestante(texto + *desplazamiento, tamRestante);
+		tamBloqueAGuardar = strlen(bloqueAGurdar);
+
+		//Pregunto si es el ultimo bloque
+		if ((tamRestante - tamBloqueAGuardar) != 0) {
+			tamBloqueAGuardar++;
+		}
+
+	}
+
+	free(bloqueAGurdar);
+
+	return buffer;
+}
+
+char * armarBloqueTamRestante(void * texto, int tamRestante) {
+
+	int desplazamiento = 0;
+	int tamALeer = 0;
+
+	if (string_starts_with(texto, "\n"))
+		desplazamiento++;
+
+	void * prueba = strchr(texto + desplazamiento, '\n');
+
+	if (prueba == NULL) {
+		tamALeer += tamRestante;
+		desplazamiento = 0;
+	} else {
+		tamALeer += prueba - texto;
+	}
+
+	char * bloque = malloc(tamALeer + 1);
+	char * finBloque = "\0";
+	memcpy(bloque, texto + desplazamiento, tamALeer);
+	memcpy(bloque + tamALeer, finBloque, 1);
+
+	return bloque;
 }
 
 t_list* dividirArchivoTexto(char* p, int indiceDeArchivo){

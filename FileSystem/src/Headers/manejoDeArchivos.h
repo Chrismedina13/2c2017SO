@@ -40,7 +40,15 @@ char* obtenerPuntero(const char* rutaArchivo);
 int tamanioArchivoCerrado(const char* rutaArchivo);
 t_list* dividirArchivoBinario(char*puntero,int cantidadDeBloques);
 t_list* dividirArchivoTexto(char* p, int indiceArchivo);
+
+//dividir en memoria
+
+char * armarBloqueTamRestante(void * texto, int tamRestante);
+char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceArchivo);
+
+
 char* obtenerContenidoDelArchivo(const char* rutaArchivo);
 t_list* listaDeContenidos(t_list* rutasDeArchivos);
+
 
 #endif /* HEADERS_MANEJODEARCHIVOS_H_ */
