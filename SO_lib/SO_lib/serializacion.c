@@ -987,3 +987,60 @@ almacenadoFinal* deserializaralmacenadoFinal(char* serializado){
 
 	return info;
 }
+
+/* Serializacion y deserializacion de una lista de la nueva ubicacion bloques archivos */
+
+char* serializarListaUbicacionBloquesArchivo2(t_list* listaDeUbicacionesDeBloquesArchivos){
+
+	int desplazamiento = 0;
+	int tamanioLista = list_size(listaDeUbicacionesDeBloquesArchivos);
+	int i = 0;
+	char* listaSerializada = malloc(sizeof(UbicacionBloquesArchivo2)*list_size(listaDeUbicacionesDeBloquesArchivos));
+
+	serializarDato(listaSerializada,&(tamanioLista),sizeof(int),&desplazamiento);
+
+	while(i < tamanioLista){
+
+		UbicacionBloquesArchivo2* ubi = list_get(listaDeUbicacionesDeBloquesArchivos,i);
+
+		serializarDato(listaSerializada,&(ubi->bytesOcupados),sizeof(int),&desplazamiento);
+		serializarDato(listaSerializada,&(ubi->desplazamiento1),sizeof(int),&desplazamiento);
+		serializarDato(listaSerializada,&(ubi->desplazamiento2),sizeof(int),&desplazamiento);
+		serializarDato(listaSerializada,&(ubi->nodo1),sizeof(int),&desplazamiento);
+		serializarDato(listaSerializada,&(ubi->nodo2),sizeof(int),&desplazamiento);
+		serializarDato(listaSerializada,&(ubi->parteDelArchivo),sizeof(int),&desplazamiento);
+
+		i++;
+	}
+
+	return listaSerializada;
+}
+
+UbicacionBloquesArchivo2* deserializarListaUbicacionBloquesArchivo2(char* listaSerilizada){
+
+	int desplazamiento = 0;
+	int tamanioLista;
+	int i = 0;
+	t_list* listaUbicacionBloquesArchivos2 = list_create();
+
+	deserializarDato(&(tamanioLista),listaSerilizada,sizeof(int),&desplazamiento);
+
+	while(i < tamanioLista){
+
+		UbicacionBloquesArchivo2* ubi = malloc(UbicacionBloquesArchivo2);
+
+		deserializarDato(&(ubi->bytesOcupados),listaSerilizada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->desplazamiento1),listaSerilizada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->desplazamiento2),listaSerilizada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->nodo1),listaSerilizada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->nodo2),listaSerilizada,sizeof(int),&desplazamiento);
+		deserializarDato(&(ubi->parteDelArchivo),listaSerilizada,sizeof(int),&desplazamiento);
+
+		list_add(listaUbicacionBloquesArchivos2,ubi);
+		i++;
+	}
+
+	return listaUbicacionBloquesArchivos2;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
