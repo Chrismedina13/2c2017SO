@@ -36,13 +36,13 @@ void atenderJOB(){
 	logInfo("Creando Planificacion de prueba");
 
 	t_list* listaDeWorkersAPlanificar = list_create();
-	UbicacionBloquesArchivo* ubi0 = crearUbicacionBloquesArchivos(0, 500, 1, 12, 2, 13);
-	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(1, 100, 1, 20, 3, 19);
-	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(2, 100, 2, 20, 3, 19);
-	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(3, 100, 1, 20, 2, 19);
-	UbicacionBloquesArchivo* ubi4 = crearUbicacionBloquesArchivos(4, 100, 1, 20, 3, 19);
-	UbicacionBloquesArchivo* ubi5 = crearUbicacionBloquesArchivos(5, 100, 2, 20, 3, 19);
-	UbicacionBloquesArchivo* ubi6 = crearUbicacionBloquesArchivos(6, 100, 1, 20, 2, 19);
+	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 1, 12, 2, 13);
+	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 19);
+	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 19);
+	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 19);
+	UbicacionBloquesArchivo2* ubi6 = crearUbicacionBloquesArchivos2(6, 100, 1, 20, 2, 19);
 
 
 	list_add(listaDeWorkersAPlanificar, ubi0);
@@ -59,6 +59,7 @@ void atenderJOB(){
 	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
 	logInfo("Se crea JOB Completo");
+
 	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
 
 	logInfo("Actualizar Tabla Global");
@@ -168,13 +169,13 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	logInfo("Creando Planificacion de prueba");
 
            	t_list* listaDeWorkersAPlanificar = list_create();
-           	UbicacionBloquesArchivo* ubi0 = crearUbicacionBloquesArchivos(0, 500, 1, 12, 2, 13);
-           	UbicacionBloquesArchivo* ubi1 = crearUbicacionBloquesArchivos(1, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo* ubi2 = crearUbicacionBloquesArchivos(2, 100, 2, 20, 3, 19);
-           	UbicacionBloquesArchivo* ubi3 = crearUbicacionBloquesArchivos(3, 100, 1, 20, 2, 19);
-           	UbicacionBloquesArchivo* ubi4 = crearUbicacionBloquesArchivos(4, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo* ubi5 = crearUbicacionBloquesArchivos(5, 100, 2, 20, 3, 19);
-           	UbicacionBloquesArchivo* ubi6 = crearUbicacionBloquesArchivos(6, 100, 1, 20, 2, 19);
+           	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 1, 12, 2, 13);
+           	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 1, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 19);
+           	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi6 = crearUbicacionBloquesArchivos2(6, 100, 1, 20, 2, 19);
 
 
            	list_add(listaDeWorkersAPlanificar, ubi0);
@@ -191,6 +192,8 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
            	logInfo("Se crea JOB Completo");
+
+
            	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
 
            	logInfo("Actualizar Tabla Global");

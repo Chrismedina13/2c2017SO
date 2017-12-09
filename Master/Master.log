@@ -1,0 +1,201 @@
+[INFO] 15:36:37:928 MASTER/(4605:4605): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:36:37:938 MASTER/(4605:4605): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:36:37:938 MASTER/(4605:4605): Creando el hilo para comunicarme con Yama
+[INFO] 15:36:37:939 MASTER/(4605:4606): Ingrese JOB a Ejecutar
+[INFO] 15:37:17:671 MASTER/(4941:4941): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:37:17:673 MASTER/(4941:4941): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:37:17:674 MASTER/(4941:4941): Creando el hilo para comunicarme con Yama
+[INFO] 15:37:17:682 MASTER/(4941:4945): Ingrese JOB a Ejecutar
+[INFO] 15:37:21:737 MASTER/(4941:4945): Se va a ejecutar wewe
+[INFO] 15:37:21:737 MASTER/(4941:4945): 4
+[INFO] 15:37:21:738 MASTER/(4941:4945): Recibi de YAMA: 30
+[INFO] 15:37:21:738 MASTER/(4941:4945): Master recibe el numero De JOB.
+[INFO] 15:37:21:738 MASTER/(4941:4945): Tamanio de lo que recibo 4
+[INFO] 15:37:21:738 MASTER/(4941:4945): El job asignado es 0
+[INFO] 15:37:22:60 MASTER/(4941:4945): Recibi de YAMA: -1218561216
+[INFO] 15:40:55:808 MASTER/(5284:5284): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:40:55:819 MASTER/(5284:5284): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:40:55:819 MASTER/(5284:5284): Creando el hilo para comunicarme con Yama
+[INFO] 15:40:55:820 MASTER/(5284:5289): Ingrese JOB a Ejecutar
+[INFO] 15:41:00:105 MASTER/(5284:5289): Se va a ejecutar wew
+[INFO] 15:41:00:105 MASTER/(5284:5289): 3
+[INFO] 15:41:26:964 MASTER/(5284:5289): Recibi de YAMA: 30
+[INFO] 15:41:26:965 MASTER/(5284:5289): Master recibe el numero De JOB.
+[INFO] 15:41:26:965 MASTER/(5284:5289): Tamanio de lo que recibo 4
+[INFO] 15:41:26:965 MASTER/(5284:5289): El job asignado es 0
+[INFO] 15:42:35:907 MASTER/(5284:5289): Recibi de YAMA: -1219081408
+[INFO] 15:44:13:274 MASTER/(5729:5729): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:44:13:279 MASTER/(5729:5729): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:44:13:282 MASTER/(5729:5729): Creando el hilo para comunicarme con Yama
+[INFO] 15:44:13:286 MASTER/(5729:5734): Ingrese JOB a Ejecutar
+[INFO] 15:44:20:934 MASTER/(5729:5734): Se va a ejecutar lll
+[INFO] 15:44:20:935 MASTER/(5729:5734): 3
+[INFO] 15:44:37:104 MASTER/(5729:5734): Recibi de YAMA: 30
+[INFO] 15:44:37:104 MASTER/(5729:5734): Master recibe el numero De JOB.
+[INFO] 15:44:37:104 MASTER/(5729:5734): Tamanio de lo que recibo 4
+[INFO] 15:44:37:104 MASTER/(5729:5734): El job asignado es 0
+[INFO] 15:46:48:782 MASTER/(5729:5734): Recibi de YAMA: -1218925760
+[INFO] 15:48:25:377 MASTER/(6211:6211): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:48:25:378 MASTER/(6211:6211): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:48:25:378 MASTER/(6211:6211): Creando el hilo para comunicarme con Yama
+[INFO] 15:48:25:381 MASTER/(6211:6214): Ingrese JOB a Ejecutar
+[INFO] 15:48:28:871 MASTER/(6211:6214): Se va a ejecutar 2323
+[INFO] 15:48:28:871 MASTER/(6211:6214): 4
+[INFO] 15:48:28:871 MASTER/(6211:6214): Recibi de YAMA: 30
+[INFO] 15:48:28:871 MASTER/(6211:6214): Master recibe el numero De JOB.
+[INFO] 15:48:28:871 MASTER/(6211:6214): Tamanio de lo que recibo 4
+[INFO] 15:48:28:871 MASTER/(6211:6214): El job asignado es 0
+[INFO] 15:48:28:873 MASTER/(6211:6214): Recibi de YAMA: 2
+[INFO] 15:48:28:873 MASTER/(6211:6214): Master recibe de Yama solicitud de transformación.
+[INFO] 15:48:28:873 MASTER/(6211:6214): Tamanio de lo que recibo 287
+[INFO] 15:48:28:873 MASTER/(6211:6214): Recibo corecctamente la respuesta
+[INFO] 15:48:28:873 MASTER/(6211:6214): tamnio_lista 5
+[INFO] 15:48:28:873 MASTER/(6211:6214): Entro a 5
+Bloque: 12
+[INFO] 15:48:28:873 MASTER/(6211:6214): Entro a 5
+Bloque: 22
+[INFO] 15:48:28:873 MASTER/(6211:6214): Entro a 5
+Bloque: 44
+[INFO] 15:48:28:873 MASTER/(6211:6214): Entro a 5
+Bloque: 55
+[INFO] 15:48:28:873 MASTER/(6211:6214): Entro a 5
+Bloque: 66
+[INFO] 15:48:28:873 MASTER/(6211:6214): Terminada la deserializacion
+[INFO] 15:48:28:873 MASTER/(6211:6214): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:48:28:882 MASTER/(6211:6220): Trato de comunicar con worker
+[INFO] 15:48:28:886 MASTER/(6211:6220): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:886 MASTER/(6211:6220): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 15:48:28:886 MASTER/(6211:6220): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:886 MASTER/(6211:6220): Despues de serializar info para worker
+[INFO] 15:48:28:886 MASTER/(6211:6220): Error en envio de  INFOPARAWORKERS
+[INFO] 15:48:28:887 MASTER/(6211:6214): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:48:28:887 MASTER/(6211:6221): Trato de comunicar con worker
+[INFO] 15:48:28:887 MASTER/(6211:6221): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:887 MASTER/(6211:6221): Se obtuvo: tamanioArchivoTemp: 22
+
+[INFO] 15:48:28:887 MASTER/(6211:6221): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:888 MASTER/(6211:6221): Despues de serializar info para worker
+[INFO] 15:48:28:888 MASTER/(6211:6221): Error en envio de  INFOPARAWORKERS
+[INFO] 15:48:28:888 MASTER/(6211:6214): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:48:28:888 MASTER/(6211:6222): Trato de comunicar con worker
+[INFO] 15:48:28:888 MASTER/(6211:6222): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:888 MASTER/(6211:6222): Se obtuvo: tamanioArchivoTemp: 22
+
+[INFO] 15:48:28:888 MASTER/(6211:6222): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:888 MASTER/(6211:6222): Despues de serializar info para worker
+[INFO] 15:48:28:888 MASTER/(6211:6222): Error en envio de  INFOPARAWORKERS
+[INFO] 15:48:28:888 MASTER/(6211:6214): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:48:28:890 MASTER/(6211:6223): Trato de comunicar con worker
+[INFO] 15:48:28:890 MASTER/(6211:6223): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:890 MASTER/(6211:6223): Se obtuvo: tamanioArchivoTemp: 4
+
+[INFO] 15:48:28:890 MASTER/(6211:6223): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:890 MASTER/(6211:6223): Despues de serializar info para worker
+[INFO] 15:48:28:891 MASTER/(6211:6223): Error en envio de  INFOPARAWORKERS
+[INFO] 15:48:28:891 MASTER/(6211:6214): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:48:28:892 MASTER/(6211:6224): Trato de comunicar con worker
+[INFO] 15:48:28:892 MASTER/(6211:6224): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:893 MASTER/(6211:6224): Se obtuvo: tamanioArchivoTemp: 3
+
+[INFO] 15:48:28:893 MASTER/(6211:6224): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:48:28:893 MASTER/(6211:6224): Despues de serializar info para worker
+[INFO] 15:48:28:893 MASTER/(6211:6224): Error en envio de  INFOPARAWORKERS
+[INFO] 16:10:08:276 MASTER/(6961:6961): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 16:10:08:278 MASTER/(6961:6961): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 16:10:08:283 MASTER/(6961:6961): Creando el hilo para comunicarme con Yama
+[INFO] 16:10:08:290 MASTER/(6961:6966): Ingrese JOB a Ejecutar
+[INFO] 16:10:11:580 MASTER/(6961:6966): Se va a ejecutar 2332
+[INFO] 16:10:11:580 MASTER/(6961:6966): 4
+[INFO] 16:10:11:581 MASTER/(6961:6966): Recibi de YAMA: 30
+[INFO] 16:10:11:581 MASTER/(6961:6966): Master recibe el numero De JOB.
+[INFO] 16:10:11:581 MASTER/(6961:6966): Tamanio de lo que recibo 4
+[INFO] 16:10:11:581 MASTER/(6961:6966): El job asignado es 0
+[INFO] 16:10:11:588 MASTER/(6961:6966): Recibi de YAMA: 2
+[INFO] 16:10:11:588 MASTER/(6961:6966): Master recibe de Yama solicitud de transformación.
+[INFO] 16:10:11:588 MASTER/(6961:6966): Tamanio de lo que recibo 287
+[INFO] 16:10:11:588 MASTER/(6961:6966): Recibo corecctamente la respuesta
+[INFO] 16:10:11:588 MASTER/(6961:6966): tamnio_lista 5
+[INFO] 16:10:11:588 MASTER/(6961:6966): Entro a 5
+Bloque: 12
+[INFO] 16:10:11:588 MASTER/(6961:6966): Entro a 5
+Bloque: 22
+[INFO] 16:10:11:588 MASTER/(6961:6966): Entro a 5
+Bloque: 44
+[INFO] 16:10:11:589 MASTER/(6961:6966): Entro a 5
+Bloque: 55
+[INFO] 16:10:11:589 MASTER/(6961:6966): Entro a 5
+Bloque: 66
+[INFO] 16:10:11:589 MASTER/(6961:6966): Terminada la deserializacion
+[INFO] 16:10:11:589 MASTER/(6961:6966): Creando hilos para comunicacion con WORKERS.
+[INFO] 16:10:11:598 MASTER/(6961:6970): Trato de comunicar con worker
+[INFO] 16:10:11:598 MASTER/(6961:6970): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:598 MASTER/(6961:6970): Se obtuvo: tamanioArchivoTemp: 30
+
+[INFO] 16:10:11:598 MASTER/(6961:6970): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:599 MASTER/(6961:6970): Despues de serializar info para worker
+[INFO] 16:10:11:599 MASTER/(6961:6970): Error en envio de  INFOPARAWORKERS
+[INFO] 16:10:11:599 MASTER/(6961:6966): Creando hilos para comunicacion con WORKERS.
+[INFO] 16:10:11:599 MASTER/(6961:6971): Trato de comunicar con worker
+[INFO] 16:10:11:599 MASTER/(6961:6971): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:599 MASTER/(6961:6971): Se obtuvo: tamanioArchivoTemp: 22
+
+[INFO] 16:10:11:600 MASTER/(6961:6971): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:600 MASTER/(6961:6971): Despues de serializar info para worker
+[INFO] 16:10:11:600 MASTER/(6961:6971): Error en envio de  INFOPARAWORKERS
+[INFO] 16:10:11:600 MASTER/(6961:6966): Creando hilos para comunicacion con WORKERS.
+[INFO] 16:10:11:602 MASTER/(6961:6972): Trato de comunicar con worker
+[INFO] 16:10:11:602 MASTER/(6961:6972): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:602 MASTER/(6961:6972): Se obtuvo: tamanioArchivoTemp: 22
+
+[INFO] 16:10:11:602 MASTER/(6961:6972): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:602 MASTER/(6961:6972): Despues de serializar info para worker
+[INFO] 16:10:11:602 MASTER/(6961:6972): Error en envio de  INFOPARAWORKERS
+[INFO] 16:10:11:602 MASTER/(6961:6966): Creando hilos para comunicacion con WORKERS.
+[INFO] 16:10:11:603 MASTER/(6961:6973): Trato de comunicar con worker
+[INFO] 16:10:11:603 MASTER/(6961:6973): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:603 MASTER/(6961:6973): Se obtuvo: tamanioArchivoTemp: 4
+
+[INFO] 16:10:11:603 MASTER/(6961:6973): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:603 MASTER/(6961:6973): Despues de serializar info para worker
+[INFO] 16:10:11:603 MASTER/(6961:6973): Error en envio de  INFOPARAWORKERS
+[INFO] 16:10:11:603 MASTER/(6961:6966): Creando hilos para comunicacion con WORKERS.
+[INFO] 16:10:11:607 MASTER/(6961:6974): Trato de comunicar con worker
+[INFO] 16:10:11:607 MASTER/(6961:6974): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:607 MASTER/(6961:6974): Se obtuvo: tamanioArchivoTemp: 3
+
+[INFO] 16:10:11:608 MASTER/(6961:6974): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 16:10:11:608 MASTER/(6961:6974): Despues de serializar info para worker
+[INFO] 16:10:11:608 MASTER/(6961:6974): Error en envio de  INFOPARAWORKERS

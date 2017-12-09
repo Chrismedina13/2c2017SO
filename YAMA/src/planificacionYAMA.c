@@ -247,7 +247,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 
 	logInfo("El archivo esta dividido en %i", list_size(partesDelArchivo));
 
-	logInfo("Actualizar lista de workers Totales");
+	logInfo("Actualizar lista de workers Totales");//Arreglado
 	actualizarListaDeWorkersTotales(listaDeWorkersAPlanificar,disponibilidadBase);
 
 	logInfo("La lista de workers totales se actualizo con %i",list_size(listaDeWorkerTotales));
@@ -421,16 +421,16 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	//faltaLLenarLaTablaDeNodos
 
 	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"/home/utnso/SO-Nombres-Dataset");
-	/*RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
+	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
 	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(4,31,"44.4343",44,44144,"archivoTransformacion4");
 	RespuestaTransformacionYAMA* respuestaTrans4 = setRespuestaTransformacionYAMA(5,31,"55.55543",55,55155,"arch");
-	RespuestaTransformacionYAMA* respuestaTrans5 = setRespuestaTransformacionYAMA(6,31,"6.6665",66,66166,"arc");*/
+	RespuestaTransformacionYAMA* respuestaTrans5 = setRespuestaTransformacionYAMA(6,31,"6.6665",66,66166,"arc");
 
 	list_add(respuestaAMaster,respuestaTrans1);
-	/*list_add(respuestaAMaster,respuestaTrans2);
+	list_add(respuestaAMaster,respuestaTrans2);
 	list_add(respuestaAMaster,respuestaTrans3);
 	list_add(respuestaAMaster,respuestaTrans4);
-	list_add(respuestaAMaster,respuestaTrans5);*/
+	list_add(respuestaAMaster,respuestaTrans5);
 
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
@@ -439,7 +439,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 
 }
 
-
+//Ya Usa la nueva estructura
 void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		int disponibilidadBase) {
 
@@ -448,13 +448,13 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 	int a = 0;
 	while (a < list_size(listaDeWorkersAPLanificar)) {
 
-		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPLanificar,a);
-		nodo1 = bloque->ubicacionCopia1.nodo;
-		nodo2 = bloque->ubicacionCopia2.nodo;
+		UbicacionBloquesArchivo2* bloque = list_get(listaDeWorkersAPLanificar,a);
+		nodo1 = bloque->nodo1;
+		nodo2 = bloque->nodo2;
 		if (!estaNodorEnLaListaDeTotales(nodo1)) {
 
 			nodoParaPlanificar* nodoA = crearNodoParaPlanificar(
-					bloque->ubicacionCopia1.nodo, disponibilidadBase, 0,
+					bloque->nodo1, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
 			logInfo("Se va agregar el nodo %i", nodo1);
 			logInfo("Tamanio Lista de workersTotales antes de add %i",
@@ -470,7 +470,7 @@ void actualizarListaDeWorkersTotales(t_list* listaDeWorkersAPLanificar,
 		if (!estaNodorEnLaListaDeTotales(nodo2)) {
 
 			nodoParaPlanificar* nodoB = crearNodoParaPlanificar(
-					bloque->ubicacionCopia2.nodo, disponibilidadBase, 0,
+					bloque->nodo2, disponibilidadBase, 0,
 					bloque->parteDelArchivo);
 			logInfo("Se va agregar el nodo %i", nodo2);
 
@@ -729,7 +729,7 @@ int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar){
 	int a = 0;
 	while(a < list_size(listaDeWorkersAPlanificar)){
 
-		UbicacionBloquesArchivo* bloque = list_get(listaDeWorkersAPlanificar,a);
+		UbicacionBloquesArchivo2* bloque = list_get(listaDeWorkersAPlanificar,a);
 
 		if(bloque->parteDelArchivo == parte){
 
@@ -751,15 +751,15 @@ int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAP
 
 	int a = 0;
 	while(a < list_size(listaDeWorkersAPlanificar)){
-		UbicacionBloquesArchivo* ubi = list_get(listaDeWorkersAPlanificar,a);
+		UbicacionBloquesArchivo2* ubi = list_get(listaDeWorkersAPlanificar,a);
 		if(ubi->parteDelArchivo == parte){
-			if(ubi->ubicacionCopia1.nodo == nodo){
+			if(ubi->nodo1 == nodo){
 
-				return ubi->ubicacionCopia1.desplazamiento;
+				return ubi->desplazamiento1;
 			}
-			if(ubi->ubicacionCopia2.nodo == nodo){
+			if(ubi->nodo2 == nodo){
 
-				return ubi->ubicacionCopia2.desplazamiento;
+				return ubi->desplazamiento2;
 			}
 		}
 

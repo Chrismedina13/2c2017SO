@@ -205,12 +205,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		logInfo("Esperando Respuesta de las ubicaciones de las partes del job");
 
-
-
-
-		//agregarJObACola(job);
+		agregarJObACola(job);
 
 		atenderJOB();
+		free(mensaje);
+		free(numeroDeJob);
 		sem_post(&semaforoYAMA);
 
 
