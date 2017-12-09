@@ -132,7 +132,8 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 				}
 		break;
 	case UBICACION_BLOQUES:
-				logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
+
+		logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
 					tamanio = deserializarINT(pesoMensaje);
 					logInfo("tamanio de lo que recibo %i", tamanio);
@@ -157,7 +158,6 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	    	  	  	  logInfo("Con la cantidad de bytes Ocupados: %i", ubicacionb->bytesOcupados);
 	      }
 
-			sem_wait(&semaforoYAMA);
 			Job* jobAEjecutar = retirarJobDeLista();
 
 

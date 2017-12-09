@@ -16,7 +16,7 @@ void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* m
 	while( a < list_size(tabla_estados)){
 
 		t_reg* registro = list_remove(tabla_estados,a);
-		if(registro->job == job && registro->master == master && registro->nodo == nodo){
+		if(registro->job == job  && registro->nodo == nodo){
 
 			if(aModificar == 1){
 
