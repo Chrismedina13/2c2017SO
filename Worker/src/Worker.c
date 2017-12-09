@@ -22,15 +22,6 @@ int main(int argc, char *argv[]) {
 	//char* puntero = obtenerPuntero("/home/utnso/SO-Nombres-Dataset/nombres.csv");
 	//logInfo("%s",puntero);
 
-	char* archivo1="/home/utnso/Escritorio/archivo1";
-	char* archivo2="/home/utnso/Escritorio/archivo2";
-	char* rutaArchivoReduccionLocal = "/home/utnso/Escritorio/";
-	t_list* lista = list_create();
-	list_add(lista,archivo1);
-	list_add(lista,archivo2);
-
-	apareoDeArchivos(lista);
-
 
 	//ejecutarScript("/home/utnso/SO-Nombres-Dataset/transformador.py","/home/utnso/SO-Nombres-Dataset/nombres.csv","/home/utnso/SO-Nombres-Dataset/Resultado.txt");
 
