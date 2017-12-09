@@ -1027,7 +1027,7 @@ UbicacionBloquesArchivo2* deserializarListaUbicacionBloquesArchivo2(char* listaS
 
 	while(i < tamanioLista){
 
-		UbicacionBloquesArchivo2* ubi = malloc(UbicacionBloquesArchivo2);
+		UbicacionBloquesArchivo2* ubi = malloc(sizeof(UbicacionBloquesArchivo2));
 
 		deserializarDato(&(ubi->bytesOcupados),listaSerilizada,sizeof(int),&desplazamiento);
 		deserializarDato(&(ubi->desplazamiento1),listaSerilizada,sizeof(int),&desplazamiento);

@@ -261,10 +261,10 @@ almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal){
 
 
 //el set de la nueva estructura
-UbicacionBloquesArchivo2* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
+UbicacionBloquesArchivo2* crearUbicacionBloquesArchivos2(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
 		,int copia2Nodo,int copia2Bloque){
 
-	UbicacionBloquesArchivo2* ubi = malloc(UbicacionBloquesArchivo2);
+	UbicacionBloquesArchivo2* ubi = malloc(sizeof(UbicacionBloquesArchivo2));
 	ubi->bytesOcupados = bytesOcupados;
 	ubi->parteDelArchivo = parteDelArchivo;
 	ubi->nodo1 = copia1Nodo;
