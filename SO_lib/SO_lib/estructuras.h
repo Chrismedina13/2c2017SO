@@ -103,12 +103,20 @@ typedef struct ubicacionBloque {
 } UbicacionBloque;
 
 typedef struct ubiacionBloquesArchivo {
-
 	int parteDelArchivo; //numero del bloque del archivo
 	UbicacionBloque ubicacionCopia1; //ubicacion copia 1
 	UbicacionBloque ubicacionCopia2; //ubicacion copia 2
 	int bytesOcupados; //bytesOCupados por ese bloque
 } UbicacionBloquesArchivo;
+
+typedef struct ubicacionBloquesArchivo2{
+	int parteDelArchivo; //numero del bloque del archivo
+	int nodo1;  //Nodo donde se encuentra la copia
+	int desplazamiento1; // Bloque adentro del nodo donde se encuentra. Desplazamiento
+	int nodo2;  //Nodo donde se encuentra la copia
+	int desplazamiento2; // Bloque adentro del nodo donde se encuentra. Desplazamiento
+	int bytesOcupados; //bytesOCupados por ese bloque
+} UbicacionBloquesArchivo2;
 
 typedef struct SetBloque{
 	int nrobloque;

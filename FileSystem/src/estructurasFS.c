@@ -726,7 +726,7 @@ int nodoToFD(int nodo){
 
 	int count=0;
 	int retorno;
-	nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
+	nodos_id_fd * nodo2;
 
 	while(count < list_size(list_nodos_id_fd)){
 
@@ -737,6 +737,5 @@ int nodoToFD(int nodo){
 		}
 		count++;
 	}
-	free(nodo2);
 	return(-1);
 }

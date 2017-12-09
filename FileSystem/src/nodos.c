@@ -46,13 +46,14 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 		count++;
 	}
 
+	free(bloque);
 	fclose(fp);
 
 	return 0;
 
 }
 
-t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchivo){
+void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 	/*Recibe una lista de char* con bloques de texto (bloques) y una lista de bitMap (nodos)
 	 * Devuelve una lista de ubicacionBloquesArchivo
@@ -63,20 +64,23 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 	int cantBloques = list_size(bloques);
 	int indiceBloque = 0;
 	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
+	char* bloque;
+	bloques_nodo* bitMapNodo1;
+	bloques_nodo* bitMapNodo2;
+	UbicacionBloquesArchivo2* ubicacionBloquesArchivo = malloc(sizeof(int)*6);
+	int index1, indexList1, index2, indexList2;
+	int desplazamiento1, desplazamiento2;
+
 
 	while(indiceBloque<cantBloques){
 
-		char* bloque = list_get(bloques,indiceBloque);
+		bloque = list_get(bloques,indiceBloque);
 
 		//elije los 2 nodos mas vacios
 
-		int index1, indexList1, index2, indexList2;
-		int desplazamiento1, desplazamiento2;
-		bloques_nodo* bitMapNodo1 = malloc(sizeof(bloques_nodo)+160);
-		bloques_nodo* bitMapNodo2 = malloc(sizeof(bloques_nodo)+160);
 
-		indexList1 = elegirNodo(mapa_de_bits);
-		bitMapNodo1 = list_get(mapa_de_bits,indexList1);
+		indexList1 = elegirNodo( tabla_de_nodos.listaCapacidadNodos);
+		bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList1);
 		index1 = bitMapNodo1->idNodo;
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
@@ -84,12 +88,12 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
 		logInfo("Ubico la copia 1 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index1,desplazamiento1);
-		list_remove(mapa_de_bits,indexList1);
+		list_remove(tabla_de_nodos.listaCapacidadNodos,indexList1);
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
 
-		indexList2 = elegirNodo(mapa_de_bits);
-		bitMapNodo2 = list_get(mapa_de_bits,indexList2);
+		indexList2 = elegirNodo(tabla_de_nodos.listaCapacidadNodos);
+		bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
 
@@ -97,24 +101,23 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
 		logInfo("Ubico la copia 2 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index2,desplazamiento2);
-		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index2,desplazamiento2);
 
-		list_add(mapa_de_bits,bitMapNodo1);
+		list_add(tabla_de_nodos.listaCapacidadNodos,bitMapNodo1);
 
 		//cargo los datos de los bloques en tabla_de_archivos
 
-		UbicacionBloquesArchivo* ubicacionBloquesArchivo = malloc(sizeof(UbicacionBloquesArchivo));
-		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
 		ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
-		ubicacionBloquesArchivo->ubicacionCopia1.desplazamiento = desplazamiento1;
-		ubicacionBloquesArchivo->ubicacionCopia1.nodo = index1;
-		ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento = desplazamiento2;
-		ubicacionBloquesArchivo->ubicacionCopia2.nodo = index2;
+		ubicacionBloquesArchivo->desplazamiento1 = desplazamiento1;
+		ubicacionBloquesArchivo->nodo1 = index1;
+		ubicacionBloquesArchivo->desplazamiento2 = desplazamiento2;
+		ubicacionBloquesArchivo->nodo2 = index2;
+		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+
 		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados,
-				ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->ubicacionCopia1.nodo,
-				ubicacionBloquesArchivo->ubicacionCopia1.desplazamiento,ubicacionBloquesArchivo->ubicacionCopia2.nodo, ubicacionBloquesArchivo->ubicacionCopia2.desplazamiento);
-		//list_add(tabla_de_nodos.listaCapacidadNodos,ubicacionBloquesArchivo);
-		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);//empieza a cargar el vector de archivos
+				ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->nodo1,
+				ubicacionBloquesArchivo->desplazamiento1,ubicacionBloquesArchivo->nodo2, ubicacionBloquesArchivo->desplazamiento2);
+
+		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);
 
 	//	free(ubicacionBloquesArchivo);
 	//	free(bitMapNodo1);
@@ -122,7 +125,6 @@ t_list* distribuirBloques(t_list* bloques, t_list* mapa_de_bits, int indiceArchi
 
 		indiceBloque++;
 	}
-	return (tabla_de_archivos[indiceArchivo].ubicaciones);
 	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
 }
 
@@ -282,6 +284,7 @@ int elegirNodo(t_list* nodos){
 
 		count++;
 	}
+
 	return extraCount;
 }
 

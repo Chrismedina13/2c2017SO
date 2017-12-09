@@ -175,16 +175,25 @@ t_list* dividirArchivoTexto(char* p, int indiceDeArchivo){
 	int totalEspacioLlenado = 0; //PARA VERIFICAR QUE AL AGREGAR LOS PARRAFOS NO SUPEREN EL ESPACIO REQUERIDO
 	t_list* lista = list_create();
 	char* parrafo;
+
 	while(parrafos[i]!='\0'){
+
 		k=i+1;
 		parrafo = parrafos[i];
 		longitudParrafo = string_length(parrafo);
-		totalEspacioLlenado += longitudParrafo; //sirve para verificar que no sobrepase el MB
-		if(totalEspacioLlenado<=MB && parrafos[k]!='\0'){ //verifico que no sobrepase el MB y que no sea el fin del archivo.
+		int cortoArchivo=0;
+
+		if(totalEspacioLlenado+longitudParrafo>MB){
+			cortoArchivo=1;
+		}
+
+		if(cortoArchivo==0 && parrafos[k]!='\0'){ //verifico que no sobrepase el MB y que no sea el fin del archivo.
+			totalEspacioLlenado += longitudParrafo; //sirve para verificar que no sobrepase el MB
 			string_append(&contenidoDelBloque, parrafo);//agrego el parrafo al bloque
 			string_append(&contenidoDelBloque,"\n");
 			i++;
 		}
+
 		else{
 			if(parrafos[k]=='\0') {
 				string_append(&contenidoDelBloque, parrafo); //agrego el parrafo faltante al bloque

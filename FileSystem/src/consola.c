@@ -423,8 +423,7 @@ void consolaFileSystem(){
 
 						//le pasa los bloques a los nodos
 
-						t_list* ubicaciones; //tipo ubicacionBloquesArchivo
-						ubicaciones = distribuirBloques(bloquesDeTexto, tabla_de_nodos.listaCapacidadNodos, indiceArchivo);
+						distribuirBloques(bloquesDeTexto, indiceArchivo);
 						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
 
 						int count = 0;
@@ -432,53 +431,61 @@ void consolaFileSystem(){
 						while(count<cantBloques){
 
 
-							char* bloque = malloc(1024*1024);
-							bloque = list_get(bloquesDeTexto,count);
-							UbicacionBloquesArchivo* ubicacion = list_get(ubicaciones,count);
+							char* bloque= list_get(bloquesDeTexto,count);
+
+							UbicacionBloquesArchivo2* ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+
+							char* mensaje = serializarBloque(ubicacion->desplazamiento1,bloque);
+
+							int tamanioSetBloque= strlen(bloque) + sizeof(int)*2;
+
+							//
+
+							int count=0;
+							nodos_id_fd * nodo2;
+
+							while(count < list_size(list_nodos_id_fd)){
+
+								nodo2=list_get(list_nodos_id_fd, count);
+								logInfo("nodo id: %d, file descriptro %d",nodo2->id_nodo,nodo2->nodo_fd);
+
+								count++;
+							}
 
 
+							//
 
-							SetBloque *setbloque1= malloc(sizeof(char)+1024*1024+sizeof(int));
-							setbloque1->nrobloque= ubicacion->ubicacionCopia1.desplazamiento;
-							setbloque1->contenidoBloque=bloque;
-							char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque)));
-
-							mensaje = serializarBloque(setbloque1->nrobloque,setbloque1->contenidoBloque);
-
-							int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque1->contenidoBloque));
-							int fileDescriptor1=nodoToFD(ubicacion->ubicacionCopia1.nodo);
+							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
 									tamanioSetBloque,string_substring(mensaje,0,255));
 							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, mensaje, tamanioSetBloque);
 
-							logInfo("Copia1 esta en dataNode%d:desplazamiento%d", ubicacion->ubicacionCopia1.nodo, setbloque1->nrobloque);
+							logInfo("Copia1 esta en dataNode%d:desplazamiento%d", ubicacion->nodo1, ubicacion->desplazamiento1);
 
 
+							char* mensaje2 = serializarBloque(ubicacion->desplazamiento2,bloque);
 
-							SetBloque *setbloque2= malloc(sizeof(char)+1024*1024+sizeof(int));
-							setbloque2->nrobloque= ubicacion->ubicacionCopia2.desplazamiento;
-							setbloque2->contenidoBloque=bloque;
-							char* mensaje2= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque)));
-							mensaje2 = serializarBloque(setbloque2->nrobloque,setbloque2->contenidoBloque);
-							int tamanioSetBloque2= sizeof(int)+(sizeof(char)+strlen(setbloque2->contenidoBloque));
-							int fileDescriptor2=nodoToFD(ubicacion->ubicacionCopia2.nodo);
+							int tamanioSetBloque2= strlen(bloque) + sizeof(int)*2;
+							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
 															tamanioSetBloque,string_substring(mensaje,0,255));
 							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque2);
 
-							logInfo("Copia2 esta en dataNode%d:desplazamiento%d", ubicacion->ubicacionCopia2.nodo, setbloque2->nrobloque);
+							logInfo("Copia2 esta en dataNode%d:desplazamiento%d", ubicacion->nodo2, ubicacion->desplazamiento2);
 
 							count++;
 
+							free(mensaje);
+							free(mensaje2);
 						}
 
 						logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
 
 						//crea registro del archivo en YAMAFS
 
-						status = crearRegistroArchivo(comandos[1],comandos[2], ubicaciones, indiceArchivo);
+						status = crearRegistroArchivo(comandos[1],comandos[2], tabla_de_archivos[indiceArchivo].ubicaciones, indiceArchivo);
 						if(status==1){
 							logInfo("Registro de archivo creado correctamente.");
 
@@ -489,7 +496,11 @@ void consolaFileSystem(){
 						if(status==1){
 							logInfo("Registro de archivo no pudo ser creado.");
 						}
+
+
 					}
+
+					fclose(fp);
 				}
 
 			}

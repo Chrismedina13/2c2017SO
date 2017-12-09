@@ -331,7 +331,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							//ahora pruebo con la fun nueva
 
 							int fileDescriptor=nodoToFD(idNodo);
-							logInfo("EL FD DEL NODO %d es %d",idNodo,fileDescriptor);
+							logInfo("Funcion nodoToFD: EL FD DEL NODO %d es %d",idNodo,fileDescriptor);
 
 
 						}
@@ -342,7 +342,6 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							logInfo("Se conectaron todos los nodos");
 							semaphore_signal(SEMAFORODN);
 
-							free(nodo2);
 							free(infoworker);
 						}
 
