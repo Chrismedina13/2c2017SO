@@ -86,6 +86,9 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio) {
 
 	Paquete* paqueteSolicitudTransf;
+	Paquete* paqueteEnvioDeReduccionLocal;
+	Paquete* paqueteEnvioReduccionGlobal;
+	Paquete* paqueteEnvioAlmacenadoFinal;
 
 	switch (codigo) {
 
@@ -104,48 +107,97 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster,char* mensaje,int tamanio)
 		logInfo("YAMA envia a Master el identificador de job.");
 
 		break;
-	case SOL_TRANSFORMACION:
-		logInfo("YAMA envia a Master solicitud de transformación.");
+	case REDUCCION_LOCAL:
+		logInfo("YAMA envia a Master la respuesta de reduccion Local");
 
-		paqueteSolicitudTransf = crearPaquete(codigo,
-				tamanio, mensaje);
+		paqueteEnvioDeReduccionLocal = crearPaquete(codigo, tamanio, mensaje);
 
-		if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
-			logInfo("Error en envio de solicitud de transformación a MASTER");
+		if (enviarPaquete(FDMaster, paqueteEnvioDeReduccionLocal) == -1) {
+			logInfo("Error en envio de reduccion local a MASTER");
+		}else{
+			logInfo("se envio exitosamente la solicitud de reduccion local a MASTER");
+
 		}
 
-		destruirPaquete(paqueteSolicitudTransf);
+		destruirPaquete(paqueteEnvioDeReduccionLocal);
 
-		// Yama envia solicitud de transformacion YAMA , serializando esa lista
-
-		break;
-	case SOL_REDUCCION_LOCAL:
-		logInfo("YAMA envia a Master solicitud de Reducción Local.");
 
 		break;
-	case SOL_REDUCCION_GLOBAL:
-		logInfo("YAMA envia a Master solicitud de Reducción Global");
+	case REDUCCION_GLOBAL:
+		logInfo("YAMA envia a Master la respuesta de Reduccion global");
 
+			paqueteEnvioReduccionGlobal = crearPaquete(codigo, tamanio, mensaje);
+
+			if (enviarPaquete(FDMaster, paqueteEnvioReduccionGlobal) == -1) {
+				logInfo("Error en envio de reduccion local a MASTER");
+			}else{
+				logInfo("se envio exitosamente la solicitud de reduccion local a MASTER");
+
+			}
+
+			destruirPaquete(paqueteEnvioReduccionGlobal);
 
 		break;
 	case SOL_ALMACENADO_FINAL:
 		logInfo("YAMA envia a Master solicitud de Almacenado Final");
+		paqueteEnvioAlmacenadoFinal = crearPaquete(codigo, tamanio, mensaje);
+
+				if (enviarPaquete(FDMaster, paqueteEnvioAlmacenadoFinal) == -1) {
+					logInfo("Error en envio de reduccion local a MASTER");
+				}else{
+					logInfo("se envio exitosamente la solicitud de reduccion local a MASTER");
+
+				}
+
+				destruirPaquete(paqueteEnvioAlmacenadoFinal);
+
 		break;
 
 	}
 }
 void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
+	//Reduccion local
+	char* mensajeReduccionLocalSerializado;
+	int tamanioDelMensajeDeReduccionLocal;
+    RespuestaReduccionLocal* RRL;
+    char pesoARecibir[4];
+    int tamanioDeLafinalizacionDeTransformacion;
+    char* mensajeSerializadoFinTransformacion;
+    finTransformacion* finTrans;
+
+    //Reduccion Global
+    char pesoARecibirRG[4];
+    int tamanioDeLoQueReciboDelMensaje;
+    char* numeroDeJobQueTerminoRL;
+    t_list* RRG;
+    int numeroDeJobFinalReduccionLocal;
+    char* respuesReduccionGlobalSerializado;
+    int tamanioDeLaRespuestaDeReduccionGlobal;
+
+    //Almacenado Final
+    respuestaAlmacenadoFinal* RAF;
+	char pesoMensajeFRG;
+	int tamanioDeFRG;
+	char * mensajeFinReduccionGlobal;
+	finTransformacion* finRG;
+	char* almacenadoFinalSerializado;
+	int tamanioDeLarespuestaAlmacenadoFinal;
+
+
+	//Fin de job
+
+	char pesoFJ[4];
+	int tamanioDeLaFinalizacionDeJob;
+	char* mesnajeFinalizacionDeJob;
+    int jobQueFinalizo;
+
+
 	char pesoMensaje[4];
 	int tamanio;
 	char* mensaje;
-    RespuestaReduccionLocal* RRL;
-    int numeroDeJobFinalReduccionLocal;
-    t_list* RRG;
     Replanificacion* parametrosReplanif;
-    respuestaAlmacenadoFinal* RAF;
     t_list* nuevaPlanificacion;
-    int jobQueFinalizo;
 
 	switch (codigo) {
 	case REPLANIFICACION:
@@ -185,7 +237,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		Job* job = crearJOB(FDMaster,mensaje);
 
 		char* numeroDeJob;
-		int a = 0;
 
 		numeroDeJob = serializeInt(job->identificadorJob);
 		mensajesEnviadosAMaster(NUMERO_DE_JOB,FDMaster,numeroDeJob,4);
@@ -210,102 +261,120 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		atenderJOB();
 		free(mensaje);
 		free(numeroDeJob);
-		sem_post(&semaforoYAMA);
 
 
 		break;
 
 	case FIN_TRANSFORMACION:
-		logInfo("YAMA recibe señal de finalización de Transformación.");
-		recv(FDMaster, pesoMensaje, 4, 0);
-		tamanio = deserializarINT(pesoMensaje);
-		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
 
-		recv(FDMaster, mensaje, tamanio, 0);
+		logInfo("Se recibe la finalizacion de la transformacion de un nodo");
+		recv(FDMaster, pesoARecibir, 4, 0);
+		tamanioDeLafinalizacionDeTransformacion = deserializarINT(pesoARecibir);
+		logInfo("tamanio de lo que recibo %i", tamanioDeLafinalizacionDeTransformacion);
+		mensajeSerializadoFinTransformacion = malloc(tamanioDeLafinalizacionDeTransformacion + 1);
+		mensajeSerializadoFinTransformacion[tamanioDeLafinalizacionDeTransformacion] = '\0';
 
-		finTransformacion* finTrans = deserializarFinTransformacion(mensaje);
+		recv(FDMaster, mensajeSerializadoFinTransformacion, tamanioDeLafinalizacionDeTransformacion, 0);
 
+
+		finTrans = deserializarFinTransformacion(mensaje);
+		logInfo("en nodo %i termino la reduccion del job %i",finTrans->nodo,finTrans->numeroDeJob);
+
+		logInfo("Actualizo la tabla de estados con la transformacion correcta del job");
 		actualizarTablaDeEstados(finTrans->numeroDeJob,FDMaster,finTrans->nodo,2,"OK");
 
+		logInfo("Creo Respuesta Reduccion Local ");
 		RRL = respuestaReduccionLocal(finTrans,FDMaster);
 
-		//serializarRespuestaReduccionLocal(RRL);
-		//mensajesEnviadosAMaster();
+		//tamanioDelMensajeDeReduccionLocal =
+		//respuesReduccionLocalSerializada = serializarRespuestaReduccionLocal(RRL);
+		//mensajesEnviadosAMaster(REDUCCION_LOCAL,FDMaster);
 
+		logInfo("Actualizo la tabla De Estados");
 		agregarEntradasReduccionLocal(finTrans,RRL,FDMaster);
+
+		free(mensaje);
+		free(finTrans);
 
 		break;
 
 	case FIN_REDUCCION_LOCAL:
 
-		//recibe numero de job
 		logInfo("YAMA recibe señal de finalización de Reducción Local");
-		recv(FDMaster, pesoMensaje, 4, 0);
-		tamanio = deserializarINT(pesoMensaje);
-		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
-		recv(FDMaster, mensaje, tamanio, 0);
+		recv(FDMaster, pesoARecibirRG, 4, 0);
+		tamanioDeLoQueReciboDelMensaje = deserializarINT(pesoARecibirRG);
+		logInfo("tamanio de lo que recibo %i", tamanioDeLoQueReciboDelMensaje);
+		numeroDeJobQueTerminoRL = malloc(tamanioDeLoQueReciboDelMensaje + 1);
+		numeroDeJobQueTerminoRL[tamanioDeLoQueReciboDelMensaje] = '\0';
+		recv(FDMaster, numeroDeJobQueTerminoRL, tamanioDeLoQueReciboDelMensaje, 0);
+
+		logInfo("Recibo el numero de job que termina la Reduccion Local");
 		numeroDeJobFinalReduccionLocal = deserializarINT(mensaje);
 
+		logInfo("Actualizo la tabla de estados por finalizacion de reduccion local");
 		actualizarTablaDeEstadosFinReduccionLocal(FDMaster,numeroDeJobFinalReduccionLocal);
 
+		logInfo("creo la lista de respuesta de reduccion Global");
 		RRG = respuestaReduccionGlobal(numeroDeJobFinalReduccionLocal,FDMaster);
 
-		//serializarRespuestaReduccionLocal(RRL);
+		logInfo("Serializo la lista de respues de reduccion global");
+		tamanioDeLaRespuestaDeReduccionGlobal = tamanioListareduccionGlobal(RRG) + sizeof(int) + (sizeof(int)*list_size(RRG)*4);
+		respuesReduccionGlobalSerializado = serializarListaRespuestaReduccionGlobal(RRG);
 
-		//mensajesEnviadosAMaster();
+		mensajesEnviadosAMaster(REDUCCION_GLOBAL,FDMaster,respuesReduccionGlobalSerializado,tamanioDeLaRespuestaDeReduccionGlobal);
 
+		logInfo("actualizar la tabla de estados por la respuesta de reduccion global");
 		crearEntradasReduccionGlobal(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
 
+		logInfo("Asignar nodo encargado a Job Completo");
 		asignarNodoEncargadoAJobCompleto(RRG,FDMaster,numeroDeJobFinalReduccionLocal);
+
+		logInfo("Actualizar carga de worker por la reduccion global");
 		actualizarCargaWorkerReduccionGlobal(RRG);
 
 		break;
 
 	case FIN_REDUCCION_GLOBAL:
-
 		logInfo("YAMA recibe señal de finalización de Reducción Global");
-		recv(FDMaster, pesoMensaje, 4, 0);
-		tamanio = deserializarINT(pesoMensaje);
-		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
-		recv(FDMaster, mensaje, tamanio, 0);
 
-		finTransformacion* finRG = deserializarFinTransformacion(mensaje);
+		recv(FDMaster, pesoMensajeFRG, 4, 0);
+		tamanioDeFRG = deserializarINT(pesoMensajeFRG);
+		logInfo("tamanio de lo que recibo %i", tamanioDeFRG);
+		mensajeFinReduccionGlobal = malloc(tamanioDeFRG + 1);
+		mensajeFinReduccionGlobal[tamanioDeFRG] = '\0';
+		recv(FDMaster, mensajeFinReduccionGlobal, tamanioDeFRG, 0);
 
+
+		finRG = deserializarFinTransformacion(mensajeFinReduccionGlobal);
+
+		logInfo("Actualizo la tabla de estados por finalizacion de reduccion global");
 		actualizarTablaDeEstadosFinReduccionGlobal(finRG->numeroDeJob,FDMaster);
 
+		logInfo("Armo respuesta almacenado final");
 		RAF = RespuestaAlmacenadoFinal(finRG,FDMaster);
 
-		//serializarRespuestaAlmacenadoFinal(RAF);
-		//mensajesEnviadosAMaster
+		logInfo("Serializo respuesta almacenado final");
+		tamanioDeLarespuestaAlmacenadoFinal = sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker);
+		almacenadoFinalSerializado = serializarRespuestaAlmacenadoFinal(RAF);
+
+		logInfo("Envio respuesta almacenado final a master");
+		mensajesEnviadosAMaster(SOL_ALMACENADO_FINAL,FDMaster,almacenadoFinalSerializado,tamanioDeLarespuestaAlmacenadoFinal);;
+
+		logInfo("Actualizo la tabla de estados por el almacenado final");
 		crearEntradasAlmacenamientoFinal(RAF,finRG,FDMaster);
 
 		break;
-	case SOL_ALMACENADO_FINAL:
-		logInfo("Yama recibe señal de finalización de Almacenamiento Final.");
-		recv(FDMaster, pesoMensaje, 4, 0);
-		tamanio = deserializarINT(pesoMensaje);
-		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
-		recv(FDMaster, mensaje, tamanio, 0);
-		break;
 	case FINALIZACION_DE_JOB:
-
+		//aca entra por la finalizacion normal o un error
 		logInfo("Yama recibe señal de finalización de JOB ");
-		recv(FDMaster, pesoMensaje, 4, 0);
-		tamanio = deserializarINT(pesoMensaje);
-		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
-		recv(FDMaster, mensaje, tamanio, 0);
+		recv(FDMaster, pesoFJ, 4, 0);
+		tamanioDeLaFinalizacionDeJob = deserializarINT(pesoFJ);
+		logInfo("tamanio de lo que recibo %i", tamanioDeLaFinalizacionDeJob);
+		mesnajeFinalizacionDeJob = malloc(tamanioDeLaFinalizacionDeJob + 1);
+		mesnajeFinalizacionDeJob[tamanioDeLaFinalizacionDeJob] = '\0';
+		recv(FDMaster, mesnajeFinalizacionDeJob, tamanioDeLaFinalizacionDeJob, 0);
 
-		jobQueFinalizo = deserializarINT(mensaje);
+		jobQueFinalizo = deserializarINT(mesnajeFinalizacionDeJob);
 
 		logInfo("Actualizar estructuras por finalizacion de job ");
 		actualizarEstructurasFinalizacionDeJOB(jobQueFinalizo, FDMaster);
@@ -502,6 +571,7 @@ void elNodoEncargadoEs(int nodo,int master,int job){
 		if(jc->job->identificadorJob == job && jc->job->master){
 			JOBCompleto * jcModificar = list_remove(listaDeJobs,i);
 			jcModificar->nodoEncargado = nodo;
+			list_add_in_index(listaDeJobs,i,jcModificar);
 		}
 		i++;
 	}
