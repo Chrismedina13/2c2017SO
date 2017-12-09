@@ -107,6 +107,7 @@ int cantArchivos;
 
 typedef struct bloques_nodo{
 	int idNodo;
+	int fileDescriptor;
 	int estado; //0 desconectado, 1 conectado
 	int bloquesTotales;
 	int bloquesLibres;
@@ -149,6 +150,7 @@ char* pathToFile(char* path);
 t_list* nombreToUbicaciones(char* nombre);
 
 int cantNodos;
+int cantNodosConectados;
 
 
 #endif /* HEADERS_FILESYSTEM_H_ */

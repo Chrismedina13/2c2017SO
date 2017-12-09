@@ -427,53 +427,40 @@ void consolaFileSystem(){
 						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
 
 						int count = 0;
+						UbicacionBloquesArchivo2* ubicacion;
+						char* bloque;
 
 						while(count<cantBloques){
 
 
-							char* bloque= list_get(bloquesDeTexto,count);
+							bloque= list_get(bloquesDeTexto,count);
+							ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+							int tamanioSetBloque= (strlen(bloque) + sizeof(int)*2);
 
-							UbicacionBloquesArchivo2* ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+
+							//copia 1
 
 							char* mensaje = serializarBloque(ubicacion->desplazamiento1,bloque);
-
-							int tamanioSetBloque= strlen(bloque) + sizeof(int)*2;
-
-							//
-
-							int count=0;
-							nodos_id_fd * nodo2;
-
-							while(count < list_size(list_nodos_id_fd)){
-
-								nodo2=list_get(list_nodos_id_fd, count);
-								logInfo("nodo id: %d, file descriptro %d",nodo2->id_nodo,nodo2->nodo_fd);
-
-								count++;
-							}
-
-
-							//
-
 							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
 
-							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
-									tamanioSetBloque,string_substring(mensaje,0,255));
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
+
 							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, mensaje, tamanioSetBloque);
 
-							logInfo("Copia1 esta en dataNode%d:desplazamiento%d", ubicacion->nodo1, ubicacion->desplazamiento1);
+							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
 
+							//copia 2
 
 							char* mensaje2 = serializarBloque(ubicacion->desplazamiento2,bloque);
-
-							int tamanioSetBloque2= strlen(bloque) + sizeof(int)*2;
 							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
 
-							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d. Los primeros caracteres del mensaje son: %s", fileDescriptor1,
-															tamanioSetBloque,string_substring(mensaje,0,255));
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque2);
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
 
-							logInfo("Copia2 esta en dataNode%d:desplazamiento%d", ubicacion->nodo2, ubicacion->desplazamiento2);
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque);
+
+							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
+
+
 
 							count++;
 
