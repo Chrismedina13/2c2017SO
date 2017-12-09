@@ -104,6 +104,9 @@ char* serializaralmacenadoFinal(almacenadoFinal* AF);
 
 almacenadoFinal* deserializaralmacenadoFinal(char* serializado);
 
+char* serializarListaUbicacionBloquesArchivo2(t_list* listaDeUbicacionesDeBloquesArchivos);
+
+UbicacionBloquesArchivo2* deserializarListaUbicacionBloquesArchivo2(char* listaSerilizada);
 
 
 

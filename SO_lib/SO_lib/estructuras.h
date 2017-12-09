@@ -232,6 +232,7 @@ infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorke
 infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
 infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);
 almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal);
+UbicacionBloquesArchivo2* crearUbicacionBloquesArchivos2(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque,int copia2Nodo,int copia2Bloque);
 
 
 #endif /* SO_LIB_ESTRUCTURAS_H_ */

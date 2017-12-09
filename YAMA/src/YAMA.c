@@ -27,17 +27,6 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-	char* archivo1="/home/utnso/Escritorio/archivo1";
-	char* archivo2="/home/utnso/Escritorio/archivo2";
-	char* archivo3="/home/utnso/Escritorio/archivo3";
-	char* rutaArchivoReduccionLocal = "/home/utnso/Escritorio/";
-	t_list* lista = list_create();
-	list_add(lista,archivo1);
-	list_add(lista,archivo2);
-	list_add(lista,archivo3);
-
-	apareoDeArchivosVectores(lista);
-
 
 
 	//PROBANDO SERIALIZAR INFO REDUCCION GLOBAL DE MASTER PARA WORKER
