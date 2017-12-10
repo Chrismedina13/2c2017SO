@@ -18,7 +18,7 @@
 void comunicacionDN(ParametrosComunicacion* parametros){
 	tabla_de_nodos.listaNodos = list_create();
 	tabla_de_nodos.listaCapacidadNodos = list_create();
-	list_nodos_id_fd = list_create();
+	cantNodosConectados =0;
 	list_info_workers = list_create();
 
 	int socketFSServidor;
@@ -148,11 +148,10 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
     int puerto_worker =  config->puerto_worker;
     Info_Workers * infoworker;
     saludo_datanode * saludo;
-    nodos_id_fd * nodos;
     char* get_bloque;
     int tamaniorecv=0;
     int count=0;
-    int cantNodos= config->cant_nodos;
+    cantNodos= config->cant_nodos;
 
 
 	switch (codigo) {
@@ -222,23 +221,24 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 				    	//me fijo si es uno nuevo o si ya se conecto
 
 						int nuevo =0;
+						int count =0;
 
-						nodos_id_fd * nodo2 = malloc(sizeof(int)*2);
+						if(!list_is_empty(tabla_de_nodos.listaNodos)){
 
-						if(!list_is_empty(list_nodos_id_fd)){
+							count =0;
 
-							int count2 =0;
+							int nodo;
 
-							while(count2 < list_size(list_nodos_id_fd)){
+							while(count < list_size(tabla_de_nodos.listaNodos)){
 
-								nodo2=list_get(list_nodos_id_fd, count2);
-								if(idNodo==nodo2->id_nodo){
+								nodo=list_get(tabla_de_nodos.listaNodos, count);
+								if(idNodo==nodo){
 									logInfo("Se volvio a conectar el nodo %d", idNodo);
 									nuevo=1;
 
 									break;
 								}
-								count2++;
+								count++;
 							}
 							if(nuevo==0){
 								logInfo("Nuevo nodo, id:%d", idNodo);
@@ -252,24 +252,24 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 						if(nuevo==1){
 
-							int count3=0;
+							count=0;
 
-							bloques_nodo* nodo3 = malloc(sizeof(int)*164);
+							bloques_nodo* nodoViejo = malloc(sizeof(int)*164);
 
-							while(count3<list_size(list_nodos_id_fd)){
+							while(count<list_size(tabla_de_nodos.listaNodos)){
 
-								nodo3 = list_get(tabla_de_nodos.listaCapacidadNodos, count3);
+								nodoViejo = list_get(tabla_de_nodos.listaCapacidadNodos, count);
 
-								if(nodo3->idNodo==idNodo){
+								if(nodoViejo->idNodo==idNodo){
 
 									logInfo("Se reconecto un nodo. Su id es:%d",idNodo);
-									nodo3->estado=1;
+									nodoViejo->estado=1;
 
 									break;
 
 								}
 
-								count3++;
+								count++;
 							}
 
 							//free(nodo3);
@@ -289,22 +289,24 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							list_add(tabla_de_nodos.listaNodos,idNodo);
 
 							int cantidad = list_size(tabla_de_nodos.listaNodos);
-							int count = 0;
+							count = 0;
 
 							//actualizo lista capadidad nodos
 
-							bloques_nodo* nodo1 = malloc(sizeof(int)*(capacidad+4));
-							nodo1->idNodo=idNodo;
-							nodo1->bloquesTotales=capacidad;
-							nodo1->bloquesLibres=capacidad;
-							nodo1->estado=1;
+							bloques_nodo* bloquesNodo = malloc(sizeof(int)*(capacidad+4));
+							bloquesNodo->idNodo=idNodo;
+							bloquesNodo->fileDescriptor=FD_DN;
+							bloquesNodo->bloquesTotales=capacidad;
+							bloquesNodo->bloquesLibres=capacidad;
+							bloquesNodo->estado=1;
+
 							int i=0;
 							while(i<capacidad){
-							nodo1->bitmap[i]=0;
-							i++;
+								bloquesNodo->bitmap[i]=0;
+								i++;
 							}
 
-							list_add(tabla_de_nodos.listaCapacidadNodos,nodo1);
+							list_add(tabla_de_nodos.listaCapacidadNodos,bloquesNodo);
 
 							//free(nodo1);
 
@@ -317,33 +319,20 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
 							logInfo("Se cargo la informacion de los workers para enviar a yama");
 
-							//free(infoworker);
-
-							//actualizo list nodos id fd
-
-							nodo2->id_nodo=idNodo;
-							nodo2->nodo_fd=FD_DN;
-							list_add(list_nodos_id_fd, nodo2);
-
-							logInfo("Nuevo nodo conectado: Nodo%d, su FD es %d.", nodo2->id_nodo,nodo2->nodo_fd);
-							logInfo("Cantidad de Nodos al momento: %d",list_size(list_nodos_id_fd));
-
-							//ahora pruebo con la fun nueva
-
-							int fileDescriptor=nodoToFD(idNodo);
-							logInfo("Funcion nodoToFD: EL FD DEL NODO %d es %d",idNodo,fileDescriptor);
-
-
 						}
+
+						cantNodosConectados++;
 
 							//checkeo cantidad de nodos para seguir con la ejecucion de FS
 
-						if(cantNodos==list_size(list_nodos_id_fd)){ //nodos necesarios para arrancar
+						if(cantNodos==cantNodosConectados){ //nodos necesarios para arrancar
 							logInfo("Se conectaron todos los nodos");
 							semaphore_signal(SEMAFORODN);
 
 							free(infoworker);
 						}
+
+
 
 						break;
 

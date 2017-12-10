@@ -79,7 +79,7 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 		//elije los 2 nodos mas vacios
 
 
-		indexList1 = elegirNodo( tabla_de_nodos.listaCapacidadNodos);
+		indexList1 = elegirNodo();
 		bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList1);
 		index1 = bitMapNodo1->idNodo;
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
@@ -92,7 +92,7 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
 
-		indexList2 = elegirNodo(tabla_de_nodos.listaCapacidadNodos);
+		indexList2 = elegirNodo();
 		bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
@@ -247,7 +247,7 @@ t_list* copyList(t_list* mapa_de_bits_original){
 }
 */
 
-int elegirNodo(t_list* nodos){
+int elegirNodo(){
 
 	int count = 0;
 	int flag=0;
@@ -258,10 +258,10 @@ int elegirNodo(t_list* nodos){
 
 	while(flag==0){
 
-		nodoMasVacio= list_get(nodos,count);
+		nodoMasVacio= list_get(tabla_de_nodos.listaCapacidadNodos,count);
 		if(nodoMasVacio->estado==1){
 			flag=1;
-			if(list_size(nodos)==1){
+			if(list_size(tabla_de_nodos.listaCapacidadNodos)==1){
 				return(count);
 			}
 		}
@@ -273,12 +273,12 @@ int elegirNodo(t_list* nodos){
 
 
 
-	while(count<list_size(nodos)){
+	while(count<list_size(tabla_de_nodos.listaCapacidadNodos)){
 
-		nodoAComparar = list_get(nodos,count);
+		nodoAComparar = list_get(tabla_de_nodos.listaCapacidadNodos,count);
 
 		if((bloquesLibres(nodoAComparar)>bloquesLibres(nodoMasVacio)) && nodoAComparar->estado==1){
-			nodoMasVacio = list_get(nodos,count);
+			nodoMasVacio = list_get(tabla_de_nodos.listaCapacidadNodos,count);
 			extraCount = count;
 		}
 

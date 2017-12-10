@@ -12,7 +12,7 @@
 
 //static bloques_nodo* inicializarEstructuras(int id);
 
-int elegirNodo(t_list* nodos);
+int elegirNodo();
 int bloquesLibres(bloques_nodo* nodo);
 int ocuparBloqueBitMap(bloques_nodo* nodo);
 void* distribuirBloques(t_list* bloques, int indiceArchivo);

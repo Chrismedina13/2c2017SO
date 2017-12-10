@@ -181,6 +181,7 @@ char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceA
 	int tamBuffer = 0;
 
 	//Genero el bloque
+
 	char * bloqueAGurdar = armarBloqueTamRestante(texto + *desplazamiento,
 			tamRestante);
 	int tamBloqueAGuardar = strlen(bloqueAGurdar);
