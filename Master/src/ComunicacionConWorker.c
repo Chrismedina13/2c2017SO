@@ -1,8 +1,5 @@
 #include "Headers/ComunicacionConWorker.h"
-#include "SO_lib/estructuras.h"
-#include "SO_lib/FuncionesAuxiliares.h"
-#include "SO_lib/Protocolo.h"
-#include "SO_lib/serializacion.h"
+
 
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;

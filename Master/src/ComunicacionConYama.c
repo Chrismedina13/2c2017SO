@@ -7,10 +7,11 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 	int FDsocketClienteYAMA;
 
-	FD_YAMA=FDsocketClienteYAMA;
 
 	FDsocketClienteYAMA = lib_SocketCliente(parametros->ipYAMA,
 			parametros->puertoYAMA);
+
+	FD_YAMA=FDsocketClienteYAMA;
 
 	char* job = malloc(50);
 
