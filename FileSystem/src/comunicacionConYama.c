@@ -103,11 +103,11 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
     logInfo(" Armando lista ubicaciones");
 
     t_list* lista_ubicaciones = list_create();
-	UbicacionBloquesArchivo * ubicaciones1 = crearUbicacionBloquesArchivos(0,1,12,23,34,45);
+	UbicacionBloquesArchivo2 * ubicaciones1 = crearUbicacionBloquesArchivos2(0,1,12,23,34,45);
 	list_add(lista_ubicaciones, ubicaciones1);
-	UbicacionBloquesArchivo * ubicaciones2 = crearUbicacionBloquesArchivos(2,50,60,45,322,125454);
+	UbicacionBloquesArchivo2 * ubicaciones2 = crearUbicacionBloquesArchivos2(2,50,60,45,322,125454);
 	list_add(lista_ubicaciones, ubicaciones2);
-	UbicacionBloquesArchivo * ubicaciones3 = crearUbicacionBloquesArchivos(3,4545,02323,3434,33434,5555555);
+	UbicacionBloquesArchivo2 * ubicaciones3 = crearUbicacionBloquesArchivos2(3,4545,02323,3434,33434,5555555);
 	list_add(lista_ubicaciones, ubicaciones3);
 
     logInfo("Lista ubicaciones armada");
@@ -176,11 +176,11 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 	    logInfo(" Armando lista ubicaciones");
 
 
-		UbicacionBloquesArchivo * ubicaciones1 = crearUbicacionBloquesArchivos(0,2,21,21,32,12);
+		UbicacionBloquesArchivo2 * ubicaciones1 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
 		list_add(lista_ubicaciones, ubicaciones1);
-		UbicacionBloquesArchivo * ubicaciones2 = crearUbicacionBloquesArchivos(0,2,21,21,32,12);
+		UbicacionBloquesArchivo2 * ubicaciones2 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
 		list_add(lista_ubicaciones, ubicaciones2);
-		UbicacionBloquesArchivo * ubicaciones3 = crearUbicacionBloquesArchivos(0,2,21,21,32,12);
+		UbicacionBloquesArchivo2 * ubicaciones3 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
 		list_add(lista_ubicaciones, ubicaciones3);
 
 	    logInfo("Lista ubicaciones armada");

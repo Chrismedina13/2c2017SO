@@ -60,22 +60,22 @@ void DestruirNodoParaPlanificar(nodoParaPlanificar* nodo) {
 	list_destroy_and_destroy_elements(nodo->partesAplanificar, free);
 	free(nodo);
 }
-
-UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
+/*
+UbicacionBloquesArchivo2* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
 		,int copia2Nodo,int copia2Bloque){
 
 	UbicacionBloquesArchivo* ubi = malloc(24);
 	ubi->bytesOcupados = bytesOcupados;
 	ubi->parteDelArchivo = parteDelArchivo;
-	ubi->ubicacionCopia1.nodo = copia1Nodo;
-	ubi->ubicacionCopia1.desplazamiento = copia1Bloque;
-	ubi->ubicacionCopia2.nodo = copia2Nodo;
-	ubi->ubicacionCopia2.desplazamiento =copia2Bloque;
+	ubi->nodo1 = copia1Nodo;
+	ubi->desplazamiento1 = copia1Bloque;
+	ubi->nodo2 = copia2Nodo;
+	ubi->desplazamiento2 =copia2Bloque;
 	return ubi;
 
 }
-
-void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi){
+*/
+void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo2* ubi){
 
 	free(ubi);
 }

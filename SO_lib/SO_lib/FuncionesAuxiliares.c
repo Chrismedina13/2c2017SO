@@ -104,7 +104,7 @@ void setInfoWorker(Info_Workers* info, int puerto,char* ipWorker){
 	info->ipWorker = ipWorker;
 }
 
-int tamanioEstructuraUbicacionBloquesArchivo(UbicacionBloquesArchivo* info){
+int tamanioEstructuraUbicacionBloquesArchivo(UbicacionBloquesArchivo2* info){
 	int tamanio = sizeof(int)*6;
 	return tamanio;
 }
