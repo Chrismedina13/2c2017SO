@@ -18,6 +18,8 @@
 
 //int DISTRIBUCION_NODOS=0;
 
+
+
 typedef struct finTransformacion{
 
 	int nodo;

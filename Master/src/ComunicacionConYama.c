@@ -6,6 +6,9 @@
 void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 	int FDsocketClienteYAMA;
+
+	FD_YAMA=FDsocketClienteYAMA;
+
 	FDsocketClienteYAMA = lib_SocketCliente(parametros->ipYAMA,
 			parametros->puertoYAMA);
 
@@ -16,6 +19,7 @@ void comunicacionYama(ParametrosComunicacionYAMA* parametros) {
 
 	logInfo("Se va a ejecutar %s", job);
 
+	nro_job= job;
 	int tamanioJOB = strlen(job);
 
 	logInfo("%i", tamanioJOB);
@@ -205,6 +209,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 
 			numeroDeJob = deserializarINT(mensaje);
 			logInfo("El job asignado es %i",numeroDeJob);
+			nro_job=numeroDeJob;
 		}
 
 		break;

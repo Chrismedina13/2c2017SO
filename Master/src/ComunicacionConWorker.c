@@ -2,6 +2,7 @@
 #include "SO_lib/estructuras.h"
 #include "SO_lib/FuncionesAuxiliares.h"
 #include "SO_lib/Protocolo.h"
+#include "SO_lib/serializacion.h"
 
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	int FDServidorWORKER;
@@ -124,5 +125,118 @@ case SCRIPT_TRANSFORMADOR_ANUAL:
 		destruirPaquete(paqueteDeEnvio);
 		break;
 
+	}
+}
+
+
+void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
+
+//Data node recibe de File System
+	char pesoMensaje[8];
+	int tamanio;
+	char* mensaje;
+	char* buffer[4];
+	int intRecibido;
+	char* bufferBloque[4];
+
+	char* mensajeNuevo;
+
+	finTransformacion* finRG;
+
+
+	switch (codigo) {
+	case FIN_TRANSFORMACION: //listo
+
+		logInfo("MASTER RECIBE EL FIN DE LA TRANSFORMACION");
+
+				recv(FDServidorWORKER,pesoMensaje,4,0);
+				tamanio= deserializarINT(pesoMensaje);
+				logInfo("tamanio de lo que recibo %i", tamanio);
+				mensaje = malloc(tamanio + 1);
+				mensaje[tamanio] = '\0';
+				recv(FDServidorWORKER,mensaje, tamanio,0);
+				intRecibido = deserializarINT(mensaje);
+				logInfo("Recivi de Worker el fin de la transformacion %i", intRecibido);
+				mensajeNuevo = malloc (sizeof(int));
+				mensajeNuevo = serializeInt(intRecibido);
+
+				  mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+
+		break;
+
+	case FIN_REDUCCION_LOCAL:
+
+		logInfo("MASTER RECIBE EL FIN DE LA REDUCCION LOCAL");
+
+						recv(FDServidorWORKER,pesoMensaje,4,0);
+						tamanio= deserializarINT(pesoMensaje);
+						logInfo("tamanio de lo que recibo %i", tamanio);
+						mensaje = malloc(tamanio + 1);
+						mensaje[tamanio] = '\0';
+						recv(FDServidorWORKER,mensaje, tamanio,0);
+						intRecibido = deserializarINT(mensaje);
+						logInfo("Recivi de Worker el fin de la reduccion local %i", intRecibido);
+
+
+						finTransformacion* finRG = malloc(sizeof(int)*2);
+						//finRG->nodo= el nro de nodo se lo manda worker. crear estructuraa
+						//  finRG->numeroDeJob=nro_job;
+                       // logInfo("Envio a YAMA el fin de la reduccion local");
+					//	mensajesEnviadosAYama(FIN_REDUCCION_LOCAL, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+
+
+
+		break;
+
+	case FIN_REDUCCION_GLOBAL:
+		logInfo("MASTER RECIBE EL FIN DE LA REDUCCION GLOBAL");
+
+							recv(FDServidorWORKER,pesoMensaje,4,0);
+							tamanio= deserializarINT(pesoMensaje);
+							logInfo("tamanio de lo que recibo %i", tamanio);
+							mensaje = malloc(tamanio + 1);
+							mensaje[tamanio] = '\0';
+							recv(FDServidorWORKER,mensaje, tamanio,0);
+							intRecibido = deserializarINT(mensaje);
+							logInfo("Recivi de Worker el fin de la reduccion global %i", intRecibido);
+							mensajeNuevo = malloc (sizeof(int));
+							mensajeNuevo = serializeInt(intRecibido);
+							 logInfo("Envio a YAMA el fin de la reduccion global");
+					        mensajesEnviadosAYama(FIN_REDUCCION_GLOBAL, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+
+
+
+
+
+		break;
+
+	case ALMACENADO_FINAL:
+		logInfo("MASTER RECIBE EL FIN DEL ALMACENADO FINAL");
+
+									recv(FDServidorWORKER,pesoMensaje,4,0);
+									tamanio= deserializarINT(pesoMensaje);
+									logInfo("tamanio de lo que recibo %i", tamanio);
+									mensaje = malloc(tamanio + 1);
+									mensaje[tamanio] = '\0';
+									recv(FDServidorWORKER,mensaje, tamanio,0);
+									intRecibido = deserializarINT(mensaje);
+									logInfo("Recivi de Worker el fin deL almacenado final %i", intRecibido);
+									mensajeNuevo = malloc (sizeof(int));
+									mensajeNuevo = serializeInt(intRecibido);
+
+							        mensajesEnviadosAYama(FINALIZACION_DE_JOB, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+
+
+
+
+
+
+
+		break;
+
+
+	default:
+		logInfo("MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR");
+		break;
 	}
 }
