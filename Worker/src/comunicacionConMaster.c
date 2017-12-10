@@ -213,8 +213,54 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 
 							break;
 						case REDUCCION_GLOBAL:
+
 							break;
 						case TRANSFORMADOR:
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+								infoTransformacionParaWorker * info = deserializarInfoParaWorker(mensaje);
+								int bloque = info->bloque;
+								int bytesOcupados = info->bytesOcupados;
+								char* archivoTemporal = info->archivoTemporal;
+								//RECIBO EL SCRIPT
+								recv(FDMaster, pesoMensaje, 4, 0);
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+									logInfo("Error en la recepcion de Info de Master.");
+								}else{
+
+									script* script = deserilizarScript(mensaje);
+
+									rearmar_script(script,SCRIPT_REDUCCION);
+
+									printf("recibo script tranformador");
+
+									//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
+									char* contenido = get_bloque(bloque);
+									char* nombreArchivoBloque = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
+									crearArchivo(contenido,nombreArchivoBloque);
+									int estado = ejecutarScript(script->nombre,nombreArchivoBloque,archivoTemporal);//Estado -1 significa que falló
+
+									//BORRO EL ARCHIVO TEMPORAL archivoBloque
+									destruirArchivoOScript(nombreArchivoBloque);
+
+									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT A MASTER
+									//mensajesEnviadosAMaster(FIN_TRANSFORMACION,);
+
+
+
+
+
+								}
+							}
 							break;
 						case REDUCCION_TEMPORALES:
 							break;

@@ -36,10 +36,10 @@ int tamanioEstructurasListaWorkers(t_list* listaWorkers);
 void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 script* setScript(char* rutaScript);
 void rearmar_script(script* script,int codigo);
-void ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
+int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
 void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
 void darPermisosAlLosScriptsPy();
-void destruirScript(char* rutaScript);
+void destruirArchivoOScript(char* rutaScript);
 int tamanioListaDeArchivos(t_list* lista);
 int tamanioScript(script script);
 vectorConIndice* LApalabra(vectorConIndice* nodo1,vectorConIndice* nodo2);
@@ -48,4 +48,7 @@ void apareoDeArchivosVectores(t_list* lista,char* rutaAGuardarApareo);
 int indiceDelVectorQueQuedanLecturas(vectorConIndice vectorNodos[],int cantidadElementosLista);
 int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementosLista);
 char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2);
+void crearArchivo(char* contenido,char* rutaArchivoACrear);
+
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
+

@@ -164,7 +164,7 @@ void rearmar_script(script* script,int codigo){
 	fclose(fd);
 }
 
-void ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
+int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
 
 	char* command = string_new();
 	string_append(&command,"/bin/cat ");
@@ -174,7 +174,9 @@ void ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,cha
 	string_append(&command, " | sort > ");
 	string_append(&command, rutaArchivoAGuardar);
 
-    system(command);
+    int estado = system(command);
+
+    return estado;
 
 }
 void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
@@ -432,4 +434,14 @@ char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2){
 	}
 	if(palabraAux1[i]<palabraAux2[i]) return palabraAux1;
 	else return palabraAux2;
+}
+
+void crearArchivo(char* contenido,char* rutaArchivoACrear){
+	FILE* fd;
+	fd = fopen(rutaArchivoACrear,"w");
+	if (fd==NULL) {
+		printf("Error al abrir el archivo.");
+	}
+	fputs(contenido,fd);
+	fclose(fd);
 }
