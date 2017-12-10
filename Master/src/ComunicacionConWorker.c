@@ -138,11 +138,18 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 
 	char* mensajeNuevo;
 
+	char* mensajeNuevo2;
+
 	finTransformacion* finRG;
+	resultadoJob * resultado_job;
+    Replanificacion* parametrosReplanif;
+
+	int tamanioRta;
 
 
 	switch (codigo) {
-	case FIN_TRANSFORMACION: //listo
+	case FIN_TRANSFORMACION: //master recibe de worker el nro del nodo y el resultado
+		//si result==0, manda a YAMA replanificacion
 
 		logInfo("MASTER RECIBE EL FIN DE LA TRANSFORMACION");
 
@@ -152,16 +159,30 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 				mensaje = malloc(tamanio + 1);
 				mensaje[tamanio] = '\0';
 				recv(FDServidorWORKER,mensaje, tamanio,0);
-				intRecibido = deserializarINT(mensaje);
-				logInfo("Recivi de Worker el fin de la transformacion %i", intRecibido);
-				mensajeNuevo = malloc (sizeof(int));
-				mensajeNuevo = serializeInt(intRecibido);
+				resultado_job=deserializarResultado(mensaje);
+						if(resultado_job->resultado==1){
+				logInfo("Recibi de Worker el fin de la transformacion %i", intRecibido);
+				logInfo("Envio a YAMA el fin transformacion");
+				finRG=malloc(sizeof(int)*2);
+				finRG->nodo= resultado_job->nodo;
+			    finRG->numeroDeJob= nro_job;
+			    mensajeNuevo = serializarFinTransformacion(finRG);
+				mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+						}else{
+               logInfo("Fin de la transformacion salio mal, Envio a YAMA la replanificacion");
+    	       parametrosReplanif = malloc(sizeof(int)*2);
+    	       parametrosReplanif->nodoCaido=resultado_job->nodo;
+               parametrosReplanif->numeroDeJOb=nro_job;
+               mensajeNuevo2=serializarReplanificacion(parametrosReplanif);
 
-				  mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
-
+				  mensajesEnviadosAYama(REPLANIFICACION, FD_YAMA,mensajeNuevo2, strlen(mensajeNuevo2));
+						}
 		break;
 
-	case FIN_REDUCCION_LOCAL:
+	case FIN_REDUCCION_LOCAL:// master recibe de worker y el nro de nodo y resultado,
+		//si result ==1 , manda fin reduccion local --- FALTA SEMAFORO QUE NO LO MANDA HASTA QUE NO ESTEN TODOS LOS WORKERS TERMINADOS
+		//si result ==0 , manda FINALIZACION DE JOB
+
 
 		logInfo("MASTER RECIBE EL FIN DE LA REDUCCION LOCAL");
 
