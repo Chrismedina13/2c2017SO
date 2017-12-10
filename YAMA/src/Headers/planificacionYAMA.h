@@ -38,6 +38,7 @@ t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list*
 int bytesocupadosPorLaParte(int parte,t_list* listaDeWorkersAPlanificar);
 int bloqueOcupadoPorLaParteEnElNodo(int parte,int nodo, t_list* listaDeWorkersAPlanificar);
 bool dev_mayor_disponib(nodoParaPlanificar* nodo1,nodoParaPlanificar* nodo2);
+void algoritmoPrincipal(t_list* nodosFinalesAPLanificar,t_list* partesDelArchivo,int disponibilidadBase);
 
 
 
