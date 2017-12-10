@@ -282,7 +282,7 @@ void apareoDeArchivos(t_list* lista){
 	fclose(fd);
 }
 
-void apareoDeArchivosVectores(t_list* lista){
+void apareoDeArchivosVectores(t_list* lista,char* rutaA){
 	int cantidadElementosLista = list_size(lista);
 	vectorConIndice vectorNodos[cantidadElementosLista];
 	int i = 0;
@@ -304,7 +304,7 @@ void apareoDeArchivosVectores(t_list* lista){
 	}
 	//Creamos el archivo apareado
 	FILE* fd;
-	fd = fopen("/home/utnso/Escritorio/archivoApareado.txt","w");
+	fd = fopen(rutaA,"w");
 	if (fd==NULL) {
 		printf("Error al abrir el archivo.");
 	}
@@ -387,10 +387,10 @@ int indiceDelVectorQueQuedanLecturas(vectorConIndice vectorNodos[],int cantidadE
 	return indice;
 }
 
-int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementosLista){
+int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementos){
 	int cantidad = 0;
 	int i= 0;
-	while(i<cantidadElementosLista){
+	while(i<cantidadElementos){
 		if(vectorNodos[i].pasoDeDatosCompleto == 0){
 			cantidad++;
 		}
