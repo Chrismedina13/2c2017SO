@@ -215,11 +215,11 @@ void destruirPaquete(Paquete* package);
 size_t sizePackage(Paquete *package);
 char* serializarPaquete(Paquete *package);
 int enviarPaquete(int fileDescriptor, Paquete *package);
-
+/*
 UbicacionBloquesArchivo* crearUbicacionBloquesArchivos(int parteDelArchivo,int bytesOcupados,int copia1Nodo, int copia1Bloque
 		,int copia2Nodo,int copia2Bloque);
-
-void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo* ubi);
+*/
+void destruirUbicacionBloquesArchivo(UbicacionBloquesArchivo2* ubi);
 JOBCompleto* crearJobCompleto(Job* job, t_list* listaDeUbicacionPartes,t_list* respuestaTransformacion);
 int tamanioRespuestaTransformacionYAMA(t_list* listaDeRespuesta);
 int tamanioJOB(Job* job);
