@@ -61,6 +61,8 @@ int cantidadDeTrasformacionesYReduccionesQueHace(int nodo,t_list* respuestaTrans
 void darDeBajaUnNodoCaido(int nodoCaido);
 
 
+void actualizarCargaDeWorkersPorReplanificacion(int numeroDeNodo,int numeroDeJOb, int master);
+
 
 
 #endif /* HEADERS_COMUNICACIONCONMASTER_H_ */

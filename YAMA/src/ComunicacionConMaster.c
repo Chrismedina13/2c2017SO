@@ -210,8 +210,12 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		parametrosReplanif = deserializarReplanificacion(mensaje);
 
+		//le saca 1 de carga por cada transformacion que hacia
+		actualizarCargaDeWorkersPorReplanificacion(parametrosReplanif->nodoCaido,parametrosReplanif->numeroDeJOb,FDMaster);
+
 		darDeBajaUnNodoCaido(parametrosReplanif);
 
+		//Planificar nuevamente
 		nuevaPlanificacion = replanificacion(parametrosReplanif,FDMaster);
 
 		actualizarNodosCaidosReplanificacion(parametrosReplanif,FDMaster);
@@ -959,4 +963,35 @@ void darDeBajaUnNodoCaido(int nodoCaido){
 		}
 	}
 
+}
+
+
+//Replanificacion
+
+void actualizarCargaDeWorkersPorReplanificacion(int numeroDeNodo,int numeroDeJOb, int master){
+
+	int i = 0;
+	while(i < list_size(listaDeJobs)){
+		JOBCompleto* jobAComparar = list_get(listaDeJobs,i);
+		if(jobAComparar->job->identificadorJob == numeroDeJOb,jobAComparar->job->master = master){
+
+			JOBCompleto* jobElegido = list_remove(listaDeJobs,i);
+			disminuirCargaDeWorkersPorReplanificacion(jobElegido->respuestaTransformacion);
+			list_add_in_index(listaDeJobs,i);
+			i++;
+		}else{
+
+			i++;
+		}
+	}
+}
+
+void disminuirCargaDeWorkersPorReplanificacion(t_list* listaDeRespuestas){
+
+	int i = 0;
+	while(i < list_size(listaDeRespuestas)){
+		RespuestaTransformacionYAMA* respuesta = list_get(listaDeRespuestas,i);
+		reducirCargaANodo(respuesta->nodo,1);
+		i++;
+	}
 }
