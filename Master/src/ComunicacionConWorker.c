@@ -132,9 +132,9 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 	char pesoMensaje[8];
 	int tamanio;
 	char* mensaje;
-	char* buffer[4];
+
 	int intRecibido;
-	char* bufferBloque[4];
+
 
 	char* mensajeNuevo;
 
@@ -142,7 +142,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 
 	finTransformacion* finRG;
 	resultadoJob * resultado_job;
-    Replanificacion* parametrosReplanif;
+
 
 	int tamanioRta;
 	int jobQueFinalizo;
@@ -150,7 +150,8 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 
 	switch (codigo) {
 	case FIN_TRANSFORMACION: //master recibe de worker el nro del nodo y el resultado
-		//si result==0, manda a YAMA replanificacion
+		//si result==1, manda a YAMA replanificacion
+		//si result==0, manda a YAMA fin transformacion
 
 		logInfo("MASTER RECIBE EL FIN DE LA TRANSFORMACION");
 
@@ -180,8 +181,8 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 		break;
 
 	case FIN_REDUCCION_LOCAL:// master recibe de worker y el nro de nodo y resultado,
-		//si result ==1 , manda fin reduccion local --- FALTA SEMAFORO QUE NO LO MANDA HASTA QUE NO ESTEN TODOS LOS WORKERS TERMINADOS
-		//si result ==0 , manda FINALIZACION DE JOB
+		//si result ==0 , manda fin reduccion local --- FALTA SEMAFORO QUE NO LO MANDA HASTA QUE NO ESTEN TODOS LOS WORKERS TERMINADOS
+		//si result ==1, manda FINALIZACION DE JOB
 
 
 		logInfo("MASTER RECIBE EL FIN DE LA REDUCCION LOCAL");
@@ -196,12 +197,16 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 												if(resultado_job->resultado==0){
 										logInfo("Recibi de Worker el fin de la reduccion local ");
 
+										//if(cantN)
+
 										logInfo("Envio a YAMA el fin reduccion Local");
 										finRG=malloc(sizeof(int)*2);
 										finRG->nodo= resultado_job->nodo;
 									    finRG->numeroDeJob= nro_job;
 									    mensajeNuevo = serializarFinTransformacion(finRG);
 										mensajesEnviadosAYama(FIN_REDUCCION_LOCAL,FD_YAMA,mensajeNuevo,sizeof(int)*2);
+
+
 												}else{
 						               logInfo("Fin de la reduccion local salio mal, Envio a YAMA la finalizacion del job");
 
@@ -262,12 +267,6 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 									mensajeNuevo = serializeInt(intRecibido);
 
 							        mensajesEnviadosAYama(FINALIZACION_DE_JOB, FD_YAMA,mensajeNuevo, sizeof(int));
-
-
-
-
-
-
 
 		break;
 
