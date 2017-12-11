@@ -510,4 +510,61 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 	return(1);
 }
 
+void * distribuirBloque(char* bloque, int indiceArchivo, int cantBloques){
 
+	/*Recibe una lista de char* con bloques de texto (bloques) y una lista de bitMap (nodos)
+	 * Devuelve una lista de ubicacionBloquesArchivo
+	 */
+
+	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
+
+	int indiceBloque = cantBloques;
+	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
+	bloques_nodo* bitMapNodo1;
+	bloques_nodo* bitMapNodo2;
+	UbicacionBloquesArchivo2* ubicacionBloquesArchivo = malloc(sizeof(int)*6);
+	int index1, indexList1, index2, indexList2;
+	int desplazamiento1, desplazamiento2;
+
+
+	indexList1 = elegirNodo();
+	bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList1);
+	index1 = bitMapNodo1->idNodo;
+	desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+
+	if(desplazamiento1==-1){
+		logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+	}
+	logInfo("Ubico la copia 1 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index1,desplazamiento1);
+	list_remove(tabla_de_nodos.listaCapacidadNodos,indexList1);
+
+	//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
+
+	indexList2 = elegirNodo();
+	bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList2);
+	index2 = bitMapNodo2->idNodo;
+	desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
+
+	if(desplazamiento2==-1){
+		logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+	}
+	logInfo("Ubico la copia 2 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index2,desplazamiento2);
+
+	list_add(tabla_de_nodos.listaCapacidadNodos,bitMapNodo1);
+
+	//cargo los datos de los bloques en tabla_de_archivos
+
+	ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
+	ubicacionBloquesArchivo->desplazamiento1 = desplazamiento1;
+	ubicacionBloquesArchivo->nodo1 = index1;
+	ubicacionBloquesArchivo->desplazamiento2 = desplazamiento2;
+	ubicacionBloquesArchivo->nodo2 = index2;
+	ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+
+	logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados,
+			ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->nodo1,
+			ubicacionBloquesArchivo->desplazamiento1,ubicacionBloquesArchivo->nodo2, ubicacionBloquesArchivo->desplazamiento2);
+
+	list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);
+
+}
