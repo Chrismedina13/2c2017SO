@@ -227,7 +227,7 @@ infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArc
 
 	return info;
 }
-infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal){
+infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script scritpReduccionGlobal){
 	infoReduccionGlobalDeMasterParaWorker* info = malloc(tamanioListaDeArchivos(listaArchivosReduccionLocal)+strlen(archivoTemporalReduccionGlobal) + tamanioScript(scritpReduccionGlobal));
 	info->archivoTemporalReduccionGlobal=archivoTemporalReduccionGlobal;
 	info->listaInfoParaReduccionGlobal = listaArchivosReduccionLocal;

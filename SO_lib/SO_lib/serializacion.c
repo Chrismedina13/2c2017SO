@@ -754,8 +754,8 @@ infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializa
 char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMasterParaWorker* info){
 	int tamanioArchivoTemporal=strlen(info->archivoTemporalReduccionGlobal);
 	int tamanioLista=tamanioListaDeArchivos(info->listaInfoParaReduccionGlobal);
-	int tamanioNombreScript=strlen(info->scriptReduccionGlobal->nombre);
-	int tamanioContenidoScript=strlen(info->scriptReduccionGlobal->contenido);
+	int tamanioNombreScript=strlen(info->scriptReduccionGlobal.nombre);
+	int tamanioContenidoScript=strlen(info->scriptReduccionGlobal.contenido);
 	int cantidadElementosLista = list_size(info->listaInfoParaReduccionGlobal);
 
 
@@ -770,8 +770,8 @@ char* serializarInfoReduccionGlobalDeMasterParaWorker(infoReduccionGlobalDeMaste
 	serializarDato(infoSerializada,&(cantidadElementosLista),sizeof(int),&offset);
 
 	serializarDato(infoSerializada,info->archivoTemporalReduccionGlobal,tamanioArchivoTemporal,&offset);
-	serializarDato(infoSerializada,info->scriptReduccionGlobal->nombre,tamanioNombreScript,&offset);
-	serializarDato(infoSerializada,info->scriptReduccionGlobal->contenido,tamanioContenidoScript,&offset);
+	serializarDato(infoSerializada,info->scriptReduccionGlobal.nombre,tamanioNombreScript,&offset);
+	serializarDato(infoSerializada,info->scriptReduccionGlobal.contenido,tamanioContenidoScript,&offset);
 
 	int i = 0;
 	while(i<cantidadElementosLista){
@@ -804,10 +804,10 @@ infoReduccionGlobalDeMasterParaWorker* deserializarInfoReduccionGlobalDeMasterPa
 	info->archivoTemporalReduccionGlobal=string_substring(infoSerializada,offset,tamanioArchivoTemporal);
 	offset+=tamanioArchivoTemporal;
 	char* nombre = string_substring(infoSerializada,offset,tamanioNombreScript);
-	info->scriptReduccionGlobal->nombre= nombre;
+	info->scriptReduccionGlobal.nombre= nombre;
 	offset+=tamanioNombreScript;
 	char* contenido = string_substring(infoSerializada,offset,tamanioContenidoScript);
-	info->scriptReduccionGlobal->contenido = contenido;
+	info->scriptReduccionGlobal.contenido = contenido;
 	offset+=tamanioContenidoScript;
 	int i=0;
 	while(i<cantidadElementosLista){
