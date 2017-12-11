@@ -37,7 +37,7 @@ void setInfoWorker(Info_Workers* info,int puerto,char* ipWorker);
 script* setScript(char* rutaScript);
 void rearmar_script(script* script,int codigo);
 int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
-void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
+int ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar);
 void darPermisosAlLosScriptsPy();
 void destruirArchivoOScript(char* rutaScript);
 int tamanioListaDeArchivos(t_list* lista);
