@@ -206,6 +206,12 @@ typedef struct vectorConIndice{
 	int pasoDeDatosCompleto; //0 si no esta completo, 1 si esta completo.
 }vectorConIndice;
 
+typedef struct archivo{
+	char* nombre;
+	char* contenido;
+}archivo;
+
+
 t_list * list_info_workers;
 t_list * listaUbicaciones;
 
