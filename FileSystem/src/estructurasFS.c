@@ -410,7 +410,7 @@ int newArchivo(){
 
 }
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int indiceArchivo){
+int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo){
 
 	int tamanioBloque = 1024*1024;
 	int tamArchivo;
@@ -438,7 +438,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int in
 	tabla_de_archivos[indiceArchivo].tamanio = tamArchivo;
 	tabla_de_archivos[indiceArchivo].tipo = tipo;
 	tabla_de_archivos[indiceArchivo].directorio = pathToIndex(rutaLocal);
-	tabla_de_archivos[indiceArchivo].bloques = ubicaciones;
+	tabla_de_archivos[indiceArchivo].bloques = tabla_de_archivos[indiceArchivo].ubicaciones;
 	//tabla_de_archivos[indiceArchivo].ubicaciones =
 
 	//creo mi registro de archivo local
@@ -471,7 +471,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal,t_list* ubicaciones, int in
 		//infoNodoCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.nodo;
 		//infoBloqueCopia = archivosPtr[indiceArchivo].bloques[count].ubicacionCopia1.bloqueDelNodoDeLaCopia;
 
-		bloquesPtr = list_get(ubicaciones,count);
+		bloquesPtr = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
 
 		infoNodoCopia = bloquesPtr->ubicacionCopia1.nodo;
 		infoBloqueCopia = bloquesPtr->ubicacionCopia1.desplazamiento;
