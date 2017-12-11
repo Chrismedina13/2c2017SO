@@ -469,36 +469,56 @@ int deserializarINT(char* stream) {
 }
 
 
-char* serializarBloque(int numeroBloque, char* contenidoBloque) {
 
-	char *bloqueSerializado = malloc(
-			strlen(contenidoBloque) + sizeof(int)*2);
+char* serializarContenidoDelBloque(char* contenidoBloque){
+
+	char *bloqueSerializado = malloc(strlen(contenidoBloque) + sizeof(int));
 	int desplazamiento = 0;
 	int tamanio = strlen(contenidoBloque);
+	//int TamanioDataSetBloque = strlen(contenidoBloque) + sizeof(int) ;
 
-	serializarDato(bloqueSerializado, &(numeroBloque), sizeof(int),
-			&desplazamiento);
+	//serializarDato(bloqueSerializado, &(TamanioDataSetBloque), sizeof(int), &desplazamiento);
 
-	serializarDato(bloqueSerializado, &(tamanio), sizeof(int),
-			&desplazamiento);
+	//serializarDato(bloqueSerializado, &(numeroBloque), sizeof(int),&desplazamiento);
 
-	serializarDato(bloqueSerializado, contenidoBloque,
-			strlen(contenidoBloque), &desplazamiento);
+	serializarDato(bloqueSerializado, &(tamanio), sizeof(int),&desplazamiento);
+
+	serializarDato(bloqueSerializado, contenidoBloque,tamanio, &desplazamiento);
 
 	return bloqueSerializado;
 }
 
-SetBloque* deserilizarBloque(char* bloqueSerializado) {
-	SetBloque* setbloque = malloc(1024 * 1024 + sizeof(int)*2);
+
+char* serializarBloque(int numeroBloque, char* contenidoBloque) {
+
+	char *bloqueSerializado = malloc(strlen(contenidoBloque) + sizeof(int)*3);
+	int desplazamiento = 0;
+	int tamanio = strlen(contenidoBloque);
+	int TamanioDataSetBloque = strlen(contenidoBloque) + sizeof(int) ;
+
+	serializarDato(bloqueSerializado, &(TamanioDataSetBloque), sizeof(int), &desplazamiento);
+
+	serializarDato(bloqueSerializado, &(numeroBloque), sizeof(int),&desplazamiento);
+
+	serializarDato(bloqueSerializado, &(tamanio), sizeof(int),&desplazamiento);
+
+	serializarDato(bloqueSerializado, contenidoBloque,tamanio, &desplazamiento);
+
+	return bloqueSerializado;
+}
+
+char* deserilizarContenidoBloque(char* bloqueSerializado) {
+
 	int desplazamiento = 0;
 	int tamanioContenido;
-	deserializarDato(&(setbloque->nrobloque), bloqueSerializado, sizeof(int),
-			&desplazamiento);
-	deserializarDato(&(tamanioContenido), bloqueSerializado, sizeof(int),
-			&desplazamiento);
-	setbloque->contenidoBloque = string_substring(bloqueSerializado,desplazamiento,tamanioContenido);
+	int tamanioDelSetBloque;
+	deserializarDato(&(tamanioDelSetBloque), bloqueSerializado, sizeof(int),&desplazamiento);
 
-	return setbloque;
+	char* contenidoBloque = malloc(tamanioDelSetBloque);
+
+	contenidoBloque = string_substring(bloqueSerializado,desplazamiento,tamanioContenido);
+
+	return contenidoBloque;
 }
 
 char* serializarFinTransformacion(finTransformacion* fin) {
