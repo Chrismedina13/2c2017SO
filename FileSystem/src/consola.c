@@ -378,11 +378,11 @@ void consolaFileSystem(){
 				}
 			}
 
-			if(*comandos!=NULL && compararComando){
-				if(string_equals_ignore_case(comandos[0], CPFROM)){
-					compararComando=false;
+			if (*comandos != NULL && compararComando) {
+				if (string_equals_ignore_case(comandos[0], CPFROM)) {
+					compararComando = false;
 
-					int status=0;
+					int status = 0;
 
 					int indiceArchivo = newArchivo();
 
@@ -390,25 +390,26 @@ void consolaFileSystem(){
 
 					FILE * fp = fopen(comandos[1], "r");
 					if (!fp) {
-					  perror("Error al abrir el Archivo");
-					  status = -1;
+						perror("Error al abrir el Archivo");
+						status = -1;
 					}
-
 
 					//parte el archivo en bloques
 
-					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1], indiceArchivo); //quedan cargados en bloques
+					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1],
+							indiceArchivo); //quedan cargados en bloques
 
 					int cantBloques = list_size(bloquesDeTexto);
 					logInfo("Parti el archivo en %d bloques.", cantBloques);
 
-					int bloquesNecesarios = cantBloques *2;
+					int bloquesNecesarios = cantBloques * 2;
 
 					int bloquesLibres = tabla_de_nodos.bloqueslibres;
 					//logInfo("%d", tabla_de_nodos.bloqueslibres);
 
-					if(bloquesNecesarios>bloquesLibres){//necesita guardar una copia por cada bloque
-						logInfo("No hay lugar suficiente para almacenar el archivo y sus copias");
+					if (bloquesNecesarios > bloquesLibres) { //necesita guardar una copia por cada bloque
+						logInfo(
+								"No hay lugar suficiente para almacenar el archivo y sus copias");
 						status = -1;
 					}
 
@@ -417,60 +418,73 @@ void consolaFileSystem(){
 					//	status = -1;
 					//}
 
-
-
-					if(status==0){
+					if (status == 0) {
 
 						//le pasa los bloques a los nodos
 
 						distribuirBloques(bloquesDeTexto, indiceArchivo);
-						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
+						logInfo(
+								"Distribui administrativamente los bloques en los Nodos conectados.");
 
 						int count = 0;
 						UbicacionBloquesArchivo2* ubicacion;
 						char* bloque;
 
-						while(count<cantBloques){
+						while (count < cantBloques) {
 
-
-							bloque= list_get(bloquesDeTexto,count);
-							ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
-							int tamanioSetBloque= (strlen(bloque) + sizeof(int)*3);
-
+							bloque = list_get(bloquesDeTexto, count);
+							ubicacion =
+									list_get(
+											tabla_de_archivos[indiceArchivo].ubicaciones,
+											count);
+							int tamanioSetBloque = (strlen(bloque)
+									+ sizeof(int) * 3);
 
 							//copia 1
 
-						//	char* contenidoSerializado = serializarContenidoDelBloque(bloque);
-							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
+							//	char* contenidoSerializado = serializarContenidoDelBloque(bloque);
+							char* desplazamiento = serializeInt(
+									ubicacion->desplazamiento1);
 
-							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
+							int fileDescriptor1 = nodoToFD(ubicacion->nodo1);
 
-							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
+							logInfo(
+									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+									fileDescriptor1, tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, desplazamiento,sizeof(int));
+							mensajesEnviadosADataNode(SET_BLOQUE,
+									fileDescriptor1, desplazamiento,
+									sizeof(int));
 
-							send(fileDescriptor1,bloque, strlen(bloque),0);
+							send(fileDescriptor1, bloque, strlen(bloque), 0);
 
-							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
-
-
+							logInfo(
+									"Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
+									count, ubicacion->nodo1,
+									ubicacion->desplazamiento1);
 
 							//copia 2
 
-						  //char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
-							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
+							//char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
+							char* desplazamiento2 = serializeInt(
+									ubicacion->desplazamiento1);
 
-							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
+							int fileDescriptor2 = nodoToFD(ubicacion->nodo2);
 
-							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
+							logInfo(
+									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+									fileDescriptor2, tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, desplazamiento2, sizeof(int));
+							mensajesEnviadosADataNode(SET_BLOQUE,
+									fileDescriptor2, desplazamiento2,
+									sizeof(int));
 
-							send(fileDescriptor2,bloque,strlen(bloque),0);
+							send(fileDescriptor2, bloque, strlen(bloque), 0);
 
-							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
-
-
+							logInfo(
+									"Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
+									count, ubicacion->nodo2,
+									ubicacion->desplazamiento2);
 
 							count++;
 
@@ -479,24 +493,24 @@ void consolaFileSystem(){
 
 						}
 
-
-
-						logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
+						logInfo(
+								"Envio los bloques a sus respectivos nodos y desplazamiento.");
 
 						//crea registro del archivo en YAMAFS
 
-						status = crearRegistroArchivo(comandos[1],comandos[2], tabla_de_archivos[indiceArchivo].ubicaciones, indiceArchivo);
-						if(status==1){
-							logInfo("Registro de archivo creado correctamente.");
+						status = crearRegistroArchivo(comandos[1], comandos[2],
+								indiceArchivo);
+						if (status == 1) {
+							logInfo(
+									"Registro de archivo creado correctamente.");
 
-							if(cantidad_archivos==cantArchivos){
+							if (cantidad_archivos == cantArchivos) {
 								semaphore_signal(SEMAFOROYAMA);
 							}
 						}
-						if(status==1){
+						if (status == 1) {
 							logInfo("Registro de archivo no pudo ser creado.");
 						}
-
 
 					}
 

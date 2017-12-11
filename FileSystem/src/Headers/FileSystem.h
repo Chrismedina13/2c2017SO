@@ -89,7 +89,7 @@ extern tabla_archivos *archivosPtr;
 
 //funciones de tabla de archivos
 
-int crearRegistroArchivo(char* ruta, char* rutaLocal, t_list* ubicacion, int indiceArchivo);
+int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo);
 
 int cambiarNombreArchivo(char* rutaLocal, char* nombreNew);
 
