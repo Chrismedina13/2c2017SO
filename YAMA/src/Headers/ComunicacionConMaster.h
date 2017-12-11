@@ -35,7 +35,7 @@ t_list* replanificacion(Replanificacion* replani,int master);
 t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacionDeLosBloques,int nodoCaido);
 UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque);
 Replanificacion* deserializarReplanificacion(char* replanifSerializado);
-char* serializarReplanificacion(int numeroJob,int nodoCaido);
+
 
 int actualizarCargaANodo(int nodo, int cantidadDeCarga);
 int nodoEncargadoDeLaReduccionGlobal(t_list* RRG);

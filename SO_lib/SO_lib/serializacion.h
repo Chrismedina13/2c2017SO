@@ -112,7 +112,7 @@ char* serializarResultado(resultadoJob* fin) ;
 resultadoJob * deserializarResultado(char* FT);
 
 Replanificacion* deserializarReplanificacion(char* FT);
-char* serializarReplanificacion(Replanificacion* fin);
+char* serializarReplanificacion(int numeroJob,int nodoCaido);
 
 #endif
 

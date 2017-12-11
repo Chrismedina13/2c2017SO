@@ -1066,15 +1066,16 @@ resultadoJob * deserializarResultado(char* FT) {
 
 }
 
-char* serializarReplanificacion(Replanificacion* fin) {
+char* serializarReplanificacion(int numeroJob,int nodoCaido){
+
+	char* replanifSerializado = malloc(sizeof(int)*2);
 
 	int desplazamiento = 0;
-	char* finTransformcaionSerializado = malloc(sizeof(int) * 2);
-	serializarDato(finTransformcaionSerializado, &(fin->nodoCaido), sizeof(int),
-			&desplazamiento);
-	serializarDato(finTransformcaionSerializado, &(fin->numeroDeJOb),
-			sizeof(int), &desplazamiento);
-	return (finTransformcaionSerializado);
+
+	serializarDato(replanifSerializado, &(numeroJob), sizeof(int),&desplazamiento);
+	serializarDato(replanifSerializado, &(nodoCaido), sizeof(int), &desplazamiento);
+
+	return replanifSerializado;
 }
 
 Replanificacion* deserializarReplanificacion(char* FT) {

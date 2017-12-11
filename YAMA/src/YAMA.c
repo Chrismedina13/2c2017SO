@@ -217,6 +217,8 @@ int main(int argc, char *argv[]) {
 			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase,config->retardo);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
 
+    cantNodos= config->cantNodos;
+
 	signal(SIGUSR1,rutina);
 
 	logInfo("Creando hilos para comunicacion con YAMA y FS");

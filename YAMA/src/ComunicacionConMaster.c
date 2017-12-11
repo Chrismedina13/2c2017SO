@@ -12,7 +12,7 @@ void comunicacionConMasters(ParametrosComunicacionConMaster* parametros) {
 	//Creo Servidor Principal
 	int socketYAMAServidor;
 	socketYAMAServidor = lib_socketServidor(parametros->puerto);
-
+    cantNodosConectados=0;
 	fd_set master;
 	fd_set read_fds;
 	int fd_max;
@@ -303,6 +303,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		break;
 
 	case FIN_REDUCCION_LOCAL:
+		cantNodosConectados++; //nuevo
 
 		logInfo("YAMA recibe señal de finalización de Reducción Local");
 		recv(FDMaster, pesoARecibirRG, 4, 0);
@@ -325,6 +326,11 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		tamanioDeLaRespuestaDeReduccionGlobal = tamanioListareduccionGlobal(RRG) + sizeof(int) + (sizeof(int)*list_size(RRG)*4);
 		respuesReduccionGlobalSerializado = serializarListaRespuestaReduccionGlobal(RRG);
 
+
+		if(cantNodos==cantNodosConectados){ //nuevo
+																										logInfo("RECIBI TODAS LAS REDUCCIONES LOCALES");
+
+
 		mensajesEnviadosAMaster(REDUCCION_GLOBAL,FDMaster,respuesReduccionGlobalSerializado,tamanioDeLaRespuestaDeReduccionGlobal);
 
 		logInfo("actualizar la tabla de estados por la respuesta de reduccion global");
@@ -335,6 +341,12 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		logInfo("Actualizar carga de worker por la reduccion global");
 		actualizarCargaWorkerReduccionGlobal(RRG);
+
+		}else{//nuevo
+			logInfo("FALTAN WORKERS TERMINAR LA REDUCCION LOCAL");//nuevo
+		}
+
+
 
 		break;
 
@@ -384,6 +396,22 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		actualizarEstructurasFinalizacionDeJOB(jobQueFinalizo, FDMaster);
 
 		break;
+	case ABORTO_JOB:
+			//aca entra por la finalizacion normal o un error
+			logInfo("Yama recibe señal de finalización de JOB ");
+			recv(FDMaster, pesoFJ, 4, 0);
+			tamanioDeLaFinalizacionDeJob = deserializarINT(pesoFJ);
+			logInfo("tamanio de lo que recibo %i", tamanioDeLaFinalizacionDeJob);
+			mesnajeFinalizacionDeJob = malloc(tamanioDeLaFinalizacionDeJob + 1);
+			mesnajeFinalizacionDeJob[tamanioDeLaFinalizacionDeJob] = '\0';
+			recv(FDMaster, mesnajeFinalizacionDeJob, tamanioDeLaFinalizacionDeJob, 0);
+
+			jobQueFinalizo = deserializarINT(mesnajeFinalizacionDeJob);
+
+			logInfo("ERROR: SE ABORTO EL JOB %i", jobQueFinalizo);
+
+
+			break;
 
 	default:
 		logInfo("YAMA recibe un señal que no sabe traducir.");
@@ -729,17 +757,6 @@ Replanificacion* deserializarReplanificacion(char* replanifSerializado){
 
 }
 
-char* serializarReplanificacion(int numeroJob,int nodoCaido){
-
-	char* replanifSerializado = malloc(sizeof(int)*2);
-
-	int desplazamiento = 0;
-
-	serializarDato(replanifSerializado, &(numeroJob), sizeof(int),&desplazamiento);
-	serializarDato(replanifSerializado, &(nodoCaido), sizeof(int), &desplazamiento);
-
-	return replanifSerializado;
-}
 
 void actualizarCargaWorkerReduccionGlobal(t_list* RRG){
 
@@ -977,7 +994,7 @@ void actualizarCargaDeWorkersPorReplanificacion(int numeroDeNodo,int numeroDeJOb
 
 			JOBCompleto* jobElegido = list_remove(listaDeJobs,i);
 			disminuirCargaDeWorkersPorReplanificacion(jobElegido->respuestaTransformacion);
-			list_add_in_index(listaDeJobs,i);
+			list_add_in_index(listaDeJobs,i, jobElegido);
 			i++;
 		}else{
 

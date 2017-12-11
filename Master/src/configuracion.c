@@ -29,6 +29,7 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 
 	configuracion->ipYama = strdup(config_get_string_value(configTemporal, YAMA_IP));
 	configuracion->puertoYama = config_get_int_value(configTemporal, YAMA_PUERTO);
+    configuracion->cantNodos = config_get_int_value(configTemporal, CANT_NODOS);
 
     config_destroy(configTemporal);
 

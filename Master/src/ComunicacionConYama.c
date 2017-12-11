@@ -61,41 +61,43 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 
 void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio) {
 	switch (codigo) {
-	Paquete* paqueteDeEnvioDeJOB;
-	case NOMBRE_ARCHIVO:
-		paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
+	Paquete* paquete;
 
-		if (enviarPaquete(FDsocketClienteYAMA, paqueteDeEnvioDeJOB) == -1) {
+
+	case NOMBRE_ARCHIVO:
+		paquete = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
+
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de job");
 		}
 
-		destruirPaquete(paqueteDeEnvioDeJOB);
+		destruirPaquete(paquete);
 		break;
 
 	case FIN_TRANSFORMACION:
 		logInfo(
 				"Master envia señal de finalización de Transformación(EXITO o FRACASO)");
-		Paquete* paqueteTranf = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
+		paquete = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
 
-		if (enviarPaquete(FDsocketClienteYAMA, paqueteTranf) == -1) {
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Transformacion.");
 		}
 
-		destruirPaquete(paqueteTranf);
+		destruirPaquete(paquete);
 
 		break;
 
 	case FIN_REDUCCION_LOCAL:
 		logInfo(
 				"Master envia señal de finalización de Reducción Local(EXITO o FRACASO)");
-		Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+		paquete = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
 
-		if (enviarPaquete(FDsocketClienteYAMA, paqueteRedLocal) == -1) {
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Red.Local.");
 		}
 
-		destruirPaquete(paqueteRedLocal);
+		destruirPaquete(paquete);
 
 		break;
 
@@ -103,31 +105,46 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,in
 		logInfo(
 				"Master envia señal de finalización de Reducción Global(EXITO o FRACASO)");
 
-		Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+		paquete = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
 
-		if (enviarPaquete(FDsocketClienteYAMA, paqueteRedGlobal) == -1) {
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Red.Global.");
 		}
 
-		destruirPaquete(paqueteRedGlobal);
+		destruirPaquete(paquete);
 
 		break;
 
-	case ALMACENADO_FINAL:
+	case ALMACENADO_FINAL: // termino bien
 		logInfo(
 				"Master envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
 
-		Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+		paquete = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
 				mensaje);
 
-		if (enviarPaquete(FDsocketClienteYAMA, paqueteAlmacenado) == -1) {
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Almacenado Final");
 		}
 
-		destruirPaquete(paqueteAlmacenado);
+		destruirPaquete(paquete);
 
 		break;
+	case ABORTO_JOB: // termino bien
+		logInfo(
+				"Master envia señal de ABORTO DE JOB");
+
+		paquete = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
+
+		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
+			logInfo("Error en envio de respuesta de Almacenado Final");
+		}
+
+		destruirPaquete(paquete);
+
+		break;
+
 
 	default:
 		break;

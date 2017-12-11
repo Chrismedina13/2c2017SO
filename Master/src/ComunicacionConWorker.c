@@ -145,6 +145,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
     Replanificacion* parametrosReplanif;
 
 	int tamanioRta;
+	int jobQueFinalizo;
 
 
 	switch (codigo) {
@@ -160,22 +161,21 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 				mensaje[tamanio] = '\0';
 				recv(FDServidorWORKER,mensaje, tamanio,0);
 				resultado_job=deserializarResultado(mensaje);
-						if(resultado_job->resultado==1){
-				logInfo("Recibi de Worker el fin de la transformacion %i", intRecibido);
+						if(resultado_job->resultado==0){
+				logInfo("Recibi de Worker el fin de la transformacion");
 				logInfo("Envio a YAMA el fin transformacion");
 				finRG=malloc(sizeof(int)*2);
 				finRG->nodo= resultado_job->nodo;
 			    finRG->numeroDeJob= nro_job;
 			    mensajeNuevo = serializarFinTransformacion(finRG);
-				mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+				mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA,mensajeNuevo,sizeof(int)*2);
 						}else{
                logInfo("Fin de la transformacion salio mal, Envio a YAMA la replanificacion");
-    	       parametrosReplanif = malloc(sizeof(int)*2);
-    	       parametrosReplanif->nodoCaido=resultado_job->nodo;
-               parametrosReplanif->numeroDeJOb=nro_job;
-               mensajeNuevo2=serializarReplanificacion(parametrosReplanif);
 
-				  mensajesEnviadosAYama(REPLANIFICACION, FD_YAMA,mensajeNuevo2, strlen(mensajeNuevo2));
+
+               mensajeNuevo2=serializarReplanificacion(nro_job,resultado_job->nodo);
+
+				  mensajesEnviadosAYama(REPLANIFICACION, FD_YAMA,mensajeNuevo2,sizeof(int)*2);
 						}
 		break;
 
@@ -192,17 +192,24 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 						mensaje = malloc(tamanio + 1);
 						mensaje[tamanio] = '\0';
 						recv(FDServidorWORKER,mensaje, tamanio,0);
-						intRecibido = deserializarINT(mensaje);
-						logInfo("Recivi de Worker el fin de la reduccion local %i", intRecibido);
+						resultado_job=deserializarResultado(mensaje);
+												if(resultado_job->resultado==0){
+										logInfo("Recibi de Worker el fin de la reduccion local ");
 
+										logInfo("Envio a YAMA el fin reduccion Local");
+										finRG=malloc(sizeof(int)*2);
+										finRG->nodo= resultado_job->nodo;
+									    finRG->numeroDeJob= nro_job;
+									    mensajeNuevo = serializarFinTransformacion(finRG);
+										mensajesEnviadosAYama(FIN_REDUCCION_LOCAL,FD_YAMA,mensajeNuevo,sizeof(int)*2);
+												}else{
+						               logInfo("Fin de la reduccion local salio mal, Envio a YAMA la finalizacion del job");
 
-						finTransformacion* finRG = malloc(sizeof(int)*2);
-						//finRG->nodo= el nro de nodo se lo manda worker. crear estructuraa
-						//  finRG->numeroDeJob=nro_job;
-                       // logInfo("Envio a YAMA el fin de la reduccion local");
-					//	mensajesEnviadosAYama(FIN_REDUCCION_LOCAL, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+						               jobQueFinalizo =nro_job;
+						               mensajeNuevo2=serializeInt(jobQueFinalizo);
 
-
+										  mensajesEnviadosAYama(ABORTO_JOB, FD_YAMA,mensajeNuevo2,sizeof(int));
+												}
 
 		break;
 
@@ -215,12 +222,24 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 							mensaje = malloc(tamanio + 1);
 							mensaje[tamanio] = '\0';
 							recv(FDServidorWORKER,mensaje, tamanio,0);
-							intRecibido = deserializarINT(mensaje);
-							logInfo("Recivi de Worker el fin de la reduccion global %i", intRecibido);
-							mensajeNuevo = malloc (sizeof(int));
-							mensajeNuevo = serializeInt(intRecibido);
-							 logInfo("Envio a YAMA el fin de la reduccion global");
-					        mensajesEnviadosAYama(FIN_REDUCCION_GLOBAL, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+							resultado_job=deserializarResultado(mensaje);
+																			if(resultado_job->resultado==0){
+
+																	logInfo("Envio a YAMA el fin reduccion Global");
+																	finRG=malloc(sizeof(int)*2);
+																	finRG->nodo= resultado_job->nodo;
+																    finRG->numeroDeJob= nro_job;
+																    mensajeNuevo = serializarFinTransformacion(finRG);
+																	mensajesEnviadosAYama(FIN_REDUCCION_GLOBAL,FD_YAMA,mensajeNuevo,sizeof(int)*2);
+																							}
+		                                                           else{
+													               logInfo("Fin de la reduccion local salio mal, Envio a YAMA la finalizacion del job");
+
+													               jobQueFinalizo =nro_job;
+													               mensajeNuevo2=serializeInt(jobQueFinalizo);
+
+																	  mensajesEnviadosAYama(ABORTO_JOB, FD_YAMA,mensajeNuevo2,sizeof(int));
+																			}
 
 
 
@@ -228,7 +247,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 
 		break;
 
-	case ALMACENADO_FINAL:
+	case ALMACENADO_FINAL: //el estado (int). 0 si esta bien, 1 si esta mal
 		logInfo("MASTER RECIBE EL FIN DEL ALMACENADO FINAL");
 
 									recv(FDServidorWORKER,pesoMensaje,4,0);
@@ -242,7 +261,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 									mensajeNuevo = malloc (sizeof(int));
 									mensajeNuevo = serializeInt(intRecibido);
 
-							        mensajesEnviadosAYama(FINALIZACION_DE_JOB, FD_YAMA,mensajeNuevo, strlen(mensajeNuevo));
+							        mensajesEnviadosAYama(FINALIZACION_DE_JOB, FD_YAMA,mensajeNuevo, sizeof(int));
 
 
 

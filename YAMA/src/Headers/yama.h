@@ -37,6 +37,8 @@ int FDsocketClienteFileSystem;
 
 Job* crearJOB(int FDMAster,char* nombreDelJob);
 void rutina(int senial);
+int cantNodos;
+int cantNodosConectados;
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/YAMA/yama.conf"
 #endif /* HEADERS_YAMA_H_ */
