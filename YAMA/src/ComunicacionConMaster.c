@@ -303,7 +303,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		break;
 
 	case FIN_REDUCCION_LOCAL:
-		cantNodosConectados++; //nuevo
 
 		logInfo("YAMA recibe señal de finalización de Reducción Local");
 		recv(FDMaster, pesoARecibirRG, 4, 0);
@@ -327,10 +326,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		respuesReduccionGlobalSerializado = serializarListaRespuestaReduccionGlobal(RRG);
 
 
-		if(cantNodos==cantNodosConectados){ //nuevo
-																										logInfo("RECIBI TODAS LAS REDUCCIONES LOCALES");
-
-
 		mensajesEnviadosAMaster(REDUCCION_GLOBAL,FDMaster,respuesReduccionGlobalSerializado,tamanioDeLaRespuestaDeReduccionGlobal);
 
 		logInfo("actualizar la tabla de estados por la respuesta de reduccion global");
@@ -341,12 +336,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		logInfo("Actualizar carga de worker por la reduccion global");
 		actualizarCargaWorkerReduccionGlobal(RRG);
-
-		}else{//nuevo
-			logInfo("FALTAN WORKERS TERMINAR LA REDUCCION LOCAL");//nuevo
-		}
-
-
 
 		break;
 
