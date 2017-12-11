@@ -1107,4 +1107,44 @@ Replanificacion* deserializarReplanificacion(char* FT) {
 	return fin;
 
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+char* serializarArchivo(archivo* arch) {
+	char* nombre = arch->nombre;
+	char* contenido = arch->contenido;
+	int tamanioContenido = strlen(contenido);
+	int tamanioNombre = strlen(nombre);
+
+	char* scriptSerializado = malloc(tamanioNombre + tamanioContenido + sizeof(int)*2);
+	int desplazamiento = 0;
+
+	serializarDato(scriptSerializado, &(tamanioNombre), sizeof(int), &desplazamiento);
+	serializarDato(scriptSerializado, &(tamanioContenido), sizeof(int), &desplazamiento);
+
+	serializarDato(scriptSerializado, contenido,tamanioContenido, &desplazamiento);
+	serializarDato(scriptSerializado, nombre, tamanioNombre,&desplazamiento);
+
+	return scriptSerializado;
+}
+
+archivo* deserializarArchivo(char* archivoSerializado) {
+
+	int desplazamiento = 0;
+	int tamanioContenido;
+	int tamanioNombre;
+	deserializarDato(&(tamanioNombre), archivoSerializado,sizeof(int), &desplazamiento);
+	deserializarDato(&(tamanioContenido), archivoSerializado,sizeof(int), &desplazamiento);
+
+	archivo* archivoDeserializado = malloc(tamanioContenido+tamanioNombre);
+
+	archivoDeserializado->contenido = string_substring(archivoSerializado,desplazamiento, tamanioContenido);
+	desplazamiento = desplazamiento+ tamanioContenido;
+
+	archivoDeserializado->nombre = string_substring(archivoSerializado,desplazamiento,tamanioNombre);
+	desplazamiento = desplazamiento+ tamanioNombre;
+
+	free(archivoSerializado);
+
+	return archivoDeserializado;
+}
