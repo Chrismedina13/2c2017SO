@@ -440,14 +440,14 @@ void consolaFileSystem(){
 
 							//copia 1
 
-							char* contenidoSerializado = serializarContenidoDelBloque(bloque);
+						//	char* contenidoSerializado = serializarContenidoDelBloque(bloque);
 							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
 
 							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, contenidoSerializado,sizeof(int)+strlen(bloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, bloque,strlen(bloque));
 
 							send(fileDescriptor1,desplazamiento,4,0);
 
@@ -457,14 +457,14 @@ void consolaFileSystem(){
 
 							//copia 2
 
-							char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
+						  //char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
 							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
 
 							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, contenidoSerializado2, sizeof(int)+strlen(bloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, bloque, strlen(bloque));
 
 							send(fileDescriptor1,desplazamiento2,4,0);
 
