@@ -43,10 +43,10 @@ int receive_basic(int fd_dn, int tamanio_parcial)
 
 char* recv_timeout(int FD_DN , int timeout, int CHUNK_SIZE)
 {
-	char* bloque=string_new();
+	char* bloque=NULL;
     int size_recv , total_size= 0;
     struct timeval begin , now;
-    char chunk[CHUNK_SIZE];
+    char chunk[CHUNK_SIZE]; //tamanio de los bloques que va recibiendo
     double timediff;
 
     //make socket non blocking
@@ -83,7 +83,8 @@ char* recv_timeout(int FD_DN , int timeout, int CHUNK_SIZE)
         else
         {
             total_size += size_recv;
-            string_append(&bloque,chunk);
+          	realloc(bloque, size_recv);
+          	memcpy(bloque, &chunk, size_recv);
             //reset beginning time
             gettimeofday(&begin , NULL);
         }
