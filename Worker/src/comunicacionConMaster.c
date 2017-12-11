@@ -139,7 +139,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								char* archivoApareado = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/localApareado";
 
 								//REARMO EL SCRIPT
-								rearmar_script(info->scriptReduccionLocal,REDUCCION_LOCAL);
+								rearmar_script(&(info->scriptReduccionLocal),REDUCCION_LOCAL);
 
 								//APAREO LOS ARCHIVOS TEMPORALES TRANSFORMADOS QUE VOY A REDUCIR
 								apareoDeArchivosVectores(info->listaDeArchivosTemporales,archivoApareado);
@@ -172,7 +172,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								char* archivoApareado = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/localApareado";
 
 								//REARMO EL SCRIPT
-								rearmar_script(info->scriptReduccionGlobal,REDUCCION_LOCAL);
+								rearmar_script(&(info->scriptReduccionGlobal),REDUCCION_LOCAL);
 
 								//LISTA DE INFO QUE TIENE QUE SOLICITAR A CADA WORKER
 								t_list* lista = info->listaInfoParaReduccionGlobal;
@@ -181,6 +181,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								int i = 0;
 								while(i<list_size(lista)){
 									//SE CONECTA A CADA WORKER Y LE SOLICITA EL ARCHIVO TEMPORAL
+
+
 								}
 
 								//RECIBE LOS ARCHIVOS TEMPORALES Y LOS GUARDA EN /WORKER/TMP (se podria hacer un semaforo esperando
@@ -247,67 +249,67 @@ return parametros;
 
 
 void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje, int tamanio) {
-//Worker recibe de master
-char pesoMensaje[4];
+	//Worker recibe de master
+	char pesoMensaje[4];
 
 
-switch (codigo) {
-case FIN_TRANSFORMACION:
-	logInfo(
-			"Woker envia señal de finalización de Transformación(EXITO o FRACASO)");
-	Paquete* paqueteTranf = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
+	switch (codigo) {
+	case FIN_TRANSFORMACION:
+		logInfo(
+				"Woker envia señal de finalización de Transformación(EXITO o FRACASO)");
+		Paquete* paqueteTranf = crearPaquete(FIN_TRANSFORMACION, tamanio, mensaje);
 
-	if (enviarPaquete(FDMaster, paqueteTranf) == -1) {
-		logInfo("Error en envio de respuesta de Transformacion.");
+		if (enviarPaquete(FDMaster, paqueteTranf) == -1) {
+			logInfo("Error en envio de respuesta de Transformacion.");
+		}
+
+		destruirPaquete(paqueteTranf);
+
+		break;
+	case FIN_REDUCCION_LOCAL:
+		logInfo(
+				"Woker envia señal de finalización de Reducción Local(EXITO o FRACASO)");
+		Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
+
+		if (enviarPaquete(FDMaster, paqueteRedLocal) == -1) {
+			logInfo("Error en envio de respuesta de Red.Local.");
+		}
+
+		destruirPaquete(paqueteRedLocal);
+
+		break;
+
+	case FIN_REDUCCION_GLOBAL:
+		logInfo(
+				"Worker envia señal de finalización de Reducción Global(EXITO o FRACASO)");
+
+		Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
+
+		if (enviarPaquete(FDMaster, paqueteRedGlobal) == -1) {
+			logInfo("Error en envio de respuesta de Red.Global.");
+		}
+
+		destruirPaquete(paqueteRedGlobal);
+
+		break;
+	case ALMACENADO_FINAL:
+		logInfo(
+				"Worker envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
+
+		Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
+				mensaje);
+
+		if (enviarPaquete(FDMaster, paqueteAlmacenado) == -1) {
+			logInfo("Error en envio de respuesta de Almacenado Final");
+		}
+
+		destruirPaquete(paqueteAlmacenado);
+
+		break;
+
+	default:
+		break;
 	}
-
-	destruirPaquete(paqueteTranf);
-
-	break;
-case FIN_REDUCCION_LOCAL:
-	logInfo(
-			"Woker envia señal de finalización de Reducción Local(EXITO o FRACASO)");
-	Paquete* paqueteRedLocal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
-
-	if (enviarPaquete(FDMaster, paqueteRedLocal) == -1) {
-		logInfo("Error en envio de respuesta de Red.Local.");
-	}
-
-	destruirPaquete(paqueteRedLocal);
-
-	break;
-
-case FIN_REDUCCION_GLOBAL:
-	logInfo(
-			"Worker envia señal de finalización de Reducción Global(EXITO o FRACASO)");
-
-	Paquete* paqueteRedGlobal = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
-
-	if (enviarPaquete(FDMaster, paqueteRedGlobal) == -1) {
-		logInfo("Error en envio de respuesta de Red.Global.");
-	}
-
-	destruirPaquete(paqueteRedGlobal);
-
-	break;
-case ALMACENADO_FINAL:
-	logInfo(
-			"Worker envia señal de finalización de Almacenamiento Final(EXITO o FRACASO).");
-
-	Paquete* paqueteAlmacenado = crearPaquete(FIN_REDUCCION_LOCAL, tamanio,
-			mensaje);
-
-	if (enviarPaquete(FDMaster, paqueteAlmacenado) == -1) {
-		logInfo("Error en envio de respuesta de Almacenado Final");
-	}
-
-	destruirPaquete(paqueteAlmacenado);
-
-	break;
-
-default:
-	break;
-}
 }

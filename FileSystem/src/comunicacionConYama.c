@@ -33,7 +33,7 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 	logInfo("Creando mensaje de ubicacion de nodos");
 
-	char* ipWorker1 = "43.2.2.4";
+/*	char* ipWorker1 = "43.2.2.4";
 	int puerto1 = 2;
 	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
 	char* ipWorker2 = "100.23.12.4";
@@ -54,10 +54,10 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	list_add(LISTARRG,info1);
 	list_add(LISTARRG,info2);
 	list_add(LISTARRG,info3);
-
-	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
-	char* listaSerializada = serializarLista_info_workers(LISTARRG);
-	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
+*/
+	//int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
+	//char* listaSerializada = serializarLista_info_workers(LISTARRG);
+//	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
 /*    logInfo("creando Respuesta Almacenado Final de prueba ");
 
@@ -172,21 +172,21 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 				tamanio);
 
 
-      //	lista_ubicaciones = nombreToUbicaciones(mensaje);
-	    logInfo(" Armando lista ubicaciones");
+      lista_ubicaciones = nombreToUbicaciones(mensaje);
+	  //  logInfo(" Armando lista ubicaciones");
 
 
-		UbicacionBloquesArchivo2 * ubicaciones1 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
-		list_add(lista_ubicaciones, ubicaciones1);
-		UbicacionBloquesArchivo2 * ubicaciones2 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
-		list_add(lista_ubicaciones, ubicaciones2);
-		UbicacionBloquesArchivo2 * ubicaciones3 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
-		list_add(lista_ubicaciones, ubicaciones3);
+	//	UbicacionBloquesArchivo2 * ubicaciones1 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
+	//	list_add(lista_ubicaciones, ubicaciones1);
+	//	UbicacionBloquesArchivo2 * ubicaciones2 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
+	//	list_add(lista_ubicaciones, ubicaciones2);
+	//	UbicacionBloquesArchivo2 * ubicaciones3 = crearUbicacionBloquesArchivos2(0,2,21,21,32,12);
+	//	list_add(lista_ubicaciones, ubicaciones3);
 
-	    logInfo("Lista ubicaciones armada");
+	//    logInfo("Lista ubicaciones armada");
 
 		lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones));
-		lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
+		lista_serializada=serializarListaUbicacionBloquesArchivo2(lista_ubicaciones);
 		tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones);
 
 	    logInfo(" todo serializado listo para mandar");
