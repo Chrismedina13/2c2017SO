@@ -6,87 +6,41 @@
  */
 #include "Headers/comunicacionConWorkerServidor.h"
 
-void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
+void comunicacionConWorkerServidor(ParametrosComunicacionConWorkerServidor* param) {
+	//socketClienteParaFileSystem
+	char buffer2[4];
 
-	//Creo Servidor Principal
-	int socketWorkerServidor;
-	socketWorkerServidor = lib_socketServidor(parametrosMaster->puertoWorker);
+	int FDsocketClienteWorkerServidor;
+	FDsocketClienteWorkerServidor = lib_SocketCliente(param->ip,param->puerto);
+	logInfo("SocketCliente = %d \n", FDsocketClienteWorkerServidor);
 
-	fd_set master;
-	fd_set read_fds;
-	int fd_max;
-	int i;
-	int FD_Cliente;
-	int bytesRecibidos;
-	char buffer[4];
+	FD_WorkerServidor=FDsocketClienteWorkerServidor;
+}
 
-	FD_SET(socketWorkerServidor, &master);
-	fd_max = socketWorkerServidor;
+ParametrosComunicacionConWorkerServidor* setParametrosComunicacionConWorkerServidor(int puerto,char* ip){
+	ParametrosComunicacionConWorkerServidor* parametros = malloc(sizeof(ParametrosComunicacionConWorkerServidor));
+	parametros->ip = ip;
+	parametros->puerto = puerto;
+	return parametros;
+}
 
-	for (;;) {
+void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem, char* mensaje, int tamanio) {
+	Paquete * paqueteEnvio;
+	switch (codigo) {
 
-		read_fds = master;
-		if (select(fd_max + 1, &read_fds, NULL, NULL, NULL) == -1) {
-
-			logInfo("Error en el select");
-		}
-		for (i = 0; i <= fd_max; i++) {
-
-			if (FD_ISSET(i, &read_fds)) {
-
-				if (i == socketWorkerServidor) {
-
-					if ((FD_Cliente = lib_aceptarYRegistrarSocket(
-							socketWorkerServidor)) == -1) {
-
-						logInfo("Error en el aceept despues del select");
-
-					} else {
-						FD_SET(FD_Cliente, &master);
-						if (FD_Cliente > fd_max) {
-							fd_max = FD_Cliente;
-						}
-						logInfo(
-								"Nueva conexion del socket cliente Master de FD: %i",
-								FD_Cliente);
-					}
-				} else {
-
-					//Recibo datos de algun cliente
-					if ((bytesRecibidos = recv(i, buffer,4 , 0)) <= 0) {
-						if (bytesRecibidos == 0) {
-							logInfo("Conexion cerrada del FD : %i", i);
-
-						}
-						close(i);
-						FD_CLR(i, &master);
-
-					} else {
-						//logInfo("HOLA");1
-						int codigo = deserializarINT(buffer);
-						//logInfo(" Worker Recibe de Master: %d", codigo);
-						printf(" Worker Recibe de Master: %d", codigo);
-
-						char pesoMensaje[4];
-						int tamanio;
-						char* mensaje;
-						int FDMaster = i;
-
-
-						//ENVIO MASTER
-						resultadoJob* resultado_job;
-						char* mensajeAEnviar;
-
-						/*switch (codigo) {
-
-						}*/
-
-
-					}
+	case ALMACENADO_FINAL:
+      logInfo("se manda a file system el saludo");
+		paqueteEnvio = crearPaquete(ALMACENADO_FINAL, tamanio,mensaje);
+				if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
+					logInfo("ERROR EN EL ENVIO DE SALUDO");
 				}
 
-			}
-		}
+				destruirPaquete(paqueteEnvio);
+				free(mensaje);
+				break;
 
-	}
+	default:
+		break;
+	  }
 }
+
