@@ -59,8 +59,9 @@ t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada)
 char* serializarInfoParaReduccionGlobal(infoParaReduccionGlobal* info);
 
 infoParaReduccionGlobal* deserializarInfoParaReduccionGlobal(char* infoSerializada);
+char* serializarRespuestaReduccionLocal(RespuestaReduccionLocal* info);
 
-
+RespuestaReduccionLocal* deserializarRespuestaReduccionLocal(char* infoSerializada);
 //////////////////////////////////////DEFINICION DE FUNCIONES  SIN PROBAR//////////////////////////////////////
 int deserializarINT(char* stream);
 

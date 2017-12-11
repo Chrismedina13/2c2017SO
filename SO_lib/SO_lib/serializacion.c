@@ -456,7 +456,83 @@ t_list * deserializarUbicacionBloquesArchivos(char* ListaUbicacionesSerializada)
 	return lista;
 
 }
+char* serializarRespuestaReduccionLocal(RespuestaReduccionLocal* info){
+	logInfo("inicio Serializo redu local");
 
+	int tamanioArchivoRedu=strlen(info->archivoReduccionLocal);
+	int tamanioip=strlen(info->ipWorker);
+	int tamanioLista=tamanioListaDeArchivos(info->archivosDeTransformacion);
+	int cantidadElementosLista = list_size(info->archivosDeTransformacion);
+
+	char* infoSerializada = malloc(tamanioArchivoRedu+tamanioip+tamanioLista+sizeof(int)*6 + sizeof(int)*cantidadElementosLista);
+	int offset = 0;
+
+	serializarDato(infoSerializada,&(tamanioArchivoRedu),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(tamanioip),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(tamanioLista),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(cantidadElementosLista),sizeof(int),&offset);
+
+	serializarDato(infoSerializada,&(info->nodo),sizeof(int),&offset);
+	serializarDato(infoSerializada,&(info->puertoWorker),sizeof(int),&offset);
+
+	serializarDato(infoSerializada,info->archivoReduccionLocal,tamanioArchivoRedu,&offset);
+	serializarDato(infoSerializada,info->ipWorker,tamanioip,&offset);
+
+	int i = 0;
+	while(i<cantidadElementosLista){
+		char* contenido = list_get(info->archivosDeTransformacion,i);
+		int tamanioContenido = strlen(contenido);
+		serializarDato(infoSerializada,&(tamanioContenido),sizeof(int),&offset);
+		serializarDato(infoSerializada,contenido,tamanioContenido,&offset);
+		i++;
+	}
+	logInfo(" termino Serializo redu local");
+	return infoSerializada;
+}
+RespuestaReduccionLocal* deserializarRespuestaReduccionLocal(char* infoSerializada){
+	int tamanioArchivoRedu;
+	int tamanioLista;
+	int tamanioip ;
+	int cantidadElementosLista ;
+	int tamanioContenido;
+	int offset = 0;
+	logInfo("deserializo redu local");
+
+
+	deserializarDato(&(tamanioArchivoRedu),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(tamanioip),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(tamanioLista),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(cantidadElementosLista),infoSerializada,sizeof(int),&offset);
+
+	RespuestaReduccionLocal* info = malloc(tamanioArchivoRedu+ tamanioip+ tamanioLista + sizeof(int)*2);
+	deserializarDato(&(info->nodo),infoSerializada,sizeof(int),&offset);
+	deserializarDato(&(info->puertoWorker),infoSerializada,sizeof(int),&offset);
+	logInfo("%i",info->nodo);
+	logInfo("%i",info->puertoWorker);
+	info->archivoReduccionLocal=string_substring(infoSerializada,offset,tamanioArchivoRedu);
+	offset+=tamanioArchivoRedu;
+	info->ipWorker=string_substring(infoSerializada,offset,tamanioip);
+		offset+=tamanioip;
+		logInfo("%s",info->archivoReduccionLocal);
+		logInfo("%s",info->ipWorker);
+int i;
+	logInfo("%i",cantidadElementosLista);
+	t_list* lista = list_create();
+	for (i = 0; i < cantidadElementosLista; i++) {
+
+		deserializarDato(&(tamanioContenido),infoSerializada,sizeof(int),&offset);
+		char* contenido = malloc(tamanioContenido);
+		contenido = string_substring(infoSerializada,offset,tamanioContenido);
+		offset += tamanioContenido;
+		logInfo("%s",contenido);
+		list_add(lista,contenido);
+		info->archivosDeTransformacion = lista;
+	}
+
+logInfo("Deserilizo fin");
+	return info;
+
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////

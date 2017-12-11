@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
-//probando serializar redu local
+/*probando serializar redu local
 
 		char* archivo1 = "archivotemplocal1";
 		char* archivo2 = "archivotemporallocal2";
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
 		char* listaS = serializarRespuestaReduccionLocal(redu);
 		t_list* l = deserializarRespuestaReduccionLocal(listaS);
-
+*/
 	//PROBANDO SERIALIZAR INFO REDUCCION GLOBAL DE MASTER PARA WORKER
 	/*char* archivoG = "archivoTemporalGlobal";
 	char* archivo1 = "archivotemplocal1";
