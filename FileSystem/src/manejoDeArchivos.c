@@ -91,6 +91,7 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 }
 
+
 int cantidadDeBloques(int tamanio){
 	int cantidad;
 	if(tamanio%MB == 0) cantidad = tamanio/MB;
@@ -339,3 +340,174 @@ void mostrarBloque(t_list* listaDeBloques,int index){
 	char* contenido = list_get(listaDeBloques,index);
 	printf("El contenido del bloque %d es:\n\n\n%s",index,contenido);
 }
+
+/*
+int cpfrom(char* ruta, char* rutaLocal){
+
+
+						int status=0;
+
+						int indiceArchivo = newArchivo();
+
+						//reviso si hay lugar en mis nodos
+
+						FILE * fp = fopen(comandos[1], "r");
+						if (!fp) {
+						  perror("Error al abrir el Archivo");
+						  status = -1;
+						}
+
+						int desplazamiento = 0;
+						int tamArchivo = tamanioArchivo(fp);
+						int cantBloques = 0;
+
+						int bloquesNecesarios = 10;//hacer bien, no importa mucho ahora porque hay lugar
+
+						int bloquesLibres = tabla_de_nodos.bloqueslibres;
+						//logInfo("%d", tabla_de_nodos.bloqueslibres);
+
+						if(bloquesNecesarios>bloquesLibres){//necesita guardar una copia por cada bloque
+							logInfo("No hay lugar suficiente para almacenar el archivo y sus copias");
+							status = -1;
+						}
+
+						while (desplazamiento < tamArchivo  && status == 0) {
+
+							//saco el bloque del archivo
+
+							char* bloque = obtenerBloqueDeTexto(fp, indiceArchivo, desplazamiento);
+
+							cantBloques++;
+
+							//elijo los nodos para guardarlo
+
+							distribuirBloque(bloque, indiceArchivo);
+
+							int count = 0;
+							UbicacionBloquesArchivo2* ubicacion;
+
+							ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+							int tamanioSetBloque= (strlen(bloque) + sizeof(int)*3);
+
+
+							//envio las copias a los nodos
+
+							//copia 1
+
+							char* contenidoSerializado = serializarContenidoDelBloque(bloque);
+							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
+
+							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
+
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
+
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, contenidoSerializado,sizeof(int)+strlen(bloque));
+
+							send(fileDescriptor1,desplazamiento,4,0);
+
+							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
+
+
+							//copia 2
+
+							char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
+							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
+
+							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
+
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
+
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, contenidoSerializado2, sizeof(int)+strlen(bloque));
+
+							send(fileDescriptor1,desplazamiento2,4,0);
+
+							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
+
+							logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
+
+						}
+
+						logInfo("Parti el archivo en %d bloques.", cantBloques);
+
+						//crea registro del archivo en YAMAFS
+
+						status = crearRegistroArchivo(comandos[1],comandos[2], indiceArchivo);
+						if(status==1){
+							logInfo("Registro de archivo creado correctamente.");
+
+							if(cantidad_archivos==cantArchivos){
+								semaphore_signal(SEMAFOROYAMA);
+							}
+						}
+						if(status==-1){
+							logInfo("Registro de archivo no pudo ser creado.");
+						}
+
+						fclose(fp);
+
+					}
+
+
+}
+*/
+char* obtenerBloqueDeTexto(int fp, int indiceArchivo, int desplazamiento){
+
+	char* bloque = malloc(MB);
+
+	bloque = dividirArchivoTextoMemoria(fp,&desplazamiento,indiceArchivo);
+	return(bloque);
+
+}
+/*
+char * dividirArchivoTextoMemoria2(int fp, int * desplazamiento, int indiceArchivo, int tamArchivo) {
+
+	int tamRestante = tamArchivo - *desplazamiento;
+
+	char * buffer = string_new();
+
+	int tamBuffer = 0;
+
+	//Genero el bloque
+
+	char * bloqueAGurdar = armarBloqueTamRestante(texto + *desplazamiento,
+			tamRestante);
+	int tamBloqueAGuardar = strlen(bloqueAGurdar);
+
+	//Pregunto si es el ultimo bloque
+	if ((tamRestante - tamBloqueAGuardar) != 0) {
+		tamBloqueAGuardar++;
+	}
+
+	while (tamRestante > 0 && (tamBuffer + tamBloqueAGuardar) < MB) {
+		//Guardo el bloque al buffer
+		string_append(&buffer, bloqueAGurdar);
+
+		//Pregunto si es el ultimo bloque
+		if ((tamRestante - tamBloqueAGuardar) != 0) {
+			string_append(&buffer, "\n");
+		}
+
+		tamRestante -= tamBloqueAGuardar;
+
+		*desplazamiento = *desplazamiento + tamBloqueAGuardar;
+
+		tamBuffer += tamBloqueAGuardar;
+
+		free(bloqueAGurdar);
+
+		//Genero el bloque
+		bloqueAGurdar = armarBloqueTamRestante(texto + *desplazamiento, tamRestante);
+		tamBloqueAGuardar = strlen(bloqueAGurdar);
+
+		//Pregunto si es el ultimo bloque
+		if ((tamRestante - tamBloqueAGuardar) != 0) {
+			tamBloqueAGuardar++;
+		}
+
+	}
+
+	free(bloqueAGurdar);
+
+	return buffer;
+}
+*/

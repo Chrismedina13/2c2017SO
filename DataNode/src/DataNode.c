@@ -114,7 +114,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	int intRecibido;
 	char* bufferBloque[4];
 
-	SetBloque* bloque;
+	SetBloque* bloque=malloc(1024*1024+sizeof(int));
 	char * contenido_bloque;
 	int tamanio_contenido;
 	char * rta_set_bloque;
