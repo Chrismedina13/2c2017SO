@@ -216,7 +216,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		darDeBajaUnNodoCaido(parametrosReplanif);
 
 		//Planificar nuevamente
-		nuevaPlanificacion = replanificacion(parametrosReplanif,FDMaster);
+		nuevaPlanificacion = replanificacionNueva(parametrosReplanif,FDMaster);
 
 		actualizarNodosCaidosReplanificacion(parametrosReplanif,FDMaster);
 
@@ -303,7 +303,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		break;
 
 	case FIN_REDUCCION_LOCAL:
-		cantNodosConectados++; //nuevo
 
 		logInfo("YAMA recibe señal de finalización de Reducción Local");
 		recv(FDMaster, pesoARecibirRG, 4, 0);
@@ -327,10 +326,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		respuesReduccionGlobalSerializado = serializarListaRespuestaReduccionGlobal(RRG);
 
 
-		if(cantNodos==cantNodosConectados){ //nuevo
-																										logInfo("RECIBI TODAS LAS REDUCCIONES LOCALES");
-
-
 		mensajesEnviadosAMaster(REDUCCION_GLOBAL,FDMaster,respuesReduccionGlobalSerializado,tamanioDeLaRespuestaDeReduccionGlobal);
 
 		logInfo("actualizar la tabla de estados por la respuesta de reduccion global");
@@ -341,12 +336,6 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		logInfo("Actualizar carga de worker por la reduccion global");
 		actualizarCargaWorkerReduccionGlobal(RRG);
-
-		}else{//nuevo
-			logInfo("FALTAN WORKERS TERMINAR LA REDUCCION LOCAL");//nuevo
-		}
-
-
 
 		break;
 
@@ -409,6 +398,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 			jobQueFinalizo = deserializarINT(mesnajeFinalizacionDeJob);
 
 			logInfo("ERROR: SE ABORTO EL JOB %i", jobQueFinalizo);
+
+			//actualizarEstructuras
 
 
 			break;
@@ -651,98 +642,140 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 	return NULL;
 }
 
-t_list* replanificacion(Replanificacion* replani,int master){
+//Replanificacion nueva
+t_list* replanificacionNueva(Replanificacion* repla, int master){
 
-	t_list* nuevaPlanificacion;
+	JOBCompleto* jobQueReplanifica;
+	JOBCompleto* jobAComparar;
+	t_list* respuestaReplanificada;
 	int i = 0;
+	t_list* ReplanificacionVieja;
 
-	while(i< list_size(listaDeJobs)){
 
-		JOBCompleto* job = list_get(listaDeJobs,i);
-		if(job->job->master == master && job->job->identificadorJob == replani->numeroDeJOb){
-
-		nuevaPlanificacion = crearNuevaPlanificacion(job->respuestaTransformacion,job->ubicacionDeLasPartesDelJOB,replani->nodoCaido);
-
-		return nuevaPlanificacion;
-
+	while(i < list_size(listaDeJobs)){
+		JOBCompleto* jobAComparar = list_get(listaDeJobs,i);
+		if(jobAComparar->job->identificadorJob == repla->numeroDeJOb && jobAComparar->job->master == master){
+			jobQueReplanifica = list_remove(listaDeJobs,i);
+			i = 50; //para que salga del whilw
 		}else{
 
 			i++;
 		}
+	}
+
+	respuestaReplanificada = crearNuevaPlanificacionNueva(jobQueReplanifica->ubicacionDeLasPartesDelJOB,repla->nodoCaido);
+	ReplanificacionVieja = jobQueReplanifica->respuestaTransformacion;
+	//destruirRespuestaTransformacionYama(ReplanificacionVieja);
+	jobQueReplanifica->respuestaTransformacion = respuestaReplanificada;
+	list_add(listaDeJobs,jobQueReplanifica);
+
+	return respuestaReplanificada;
+}
+
+
+t_list* crearNuevaPlanificacionNueva(t_list* ubicacionDeLasPartes, int nodoCaido){
+
+	int parte = 0;
+	t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
+	int cantidadDePartesDelArchivo = list_size(ubicacionDeLasPartes);
+
+	while (cantidadDePartesDelArchivo > 0) {
+
+		list_add(partesDelArchivo, parte);
+		cantidadDePartesDelArchivo--;
+		parte++;
+	}
+
+	//Me actualiza la lista de workers totales con las partes que tiene para planificar pero no me crea el nodo caido
+	actualizarListaDeWorkersTotalesParaReplanificacion(ubicacionDeLasPartes,nodoCaido,parametrosFileSystem->disponibilidadBase);
+
+	if(string_equals_ignore_case(parametrosFileSystem->algoritmo, "W-CLOCK")){
+
+		asignarFuncionDeDisponibilidadW_ClockANodos(parametrosFileSystem->disponibilidadBase);
+
+	}else{
+
+		asignarFuncionDeDisponibilidadClockANodos(parametrosFileSystem->disponibilidadBase);
 
 	}
 
-	return NULL;
+	t_list* nodosFinalesAReplanificar = dev_nodos_a_planificar();
 
-}
+	algoritmoPrincipal(nodosFinalesAReplanificar,partesDelArchivo,parametrosFileSystem->disponibilidadBase);
 
-t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacionDeLosBloques,int nodoCaido){
+	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAReplanificar);
 
-	t_list* listaConNuevaRespuesta = list_create();
-	int i = 0;
-	RespuestaTransformacionYAMA* respuestaAAnalizar;
+	t_list* respuestaReplanificacion = armarRespuestaTransformacionYAMA(nodosFinalesAReplanificar,ubicacionDeLasPartes);
 
-	while(i<list_size(respuestaTransformacion)){
-	 respuestaAAnalizar= list_get(respuestaTransformacion,i);
-		if(respuestaAAnalizar->nodo == nodoCaido){
 
-			RespuestaTransformacionYAMA* respuestaAModificar = list_remove(respuestaTransformacion,i);
-			UbicacionBloque* ubicacionNuevoBloque = otroNodoDondeEstaLaParte(ubicacionDeLosBloques,respuestaAModificar->nodo,respuestaAModificar->bloque);
-			Info_Workers* info = list_get(list_info_workers,((ubicacionNuevoBloque->nodo)+1));
+	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales y limpiar las listas internas");
 
-			RespuestaTransformacionYAMA* nuevaRespuesta = setRespuestaTransformacionYAMA(ubicacionNuevoBloque->nodo,info->puerto,info->ipWorker,
-					ubicacionNuevoBloque->desplazamiento,respuestaAModificar->bytesOcupados,respuestaAModificar->archivoTemporal);
-
-			list_add(listaConNuevaRespuesta,nuevaRespuesta);
-			free(ubicacionNuevoBloque);
-			i++;
-		}
-		else{
-
-			RespuestaTransformacionYAMA* respuestaAModificar = list_remove(respuestaTransformacion,i);
-			list_add(listaConNuevaRespuesta,respuestaAModificar);
-			i++;
-		}
+	int j = 0;
+	while(j<list_size(nodosFinalesAReplanificar)){
+		nodoParaPlanificar* nodofin = list_remove(nodosFinalesAReplanificar,j);
+		list_clean(nodofin->partesAplanificar);
+		list_clean(nodofin->partesDelArchivo);
+		list_add_in_index(nodosFinalesAReplanificar,j,nodofin);
+		j++;
 	}
 
-	return listaConNuevaRespuesta;
+	list_add_all(listaDeWorkerTotales,nodosFinalesAReplanificar);
+
+	return respuestaReplanificacion;
+}
+
+void actualizarListaDeWorkersTotalesParaReplanificacion(t_list* ubicacionDeLasPartes, int nodoCaido,int disponibilidadBase){
+
+	int nodo1;
+		int nodo2;
+		int a = 0;
+		while (a < list_size(ubicacionDeLasPartes)) {
+
+			UbicacionBloquesArchivo2* bloque = list_get(ubicacionDeLasPartes,a);
+			nodo1 = bloque->nodo1;
+			nodo2 = bloque->nodo2;
+			if (!estaNodorEnLaListaDeTotales(nodo1)) {
+
+				if(nodo1 != nodoCaido){
+
+				nodoParaPlanificar* nodoA = crearNodoParaPlanificar(
+						bloque->nodo1, disponibilidadBase, 0,
+						bloque->parteDelArchivo);
+				logInfo("Se va agregar el nodo %i", nodo1);
+				logInfo("Tamanio Lista de workersTotales antes de add %i",
+						list_size(listaDeWorkerTotales));
+
+				list_add(listaDeWorkerTotales, nodoA);
+				logInfo("Tamanio Lista de workersTotales %i",
+						list_size(listaDeWorkerTotales));
+				}
+			} else {
+				//si ya esta el nodo en la lista, agre ga una parte de archivo
+				agregarPartedeArchivoANodo(nodo1, bloque->parteDelArchivo);
+			}
+			if (!estaNodorEnLaListaDeTotales(nodo2)) {
+				if(nodo2 != nodoCaido){
+				nodoParaPlanificar* nodoB = crearNodoParaPlanificar(
+						bloque->nodo2, disponibilidadBase, 0,
+						bloque->parteDelArchivo);
+				logInfo("Se va agregar el nodo %i", nodo2);
+
+				logInfo("Tamanio Lista de workersTotales antes de add %i",
+						list_size(listaDeWorkerTotales));
+				list_add(listaDeWorkerTotales, nodoB);
+				logInfo("Tamanio Lista de workersTotales %i",
+						list_size(listaDeWorkerTotales));
+				}
+			} else {
+				//si ya esta el nodo en la lista, agrega una parte de archivo
+				agregarPartedeArchivoANodo(nodo2, bloque->parteDelArchivo);
+			}
+
+			a++;
+		}
 
 }
 
-UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque){
-
-	int i = 0;
-
-	while(i < list_size(ubicacionDeLosBloques)){
-
-		UbicacionBloquesArchivo* ubi = list_get(ubicacionDeLosBloques,i);
-
-		UbicacionBloque* ubiBloque1 = malloc(sizeof(UbicacionBloque));
-		UbicacionBloque* ubiBloque2= malloc(sizeof(UbicacionBloque));
-
-		ubiBloque1->nodo = ubi->ubicacionCopia1.nodo;
-		ubiBloque1->desplazamiento = ubi->ubicacionCopia1.desplazamiento;
-		ubiBloque2->nodo = ubi->ubicacionCopia2.nodo;
-		ubiBloque2->desplazamiento = ubi->ubicacionCopia2.desplazamiento;
-
-		if(ubiBloque1->nodo == nodo && ubiBloque1->desplazamiento == bloque){
-
-			free(ubiBloque1);
-			return  ubiBloque2;
-		}
-		if(ubiBloque2->nodo == nodo && ubiBloque2->desplazamiento == bloque){
-
-			free(ubiBloque2);
-			return ubiBloque1;
-		}
-
-		free(ubiBloque1);
-		free(ubiBloque2);
-
-		i++;
-	}
-	return NULL;
-}
 
 //Esto va en serializacion.c
 
