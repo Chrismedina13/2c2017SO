@@ -8,21 +8,21 @@
 #ifndef HEADERS_COMUNICACIONCONWORKERSERVIDOR_H_
 #define HEADERS_COMUNICACIONCONWORKERSERVIDOR_H_
 
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include "logWorker.h"
-#include "commons/collections/list.h"
-#include "SO_lib/sockets.h"
-#include "SO_lib/Protocolo.h"
-#include "SO_lib/estructuras.h"
-#include "SO_lib/serializacion.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "pthread.h"
-#include "Worker.h"
-#include "SO_lib/FuncionesAuxiliares.h"
 
+#include <SO_lib/sockets.h>
+#include <SO_lib/Protocolo.h>
+#include <SO_lib/estructuras.h>
+#include <SO_lib/serializacion.h>
+#include "Worker.h"
+
+typedef struct ParametrosComunicacionConWorkerServidor{
+	int puerto;
+	int ip;
+} ParametrosComunicacionConWorkerServidor;
+
+void comunicacionConWorkerServidor(ParametrosComunicacionConWorkerServidor* parametros);
+ParametrosComunicacionConWorkerServidor* setParametrosComunicacionConWorkerServidor(int puerto,char* ip);
+
+void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem, char* mensaje, int tamanio);
 
 #endif /* HEADERS_COMUNICACIONCONWORKERSERVIDOR_H_ */
