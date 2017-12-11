@@ -164,10 +164,24 @@ void rearmar_script(script* script,int codigo){
 	fclose(fd);
 }
 
-void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
+int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
 
 	char* command = string_new();
-	//malloc(strlen(rutaScript)+strlen(rutaArchivoAEjecutar)+strlen(rutaArchivoAGuardar)+sizeof(char)*15);
+	string_append(&command,"/bin/cat ");
+	string_append(&command, rutaArchivoAEjecutar);
+	string_append(&command, " | ");
+	string_append(&command, rutaScript);
+	string_append(&command, " | sort > ");
+	string_append(&command, rutaArchivoAGuardar);
+
+    int estado = system(command);
+
+    return estado;
+
+}
+void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
+
+	char* command = string_new();
 	string_append(&command,"/bin/cat ");
 	string_append(&command, rutaArchivoAEjecutar);
 	string_append(&command, " | ");
@@ -177,6 +191,17 @@ void ejecutarScript(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchiv
 
     system(command);
 
+}
+void darPermisosAlLosScriptsPy(){
+	system("/bin/chmod 777 *.py");
+}
+
+void destruirArchivoOScript(char* rutaScript){
+	char* command = string_new();
+	string_append(&command,"/bin/rm ");
+	string_append(&command,rutaScript);
+	system(command);
+	free(command);
 }
 
 int tamanioListaDeArchivos(t_list* lista){
@@ -282,7 +307,7 @@ void apareoDeArchivos(t_list* lista){
 	fclose(fd);
 }
 
-void apareoDeArchivosVectores(t_list* lista){
+void apareoDeArchivosVectores(t_list* lista,char* rutaA){
 	int cantidadElementosLista = list_size(lista);
 	vectorConIndice vectorNodos[cantidadElementosLista];
 	int i = 0;
@@ -304,7 +329,7 @@ void apareoDeArchivosVectores(t_list* lista){
 	}
 	//Creamos el archivo apareado
 	FILE* fd;
-	fd = fopen("/home/utnso/Escritorio/archivoApareado.txt","w");
+	fd = fopen(rutaA,"w");
 	if (fd==NULL) {
 		printf("Error al abrir el archivo.");
 	}
@@ -387,10 +412,10 @@ int indiceDelVectorQueQuedanLecturas(vectorConIndice vectorNodos[],int cantidadE
 	return indice;
 }
 
-int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementosLista){
+int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementos){
 	int cantidad = 0;
 	int i= 0;
-	while(i<cantidadElementosLista){
+	while(i<cantidadElementos){
 		if(vectorNodos[i].pasoDeDatosCompleto == 0){
 			cantidad++;
 		}
@@ -409,4 +434,14 @@ char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2){
 	}
 	if(palabraAux1[i]<palabraAux2[i]) return palabraAux1;
 	else return palabraAux2;
+}
+
+void crearArchivo(char* contenido,char* rutaArchivoACrear){
+	FILE* fd;
+	fd = fopen(rutaArchivoACrear,"w");
+	if (fd==NULL) {
+		printf("Error al abrir el archivo.");
+	}
+	fputs(contenido,fd);
+	fclose(fd);
 }

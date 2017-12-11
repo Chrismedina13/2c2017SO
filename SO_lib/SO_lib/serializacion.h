@@ -108,9 +108,11 @@ char* serializarListaUbicacionBloquesArchivo2(t_list* listaDeUbicacionesDeBloque
 
 UbicacionBloquesArchivo2* deserializarListaUbicacionBloquesArchivo2(char* listaSerilizada);
 
+char* serializarResultado(resultadoJob* fin) ;
+resultadoJob * deserializarResultado(char* FT);
 
-
-
+Replanificacion* deserializarReplanificacion(char* FT);
+char* serializarReplanificacion(int numeroJob,int nodoCaido);
 
 #endif
 

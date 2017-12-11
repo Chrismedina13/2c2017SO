@@ -15,10 +15,12 @@
 //Keys para la configuracion
 #define YAMA_IP "YAMA_IP"
 #define YAMA_PUERTO "YAMA_PUERTO"
+#define CANT_NODOS "CANT_NODOS"
 
 typedef struct Configuracion {
 	char* ipYama;
 	int puertoYama;
+	int cantNodos;
 
 } Configuracion;
 

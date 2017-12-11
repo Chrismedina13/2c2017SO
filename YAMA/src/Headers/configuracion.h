@@ -21,7 +21,7 @@
 #define ALGORITMO_BALANCEO "ALGORITMO_BALANCEO"
 #define YAMA_PUERTO "YAMA_PUERTO"
 #define DISPONIBILIDAD_BASE "DISPONIBILIDAD_BASE"
-
+#define CANT_NODOS "CANT_NODOS"
 
 typedef struct Configuracion {
 	char* ipFileSystem;
@@ -30,6 +30,7 @@ typedef struct Configuracion {
 	char* algoritmo_bal;
 	int puertoYama;
 	int disponibilidadBase;
+	int cantNodos;
 } Configuracion;
 
 Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion);

@@ -18,6 +18,15 @@
 
 //int DISTRIBUCION_NODOS=0;
 
+
+typedef struct resultadoJob{
+
+	int nodo;
+	int resultado;
+
+}resultadoJob;
+
+
 typedef struct finTransformacion{
 
 	int nodo;

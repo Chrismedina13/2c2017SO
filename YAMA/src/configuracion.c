@@ -30,6 +30,7 @@ Configuracion* leerArchivoDeConfiguracion(char* pathArchivoDeConfiguracion){
 	configuracion->algoritmo_bal = strdup(config_get_string_value(configTemporal, ALGORITMO_BALANCEO));
 	configuracion->puertoYama = config_get_int_value(configTemporal, YAMA_PUERTO);
 	configuracion->disponibilidadBase = config_get_int_value(configTemporal, DISPONIBILIDAD_BASE);
+	configuracion->cantNodos = config_get_int_value(configTemporal, CANT_NODOS);
 
 	config_destroy(configTemporal);
 
