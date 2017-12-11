@@ -144,7 +144,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 						logInfo("Error en la recepcion de la lista de Bloques que componen el archivo.");
 					} else  {
 
-	            	  lista_ubicaciones= deserializarUbicacionBloquesArchivos(mensaje);
+	            	  lista_ubicaciones= deserializarListaUbicacionBloquesArchivo2(mensaje);
 
 					logInfo("se RECIBIO LA LISTA DE UBICACIONES CON %i PARTES DEL ARCHIVO", list_size(lista_ubicaciones));
 

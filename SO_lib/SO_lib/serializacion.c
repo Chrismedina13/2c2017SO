@@ -516,7 +516,7 @@ char* deserilizarContenidoBloque(char* bloqueSerializado) {
 
 	char* contenidoBloque = malloc(tamanioDelSetBloque);
 
-	contenidoBloque = string_substring(bloqueSerializado,desplazamiento,tamanioContenido);
+	contenidoBloque = string_substring(bloqueSerializado,desplazamiento,tamanioDelSetBloque);
 
 	return contenidoBloque;
 }
