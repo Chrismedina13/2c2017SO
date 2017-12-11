@@ -31,10 +31,9 @@ respuestaAlmacenadoFinal* RespuestaAlmacenadoFinal(finTransformacion* finRG,int 
 t_list* listaDeArchivosTemporalesTransformacion(int job,int master,int nodo);
 
 //Replanificacion
-t_list* replanificacion(Replanificacion* replani,int master);
-t_list* crearNuevaPlanificacion(t_list* respuestaTransformacion,t_list* ubicacionDeLosBloques,int nodoCaido);
-UbicacionBloque* otroNodoDondeEstaLaParte(t_list* ubicacionDeLosBloques,int nodo,int bloque);
-Replanificacion* deserializarReplanificacion(char* replanifSerializado);
+t_list* replanificacionNueva(Replanificacion* repla, int master);
+t_list* crearNuevaPlanificacionNueva(t_list* ubicacionDeLasPartes, int nodoCaido);
+void actualizarListaDeWorkersTotalesParaReplanificacion(t_list* ubicacionDeLasPartes, int nodoCaido,int disponibilidadBase);
 
 
 int actualizarCargaANodo(int nodo, int cantidadDeCarga);
