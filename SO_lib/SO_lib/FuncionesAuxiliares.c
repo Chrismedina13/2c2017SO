@@ -136,20 +136,12 @@ void rearmar_script(script* script,int codigo){
 
 	switch(codigo){
 	case SCRIPT_REDUCCION:
-		string_append(&nombreArchivo,"Reduccion.py");
+		string_append(&nombreArchivo,script->nombre);
 		rutaScriptReduccion = nombreArchivo; //variable global
 		break;
 	case SCRIPT_TRANSFORMADOR:
-		string_append(&nombreArchivo,"Transformador.py");
+		string_append(&nombreArchivo,script->nombre);
 		rutaScriptTransformador = nombreArchivo; //variable global
-		break;
-	case SCRIPT_TRANSFORMADOR_ANUAL:
-		string_append(&nombreArchivo,"Transformador_Anual.py");
-		rutaScriptTransformadorAnual = nombreArchivo; //variable global
-		break;
-	case SCRIPT_TRANSFORMADOR_INICIAL:
-		string_append(&nombreArchivo,"Transformador_Inicial.py");
-		rutaScriptTransformadorInicial = nombreArchivo; //variable global
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
@@ -179,7 +171,7 @@ int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char
     return estado;
 
 }
-void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
+int ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
 
 	char* command = string_new();
 	string_append(&command,"/bin/cat ");
@@ -189,7 +181,9 @@ void ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* ru
 	string_append(&command, " > ");
 	string_append(&command, rutaArchivoAGuardar);
 
-    system(command);
+    int estado = system(command);
+
+    return estado;
 
 }
 void darPermisosAlLosScriptsPy(){
