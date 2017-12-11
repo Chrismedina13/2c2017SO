@@ -78,6 +78,55 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						char* mensajeAEnviar;
 
 						switch (codigo) {
+						case TRANSFORMADOR:
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+								logInfo("Error en la recepcion de Info de Master.");
+							}else{
+								infoTransformacionParaWorker * info = deserializarInfoParaWorker(mensaje);
+								int bloque = info->bloque;
+								int bytesOcupados = info->bytesOcupados;
+								char* archivoTemporal = info->archivoTemporal;
+								//RECIBO EL SCRIPT
+								recv(FDMaster, pesoMensaje, 4, 0);
+								tamanio = deserializarINT(pesoMensaje);
+								mensaje = malloc(tamanio);
+								mensaje[tamanio] = '\0';
+								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+									logInfo("Error en la recepcion de Info de Master.");
+								}else{
+
+									script* script = deserilizarScript(mensaje);
+									rearmar_script(script,SCRIPT_REDUCCION);
+
+									printf("recibo script tranformador");
+
+									//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
+									char* contenido = get_bloque(bloque);
+									char* nombreArchivoBloque = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
+									crearArchivo(contenido,nombreArchivoBloque);
+									int estado = ejecutarScriptTransformador(script->nombre,nombreArchivoBloque,archivoTemporal);//Estado -1 significa que falló
+
+
+									//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
+									destruirArchivoOScript(nombreArchivoBloque);
+									destruirArchivoOScript(script->nombre);
+
+
+									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
+									resultado_job = malloc(sizeof(int)*2);
+									resultado_job->nodo = id_nodo;
+									resultado_job->resultado = estado;
+									mensajeAEnviar = serializarResultado(resultado_job);
+									mensajesEnviadosAMaster(FIN_TRANSFORMACION,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
+								}
+							}
+							break;
+
 						case REDUCCION_LOCAL:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
@@ -110,10 +159,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								mensajesEnviadosAMaster(FIN_REDUCCION_LOCAL,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
 							}
 							break;
-						case REDUCCION_GLOBAL:
 
-							break;
-						case TRANSFORMADOR:
+						case REDUCCION_GLOBAL:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
@@ -121,55 +168,62 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
-								infoTransformacionParaWorker * info = deserializarInfoParaWorker(mensaje);
-								int bloque = info->bloque;
-								int bytesOcupados = info->bytesOcupados;
-								char* archivoTemporal = info->archivoTemporal;
-								//RECIBO EL SCRIPT
-								recv(FDMaster, pesoMensaje, 4, 0);
-								tamanio = deserializarINT(pesoMensaje);
-								mensaje = malloc(tamanio);
-								mensaje[tamanio] = '\0';
-								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+								infoReduccionGlobalDeMasterParaWorker* info = deserializarinfoReduccionLocalParaWorker(mensaje);
+								char* archivoApareado = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/localApareado";
 
-									logInfo("Error en la recepcion de Info de Master.");
-								}else{
+								//REARMO EL SCRIPT
+								rearmar_script(info->scriptReduccionGlobal,REDUCCION_LOCAL);
 
-									script* script = deserilizarScript(mensaje);
+								//LISTA DE INFO QUE TIENE QUE SOLICITAR A CADA WORKER
+								t_list* lista = info->listaInfoParaReduccionGlobal;
 
-									rearmar_script(script,SCRIPT_REDUCCION);
-
-									printf("recibo script tranformador");
-
-									//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
-									char* contenido = get_bloque(bloque);
-									char* nombreArchivoBloque = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
-									crearArchivo(contenido,nombreArchivoBloque);
-									int estado = ejecutarScriptTransformador(script->nombre,nombreArchivoBloque,archivoTemporal);//Estado -1 significa que falló
-
-
-									//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
-									destruirArchivoOScript(nombreArchivoBloque);
-									destruirArchivoOScript(script->nombre);
-
-
-									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
-									resultado_job = malloc(sizeof(int)*2);
-									resultado_job->nodo = id_nodo;
-									resultado_job->resultado = estado;
-									mensajeAEnviar = serializarResultado(resultado_job);
-									mensajesEnviadosAMaster(FIN_TRANSFORMACION,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
+								//ENVIA	A LOS WORKERS EL PEDIDO DE LOS ARCHIVOS TEMPORALES
+								int i = 0;
+								while(i<list_size(lista)){
+									//SE CONECTA A CADA WORKER Y LE SOLICITA EL ARCHIVO TEMPORAL
 								}
-							}
-							break;
-						case REDUCCION_TEMPORALES:
-							break;
-						case SOL_REDUCCION_GLOBAL:
-							break;
-						case SOL_ALMACENADO_FINAL:
-							break;
 
+								//RECIBE LOS ARCHIVOS TEMPORALES Y LOS GUARDA EN /WORKER/TMP (se podria hacer un semaforo esperando
+								// a que todos los workers manden sus archivos temporales).
+
+
+								//HAGO EL APAREO A DICHOS ARCHIVOS
+
+
+								//EJECUTO EL SCRIPT AL APAREO
+
+
+								//ENVIO EL ESTADO DE LA EJECUCION DEL SCRIPT A MASTER
+
+								//ENVIO EL ARCHIVO TEMPORAL GLOBAL RESULTANTE A FILESYSTEM
+
+
+								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT REDUCCION GLOBAL A MASTER
+/*								resultado_job = malloc(sizeof(int)*2);
+								resultado_job->nodo = id_nodo;
+								resultado_job->resultado = estado;
+								mensajeAEnviar = serializarResultado(resultado_job);
+								mensajesEnviadosAMaster(FIN_REDUCCION_LOCAL,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
+
+*/							}
+							break;
+		//				case SOL_ARCHIVOS_TEMPORALES_LOCALES: //WORKER ELEGIDO A WORKER
+							//ACA VA LO QUE PASA CUANDO EL WORKER ELEGIDO SE CONECTA A OTRO WORKER
+
+							//ENVIO EL ARCHIVO AL WORKER ELEGIDO EL ARCHIVO QUE ME HAYA SOLICITADO
+		//					break;
 						}
+		//				case RECEPCION_ARCHIVO_TEMPORAL_LOCAL:
+							//ACA VA LO QUE PASA CUANDO UNO DE LOS WORKERS LE ENVIA AL WORKER ELEGIDO SU ARCHIVO TEMPORAL
+
+
+							/*En vez de semaforos aca podriamos hacer un if que verifique cuantos workes ennviaron su
+							 * archivo temporal con una variable global que vaya aumentando cada vez que entra en este
+							 * case. Y solo entra cuando la variable global sea igual a la cantidad de workers que
+							 * tienen que enviarle un archivo temporal local */
+			//				break;
+
+
 
 
 					}
