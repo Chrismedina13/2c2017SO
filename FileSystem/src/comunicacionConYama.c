@@ -55,9 +55,9 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	list_add(LISTARRG,info2);
 	list_add(LISTARRG,info3);
 */
-	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
-	char* listaSerializada = serializarLista_info_workers(LISTARRG);
-	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
+	//int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
+	//char* listaSerializada = serializarLista_info_workers(LISTARRG);
+//	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
 /*    logInfo("creando Respuesta Almacenado Final de prueba ");
 
