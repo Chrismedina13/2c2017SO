@@ -15,7 +15,7 @@ char * get_bloque(int nro_bloque){
 	 *
 	 */
 
-	const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin";
+	const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.txt";
 
 	char* fp = obtenerPuntero(rutaDelArchivo);
 
@@ -43,13 +43,15 @@ char * get_bloque(int nro_bloque){
 
 int set_bloque(char * contenido, int nro_bloque){
 
-	const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.bin";
+	const char * rutaDelArchivo= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/data.txt";
 
 	FILE * fp = fopen(rutaDelArchivo, "r+");
 	if (!fp) {
 	  perror("Error al abrir el Archivo");
 	   return(0);
 	}
+
+
 
 	if(fseek(fp, nro_bloque*MB, SEEK_SET)==0){
 		logInfo("Me ubico en el bloque %i", nro_bloque);

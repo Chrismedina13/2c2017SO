@@ -435,28 +435,38 @@ void consolaFileSystem(){
 
 							bloque= list_get(bloquesDeTexto,count);
 							ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
-							int tamanioSetBloque= (strlen(bloque) + sizeof(int)*2);
+							int tamanioSetBloque= (strlen(bloque) + sizeof(int)*3);
 
 
 							//copia 1
 
-							char* mensaje = serializarBloque(ubicacion->desplazamiento1,bloque);
+							char* contenidoSerializado = serializarContenidoDelBloque(bloque);
+							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
+
 							int fileDescriptor1=nodoToFD(ubicacion->nodo1);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, mensaje, tamanioSetBloque);
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, contenidoSerializado,sizeof(int)+strlen(bloque));
+
+							send(fileDescriptor1,desplazamiento,4,0);
 
 							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
 
+
+
 							//copia 2
 
-							char* mensaje2 = serializarBloque(ubicacion->desplazamiento2,bloque);
+							char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
+							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
+
 							int fileDescriptor2=nodoToFD(ubicacion->nodo2);
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, mensaje2, tamanioSetBloque);
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, contenidoSerializado2, sizeof(int)+strlen(bloque));
+
+							send(fileDescriptor1,desplazamiento2,4,0);
 
 							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
 
@@ -464,9 +474,12 @@ void consolaFileSystem(){
 
 							count++;
 
-							free(mensaje);
-							free(mensaje2);
+							//free(mensaje);
+							//free(mensaje2);
+
 						}
+
+
 
 						logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
 
