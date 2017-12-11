@@ -91,6 +91,49 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 }
 
+char* obtenerBloqueDeTexto(const char* ruta, int indiceArchivo, int count){
+
+	/*Recibe la ruta de un archivo en fs
+	 *Devuleve una lista de char* con bloques de texto que partio
+	 */
+
+	int desplazamiento=0;
+
+	char* p = obtenerPuntero(ruta);
+
+	FILE * fp = fopen(ruta, "r");
+	if (!fp) {
+	  perror("Error al abrir el Archivo");
+
+	}
+
+	int tamanio = tamanioArchivo(fp);
+
+	fclose(fp);
+
+	t_list* lista = list_create();
+	char* bloque = malloc(MB);
+
+	while (desplazamiento < tamanio) {
+
+	bloque = dividirArchivoTextoMemoria(p,&desplazamiento,indiceArchivo);
+	list_add(lista, bloque);
+
+	}
+
+	//LIBERAMOS EL ESPACIO DE MEMORIA QUE OCUPABA EL ARCHIVO
+	if (munmap (p, tamanio) == -1) {
+			printf("Error al cerrar la proyeccion \n");
+	}
+
+	//DEBERIAMOS BORRAR EL ARCHIVO PRINCIPAL**********
+
+	//t_list* bloques = listaDeContenidos(lista);
+
+	return lista;
+
+}
+
 int cantidadDeBloques(int tamanio){
 	int cantidad;
 	if(tamanio%MB == 0) cantidad = tamanio/MB;
@@ -339,3 +382,131 @@ void mostrarBloque(t_list* listaDeBloques,int index){
 	char* contenido = list_get(listaDeBloques,index);
 	printf("El contenido del bloque %d es:\n\n\n%s",index,contenido);
 }
+
+/*
+
+int cpfrom(char* ruta, char* rutaLocal){
+
+	int status=0;
+
+	int indiceArchivo = newArchivo();
+
+	//reviso si hay lugar en mis nodos
+
+	FILE * fp = fopen(ruta, "r");
+	if (!fp) {
+	  perror("Error al abrir el Archivo");
+	  status = -1;
+	}
+
+	int tamArchivo = tamanioArchivo(fp);
+
+	//parte el archivo en bloques
+
+	char* bloquesDeTexto = obtenerBloquesTexto(ruta, indiceArchivo); //quedan cargados en bloques
+
+	int cantBloques = list_size(bloquesDeTexto);
+	logInfo("Parti el archivo en %d bloques.", cantBloques);
+
+	int bloquesNecesarios = cantBloques *2;
+
+	int bloquesLibres = tabla_de_nodos.bloqueslibres;
+	//logInfo("%d", tabla_de_nodos.bloqueslibres);
+
+	if(bloquesNecesarios>bloquesLibres){//necesita guardar una copia por cada bloque
+		logInfo("No hay lugar suficiente para almacenar el archivo y sus copias");
+		status = -1;
+	}
+
+	//if(lugarEnNodos(bloquesArchivo)==-1){
+	//	logInfo("La distribucion de los bloques en Nodos no permite almacenar el archivo");
+	//	status = -1;
+	//}
+
+
+
+	if(status==0){
+
+		//le pasa los bloques a los nodos
+
+		distribuirBloques(bloquesDeTexto, indiceArchivo);
+		logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
+
+		int count = 0;
+		UbicacionBloquesArchivo2* ubicacion;
+		char* bloque;
+
+		while(count<cantBloques){
+
+
+			bloque= list_get(bloquesDeTexto,count);
+			ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+			int tamanioSetBloque= (strlen(bloque) + sizeof(int)*3);
+
+
+			//copia 1
+
+			char* contenidoSerializado = serializarContenidoDelBloque(bloque);
+			char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
+
+			int fileDescriptor1=nodoToFD(ubicacion->nodo1);
+
+			logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
+
+			mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, contenidoSerializado,sizeof(int)+strlen(bloque));
+
+			send(fileDescriptor1,desplazamiento,4,0);
+
+			logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
+
+
+
+			//copia 2
+
+			char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
+			char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
+
+			int fileDescriptor2=nodoToFD(ubicacion->nodo2);
+
+			logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
+
+			mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, contenidoSerializado2, sizeof(int)+strlen(bloque));
+
+			send(fileDescriptor1,desplazamiento2,4,0);
+
+			logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
+
+
+
+			count++;
+
+			//free(mensaje);
+			//free(mensaje2);
+
+		}
+
+
+
+		logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
+
+		//crea registro del archivo en YAMAFS
+
+		status = crearRegistroArchivo(ruta,rutaLocal, tabla_de_archivos[indiceArchivo].ubicaciones, indiceArchivo);
+		if(status==1){
+			logInfo("Registro de archivo creado correctamente.");
+
+			if(cantidad_archivos==cantArchivos){
+				semaphore_signal(SEMAFOROYAMA);
+			}
+		}
+		if(status==1){
+			logInfo("Registro de archivo no pudo ser creado.");
+		}
+
+
+	}
+
+	fclose(fp);
+}
+
+*/
