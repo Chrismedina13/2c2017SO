@@ -181,7 +181,7 @@ typedef struct infoReduccionLocalParaWorker{
 typedef struct infoReduccionGlobalDeMasterParaWorker{
 	t_list* listaInfoParaReduccionGlobal; //Lista de estructura infoParaReduccionGLobal;
 	char* archivoTemporalReduccionGlobal;
-	script* scriptReduccionGlobal;
+	script scriptReduccionGlobal;
 } infoReduccionGlobalDeMasterParaWorker;
 
 typedef struct infoParaReduccionGlobal{
@@ -237,7 +237,7 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
 infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script scriptReduccionLocal);
-infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script* scritpReduccionGlobal);
+infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script scritpReduccionGlobal);
 infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
 infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);
 almacenadoFinal* crearAlmacenadoFinal(char* archivoTemporalReduccionGlobal);

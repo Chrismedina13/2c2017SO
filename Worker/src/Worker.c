@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
 
 	int terminoReduccionGlobal = 1;
 
+	//LE ENVIA A FILESYSTEM EL ARCHIVO TEMPORAL DE LA REDUCCION GLOBAL
 	if(terminoReduccionGlobal){
 		pthread_t hiloFS;
 		pthread_create(&hiloFS, NULL, (void*) comunicacionConFileSystem, parametrosFileSystem);
