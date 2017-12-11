@@ -447,9 +447,9 @@ void consolaFileSystem(){
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor1,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, bloque,strlen(bloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor1, desplazamiento,sizeof(int));
 
-							send(fileDescriptor1,desplazamiento,4,0);
+							send(fileDescriptor1,bloque, strlen(bloque),0);
 
 							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo1, ubicacion->desplazamiento1);
 
@@ -464,9 +464,9 @@ void consolaFileSystem(){
 
 							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d", fileDescriptor2,tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, bloque, strlen(bloque));
+							mensajesEnviadosADataNode(SET_BLOQUE, fileDescriptor2, desplazamiento2, sizeof(int));
 
-							send(fileDescriptor1,desplazamiento2,4,0);
+							send(fileDescriptor2,bloque,strlen(bloque),0);
 
 							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d", count, ubicacion->nodo2, ubicacion->desplazamiento2);
 

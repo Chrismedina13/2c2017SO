@@ -119,6 +119,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	int tamanio_contenido;
 	char * rta_set_bloque;
 	int tamanio_rta_set_bloque;
+	char* bloqueRecibido;
 
 	char* bloque_obtenido;
 	int tamanio_bloque_obtenido;
@@ -135,19 +136,12 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		tamanio = deserializarINT(pesoMensaje);
 
 		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio + 1);
-		mensaje[tamanio] = '\0';
-		mensaje=recv_timeout(FD_FileSystem, 5,2046);
+		mensaje = malloc(tamanio);
+		bloque->nrobloque = deserializarINT(mensaje);
+		logInfo("Numero de bloque: %d", bloque->nrobloque);
 
-
-		//recv(FD_FileSystem,mensaje, tamanio,0 );
-    	bloque->contenidoBloque=deserilizarContenidoBloque(mensaje);
-	   logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
-
-	   char buffer[4];
-	   recv(FD_FileSystem,buffer,4,0);
-	   bloque->nrobloque = deserializarINT(buffer);
-	   logInfo("Numero de bloque: %d", bloque->nrobloque);
+		bloqueRecibido=recv_timeout(FD_FileSystem, 5,2046);
+		logInfo("Contenido del bloque : %s",bloqueRecibido);
 
 
 		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){

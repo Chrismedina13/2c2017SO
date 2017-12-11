@@ -24,7 +24,7 @@
 
 int FD_YAMA;
 int FD_WORKER;
-
+int tamanioLista;
 int nro_job;
 
 #endif /* HEADERS_MASTER_H_ */
