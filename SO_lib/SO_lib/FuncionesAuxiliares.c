@@ -196,7 +196,7 @@ void darPermisosAlLosScriptsPy(){
 	system("/bin/chmod 777 *.py");
 }
 
-void destruirScript(char* rutaScript){
+void destruirArchivoOScript(char* rutaScript){
 	char* command = string_new();
 	string_append(&command,"/bin/rm ");
 	string_append(&command,rutaScript);

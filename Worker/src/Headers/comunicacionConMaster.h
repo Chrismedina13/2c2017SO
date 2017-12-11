@@ -12,6 +12,12 @@
 #include "SO_lib/Protocolo.h"
 #include "SO_lib/estructuras.h"
 #include "SO_lib/serializacion.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "pthread.h"
+#include "Worker.h"
+#include "SO_lib/FuncionesAuxiliares.h"
 
 //#define  CONEXIONES_MAXIMAS 100 //PUDE MODIFICARSE SEGUN LO QUE PIDAN
 
@@ -29,7 +35,6 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto);
 
 infoTransformacionParaWorker* mensajesRecibidosDeMaster(int codigo, int FDMaster);
 
-void mensajesEnviadosAMaster(int codigo, int FDMaster);
-
+void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje, int tamanio);
 #endif /* SOCKETSWORKER_H_ */
 

@@ -5,10 +5,7 @@
  *      Author: utnso
  */
 #include "Headers/comunicacionConMaster.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "pthread.h"
+
 #define MAX 100
 
 void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
@@ -75,7 +72,10 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						char pesoMensaje[4];
 						int tamanio;
 						char* mensaje;
-						 int FDMaster = i;
+						int FDMaster = i;
+						//ENVIO MASTER
+						resultadoJob* resultado_job;
+						char* mensajeAEnviar;
 
 						switch (codigo) {
 
@@ -191,26 +191,36 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							break;
 						*/
 						case REDUCCION_LOCAL:
-
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
 							mensaje[tamanio] = '\0';
 							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
-
 								logInfo("Error en la recepcion de Info de Master.");
 							}else{
+								infoReduccionLocalParaWorker* info = deserializarinfoReduccionLocalParaWorker(mensaje);
+								char* archivoApareado = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/localApareado";
 
-								script* script = deserilizarScript(mensaje);
+								//REARMO EL SCRIPT
+								rearmar_script(info->scriptReduccionLocal,REDUCCION_LOCAL);
 
-								rearmar_script(script,SCRIPT_REDUCCION);
+								//APAREO LOS ARCHIVOS TEMPORALES TRANSFORMADOS QUE VOY A REDUCIR
+								apareoDeArchivosVectores(info->listaDeArchivosTemporales,archivoApareado);
 
-								printf("recibo script tranformador");
+								//EJECUTO EL SCRIPT AL SCRIPT
+								int estado = ejecutarScriptReductor(info->scriptReduccionLocal.nombre,archivoApareado,info->archivoTemporalReduccionLocal);
 
+								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
+								destruirArchivoOScript(archivoApareado);
+								destruirArchivoOScript(info->scriptReduccionLocal.nombre);
+
+								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT REDUCCION LOCAL A MASTER
+								resultado_job = malloc(sizeof(int)*2);
+								resultado_job->nodo = id_nodo;
+								resultado_job->resultado = estado;
+								mensajeAEnviar = serializarResultado(resultado_job);
+								mensajesEnviadosAMaster(FIN_REDUCCION_LOCAL,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
 							}
-
-
-
 							break;
 						case REDUCCION_GLOBAL:
 
@@ -247,18 +257,20 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 									char* contenido = get_bloque(bloque);
 									char* nombreArchivoBloque = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
 									crearArchivo(contenido,nombreArchivoBloque);
-									int estado = ejecutarScript(script->nombre,nombreArchivoBloque,archivoTemporal);//Estado -1 significa que falló
+									int estado = ejecutarScriptTransformador(script->nombre,nombreArchivoBloque,archivoTemporal);//Estado -1 significa que falló
 
-									//BORRO EL ARCHIVO TEMPORAL archivoBloque
+
+									//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
 									destruirArchivoOScript(nombreArchivoBloque);
-
-									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT A MASTER
-									//mensajesEnviadosAMaster(FIN_TRANSFORMACION,);
+									destruirArchivoOScript(script->nombre);
 
 
-
-
-
+									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
+									resultado_job = malloc(sizeof(int)*2);
+									resultado_job->nodo = id_nodo;
+									resultado_job->resultado = estado;
+									mensajeAEnviar = serializarResultado(resultado_job);
+									mensajesEnviadosAMaster(FIN_TRANSFORMACION,FD_Cliente,mensajeAEnviar, sizeof(int)*2);
 								}
 							}
 							break;
@@ -292,11 +304,10 @@ return parametros;
 
 
 
-void mensajesEnviadosAMaster(int codigo, int FDMaster) {
+void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje, int tamanio) {
 //Worker recibe de master
 char pesoMensaje[4];
-int tamanio;
-char* mensaje;
+
 
 switch (codigo) {
 case FIN_TRANSFORMACION:
