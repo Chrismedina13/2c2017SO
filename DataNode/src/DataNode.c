@@ -141,7 +141,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 
 
 		//recv(FD_FileSystem,mensaje, tamanio,0 );
-    	bloque->contenidoBloque=deserilizarBloque(mensaje);
+    	bloque->contenidoBloque=deserilizarContenidoBloque(mensaje);
 	   logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
 	   char buffer[4];
