@@ -19,7 +19,7 @@
 
 //Receiving funcion without timeout
 
-int receive_basic(int fd_dn, int tamanio_parcial);
+char* receive_basic(int fd_dn, int tamanio_parcial);
 
 
 //Receiving function

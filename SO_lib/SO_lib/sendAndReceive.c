@@ -17,27 +17,18 @@
 
 //alternativa a recv (en bloques mas pequenios), es lento ya que si el tamanio total no es multiplo de tamanio_parcial, el ultimo recv toma 30 segundos en completar
 
-int receive_basic(int fd_dn, int tamanio_parcial)
+char* receive_basic(int fd_dn, int tamanio)
 {
     int size_recv , total_size= 0;
-    char chunk[tamanio_parcial];
+    char chunk[tamanio];
+    char* bloque;
 
-    //loop
-    while(1)
-    {
-        memset(chunk ,0 , tamanio_parcial);  //clear the variable
-        if((size_recv =  recv(fd_dn , chunk , tamanio_parcial , 0) ) < 0)
-        {
-            break;
-        }
-        else
-        {
-            total_size += size_recv;
-            printf("%s" , chunk);
-        }
+    if((size_recv =  recv(fd_dn , bloque , tamanio , MSG_WAITALL))>0){
+    	return bloque;
     }
-
-    return total_size;
+    else{
+    	return ("error");
+    }
 }
 
 
@@ -83,8 +74,8 @@ char* recv_timeout(int FD_DN , int timeout, int CHUNK_SIZE)
         else
         {
             total_size += size_recv;
-          	realloc(bloque, size_recv);
-          	memcpy(bloque, &chunk, size_recv);
+          	realloc(bloque, total_size);
+          	memcpy(bloque+total_size-size_recv, &chunk, size_recv);
             //reset beginning time
             gettimeofday(&begin , NULL);
         }
