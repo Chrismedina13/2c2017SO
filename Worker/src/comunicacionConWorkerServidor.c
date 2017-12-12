@@ -93,7 +93,7 @@ void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER) {
 				"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/");
 		string_append(nombre, archivoTemporal->nombre);
 		crearArchivo(archivoTemporal->contenido, nombre);
-
+		list_add(listaDeArchivosTemporalesLocales,nombre);
 		free(mensaje);
 		break;
 	default:
