@@ -24,15 +24,15 @@ int main(int argc, char *argv[]) {
 	sem_init(&semaforoYAMA,0,0);
 	tabla_estados = list_create();
 
-	int puerto1= 12;
-	int puerto2= 13;
-	int puerto3= 14;
-	int puerto4= 15;
+	int puerto1= 5050;
+	int puerto2= 5050;
+	int puerto3= 5050;
+	int puerto4= 5050;
 
-	char* ip1 = "10101010101010";
-	char* ip2 = "202020202020020";
-	char* ip3 = "303030303030303";
-	char* ip4 = "4040404040404404";
+	char* ip1 = "124.0.0.1";
+	char* ip2 = "124.0.0.1";
+	char* ip3 = "124.0.0.1";
+	char* ip4 = "124.0.0.1";
 
 
 

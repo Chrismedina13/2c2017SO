@@ -31,7 +31,6 @@ void comunicacionConWorkerServidor(infoParaReduccionGlobal* param) {
 		int codigo2 = deserializarINT(buffer2);
 		logInfo("Recibi de WORKER SERVIDOR el codigo : %i", codigo2);
 		mensajesRecibidosDeWorkerServidor(codigo2, FD_WorkerServidor);
-
 	}
 
 	free(mensaje);
