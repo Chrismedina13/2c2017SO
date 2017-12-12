@@ -78,7 +78,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						char* mensajeAEnviar;
 
 						switch (codigo) {
-						case TRANSFORMADOR:
+						case SOL_TRANSFORMACION:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
@@ -87,8 +87,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo(
 										"Error en la recepcion de Info de Master.");
 							} else {
-								infoTransformacionParaWorker * info =
-										deserializarInfoParaWorker(mensaje);
+								infoTransformacionParaWorker * info = deserializarInfoParaWorker(mensaje);
 								int bloque = info->bloque;
 								int bytesOcupados = info->bytesOcupados;
 								char* archivoTemporal = info->archivoTemporal;
@@ -104,7 +103,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								} else {
 
 									script* script = deserilizarScript(mensaje);
-									rearmar_script(script, SCRIPT_REDUCCION);
+									rearmar_script(script, SCRIPT_TRANSFORMADOR);
 
 									printf("recibo script tranformador");
 
@@ -114,9 +113,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 											"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
 									crearArchivo(contenido,
 											nombreArchivoBloque);
-									int estado = ejecutarScriptTransformador(
-											script->nombre, nombreArchivoBloque,
-											archivoTemporal); //Estado -1 significa que falló
+									int estado = ejecutarScriptTransformador(script->nombre, nombreArchivoBloque,
+											archivoTemporal); //Estado 0 significa que lo hizo bien
 
 									//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
 									destruirArchivoOScript(nombreArchivoBloque);
@@ -135,7 +133,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							}
 							break;
 
-						case REDUCCION_LOCAL:
+						case SOL_REDUCCION_LOCAL:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
@@ -182,7 +180,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							}
 							break;
 
-						case REDUCCION_GLOBAL:
+						case SOL_REDUCCION_GLOBAL:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
 							mensaje = malloc(tamanio);
@@ -209,13 +207,16 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								int i = 0;
 								cantidadDeWorkersServidoresConectadosAlWorkerElegido =
 										list_size(lista);
-								while (i
-										< cantidadDeWorkersServidoresConectadosAlWorkerElegido) {
+								while (i< cantidadDeWorkersServidoresConectadosAlWorkerElegido) {
 									//SE CONECTA A CADA WORKER servidor Y LE SOLICITA EL ARCHIVO TEMPORAL
-									infoParaReduccionGlobal* infoReduccionGlobal =
-											list_get(lista, i);
-									comunicacionConWorkerServidor(
-											infoReduccionGlobal);
+									infoParaReduccionGlobal* infoReduccionGlobal = list_get(lista, i);
+									ParametrosComunicacionConWorkerServidor* parametrosWorker = setParametrosComunicacionConWorkerServidor(infoReduccionGlobal->puerto,infoReduccionGlobal->ipWorker);
+
+									pthread_t hiloWorker;
+									pthread_create(&hiloWorker, NULL, (void*) comunicacionConWorkerServidor(), parametrosWorker);
+									pthread_join(hiloWorker, NULL);
+
+									comunicacionConWorkerServidor(infoReduccionGlobal);
 									//adentro crea el archivo temporal en worker/tmp/
 									//y me carga la lista de archivosTemporalesLocales
 								}
