@@ -177,11 +177,13 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								//LISTA DE INFO QUE TIENE QUE SOLICITAR A CADA WORKER
 								t_list* lista = info->listaInfoParaReduccionGlobal;
 
-								//ENVIA	A LOS WORKERS EL PEDIDO DE LOS ARCHIVOS TEMPORALES
+								//ENVIA	A LOS WORKERS servidores EL PEDIDO DE LOS ARCHIVOS TEMPORALES
 								int i = 0;
+								char* rutaAGuardar = "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/";
 								while(i<list_size(lista)){
-									//SE CONECTA A CADA WORKER Y LE SOLICITA EL ARCHIVO TEMPORAL
-
+									//SE CONECTA A CADA WORKER servidor Y LE SOLICITA EL ARCHIVO TEMPORAL
+									infoParaReduccionGlobal* infoReduccionGlobal = list_get(lista,i);
+									comunicacionConWorkerServidor(infoReduccionGlobal);
 
 								}
 

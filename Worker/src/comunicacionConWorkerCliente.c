@@ -92,7 +92,7 @@ void comunicacionConWorkerCliente(ParametrosComunicacionConMaster* parametrosMas
 								logInfo("Recibo del worker cliente: %s", mensaje);
 
 								char* contenido = obtenerPuntero(mensaje);
-								char* nombreArchivoTemporal = mensaje;
+								char* nombreArchivoTemporal = obtenerSoloNombreDelArchivo(mensaje);
 
 								tamanio = strlen(contenido)+strlen(nombreArchivoTemporal);
 								archivo* archivoTemporal = malloc(tamanio);

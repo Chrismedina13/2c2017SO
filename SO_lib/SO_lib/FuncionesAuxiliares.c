@@ -439,3 +439,15 @@ void crearArchivo(char* contenido,char* rutaArchivoACrear){
 	fputs(contenido,fd);
 	fclose(fd);
 }
+
+char* obtenerSoloNombreDelArchivo(char* ruta){
+		char** aux = string_split(ruta,"/");
+		int tamanioAux=0;
+		while(aux[tamanioAux]!='\0'){
+			tamanioAux++;
+		}
+		tamanioAux--;
+		char* nombreArchivoTemporal = aux[tamanioAux];
+
+		return nombreArchivoTemporal;
+}

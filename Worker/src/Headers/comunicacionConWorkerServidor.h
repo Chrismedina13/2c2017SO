@@ -20,9 +20,9 @@ typedef struct ParametrosComunicacionConWorkerServidor{
 	int ip;
 } ParametrosComunicacionConWorkerServidor;
 
-archivo* comunicacionConWorkerServidor(infoParaReduccionGlobal* param,char* rutaAGuardar);
+void comunicacionConWorkerServidor(infoParaReduccionGlobal* param);
 ParametrosComunicacionConWorkerServidor* setParametrosComunicacionConWorkerServidor(int puerto,char* ip);
-void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,char* rutaAGuardar);
+void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER);
 void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem, char* mensaje, int tamanio);
 
 #endif /* HEADERS_COMUNICACIONCONWORKERSERVIDOR_H_ */
