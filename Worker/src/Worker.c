@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 
 
 
-		}
+
 	free(config);
 	return EXIT_SUCCESS;
 }

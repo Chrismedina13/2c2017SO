@@ -213,7 +213,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 									ParametrosComunicacionConWorkerServidor* parametrosWorker = setParametrosComunicacionConWorkerServidor(infoReduccionGlobal->puerto,infoReduccionGlobal->ipWorker);
 
 									pthread_t hiloWorker;
-									pthread_create(&hiloWorker, NULL, (void*) comunicacionConWorkerServidor(), parametrosWorker);
+									pthread_create(&hiloWorker, NULL, (void*) comunicacionConWorkerServidor, parametrosWorker);
 									pthread_join(hiloWorker, NULL);
 
 									comunicacionConWorkerServidor(infoReduccionGlobal);

@@ -15,6 +15,8 @@
 #include "pthread.h"
 #include "comunicacionConMaster.h"
 #include "configuracionW.h"
+#include "comunicacionConWorkerCliente.h"
+#include "comunicacionConWorkerServidor.h"
 
 int FD_Filesystem;
 int id_nodo;

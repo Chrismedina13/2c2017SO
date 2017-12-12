@@ -25,6 +25,7 @@
 #include "Worker.h"
 #include "SO_lib/FuncionesAuxiliares.h"
 
+
 //#define  CONEXIONES_MAXIMAS 100 //PUDE MODIFICARSE SEGUN LO QUE PIDAN
 
 struct sockaddr_in my_addr;
@@ -35,9 +36,9 @@ typedef struct ParametrosComunicacionConWorkerCliente{
 }ParametrosComunicacionConWorkerCliente;
 
 
-void comunicacionConMaster(ParametrosComunicacionConMaster* parametros);
+void comunicacionConWorkerCliente(ParametrosComunicacionConWorkerCliente* parametros);
 
-ParametrosComunicacionConMaster* setParametrosComunicacionConWorkerCliente(int puerto);
+ParametrosComunicacionConWorkerCliente* setParametrosComunicacionConWorkerCliente(int puerto);
 
 infoTransformacionParaWorker* mensajesRecibidosDeWorkerCliente(int codigo, int FDMaster);
 

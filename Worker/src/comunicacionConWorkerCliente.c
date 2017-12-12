@@ -6,7 +6,7 @@
  */
 #include "Headers/comunicacionConWorkerCliente.h"
 
-void comunicacionConWorkerCliente(ParametrosComunicacionConMaster* parametrosMaster) {
+void comunicacionConWorkerCliente(ParametrosComunicacionConWorkerCliente* parametrosMaster) {
 
 	//Creo Servidor Principal
 	int socketWorkerServidor;
@@ -115,10 +115,10 @@ void comunicacionConWorkerCliente(ParametrosComunicacionConMaster* parametrosMas
 	}
 }
 
-ParametrosComunicacionConMaster* setParametrosComunicacionConWorkerCliente(int puerto) {
+ParametrosComunicacionConWorkerCliente* setParametrosComunicacionConWorkerCliente(int puerto) {
 
-	ParametrosComunicacionConMaster* parametros = malloc(
-			sizeof(ParametrosComunicacionConMaster));
+	ParametrosComunicacionConWorkerCliente* parametros = malloc(
+			sizeof(ParametrosComunicacionConWorkerCliente));
 	parametros->puertoWorker = puerto;
 	return parametros;
 }
