@@ -70,12 +70,40 @@ void comunicacionConWorkerCliente(ParametrosComunicacionConMaster* parametrosMas
 						char pesoMensaje[4];
 						int tamanio;
 						char* mensaje;
-						int FDMaster = i;
-						//ENVIO MASTER
-						resultadoJob* resultado_job;
-						char* mensajeAEnviar;
+						int FD_WORKERCLIENTE = i;
+
 
 						switch (codigo) {
+						case SOLICITUD_ARCHIVO_TEMPORAL:
+							//ACA EL WORKER SERVIDOR ENVIA A WORKER CLIENTE EL ARCHIVO TEMPORAL PEDIDO
+
+							logInfo("DataNode Recibe la instruccion 'GetBloque' de FileSystem");
+
+
+
+								recv(FD_WORKERCLIENTE,pesoMensaje,4,0);
+
+								tamanio= deserializarINT(pesoMensaje);
+								logInfo("tamanio de lo que recibo %i", tamanio);
+								mensaje = malloc(tamanio + 1);
+								mensaje[tamanio] = '\0';
+								recv(FD_WORKERCLIENTE,mensaje, tamanio,0);
+								//intRecibido = deserializarINT(mensaje);
+								logInfo("Recibo del worker cliente: %s", mensaje);
+
+								char* contenido = obtenerPuntero(mensaje);
+								char* nombreArchivoTemporal = obtenerSoloNombreDelArchivo(mensaje);
+
+								tamanio = strlen(contenido)+strlen(nombreArchivoTemporal);
+								archivo* archivoTemporal = malloc(tamanio);
+
+								char* archivoTemporalSerializado = serializarArchivo(archivoTemporal);
+
+								mensajesEnviadosAWorkerCliente(SOLICITUD_ARCHIVO_TEMPORAL,FD_WORKERCLIENTE,archivoTemporalSerializado,tamanio);
+
+							break;
+						default:
+							break;
 
 						}
 					}

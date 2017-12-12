@@ -16,8 +16,6 @@ void comunicacionConFileSystem(){
 
 	while(1){
 
-		//recibiria un codigo de mensaje y hace lo que tiene que hacer
-		//hacer el if para recibir los bloques de archivos
 		recv(FDsocketClienteFileSystem,buffer,4,0);
 		int codigo = deserializarINT(buffer);
 		mensajesRecibidosDeFS(codigo,FDsocketClienteFileSystem);
@@ -27,73 +25,16 @@ void comunicacionConFileSystem(){
 
 }
 
-void atenderJOB(){
+ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(int puerto, char* ip, char* algoritmo, int disponiblidadBase,int retardo) {
+	ParametrosComunicacionConFileSystem* parametros = malloc(sizeof(int)*4 + strlen(algoritmo));
 
-	// esta funcion va a desaparecer es solo ahora para las pruebas
-
-	Job* jobAEjecutar = retirarJobDeLista();
-
-	logInfo("Creando Planificacion de prueba");
-
-	t_list* listaDeWorkersAPlanificar = list_create();
-	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 1, 12, 2, 13);
-	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 1, 20, 3, 19);
-	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 19);
-	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 19);
-	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 19);
-	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 19);
-	UbicacionBloquesArchivo2* ubi6 = crearUbicacionBloquesArchivos2(6, 100, 1, 20, 2, 19);
-
-
-	list_add(listaDeWorkersAPlanificar, ubi0);
-	list_add(listaDeWorkersAPlanificar, ubi1);
-	list_add(listaDeWorkersAPlanificar, ubi2);
-	list_add(listaDeWorkersAPlanificar, ubi3);
-	list_add(listaDeWorkersAPlanificar, ubi4);
-	list_add(listaDeWorkersAPlanificar, ubi5);
-	list_add(listaDeWorkersAPlanificar, ubi6);
-
-
-	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
-
-	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
-
-	logInfo("Se crea JOB Completo");
-
-	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
-
-	logInfo("Actualizar Tabla Global");
-	//probar//ingresarDatosATablaGlobal(jobCompleto);
-
-	logInfo("Serializar respueta transformacion a YAMA");
-
-	int tamanioRespuesta = (tamanioRespuestaTransformacionYAMA(planificacionDelJOb) +
-			((sizeof(int)*2)*list_size(planificacionDelJOb)) + (2*list_size(planificacionDelJOb)));
-
-	char* respuesta = serializarListaYAMA(planificacionDelJOb);
-
-	logInfo("listo para enviar el tamanio de la respuesta es %i", tamanioRespuesta);
-
-	mensajesEnviadosAMaster(SOL_TRANSFORMACION, jobCompleto->job->master,
-			respuesta, tamanioRespuesta);
-
-	logInfo("Se envio respuesta correctamaente");
-
-
-	list_add(listaDeJobs, jobCompleto);
-
-}
-
-ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(
-		int puerto, char* ip, char* algoritmo, int disponiblidadBase,int retardo) {
-	ParametrosComunicacionConFileSystem* parametros = malloc(
-			sizeof(ParametrosComunicacionConFileSystem));
 	parametros->ip = ip;
 	parametros->puerto = puerto;
 	parametros->algoritmo = algoritmo;
 	parametros->disponibilidadBase = disponiblidadBase;
 	parametros->retardo = retardo;
 	return parametros;
+
 }
 
 void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
@@ -105,6 +46,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	int i = 0;
 	int a = 0;
 	t_list* lista;
+	Job* jobAEjecutar;
 
 	switch (codigo) {
 	case PRUEBAS:
@@ -133,7 +75,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 		break;
 	case UBICACION_BLOQUES:
 
-		logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
+		/*logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
 					tamanio = deserializarINT(pesoMensaje);
 					logInfo("tamanio de lo que recibo %i", tamanio);
@@ -158,12 +100,13 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	    	  	  	  logInfo("Con la cantidad de bytes Ocupados: %i", ubicacionb->bytesOcupados);
 	      }
 
-			Job* jobAEjecutar = retirarJobDeLista();
-
-
 
 			logInfo("Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",tamanio);
                break;
+*/
+            //mutex1
+
+   			jobAEjecutar = retirarJobDeLista();
 
 
            	logInfo("Creando Planificacion de prueba");
@@ -192,12 +135,10 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
            	logInfo("Se crea JOB Completo");
-
-
            	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
 
            	logInfo("Actualizar Tabla Global");
-           	//probar//ingresarDatosATablaGlobal(jobCompleto);
+           	ingresarDatosATablaGlobal(jobCompleto);
 
            	logInfo("Serializar respueta transformacion a YAMA");
 
@@ -215,6 +156,8 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 
            	list_add(listaDeJobs, jobCompleto);
+
+           	mostrarTabla();
 
            	break;
 	case INFO_WORKER:
@@ -248,4 +191,4 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 	}
 
-}
+

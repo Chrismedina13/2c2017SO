@@ -50,13 +50,14 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 
 
 void enviarAlmacenadoFinal(char * nombre_archivo , char* contenido, int FD_FS){
-	script * arch_final= malloc(strlen(nombre_archivo)+ strlen(contenido));
+	int tamanioMensaje = strlen(nombre_archivo)+ strlen(contenido);
+	archivo* arch_final= malloc(tamanioMensaje);
 	arch_final->contenido = contenido;
 	arch_final->nombre = nombre_archivo;
-    char * arch_final_serializado = malloc(strlen(nombre_archivo)+ strlen(contenido)+sizeof(int)*2);
-	arch_final_serializado=serializarScript(arch_final);
+    char * arch_final_serializado = serializarArchivo(arch_final);
 
-	mensajesEnviadosAFileSystem(ALMACENADO_FINAL,FD_FS, arch_final_serializado, strlen(arch_final_serializado));
+	mensajesEnviadosAFileSystem(ALMACENADO_FINAL,FD_FS, arch_final_serializado, tamanioMensaje + sizeof(int)*2);
 
+	free(arch_final_serializado);
 	free(arch_final);
 }

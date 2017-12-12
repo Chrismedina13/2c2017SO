@@ -14,6 +14,12 @@
 
 int main(int argc, char *argv[]) {
 
+	//Inicializo las variables globales
+	FD_Filesystem = 0;
+	id_nodo = 0;
+	FD_WorkerServidor = 0;
+	listaDeArchivosTemporalesLocales = list_create();
+
 	//Archivo de logs
 	crearLog("Worker.log","WORKER",1,log_level_from_string("INFO"));
 
