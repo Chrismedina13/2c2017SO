@@ -137,12 +137,12 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 
 		logInfo("tamanio de lo que recibo %i", tamanio);
 		mensaje = malloc(tamanio);
-		bloque->nrobloque = deserializarINT(mensaje);
-		logInfo("Numero de bloque: %d", bloque->nrobloque);
 
-		bloque->contenidoBloque=recv_timeout(FD_FileSystem, 5,2046);
+		bloque->contenidoBloque = receive_basic(FD_FileSystem,tamanio);
 		logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
+		recv(FD_FileSystem,bufferBloque,4,0);
+		bloque->nrobloque = deserializarINT(bufferBloque);
 
 		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
 			logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");

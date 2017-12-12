@@ -453,10 +453,10 @@ void consolaFileSystem(){
 									fileDescriptor1, tamanioSetBloque);
 
 							mensajesEnviadosADataNode(SET_BLOQUE,
-									fileDescriptor1, desplazamiento,
+									fileDescriptor1, bloque , strlen(bloque),
 									sizeof(int));
 
-							send(fileDescriptor1, bloque, strlen(bloque), 0);
+							send(fileDescriptor1, desplazamiento, sizeof(int), 0);
 
 							logInfo(
 									"Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
@@ -476,10 +476,10 @@ void consolaFileSystem(){
 									fileDescriptor2, tamanioSetBloque);
 
 							mensajesEnviadosADataNode(SET_BLOQUE,
-									fileDescriptor2, desplazamiento2,
-									sizeof(int));
+									fileDescriptor2, bloque,
+									strlen(bloque));
 
-							send(fileDescriptor2, bloque, strlen(bloque), 0);
+							send(fileDescriptor2, desplazamiento2, sizeof(int), 0);
 
 							logInfo(
 									"Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
