@@ -39,12 +39,16 @@ t_list* planificar(t_list* listaDeWorkersAPlanificar, char* algoritmo,
 
 		logInfo("PLanificando con W-CLOCK");
 
+		usleep(parametrosFileSystem->retardo);
+		logInfo("La Planificacion Tiene un retardo de %i", parametrosFileSystem->retardo);
+
 		return planificarConW_Clock(listaDeWorkersAPlanificar,disponibilidadBase);
 
 	} else {
 
 		logInfo("PLanificando con CLOCK");
-
+		usleep(parametrosFileSystem->retardo);
+		logInfo("La Planificacion Tiene un retardo de %i", parametrosFileSystem->retardo);
 		return planificarConClock(listaDeWorkersAPlanificar, disponibilidadBase);
 
 	}
@@ -82,6 +86,8 @@ t_list* dev_nodos_a_planificar(void) {
 }
 
 t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
+
+	//mutex2
 
 	int parte = 0;
 	t_list* partesDelArchivo = list_create();
@@ -122,6 +128,8 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilida
 
 	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
+	//mutex2
+
 	logInfo("Armar estructura para mandar a Master");
 	t_list* respuestaAMaster = list_create(); //r= armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
 	//falta recivir los nodos
@@ -142,6 +150,7 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilida
 
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
 
+	//mutex
 	int parte = 0;
 	t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
 	int cantidadDePartesDelArchivo = list_size(listaDeWorkersAPlanificar);
@@ -206,6 +215,12 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
+
+
+	logInfo("Armar estructura para mandar a Master");
+	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+
+
 	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales y limpiar las listas internas");
 
 	int j = 0;
@@ -219,12 +234,10 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 
 	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
+	//mutex
 
-	logInfo("Armar estructura para mandar a Master");
-	t_list* respuestaAMaster = list_create(); //;armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
-	//faltaLLenarLaTablaDeNodos
 
-	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"/home/utnso/SO-Nombres-Dataset");
+	/*	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"/home/utnso/SO-Nombres-Dataset");
 	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
 	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(4,31,"44.4343",44,44144,"archivoTransformacion4");
 	RespuestaTransformacionYAMA* respuestaTrans4 = setRespuestaTransformacionYAMA(5,31,"55.55543",55,55155,"arch");
@@ -235,7 +248,7 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	list_add(respuestaAMaster,respuestaTrans3);
 	list_add(respuestaAMaster,respuestaTrans4);
 	list_add(respuestaAMaster,respuestaTrans5);
-
+*/
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
 
@@ -505,7 +518,7 @@ t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list*
 			nodoDeLaParte = nodo->nodo;
 			bloqueDeLaParte = bloqueOcupadoPorLaParteEnElNodo(parte,nodoDeLaParte,listaDeWorkersAPlanificar);
 			bytesOcupadosDeLaParte = bytesocupadosPorLaParte(parte,listaDeWorkersAPlanificar);
-			Info_Workers* worker = list_get(ipYPuertoWoerkers,nodo);
+			Info_Workers* worker = list_get(ipYPuertoWoerkers,(nodoDeLaParte-1));
 			ip =worker->ipWorker;
 			puerto = worker->puerto;
 			variableNombreTransformacion++;
@@ -520,6 +533,7 @@ t_list* armarRespuestaTransformacionYAMA(t_list* nodosFinalesAPLanificar,t_list*
 
 		}
 
+		b=0;
 		a++;
 
 	}

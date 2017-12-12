@@ -199,6 +199,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 	char* mensaje;
 	Replanificacion* parametrosReplanif;
 	t_list* nuevaPlanificacion;
+	char* replanificacionSerializada;
+	int tamanioReplanificacion;
 
 	switch (codigo) {
 	case REPLANIFICACION:
@@ -223,12 +225,16 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		actualizarNodosCaidosReplanificacion(parametrosReplanif, FDMaster);
 
-		//serializarRespuestaTransformacionYAMA(nuevaPlanificacion);
+		tamanioReplanificacion = (sizeof(char)*tamanioRespuestaTransformacionYAMA(nuevaPlanificacion)) + (list_size(nuevaPlanificacion)*sizeof(uint32_t))+ sizeof(int) ;
 
-		//mensajesEnviadosAmaster();
+		replanificacionSerializada = serializarListaYAMA(nuevaPlanificacion);
+
+		mensajesEnviadosAMaster(SOL_TRANSFORMACION,FDMaster,replanificacionSerializada,tamanioReplanificacion);
 
 		insertarNodosNuevosPlanificados(nuevaPlanificacion, FDMaster,
 				parametrosReplanif->numeroDeJOb);
+
+		free(replanificacionSerializada);
 
 		break;
 	case NOMBRE_ARCHIVO:
@@ -250,6 +256,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		logInfo("Envio De JOB a FS");
 
+		//mutex1
 		int tamanioJOB = strlen(job->nombreDelArchivo);
 		Paquete* paqueteDeEnvioDeJOB = crearPaquete(NOMBRE_ARCHIVO, tamanioJOB,
 				job->nombreDelArchivo);
@@ -267,7 +274,8 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		agregarJObACola(job);
 
-		atenderJOB();
+		mensajesRecibidosDeFS(UBICACION_BLOQUES,FDsocketClienteFileSystem);
+
 		free(mensaje);
 		free(numeroDeJob);
 
