@@ -27,8 +27,28 @@ int main(int argc, char *argv[]) {
 	//Archivo de Logs
 	crearLog("YAMA.log","YAMA",1,log_level_from_string("INFO"));
 
+/*probando serializar redu local
 
+		char* archivo1 = "archivotemplocal1";
+		char* archivo2 = "archivotemporallocal2";
+		char* archivo3 = "arclocal2";
 
+		t_list* lista = list_create();
+
+		list_add(lista,archivo1);
+		list_add(lista,archivo2);
+		list_add(lista,archivo3);
+
+		RespuestaReduccionLocal* redu = malloc(sizeof(int)*2 + tamanioListaDeArchivos(lista)+strlen("pruebaa")+ strlen("10.10.144.228"));
+		redu->archivoReduccionLocal= "pruebaa";
+		redu->archivosDeTransformacion= lista;
+		redu->ipWorker = "10.10.144.228";
+		redu->nodo = 1800;
+		redu->puertoWorker = 4545;
+
+		char* listaS = serializarRespuestaReduccionLocal(redu);
+		t_list* l = deserializarRespuestaReduccionLocal(listaS);
+*/
 	//PROBANDO SERIALIZAR INFO REDUCCION GLOBAL DE MASTER PARA WORKER
 	/*char* archivoG = "archivoTemporalGlobal";
 	char* archivo1 = "archivotemplocal1";
@@ -216,8 +236,6 @@ int main(int argc, char *argv[]) {
 	parametrosFileSystem = setParametrosComunicacionConFileSystem(
 			config->puertoFileSystem, config->ipFileSystem,config->algoritmo_bal,config->disponibilidadBase,config->retardo);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoYama);
-
-    cantNodos= config->cantNodos;
 
 	signal(SIGUSR1,rutina);
 

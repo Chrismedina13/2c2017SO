@@ -140,13 +140,12 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		bloque->nrobloque = deserializarINT(mensaje);
 		logInfo("Numero de bloque: %d", bloque->nrobloque);
 
-		bloqueRecibido=recv_timeout(FD_FileSystem, 5,2046);
-		logInfo("Contenido del bloque : %s",bloqueRecibido);
+		bloque->contenidoBloque=recv_timeout(FD_FileSystem, 5,2046);
+		logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
 
 		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
 			logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
-			malloc(19);
 			mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, "GUARDE OK EL BLOQUE", 19);
 		}
 		else{
@@ -212,7 +211,6 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 		}
 
 		destruirPaquete(paqueteEnvio);
-		free(mensaje);
 		break;
 
 	case RTA_GET_BLOQUE:
