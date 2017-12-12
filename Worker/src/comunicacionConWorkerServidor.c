@@ -8,7 +8,7 @@
 
 archivo* comunicacionConWorkerServidor(infoParaReduccionGlobal* param,
 		char* rutaAGuardar) {
-
+char buffer2[4];
 	archivo* archivoRecibido;
 
 	int FDsocketClienteWorkerServidor;
@@ -18,7 +18,8 @@ archivo* comunicacionConWorkerServidor(infoParaReduccionGlobal* param,
 
 	FD_WorkerServidor = FDsocketClienteWorkerServidor;
 
-	char* mensaje = param->archivoTemporalReduccionLocal;
+	char* mensaje = malloc(strlen(param->archivoTemporalReduccionLocal));
+	mensaje =param->archivoTemporalReduccionLocal;
 	int tamanio = strlen(mensaje);
 
 	//ENVIO LA SOLICITUD DEL ARCHIVO TEMPORAL AL WORKER SERVIDOR
@@ -26,9 +27,14 @@ archivo* comunicacionConWorkerServidor(infoParaReduccionGlobal* param,
 			FD_WorkerServidor, mensaje, tamanio);
 
 	//RECIBO EL ARCHIVO TEMPORAL, LO DESERIALIZO Y LO GUARDO EN /WORKER/TMP
-	mensajesRecibidosDeWorkerServidor(SOLICITUD_ARCHIVO_TEMPORAL,
-			FD_WorkerServidor, rutaAGuardar);
 
+		if(recv(FDsocketClienteWorkerServidor, buffer2,4,0)>=0){
+				int codigo2 = deserializarINT(buffer2);
+				logInfo("Recibi de WORKER SERVIDOR el codigo : %i", codigo2);
+	         mensajesRecibidosDeWorkerServidor(codigo2,	FD_WorkerServidor, rutaAGuardar);
+		}
+
+        free(mensaje);
 	return archivoRecibido;
 }
 
@@ -68,6 +74,10 @@ void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,
 	char* pesoMensaje;
 	int tamanio;
 	char* mensaje;
+	archivo* archivoTemporal;
+	char* nombre;
+
+
 
 	switch(codigo){
 	case SOLICITUD_ARCHIVO_TEMPORAL:
@@ -79,10 +89,10 @@ void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,
 
 		mensaje = malloc(tamanio);
 		recv(FDServidorWORKER, mensaje, tamanio, 0);
-		archivo* archivoTemporal = deserializarArchivo(mensaje);
+		archivoTemporal = deserializarArchivo(mensaje);
 
 		//VUELVO A CREAR EL ARCHIVO EN EL LUGAR EN /WORKER/TMP/
-		char* nombre = string_new();
+		nombre = string_new();
 		string_append(nombre,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/");
 		string_append(nombre,archivoTemporal->nombre);
 		crearArchivo(archivoTemporal->contenido,nombre);
