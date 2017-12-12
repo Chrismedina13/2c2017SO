@@ -6,9 +6,8 @@
  */
 #include "Headers/comunicacionConWorkerServidor.h"
 
-archivo* comunicacionConWorkerServidor(infoParaReduccionGlobal* param,
-		char* rutaAGuardar) {
-char buffer2[4];
+void comunicacionConWorkerServidor(infoParaReduccionGlobal* param) {
+	char buffer2[4];
 	archivo* archivoRecibido;
 
 	int FDsocketClienteWorkerServidor;
@@ -19,7 +18,7 @@ char buffer2[4];
 	FD_WorkerServidor = FDsocketClienteWorkerServidor;
 
 	char* mensaje = malloc(strlen(param->archivoTemporalReduccionLocal));
-	mensaje =param->archivoTemporalReduccionLocal;
+	mensaje = param->archivoTemporalReduccionLocal;
 	int tamanio = strlen(mensaje);
 
 	//ENVIO LA SOLICITUD DEL ARCHIVO TEMPORAL AL WORKER SERVIDOR
@@ -28,14 +27,14 @@ char buffer2[4];
 
 	//RECIBO EL ARCHIVO TEMPORAL, LO DESERIALIZO Y LO GUARDO EN /WORKER/TMP
 
-		if(recv(FDsocketClienteWorkerServidor, buffer2,4,0)>=0){
-				int codigo2 = deserializarINT(buffer2);
-				logInfo("Recibi de WORKER SERVIDOR el codigo : %i", codigo2);
-	         mensajesRecibidosDeWorkerServidor(codigo2,	FD_WorkerServidor, rutaAGuardar);
-		}
+	if (recv(FDsocketClienteWorkerServidor, buffer2, 4, 0) >= 0) {
+		int codigo2 = deserializarINT(buffer2);
+		logInfo("Recibi de WORKER SERVIDOR el codigo : %i", codigo2);
+		mensajesRecibidosDeWorkerServidor(codigo2, FD_WorkerServidor);
 
-        free(mensaje);
-	return archivoRecibido;
+	}
+
+	free(mensaje);
 }
 
 ParametrosComunicacionConWorkerServidor* setParametrosComunicacionConWorkerServidor(
@@ -47,7 +46,7 @@ ParametrosComunicacionConWorkerServidor* setParametrosComunicacionConWorkerServi
 	return parametros;
 }
 
-void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem,
+void mensajesEnviadosAWorkerServidor(int codigo, int FD_WorkerServidor,
 		char* mensaje, int tamanio) {
 	Paquete * paqueteEnvio;
 	switch (codigo) {
@@ -55,7 +54,7 @@ void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem,
 	case SOLICITUD_ARCHIVO_TEMPORAL:
 		logInfo("se manda a file system el saludo");
 		paqueteEnvio = crearPaquete(ALMACENADO_FINAL, tamanio, mensaje);
-		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
+		if (enviarPaquete(FD_WorkerServidor, paqueteEnvio) == -1) {
 			logInfo("ERROR EN EL ENVIO DE SALUDO");
 		}
 
@@ -68,8 +67,7 @@ void mensajesEnviadosAWorkerServidor(int codigo, int FD_FileSystem,
 	}
 }
 
-void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,
-		char* rutaAGuardar) {
+void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER) {
 
 	char* pesoMensaje;
 	int tamanio;
@@ -77,9 +75,7 @@ void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,
 	archivo* archivoTemporal;
 	char* nombre;
 
-
-
-	switch(codigo){
+	switch (codigo) {
 	case SOLICITUD_ARCHIVO_TEMPORAL:
 		logInfo("WORKER CLIENTE RECIBE ARCHIVO TEMPORAL DEL WORKER SERVIDOR");
 
@@ -93,9 +89,12 @@ void mensajesRecibidosDeWorkerServidor(int codigo, int FDServidorWORKER,
 
 		//VUELVO A CREAR EL ARCHIVO EN EL LUGAR EN /WORKER/TMP/
 		nombre = string_new();
-		string_append(nombre,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/");
-		string_append(nombre,archivoTemporal->nombre);
-		crearArchivo(archivoTemporal->contenido,nombre);
+		string_append(nombre,
+				"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/");
+		string_append(nombre, archivoTemporal->nombre);
+		crearArchivo(archivoTemporal->contenido, nombre);
+
+		free(mensaje);
 		break;
 	default:
 		break;

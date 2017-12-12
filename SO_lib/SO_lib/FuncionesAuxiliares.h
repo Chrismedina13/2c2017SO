@@ -49,6 +49,7 @@ int indiceDelVectorQueQuedanLecturas(vectorConIndice vectorNodos[],int cantidadE
 int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElementosLista);
 char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2);
 void crearArchivo(char* contenido,char* rutaArchivoACrear);
+char* obtenerSoloNombreDelArchivo(char* ruta);
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
 
