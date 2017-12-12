@@ -43,22 +43,23 @@ t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* eta
 	t_reg* registro = malloc((sizeof(int)*4)+strlen(etapa)+strlen(arch_temp)+strlen(estado));
 	registro->job= job;
 	registro->master = master;
-	registro->job = nodo;
+	registro->nodo = nodo;
 	registro->bloque = bloque;
-	registro->etapa = arch_temp;
+	registro->etapa = etapa;
 	registro->estado = estado;
+	registro->arch_temp = arch_temp;
 
 	return registro;
 
 }
 
 
-void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto,t_list* listaRespuestaPlanificacionYama){
+void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
 
 	int i = 0;
-	while(i<list_size(listaRespuestaPlanificacionYama)){
+	while(i<list_size(jobCompleto->respuestaTransformacion)){
 
-		RespuestaTransformacionYAMA* respuesta = list_get(listaRespuestaPlanificacionYama,i);
+		RespuestaTransformacionYAMA* respuesta = list_get(jobCompleto->respuestaTransformacion,i);
 
 		t_reg* registro = crearRegistroTablaGlobal(jobCompleto->job->identificadorJob,jobCompleto->job->master,
 				respuesta->nodo,respuesta->bloque,"TRANSFORMACION",respuesta->archivoTemporal,"EN PROCESO");
@@ -222,5 +223,23 @@ void actualizarAlmacenadoFinalOK(numeroDeJob,master){
 		}else{
 			i++;
 		}
+	}
+}
+
+void mostrarTabla(){
+
+	int i = 0;
+	while(i < list_size(tabla_estados)){
+		t_reg* registro = list_get(tabla_estados,i);
+		printf("----------------------------------------------------------------\n");
+		printf("JOB: %i \n",registro->job);
+		printf("MASTER: %i \n",registro->master);
+		printf("NODO: %i \n",registro->nodo);
+		printf("BLOQUE: %i \n",registro->bloque);
+		printf("ETAPA: %s \n",registro->etapa);
+		printf("ARCHIVO TEMPORAL: %s \n", registro->arch_temp);
+		printf("ESTADO %s \n",registro->estado);
+
+		i++;
 	}
 }

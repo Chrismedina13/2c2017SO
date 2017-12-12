@@ -199,3 +199,133 @@ Bloque: 66
 
 [INFO] 16:10:11:608 MASTER/(6961:6974): Despues de serializar info para worker
 [INFO] 16:10:11:608 MASTER/(6961:6974): Error en envio de  INFOPARAWORKERS
+[INFO] 10:50:01:221 MASTER/(4300:4300): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:50:01:227 MASTER/(4300:4300): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 10:50:01:227 MASTER/(4300:4300): Creando el hilo para comunicarme con Yama
+[INFO] 10:50:01:228 MASTER/(4300:4305): Ingrese JOB a Ejecutar
+[INFO] 10:50:22:163 MASTER/(4300:4305): Se va a ejecutar asdad
+[INFO] 10:50:22:163 MASTER/(4300:4305): 5
+[INFO] 10:50:22:167 MASTER/(4300:4305): Recibi de YAMA: 30
+[INFO] 10:50:22:167 MASTER/(4300:4305): Master recibe el numero De JOB.
+[INFO] 10:50:22:168 MASTER/(4300:4305): Tamanio de lo que recibo 4
+[INFO] 10:50:22:168 MASTER/(4300:4305): El job asignado es 0
+[INFO] 10:53:08:149 MASTER/(4300:4305): Recibi de YAMA: -1219134656
+[INFO] 10:54:50:239 MASTER/(4733:4733): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:54:50:252 MASTER/(4733:4733): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 10:54:50:252 MASTER/(4733:4733): Creando el hilo para comunicarme con Yama
+[INFO] 10:54:50:261 MASTER/(4733:4734): Ingrese JOB a Ejecutar
+[INFO] 10:54:58:92 MASTER/(4733:4734): Se va a ejecutar ll
+[INFO] 10:54:58:92 MASTER/(4733:4734): 2
+[INFO] 10:54:58:99 MASTER/(4733:4734): Recibi de YAMA: 30
+[INFO] 10:54:58:99 MASTER/(4733:4734): Master recibe el numero De JOB.
+[INFO] 10:54:58:100 MASTER/(4733:4734): Tamanio de lo que recibo 4
+[INFO] 10:54:58:100 MASTER/(4733:4734): El job asignado es 0
+[INFO] 10:55:57:311 MASTER/(4733:4734): Recibi de YAMA: -1218749632
+[INFO] 10:57:27:643 MASTER/(5193:5193): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 10:57:27:650 MASTER/(5193:5193): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 10:57:27:650 MASTER/(5193:5193): Creando el hilo para comunicarme con Yama
+[INFO] 10:57:27:658 MASTER/(5193:5196): Ingrese JOB a Ejecutar
+[INFO] 10:57:35:766 MASTER/(5193:5196): Se va a ejecutar klklkl
+[INFO] 10:57:35:766 MASTER/(5193:5196): 6
+[INFO] 10:57:35:773 MASTER/(5193:5196): Recibi de YAMA: 30
+[INFO] 10:57:35:773 MASTER/(5193:5196): Master recibe el numero De JOB.
+[INFO] 10:57:35:773 MASTER/(5193:5196): Tamanio de lo que recibo 4
+[INFO] 10:57:35:773 MASTER/(5193:5196): El job asignado es 0
+[INFO] 11:01:58:406 MASTER/(5193:5196): Recibi de YAMA: -1219572928
+[INFO] 11:03:21:242 MASTER/(5693:5693): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:03:21:246 MASTER/(5693:5693): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:03:21:246 MASTER/(5693:5693): Creando el hilo para comunicarme con Yama
+[INFO] 11:03:21:253 MASTER/(5693:5694): Ingrese JOB a Ejecutar
+[INFO] 11:03:26:50 MASTER/(5693:5694): Se va a ejecutar jkk
+[INFO] 11:03:26:50 MASTER/(5693:5694): 3
+[INFO] 11:03:30:348 MASTER/(5693:5694): Recibi de YAMA: 30
+[INFO] 11:03:30:348 MASTER/(5693:5694): Master recibe el numero De JOB.
+[INFO] 11:03:30:348 MASTER/(5693:5694): Tamanio de lo que recibo 4
+[INFO] 11:03:30:348 MASTER/(5693:5694): El job asignado es 0
+[INFO] 11:05:45:107 MASTER/(5693:5694): Recibi de YAMA: -1219445952
+[INFO] 11:07:06:823 MASTER/(6085:6085): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:07:06:846 MASTER/(6085:6085): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:07:06:846 MASTER/(6085:6085): Creando el hilo para comunicarme con Yama
+[INFO] 11:07:06:846 MASTER/(6085:6086): Ingrese JOB a Ejecutar
+[INFO] 11:07:21:785 MASTER/(6085:6086): Se va a ejecutar kkk
+[INFO] 11:07:21:785 MASTER/(6085:6086): 3
+[INFO] 11:07:21:792 MASTER/(6085:6086): Recibi de YAMA: 30
+[INFO] 11:07:21:793 MASTER/(6085:6086): Master recibe el numero De JOB.
+[INFO] 11:07:21:793 MASTER/(6085:6086): Tamanio de lo que recibo 4
+[INFO] 11:07:21:793 MASTER/(6085:6086): El job asignado es 0
+[INFO] 11:09:09:531 MASTER/(6085:6086): Recibi de YAMA: -1219105984
+[INFO] 11:11:05:188 MASTER/(6490:6490): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:11:05:210 MASTER/(6490:6490): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:11:05:214 MASTER/(6490:6490): Creando el hilo para comunicarme con Yama
+[INFO] 11:11:05:214 MASTER/(6490:6492): Ingrese JOB a Ejecutar
+[INFO] 11:11:09:150 MASTER/(6490:6492): Se va a ejecutar lklklk
+[INFO] 11:11:09:151 MASTER/(6490:6492): 6
+[INFO] 11:11:12:243 MASTER/(6490:6492): Recibi de YAMA: 30
+[INFO] 11:11:12:244 MASTER/(6490:6492): Master recibe el numero De JOB.
+[INFO] 11:11:12:244 MASTER/(6490:6492): Tamanio de lo que recibo 4
+[INFO] 11:11:12:244 MASTER/(6490:6492): El job asignado es 0
+[INFO] 11:15:06:492 MASTER/(6490:6492): Recibi de YAMA: -1218909376
+[INFO] 11:16:41:811 MASTER/(7043:7043): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:16:41:832 MASTER/(7043:7043): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:16:41:832 MASTER/(7043:7043): Creando el hilo para comunicarme con Yama
+[INFO] 11:16:41:836 MASTER/(7043:7044): Ingrese JOB a Ejecutar
+[INFO] 11:16:51:803 MASTER/(7043:7044): Se va a ejecutar asda
+[INFO] 11:16:51:803 MASTER/(7043:7044): 4
+[INFO] 11:16:51:807 MASTER/(7043:7044): Recibi de YAMA: 30
+[INFO] 11:16:51:813 MASTER/(7043:7044): Master recibe el numero De JOB.
+[INFO] 11:16:51:813 MASTER/(7043:7044): Tamanio de lo que recibo 4
+[INFO] 11:16:51:813 MASTER/(7043:7044): El job asignado es 0
+[INFO] 11:24:44:739 MASTER/(7043:7044): Recibi de YAMA: -1219331264
+[INFO] 11:26:03:499 MASTER/(7648:7648): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:26:03:520 MASTER/(7648:7648): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:26:03:520 MASTER/(7648:7648): Creando el hilo para comunicarme con Yama
+[INFO] 11:26:03:522 MASTER/(7648:7651): Ingrese JOB a Ejecutar
+[INFO] 11:26:12:184 MASTER/(7648:7651): Se va a ejecutar ,m,
+[INFO] 11:26:12:184 MASTER/(7648:7651): 3
+[INFO] 11:26:12:188 MASTER/(7648:7651): Recibi de YAMA: 30
+[INFO] 11:26:12:188 MASTER/(7648:7651): Master recibe el numero De JOB.
+[INFO] 11:26:12:188 MASTER/(7648:7651): Tamanio de lo que recibo 4
+[INFO] 11:26:12:188 MASTER/(7648:7651): El job asignado es 0
+[INFO] 11:26:58:438 MASTER/(7648:7651): Recibi de YAMA: -1219560640
+[INFO] 11:28:15:719 MASTER/(8013:8013): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:28:15:726 MASTER/(8013:8013): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:28:15:726 MASTER/(8013:8013): Creando el hilo para comunicarme con Yama
+[INFO] 11:28:15:727 MASTER/(8013:8014): Ingrese JOB a Ejecutar
+[INFO] 11:28:25:455 MASTER/(8013:8014): Se va a ejecutar kllk
+[INFO] 11:28:25:455 MASTER/(8013:8014): 4
+[INFO] 11:28:25:461 MASTER/(8013:8014): Recibi de YAMA: 30
+[INFO] 11:28:25:461 MASTER/(8013:8014): Master recibe el numero De JOB.
+[INFO] 11:28:25:461 MASTER/(8013:8014): Tamanio de lo que recibo 4
+[INFO] 11:28:25:461 MASTER/(8013:8014): El job asignado es 0
+[INFO] 11:31:31:791 MASTER/(8013:8014): Recibi de YAMA: -1219048640
+[INFO] 11:33:20:157 MASTER/(8475:8475): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 11:33:20:157 MASTER/(8475:8475): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 11:33:20:157 MASTER/(8475:8475): Creando el hilo para comunicarme con Yama
+[INFO] 11:33:20:165 MASTER/(8475:8476): Ingrese JOB a Ejecutar
+[INFO] 11:33:27:865 MASTER/(8475:8476): Se va a ejecutar j,mm,
+[INFO] 11:33:27:865 MASTER/(8475:8476): 5
+[INFO] 11:33:27:869 MASTER/(8475:8476): Recibi de YAMA: 30
+[INFO] 11:33:27:870 MASTER/(8475:8476): Master recibe el numero De JOB.
+[INFO] 11:33:27:871 MASTER/(8475:8476): Tamanio de lo que recibo 4
+[INFO] 11:33:27:871 MASTER/(8475:8476): El job asignado es 0
+[INFO] 11:35:31:421 MASTER/(8475:8476): Recibi de YAMA: -1219466432
