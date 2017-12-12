@@ -221,22 +221,6 @@ char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceA
 		}
 
 	}
-
-	FILE* fd;
-
-	char* rutaa = string_new();
-	char* nombreArchivo=string_itoa(count);
-	string_append(&rutaa, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/FileSystem/ArchivosADividir/");
-	string_append(&rutaa, nombreArchivo);
-	string_append(&rutaa, ".txt");
-	fd = fopen(rutaa,"w");
-	if (fd==NULL) {
-		printf("Error al abrir el archivo.");
-	}
-
-	fputs(buffer,fd);
-	fclose(fd);
-
 	free(bloqueAGurdar);
 
 	return buffer;

@@ -144,7 +144,9 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		recv(FD_FileSystem,bufferBloque,4,0);
 		bloque->nrobloque = deserializarINT(bufferBloque);
 
-		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
+		//if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
+		if (set_bloque(bloque->contenidoBloque,0)==0){
+
 			logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
 			mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, "GUARDE OK EL BLOQUE", 19);
 		}

@@ -429,6 +429,26 @@ void consolaFileSystem(){
 						int count = 0;
 						UbicacionBloquesArchivo2* ubicacion;
 						char* bloque;
+						int cantidadDeNodos=0;
+
+						int fileeDescriptor1;
+						int fileeDescriptor2;
+						bloques_nodo* asd;
+						while(cantidadDeNodos<list_size(tabla_de_nodos.listaCapacidadNodos)){
+							asd = list_get(tabla_de_nodos.listaCapacidadNodos,cantidadDeNodos);
+							if(asd->idNodo==1){
+															fileeDescriptor1=asd->fileDescriptor;
+														}if(asd->idNodo==2){
+															fileeDescriptor2=asd->fileDescriptor;
+														}if(asd->idNodo==3){
+															int fileeDescriptor3=asd->fileDescriptor;
+														}if(asd->idNodo==4){
+															int fileeDescriptor4=asd->fileDescriptor;
+														}
+														cantidadDeNodos++;
+						}
+
+
 
 						while (count < cantBloques) {
 
@@ -446,15 +466,21 @@ void consolaFileSystem(){
 							char* desplazamiento = serializeInt(
 									ubicacion->desplazamiento1);
 
-							int fileDescriptor1 = nodoToFD(ubicacion->nodo1);
+//							int fileDescriptor1 = nodoToFD(ubicacion->nodo1);
+							int fileDescriptor1;
+							if(ubicacion->nodo1==1){
+								fileDescriptor1=fileeDescriptor1;
+							}
+							if(ubicacion->nodo1==2){
+															fileDescriptor1=fileeDescriptor2;
+														}
 
 							logInfo(
 									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
 									fileDescriptor1, tamanioSetBloque);
 
 							mensajesEnviadosADataNode(SET_BLOQUE,
-									fileDescriptor1, bloque , strlen(bloque),
-									sizeof(int));
+									fileDescriptor1, bloque , strlen(bloque));
 
 							send(fileDescriptor1, desplazamiento, sizeof(int), 0);
 
@@ -469,8 +495,14 @@ void consolaFileSystem(){
 							char* desplazamiento2 = serializeInt(
 									ubicacion->desplazamiento1);
 
-							int fileDescriptor2 = nodoToFD(ubicacion->nodo2);
-
+						//	int fileDescriptor2 = nodoToFD(ubicacion->nodo2);
+							int fileDescriptor2;
+							if(ubicacion->nodo2==1){
+														fileDescriptor2=fileeDescriptor1;
+													}
+													if(ubicacion->nodo2==2){
+																					fileDescriptor2=fileeDescriptor2;
+																				}
 							logInfo(
 									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
 									fileDescriptor2, tamanioSetBloque);
