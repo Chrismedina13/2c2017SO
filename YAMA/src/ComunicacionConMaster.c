@@ -108,6 +108,16 @@ void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje,
 		logInfo("YAMA envia a Master el identificador de job.");
 
 		break;
+	case SOL_TRANSFORMACION:
+			paqueteSolicitudTransf = crearPaquete(codigo, tamanio, mensaje);
+
+			if (enviarPaquete(FDMaster, paqueteSolicitudTransf) == -1) {
+				logInfo("Error en envio de solicitud de transformación a MASTER");
+			}
+
+			destruirPaquete(paqueteSolicitudTransf);
+
+			break;
 	case REDUCCION_LOCAL:
 		logInfo("YAMA envia a Master la respuesta de reduccion Local");
 
