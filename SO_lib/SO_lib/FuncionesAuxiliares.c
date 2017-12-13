@@ -138,10 +138,12 @@ void rearmar_script(script* script,int codigo){
 	case SCRIPT_REDUCCION:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptReduccion = nombreArchivo; //variable global
+		darPermisosAlLosScriptsPy(nombreArchivo);
 		break;
 	case SCRIPT_TRANSFORMADOR:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptTransformador = nombreArchivo; //variable global
+		darPermisosAlLosScriptsPy(nombreArchivo);
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
@@ -186,8 +188,11 @@ int ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rut
     return estado;
 
 }
-void darPermisosAlLosScriptsPy(){
-	system("/bin/chmod 777 *.py");
+void darPermisosAlLosScriptsPy(char* ruta){
+	char* command = string_new();
+	string_append(&command,"/bin/chmod 777 ");
+	string_append(&command,ruta);
+	system(command);
 }
 
 void destruirArchivoOScript(char* rutaScript){

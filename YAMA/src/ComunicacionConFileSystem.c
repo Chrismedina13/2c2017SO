@@ -88,12 +88,12 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	logInfo("Creando Planificacion de prueba");
 
            	t_list* listaDeWorkersAPlanificar = list_create();
-           	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 1, 12, 2, 13);
-           	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 19);
-           	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 2, 12, 2, 1);
+           	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 2, 20, 3, 2);
+           	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 3);
+           	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 4);
+           	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 5);
+           	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 6);
            	UbicacionBloquesArchivo2* ubi6 = crearUbicacionBloquesArchivos2(6, 100, 1, 20, 2, 19);
 
 

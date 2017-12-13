@@ -29,15 +29,15 @@ int main(int argc, char *argv[]) {
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
 
 	logInfo("Creando hilos para comunicacion con MASTER y FS");
-	pthread_t hiloFS;
+	//pthread_t hiloFS;
 	pthread_t hiloMaster;
 
 
-	pthread_create(&hiloFS, NULL, (void*) comunicacionConFileSystem, parametrosFileSystem);
+	//pthread_create(&hiloFS, NULL, (void*) comunicacionConFileSystem, parametrosFileSystem);
 	pthread_create(&hiloMaster, NULL, (void*) comunicacionConMaster, parametrosMaster);
 
 	pthread_join(hiloMaster, NULL);
-	pthread_join(hiloFS, NULL);
+	//pthread_join(hiloFS, NULL);
 
 	//free(config);
 	return EXIT_SUCCESS;

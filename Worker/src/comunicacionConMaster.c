@@ -91,6 +91,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							} else {
 
 								scriptTransformador = deserilizarScript(mensaje);
+								//logInfo("scriptTransformador %s",scriptTransformador->nombre);
+								//logInfo("scriptTransformador %s",scriptTransformador->contenido);
+
 								rearmar_script(scriptTransformador, SCRIPT_TRANSFORMADOR);
 								logInfo("Se recibio correctamente el script transformador.");
 							}
@@ -104,19 +107,18 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo(
 										"Error en la recepcion de Info de Master.");
 							} else {
-								infoTransformacionParaWorker * info =
-										deserializarInfoParaWorker(mensaje);
+								infoTransformacionParaWorker * info =deserializarInfoParaWorker(mensaje);
 								int bloque = info->bloque;
-
 								char* archivoTemporal = info->archivoTemporal;
 								//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
-								char* contenidoBloque = get_bloque(bloque);
+								logInfo("Bloque %i",bloque);
+								char* contenidoBloque = get_bloque(1);
 								char* contenido = string_substring(contenidoBloque,0,info->bytesOcupados);
+								logInfo("info->bytesOcupados %i",info->bytesOcupados);
+								logInfo("contenido %s",contenido);
 								char* nombreArchivoBloque ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque.txt";
 								crearArchivo(contenido, nombreArchivoBloque);
-								int estado = ejecutarScriptTransformador(
-										scriptTransformador->nombre, nombreArchivoBloque,
-										archivoTemporal);
+								int estado = ejecutarScriptTransformador(rutaScriptTransformador, nombreArchivoBloque,archivoTemporal);
 								//Estado 0 significa que lo hizo bien
 
 								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT

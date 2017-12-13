@@ -79,6 +79,8 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,in
 
 		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Transformacion.");
+		}else{
+			logInfo("Se envio respuesta de Transformacion a YAMA exitosamente.");
 		}
 
 		destruirPaquete(paquete);

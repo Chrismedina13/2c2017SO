@@ -61,11 +61,13 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 	transformador->contenido = contenido;
 	transformador->nombre = ruta;
+	logInfo("Transformador Nombre %s",transformador->nombre);
+	logInfo("Transformador Contenido %s",transformador->contenido);
 
 	char * scriptSerializado = serializarScript(transformador);
-
+	int tamanioTransf = (strlen(transformador->nombre)+strlen(transformador->contenido)+sizeof(int)*2);
 	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR, FDServidorWORKER,
-			scriptSerializado, tamanioRespuesta);
+			scriptSerializado, tamanioTransf);
 
 	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,
 			tamanioRespuesta);
@@ -187,7 +189,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 		mensaje[tamanio] = '\0';
 		recv(FDServidorWORKER, mensaje, tamanio, 0);
 		resultado_job = deserializarResultado(mensaje);
-		logInfo("Resultado %i,Nodo %i" resultado_job->resultado,resultado_job->nodo);
+		logInfo("Resultado %i,Nodo %i", resultado_job->resultado,resultado_job->nodo);
 		if (resultado_job->resultado == 0) {
 			logInfo("Recibi de Worker el fin de la transformacion");
 			logInfo("Envio a YAMA el fin transformacion");
@@ -195,8 +197,7 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 			finRG->nodo = resultado_job->nodo;
 			finRG->numeroDeJob = nro_job;
 			mensajeNuevo = serializarFinTransformacion(finRG);
-			mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA, mensajeNuevo,
-					sizeof(int) * 2);
+			mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA, mensajeNuevo,sizeof(int) * 2);
 		} else {
 			logInfo("Fin de la transformacion salio mal, Envio a YAMA la replanificacion");
 
