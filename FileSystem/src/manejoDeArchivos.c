@@ -5,6 +5,7 @@
  *      Author: utnso
  */
 #include "Headers/manejoDeArchivos.h"
+#include "Headers/FileSystem.h"
 
 
 /*FUNCION PRINCIPAL*/
