@@ -5,6 +5,7 @@
  *      Author: utnso
  */
 #include "Headers/manejoDeArchivos.h"
+#include "Headers/FileSystem.h"
 
 
 /*FUNCION PRINCIPAL*/
@@ -48,7 +49,7 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo){
 
 /*FUNCION PRINCIPAL*/
 
-t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
+void * obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 		/*Recibe la ruta de un archivo en fs
 		 *Devuleve una lista de char* con bloques de texto que partio
@@ -68,13 +69,13 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 		fclose(fp);
 
-		t_list* lista = list_create();
+		tabla_de_archivos[indiceArchivo].bloques = list_create();
 		char* bloque = malloc(MB);
 
 		while (desplazamiento < tamanio) {
 
 		bloque = dividirArchivoTextoMemoria(p,&desplazamiento,indiceArchivo);
-		list_add(lista, bloque);
+		list_add(tabla_de_archivos[indiceArchivo].bloques, bloque);
 
 		}
 
@@ -87,7 +88,6 @@ t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
         //t_list* bloques = listaDeContenidos(lista);
 
-        return lista;
 
 }
 

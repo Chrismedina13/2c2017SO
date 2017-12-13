@@ -382,10 +382,9 @@ void consolaFileSystem(){
 					compararComando = false;
 
 					int status = 0;
-
 					int indiceArchivo = newArchivo();
 
-					//reviso si hay lugar en mis nodos
+					//abro el archivo a ingresar al YAMAFS
 
 					FILE * fp = fopen(comandos[1], "r");
 					if (!fp) {
@@ -395,16 +394,15 @@ void consolaFileSystem(){
 
 					//parte el archivo en bloques
 
-					t_list* bloquesDeTexto = obtenerBloquesTexto(comandos[1],
-							indiceArchivo); //quedan cargados en bloques
+					obtenerBloquesTexto(comandos[1],indiceArchivo); //quedan cargados en bloques
 
-					int cantBloques = list_size(bloquesDeTexto);
+					//reviso si hay lugar en mis nodos
+
+					int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
 					logInfo("Parti el archivo en %d bloques.", cantBloques);
 
 					int bloquesNecesarios = cantBloques * 2;
-
 					int bloquesLibres = tabla_de_nodos.bloqueslibres;
-					//logInfo("%d", tabla_de_nodos.bloqueslibres);
 
 					if (bloquesNecesarios > bloquesLibres) { //necesita guardar una copia por cada bloque
 						logInfo(
@@ -412,18 +410,15 @@ void consolaFileSystem(){
 						status = -1;
 					}
 
-					//if(lugarEnNodos(bloquesArchivo)==-1){
-					//	logInfo("La distribucion de los bloques en Nodos no permite almacenar el archivo");
-					//	status = -1;
-					//}
+					//si la distribucion administrativa no falla, le paso a los nodos los bloques
 
 					if (status == 0) {
 
 						//le pasa los bloques a los nodos
 
-						distribuirBloques(bloquesDeTexto, indiceArchivo);
-						logInfo(
-								"Distribui administrativamente los bloques en los Nodos conectados.");
+						distribuirBloques(indiceArchivo);
+
+						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
 
 						int count = 0;
 						UbicacionBloquesArchivo2* ubicacion;
@@ -434,7 +429,7 @@ void consolaFileSystem(){
 
 						while (count < cantBloques) {
 
-							bloque = list_get(bloquesDeTexto, count);
+							bloque = list_get(tabla_de_archivos[indiceArchivo].bloques, count);
 							ubicacion =list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
 							int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
 
@@ -484,23 +479,21 @@ void consolaFileSystem(){
 
 						}
 
-						logInfo(
-								"Envio los bloques a sus respectivos nodos y desplazamiento.");
+						logInfo("Envie los bloques a sus respectivos nodos y desplazamiento.");
 
 						//crea registro del archivo en YAMAFS
 
-						status = crearRegistroArchivo(comandos[1], comandos[2],
-								indiceArchivo);
+						status = crearRegistroArchivo(comandos[1], comandos[2],indiceArchivo);
+
 						if (status == 1) {
-							logInfo(
-									"Registro de archivo creado correctamente.");
+							logInfo("Registro de archivo creado correctamente.");
 
 							if (cantidad_archivos == cantArchivos) {
 								semaphore_signal(SEMAFOROYAMA);
 							}
 						}
 						if (status == 1) {
-							logInfo("Registro de archivo no pudo ser creado.");
+							logInfo("Registro de archivo no pudo ser creado. Archivo no pudo ser copiado al YAMAFS");
 						}
 
 					}
@@ -513,24 +506,21 @@ void consolaFileSystem(){
 			if(*comandos!=NULL && compararComando){
 				if(string_equals_ignore_case(comandos[0], CPTO)){
 					compararComando=false;
-					//hacer el comando
 
-					//cpto [path_archivo_yamafs] [directorio_filesystem] - Copiar un archivo local desde el yamafs
+					/*cpto [path_archivo_yamafs] [directorio_filesystem] - Copiar un archivo local desde el yamafs
+						buscar todas las partes
+						va pidiendo a los DN los bloques
+						va poniendo los char* por orden en un buffer
+						une todos los char*
+					*/
 
-					//buscar todas las partes
-
-					//va pidiendo a los DN los bloques
-
-					//va poniendo los char* por orden en un buffer
-
-					//une todos los char*
+					//SOLO FUNCIONA SI EL ARCHIVO ESTA PARTIDO EN MEMORIA DEL FS --- NO USAR PARA RECUPERACION FS ---
 
 					char* rutaYAMA = comandos[1];
 					char* rutaLocal = comandos[2];
 					int indexArchivo = pathToIndiceArchivo(rutaYAMA);
 
 					char* bloque = malloc(1024*1024);
-					UbicacionBloquesArchivo* ubicacion;
 
 					int count = 0;
 					int cantBloques = list_size(tabla_de_archivos[indexArchivo].bloques);
@@ -543,11 +533,12 @@ void consolaFileSystem(){
 					while(count<cantBloques){
 
 						bloque = list_get(tabla_de_archivos[indexArchivo].bloques,count);
-						fputs("%s", bloque);
+						fputs(bloque, fp);
 						count++;
 					}
 
 					free(bloque);
+					fclose(fp);
 
 
 				}
@@ -565,7 +556,7 @@ void consolaFileSystem(){
 					int parteArchivo = atoi(comandos[2]); //parte del archivo que voy a copiar
 					int nodoACopiar = atoi(comandos[3]); //nodo donde lo voy a copiar
 					int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
-					UbicacionBloquesArchivo* bloques;
+					UbicacionBloquesArchivo2* bloques;
 					bloques_nodo* nodos;
 
 					if(ultimaCopia(indiceArchivo, parteArchivo)==-1){
@@ -593,13 +584,13 @@ void consolaFileSystem(){
 							count++;
 						}
 
-						if(bloques->ubicacionCopia1.nodo==-1){
-							bloques->ubicacionCopia1.nodo = nodoACopiar;
-							bloques->ubicacionCopia1.desplazamiento = desplazamiento;
+						if(bloques->nodo1==-1){
+							bloques->nodo1 = nodoACopiar;
+							bloques->desplazamiento1 = desplazamiento;
 						}
-						if(bloques->ubicacionCopia2.nodo==-1){
-							bloques->ubicacionCopia2.nodo = nodoACopiar;
-							bloques->ubicacionCopia2.desplazamiento = desplazamiento;
+						if(bloques->nodo2==-1){
+							bloques->nodo2= nodoACopiar;
+							bloques->desplazamiento2= desplazamiento;
 						}
 						else{
 							logInfo("La parte del Archivo ya posee 2 copias en distintos DN.");
@@ -607,13 +598,24 @@ void consolaFileSystem(){
 
 						char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,count);
 
-						SetBloque *setbloque= malloc(sizeof(char)*1024+sizeof(int));
-						setbloque->nrobloque= desplazamiento;
-						setbloque->contenidoBloque=bloque;
-						char* mensaje= malloc(sizeof(int)+(sizeof(char)+strlen(setbloque->contenidoBloque)));
-						mensaje = serializarBloque(setbloque->nrobloque,setbloque->contenidoBloque);
-						int tamanioSetBloque= sizeof(int)+(sizeof(char)+strlen(setbloque->contenidoBloque));
-						mensajesEnviadosADataNode(SET_BLOQUE, nodoACopiar, mensaje, tamanioSetBloque);
+						//le mando el bloque al nodo
+
+						int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
+						char* desplazamientoSerializado = serializeInt(desplazamiento);
+						int fileDescriptor = nodoToFD(nodoACopiar);
+
+						logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+								fileDescriptor,
+								tamanioSetBloque);
+
+						mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor, bloque , strlen(bloque));
+
+						send(fileDescriptor, desplazamientoSerializado, sizeof(int), 0);
+
+						logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
+								parteArchivo,
+								nodoACopiar,
+								desplazamiento);
 
 						logInfo("El bloque fue copiado con exito.");
 

@@ -15,7 +15,7 @@
 int elegirNodo();
 int bloquesLibres(bloques_nodo* nodo);
 int ocuparBloqueBitMap(bloques_nodo* nodo);
-void* distribuirBloques(t_list* bloques, int indiceArchivo);
+void* distribuirBloques(int indiceArchivo);
 
 
 int crearRegistroArchivoNodos(tabla_nodos tablaNodos);
