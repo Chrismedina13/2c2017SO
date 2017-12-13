@@ -67,7 +67,7 @@ void * distribuirBloques(int indiceArchivo){
 	char* bloque;
 	bloques_nodo* bitMapNodo1;
 	bloques_nodo* bitMapNodo2;
-	UbicacionBloquesArchivo2* ubicacionBloquesArchivo = malloc(sizeof(int)*6);
+	UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
 	int index1, indexList1, index2, indexList2;
 	int desplazamiento1, desplazamiento2;
 
@@ -106,18 +106,18 @@ void * distribuirBloques(int indiceArchivo){
 
 		//cargo los datos de los bloques en tabla_de_archivos
 
-		ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
-		ubicacionBloquesArchivo->desplazamiento1 = desplazamiento1;
-		ubicacionBloquesArchivo->nodo1 = index1;
-		ubicacionBloquesArchivo->desplazamiento2 = desplazamiento2;
-		ubicacionBloquesArchivo->nodo2 = index2;
-		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+		bloquesPtr->parteDelArchivo = indiceBloque;
+		bloquesPtr->desplazamiento1 = desplazamiento1;
+		bloquesPtr->nodo1 = index1;
+		bloquesPtr->desplazamiento2 = desplazamiento2;
+		bloquesPtr->nodo2 = index2;
+		bloquesPtr->bytesOcupados = string_length(bloque);
 
-		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados,
-				ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->nodo1,
-				ubicacionBloquesArchivo->desplazamiento1,ubicacionBloquesArchivo->nodo2, ubicacionBloquesArchivo->desplazamiento2);
+		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",bloquesPtr->bytesOcupados,
+				bloquesPtr->parteDelArchivo,bloquesPtr->nodo1,
+				bloquesPtr->desplazamiento1,bloquesPtr->nodo2, bloquesPtr->desplazamiento2);
 
-		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);
+		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,bloquesPtr);
 
 	//	free(ubicacionBloquesArchivo);
 	//	free(bitMapNodo1);
@@ -326,7 +326,7 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 	while(count<(nodo->bloquesTotales)){
 		if(nodo->bitmap[count]==0){
 			nodo->bitmap[count]=1;
-			nodo->bloquesLibres = nodo->bloquesLibres-1;
+			nodo->bloquesLibres = nodo->bloquesLibres--;
 			return(count);
 		}
 	count++;

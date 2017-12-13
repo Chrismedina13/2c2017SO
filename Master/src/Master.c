@@ -13,6 +13,9 @@
 
 int main(int argc, char *argv[]) {
 
+	ruta_transformador= "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/scripts/transformador.py";
+	ruta_reduccion ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/scripts/reductor.py";
+
 	crearLog("Master.log", "MASTER", 1, log_level_from_string("INFO"));
 
 	Configuracion *config = leerArchivoDeConfiguracion(ARCHIVO_CONFIGURACION);

@@ -69,7 +69,7 @@ void * obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 
 		fclose(fp);
 
-		t_list* lista = list_create();
+		tabla_de_archivos[indiceArchivo].bloques = list_create();
 		char* bloque = malloc(MB);
 
 		while (desplazamiento < tamanio) {

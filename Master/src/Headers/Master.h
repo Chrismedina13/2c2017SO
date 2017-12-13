@@ -27,4 +27,7 @@ int FD_WORKER;
 int tamanioLista;
 int nro_job;
 
+char* ruta_transformador;
+char* ruta_reduccion;
+
 #endif /* HEADERS_MASTER_H_ */
