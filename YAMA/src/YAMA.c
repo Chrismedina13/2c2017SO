@@ -29,10 +29,10 @@ int main(int argc, char *argv[]) {
 	int puerto3= 5050;
 	int puerto4= 5050;
 
-	char* ip1 = "124.0.0.1";
-	char* ip2 = "124.0.0.1";
-	char* ip3 = "124.0.0.1";
-	char* ip4 = "124.0.0.1";
+	char* ip1 = "127.0.0.1";
+	char* ip2 = "127.0.0.1";
+	char* ip3 = "127.0.0.1";
+	char* ip4 = "127.0.0.1";
 
 
 
