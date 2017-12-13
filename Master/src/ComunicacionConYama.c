@@ -62,8 +62,6 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio) {
 	switch (codigo) {
 	Paquete* paquete;
-
-
 	case NOMBRE_ARCHIVO:
 		paquete = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
 
