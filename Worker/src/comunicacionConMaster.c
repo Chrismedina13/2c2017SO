@@ -49,8 +49,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 							fd_max = FD_Cliente;
 						}
 						logInfo(
-								"Nueva conexion del socket cliente Master de FD: %i",
-								FD_Cliente);
+								"Nueva conexion del socket cliente Master de FD: %i",FD_Cliente);
 					}
 				} else {
 
@@ -64,16 +63,15 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						FD_CLR(i, &master);
 
 					} else {
-						//logInfo("HOLA");1
+
 						int codigo = deserializarINT(buffer);
-						//logInfo(" Worker Recibe de Master: %d", codigo);
-						printf(" Worker Recibe de Master: %d", codigo);
+						logInfo(" Worker Recibe de Master: %d", codigo);
 
 						char pesoMensaje[4];
 						int tamanio;
 						char* mensaje;
 						int FDMaster = i;
-						//ENVIO MASTER
+
 						resultadoJob* resultado_job;
 						char* mensajeAEnviar;
 
