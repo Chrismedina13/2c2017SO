@@ -34,6 +34,8 @@ int variableNombreTransformacion;
 int VariableReduccionLocal;
 int variableReduciionGlobal;
 int FDsocketClienteFileSystem;
+pthread_mutex_t mutexPlanificacion;
+pthread_mutex_t mutexComunicacionConFS;
 
 Job* crearJOB(int FDMAster,char* nombreDelJob);
 void rutina(int senial);

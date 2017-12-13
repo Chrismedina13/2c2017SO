@@ -12,6 +12,8 @@ void agregarReguistroATablaDeEstados(t_reg* reg){
 
 void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* modificado){
 
+
+	pthread_mutex_lock(&mutexTablaDeEStados);
 	int a = 0;
 	while( a < list_size(tabla_estados)){
 
@@ -36,6 +38,9 @@ void actualizarTablaDeEstados(int job,int master,int nodo,int aModificar,char* m
 		}
 		a++;
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
 
 t_reg* crearRegistroTablaGlobal(int job,int master,int nodo,int bloque,char* etapa,char* arch_temp,char* estado){
@@ -64,7 +69,13 @@ void ingresarDatosATablaGlobal(JOBCompleto* jobCompleto){
 		t_reg* registro = crearRegistroTablaGlobal(jobCompleto->job->identificadorJob,jobCompleto->job->master,
 				respuesta->nodo,respuesta->bloque,"TRANSFORMACION",respuesta->archivoTemporal,"EN PROCESO");
 
+
+		pthread_mutex_lock(&mutexTablaDeEStados);
+
 		agregarReguistroATablaDeEstados(registro);
+
+		pthread_mutex_unlock(&mutexTablaDeEStados);
+
 		i++;
 
 	}
@@ -77,11 +88,19 @@ void agregarEntradasReduccionLocal(finTransformacion* ft,RespuestaReduccionLocal
 	t_reg* registro = crearRegistroTablaGlobal(ft->numeroDeJob,numeroMaster,
 			ft->nodo,0,"REDUCCION LOCAL",RRL->archivoReduccionLocal,"EN  PROCESO");
 
+	pthread_mutex_lock(&mutexTablaDeEStados);
+
 	agregarReguistroATablaDeEstados(registro);
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
+
 }
 
 
 void actualizarTablaDeEstadosFinReduccionLocal(int master,int job){
+
+	pthread_mutex_lock(&mutexTablaDeEStados);
 
 	int i = 0;
 	char* RL = "REDUCCION LOCAL";
@@ -96,6 +115,9 @@ void actualizarTablaDeEstadosFinReduccionLocal(int master,int job){
 			i++;
 		}
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
 
 void crearEntradasReduccionGlobal(t_list* RRG,int master,int job){
@@ -107,13 +129,19 @@ void crearEntradasReduccionGlobal(t_list* RRG,int master,int job){
 		t_reg* registro = crearRegistroTablaGlobal(job,master,
 				respuesta->nodo,0,"REDUCCION GLOBAL",respuesta->archivoReduccionGlobal,"EN  PROCESO");
 
+		pthread_mutex_lock(&mutexTablaDeEStados);
+
 		agregarReguistroATablaDeEstados(registro);
+
+		pthread_mutex_unlock(&mutexTablaDeEStados);
 
 		i++;
 	}
 }
 
 void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master){
+
+	pthread_mutex_lock(&mutexTablaDeEStados);
 
 	int i = 0;
 	char* enProceso = "EN PROCESO";
@@ -131,6 +159,9 @@ void actualizarTablaDeEstadosFinReduccionGlobal(int job,int master){
 		}
 
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
 
 
@@ -140,13 +171,20 @@ void crearEntradasAlmacenamientoFinal(respuestaAlmacenadoFinal* RAF,finTransform
 	t_reg* registro = crearRegistroTablaGlobal(ft->numeroDeJob,master,
 			RAF->nodo,0,"ALMACENADO FINAL",RAF->archivoDeReduccionGlobal,"EN  PROCESO");
 
+	pthread_mutex_lock(&mutexTablaDeEStados);
+
 	list_add(tabla_estados,registro);
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 
 }
 
 
 void actualizarNodosCaidosReplanificacion(Replanificacion* replanif, int master){
 	int i = 0;
+
+	pthread_mutex_lock(&mutexTablaDeEStados);
 
 	while(i < list_size(tabla_estados)){
 
@@ -162,9 +200,15 @@ void actualizarNodosCaidosReplanificacion(Replanificacion* replanif, int master)
 			i++;
 		}
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
 
 void insertarNodosNuevosPlanificados(t_list* respuestaNuevaPlanificacion,int Master,int numeroDeJOB){
+
+
+	pthread_mutex_lock(&mutexTablaDeEStados);
 
 	int i = 0;
 	while( i < list_size(respuestaNuevaPlanificacion)){
@@ -181,6 +225,9 @@ void insertarNodosNuevosPlanificados(t_list* respuestaNuevaPlanificacion,int Mas
 			i++;
 		}
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
 
 
@@ -211,6 +258,8 @@ void actualizarAlmacenadoFinalOK(numeroDeJob,master){
 	char* af = "ALMACENADO FINAL";
 	char* ep = "EN PROCESO";
 
+	pthread_mutex_lock(&mutexTablaDeEStados);
+
 	while(i< list_size(tabla_estados)){
 		t_reg* registro = list_get(tabla_estados,i);
 		if(registro->job == numeroDeJob && registro->master == master && registro->etapa == af && registro->estado == ep){
@@ -223,11 +272,16 @@ void actualizarAlmacenadoFinalOK(numeroDeJob,master){
 		}else{
 			i++;
 		}
+
 	}
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }
+
 
 void mostrarTabla(){
 
+	pthread_mutex_lock(&mutexTablaDeEStados);
 	int i = 0;
 	while(i < list_size(tabla_estados)){
 		t_reg* registro = list_get(tabla_estados,i);
@@ -242,4 +296,7 @@ void mostrarTabla(){
 
 		i++;
 	}
+
+	pthread_mutex_unlock(&mutexTablaDeEStados);
+
 }

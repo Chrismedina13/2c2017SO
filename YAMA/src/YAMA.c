@@ -73,16 +73,22 @@ void rutina(int senial){
 
 	if(senial == SIGUSR1){
 
-		int numero;
-		char* algoritmo;
-		printf("INGRESE EL NUEVO RETARDO DE PLANIFICACION: ");
-		scanf("%d", &numero);
+		printf("CAMBIANDO EL ALGORITMO DE PLANIFICACION \n");
+		if(parametrosFileSystem->algoritmo == "W-CLOCK"){
 
-		printf("INGRESE W-CLOCK o CLOCK:");
-		scanf("%s",&algoritmo);
+			parametrosFileSystem->algoritmo = "CLOCK";
+			printf("ALGORITMO CAMBIADO A CLOCK");
+		}else{
 
-		parametrosFileSystem->algoritmo = algoritmo;
-		parametrosFileSystem->retardo = numero;
+			parametrosFileSystem->algoritmo = "W-CLOCK";
+			printf("ALGORITMO CAMBIADO A CLOCK");
+		}
+
+		printf("AUMENTANDO EN 100 EL RETARDO");
+
+		parametrosFileSystem->retardo += 100;
+
+
 	}
 }
 

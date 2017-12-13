@@ -13,6 +13,8 @@ typedef struct {
 	char* estado;
 } t_reg;
 
+pthread_mutex_t mutexTablaDeEStados;
+
 /*  Definicion de variables */
 t_list *tabla_estados;
 /*  Definicion de funciones */
