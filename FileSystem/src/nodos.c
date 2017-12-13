@@ -53,7 +53,7 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 
 }
 
-void * distribuirBloques(t_list* bloques, int indiceArchivo){
+void * distribuirBloques(int indiceArchivo){
 
 	/*Recibe una lista de char* con bloques de texto (bloques) y una lista de bitMap (nodos)
 	 * Devuelve una lista de ubicacionBloquesArchivo
@@ -61,7 +61,7 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
 
-	int cantBloques = list_size(bloques);
+	int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
 	int indiceBloque = 0;
 	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
 	char* bloque;
@@ -74,7 +74,7 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 	while(indiceBloque<cantBloques){
 
-		bloque = list_get(bloques,indiceBloque);
+		bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
 
 		//elije los 2 nodos mas vacios
 
@@ -488,7 +488,7 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 
 	int count = 0;
 	int cantPartes;
-	UbicacionBloquesArchivo* ubicaciones;
+	UbicacionBloquesArchivo2* ubicaciones;
 
 	cantPartes = list_size(tabla_de_archivos[indiceArchivo].bloques);
 
@@ -503,7 +503,7 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 		count++;
 	}
 
-	if(ubicaciones->ubicacionCopia1.nodo == -1 || ubicaciones->ubicacionCopia2.nodo == -1){
+	if(ubicaciones->nodo1 == -1 || ubicaciones->nodo2 == -1){
 		return(-1);
 	}
 
