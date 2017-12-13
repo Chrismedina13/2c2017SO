@@ -34,13 +34,13 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	logInfo("Creando mensaje de ubicacion de nodos");
 
 	char* ipWorker1 = "127.0.0.1";
-	int puerto1 = 2;
+	int puerto1 = 5050;
 	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
 	char* ipWorker2 = "127.0.0.1";
-	int puerto2 = 21;
+	int puerto2 = 5050;
 	Info_Workers* info2 = malloc(sizeof(ipWorker2)+ sizeof(int));
 	char* ipWorker3 = "127.0.0.1";
-	int puerto3 = 100;
+	int puerto3 = 5050;
 	Info_Workers* info3 = malloc(sizeof(ipWorker3)+ sizeof(int));
 
 	info1->ipWorker = ipWorker1;

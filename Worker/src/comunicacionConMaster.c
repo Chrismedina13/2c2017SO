@@ -63,16 +63,15 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						FD_CLR(i, &master);
 
 					} else {
-						logInfo("HOLA");
+
 						int codigo = deserializarINT(buffer);
 						logInfo(" Worker Recibe de Master: %d", codigo);
-						printf(" Worker Recibe de Master: %d", codigo);
 
 						char pesoMensaje[4];
 						int tamanio;
 						char* mensaje;
 						int FDMaster = i;
-						//ENVIO MASTER
+
 						resultadoJob* resultado_job;
 						char* mensajeAEnviar;
 

@@ -34,8 +34,6 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	logInfo("Se envia script scriptTransformadorAnuales");
 */
 
-	logInfo("Trato de comunicar con worker");
-
 	infoTransformacionParaWorker* mensaje;
 	int tamanio = strlen(parametros->archivoTemporal);
 	mensaje= malloc(sizeof(int) * 3 + tamanio * sizeof(char));
@@ -87,7 +85,7 @@ case TAREA_WORKER:
 		if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
 			logInfo("Error en envio de  INFOPARAWORKERS");
 		}else{
-			logInfo("SE envio INFOPARAWORKERS exitosamente.");
+			logInfo("Se envio INFOPARAWORKERS exitosamente.");
 		}
 
 		destruirPaquete(paqueteDeEnvio);
