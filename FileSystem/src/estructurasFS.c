@@ -438,7 +438,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo){
 	tabla_de_archivos[indiceArchivo].tamanio = tamArchivo;
 	tabla_de_archivos[indiceArchivo].tipo = tipo;
 	tabla_de_archivos[indiceArchivo].directorio = pathToIndex(rutaLocal);
-	tabla_de_archivos[indiceArchivo].bloques = tabla_de_archivos[indiceArchivo].ubicaciones;
+	//tabla_de_archivos[indiceArchivo].bloques = tabla_de_archivos[indiceArchivo].ubicaciones;
 	//tabla_de_archivos[indiceArchivo].ubicaciones =
 
 	//creo mi registro de archivo local
@@ -456,7 +456,6 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo){
 	int infoNodoCopia, infoNodoCopiaCopia;
 	int infoBloqueCopia, infoBloqueCopiaCopia;
 	int infoBytesOcupados;
-	//UbicacionBloquesArchivo* bloques;
 
 	if ( tamArchivo % tamanioBloque  == 0 )
 	{
@@ -464,7 +463,7 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo){
 	}
 	else cantBloques =  abs(tamArchivo/tamanioBloque)+1;
 
-	UbicacionBloquesArchivo* bloquesPtr = malloc(sizeof(UbicacionBloquesArchivo));
+	UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(UbicacionBloquesArchivo2));
 
 	while (count < cantBloques){
 
@@ -473,11 +472,11 @@ int crearRegistroArchivo(char* ruta, char* rutaLocal, int indiceArchivo){
 
 		bloquesPtr = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
 
-		infoNodoCopia = bloquesPtr->ubicacionCopia1.nodo;
-		infoBloqueCopia = bloquesPtr->ubicacionCopia1.desplazamiento;
+		infoNodoCopia = bloquesPtr->nodo1;
+		infoBloqueCopia = bloquesPtr->desplazamiento1;
 
-		infoNodoCopiaCopia = bloquesPtr->ubicacionCopia2.nodo;
-		infoBloqueCopiaCopia = bloquesPtr->ubicacionCopia2.desplazamiento;
+		infoNodoCopiaCopia = bloquesPtr->nodo2;
+		infoBloqueCopiaCopia = bloquesPtr->desplazamiento2;
 
 		fprintf(fp2, "BLOQUE%dCOPIA0=[Nodo%d, %d]\n", count, infoNodoCopia, infoBloqueCopia);
 		fprintf(fp2, "BLOQUE%dCOPIA1=[Nodo%d, %d]\n", count, infoNodoCopiaCopia, infoBloqueCopiaCopia);
@@ -727,12 +726,14 @@ int nodoToFD(int idNodo){
 	int count=0;
 	int retorno;
 
+	//logInfo("El id del nodo que tengo es :%d, voy a devolver su FD", idNodo);
 
 	while(count < list_size(tabla_de_nodos.listaCapacidadNodos)){
 
 		bloques_nodo* nodo = list_get(tabla_de_nodos.listaCapacidadNodos, count);
 
 		if(nodo->idNodo==idNodo){
+		//	logInfo("el FD es %d",nodo->fileDescriptor);
 			return(nodo->fileDescriptor);
 		}
 
