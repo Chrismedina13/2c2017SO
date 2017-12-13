@@ -30,6 +30,7 @@
 #include <dirent.h>
 #include "commons/collections/list.h"
 #include <semaphore.h>
+#include <stdbool.h>
 
 
 
@@ -144,7 +145,7 @@ typedef struct bitMap{
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 
 char* pathToType(char* path);
-
+int nodoToFD(int idNodo);
 char* pathToFile(char* path);
 
 t_list* nombreToUbicaciones(char* nombre);
