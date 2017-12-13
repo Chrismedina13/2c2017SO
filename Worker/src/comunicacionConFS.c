@@ -12,11 +12,9 @@ void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
 	char buffer2[4];
 
-
-
 	int FDsocketClienteFileSystem;
 	FDsocketClienteFileSystem = lib_SocketCliente(param->ip,param->puerto);
-	logInfo("SocketCliente = %d \n", FDsocketClienteFileSystem);
+	logInfo("SocketCliente FS= %d \n", FDsocketClienteFileSystem);
 
 	FD_Filesystem=FDsocketClienteFileSystem;
 }

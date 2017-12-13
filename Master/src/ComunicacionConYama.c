@@ -222,6 +222,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 					pthread_join(hiloWorker, NULL);
 
 					nodoAux = nodoini;
+
 				}else{
 					i++;
 				}
