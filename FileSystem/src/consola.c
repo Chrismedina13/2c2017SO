@@ -429,93 +429,50 @@ void consolaFileSystem(){
 						int count = 0;
 						UbicacionBloquesArchivo2* ubicacion;
 						char* bloque;
-						int cantidadDeNodos=0;
-
-						int fileeDescriptor1;
-						int fileeDescriptor2;
-						bloques_nodo* asd;
-						while(cantidadDeNodos<list_size(tabla_de_nodos.listaCapacidadNodos)){
-							asd = list_get(tabla_de_nodos.listaCapacidadNodos,cantidadDeNodos);
-							if(asd->idNodo==1){
-															fileeDescriptor1=asd->fileDescriptor;
-														}if(asd->idNodo==2){
-															fileeDescriptor2=asd->fileDescriptor;
-														}if(asd->idNodo==3){
-															int fileeDescriptor3=asd->fileDescriptor;
-														}if(asd->idNodo==4){
-															int fileeDescriptor4=asd->fileDescriptor;
-														}
-														cantidadDeNodos++;
-						}
-
-
+						int fileDescriptor1, fileDescriptor2;
 
 						while (count < cantBloques) {
 
 							bloque = list_get(bloquesDeTexto, count);
-							ubicacion =
-									list_get(
-											tabla_de_archivos[indiceArchivo].ubicaciones,
-											count);
-							int tamanioSetBloque = (strlen(bloque)
-									+ sizeof(int) * 3);
+							ubicacion = list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+							int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
 
 							//copia 1
 
-							//	char* contenidoSerializado = serializarContenidoDelBloque(bloque);
-							char* desplazamiento = serializeInt(
-									ubicacion->desplazamiento1);
+							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
 
-//							int fileDescriptor1 = nodoToFD(ubicacion->nodo1);
-							int fileDescriptor1;
-							if(ubicacion->nodo1==1){
-								fileDescriptor1=fileeDescriptor1;
-							}
-							if(ubicacion->nodo1==2){
-															fileDescriptor1=fileeDescriptor2;
-														}
+							fileDescriptor1 = nodoToFD(ubicacion->nodo1);
 
-							logInfo(
-									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-									fileDescriptor1, tamanioSetBloque);
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+									fileDescriptor1,
+									tamanioSetBloque);
 
-							mensajesEnviadosADataNode(SET_BLOQUE,
-									fileDescriptor1, bloque , strlen(bloque));
+							mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor1, bloque , strlen(bloque));
 
 							send(fileDescriptor1, desplazamiento, sizeof(int), 0);
 
-							logInfo(
-									"Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
-									count, ubicacion->nodo1,
+							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
+									count,
+									ubicacion->nodo1,
 									ubicacion->desplazamiento1);
 
 							//copia 2
 
-							//char* contenidoSerializado2 = serializarContenidoDelBloque(bloque);
-							char* desplazamiento2 = serializeInt(
-									ubicacion->desplazamiento1);
+							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
 
-						//	int fileDescriptor2 = nodoToFD(ubicacion->nodo2);
-							int fileDescriptor2;
-							if(ubicacion->nodo2==1){
-														fileDescriptor2=fileeDescriptor1;
-													}
-													if(ubicacion->nodo2==2){
-																					fileDescriptor2=fileeDescriptor2;
-																				}
-							logInfo(
-									"voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-									fileDescriptor2, tamanioSetBloque);
+							fileDescriptor2 = nodoToFD(ubicacion->nodo2);
 
-							mensajesEnviadosADataNode(SET_BLOQUE,
-									fileDescriptor2, bloque,
-									strlen(bloque));
+							logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+									fileDescriptor2,
+									tamanioSetBloque);
+
+							mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor2, bloque,strlen(bloque));
 
 							send(fileDescriptor2, desplazamiento2, sizeof(int), 0);
 
-							logInfo(
-									"Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
-									count, ubicacion->nodo2,
+							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
+									count,
+									ubicacion->nodo2,
 									ubicacion->desplazamiento2);
 
 							count++;
@@ -525,16 +482,14 @@ void consolaFileSystem(){
 
 						}
 
-						logInfo(
-								"Envio los bloques a sus respectivos nodos y desplazamiento.");
+						logInfo("Envio los bloques a sus respectivos nodos y desplazamiento.");
 
 						//crea registro del archivo en YAMAFS
 
 						status = crearRegistroArchivo(comandos[1], comandos[2],
 								indiceArchivo);
 						if (status == 1) {
-							logInfo(
-									"Registro de archivo creado correctamente.");
+							logInfo("Registro de archivo creado correctamente.");
 
 							if (cantidad_archivos == cantArchivos) {
 								semaphore_signal(SEMAFOROYAMA);
@@ -734,11 +689,13 @@ void consolaFileSystem(){
 					if(string_equals_ignore_case(comandos[0], "prueba")){
 					compararComando=false;
 
+					while(1){
 					int fileDescriptor1=nodoToFD(1);
 					int fileDescriptor2=nodoToFD(2);
 
 					logInfo("EL FD DEL NODO 1 es %d, EL FD DEL NODO 2 es %d",fileDescriptor1, fileDescriptor2);
 
+					}
 				}
 			 }
 

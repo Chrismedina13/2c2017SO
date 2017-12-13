@@ -724,19 +724,19 @@ int inciarTablaDeArchivos(){
 
 int nodoToFD(int idNodo){
 
-	int count=0;
+	int count2=0;
 	int retorno;
 
 
-	while(count < list_size(tabla_de_nodos.listaCapacidadNodos)){
+	while(count2 < list_size(tabla_de_nodos.listaCapacidadNodos)){
 
-		bloques_nodo* nodo = list_get(tabla_de_nodos.listaCapacidadNodos, count);
+		bloques_nodo* nodo = list_get(tabla_de_nodos.listaCapacidadNodos, count2);
 
 		if(nodo->idNodo==idNodo){
 			return(nodo->fileDescriptor);
 		}
 
-		count++;
+		count2++;
 	}
 	return(-1);
 }
