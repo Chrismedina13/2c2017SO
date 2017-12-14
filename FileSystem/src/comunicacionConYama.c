@@ -33,14 +33,14 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 	logInfo("Creando mensaje de ubicacion de nodos");
 
-/*	char* ipWorker1 = "43.2.2.4";
-	int puerto1 = 2;
+	char* ipWorker1 = "127.0.0.1";
+	int puerto1 = 5050;
 	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
-	char* ipWorker2 = "100.23.12.4";
-	int puerto2 = 21;
+	char* ipWorker2 = "127.0.0.1";
+	int puerto2 = 5050;
 	Info_Workers* info2 = malloc(sizeof(ipWorker2)+ sizeof(int));
-	char* ipWorker3 = "167.23.2.1";
-	int puerto3 = 100;
+	char* ipWorker3 = "127.0.0.1";
+	int puerto3 = 5050;
 	Info_Workers* info3 = malloc(sizeof(ipWorker3)+ sizeof(int));
 
 	info1->ipWorker = ipWorker1;
@@ -54,10 +54,10 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	list_add(LISTARRG,info1);
 	list_add(LISTARRG,info2);
 	list_add(LISTARRG,info3);
-*/
-	//int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
-	//char* listaSerializada = serializarLista_info_workers(LISTARRG);
-//	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
+
+	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
+	char* listaSerializada = serializarLista_info_workers(LISTARRG);
+	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
 /*    logInfo("creando Respuesta Almacenado Final de prueba ");
 
@@ -69,7 +69,7 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
     mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
 
-    logInfo("Respuesta Almacenado Final de prueba listo para enviar "); */
+    logInfo("Respuesta Almacenado Final de prueba listo para enviar ");
 
 	logInfo("Creando info reduccion local para worker");
     t_list* listaArchivosTemporales = list_create();
@@ -133,7 +133,7 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 
 
 
-
+*/
 
 }
 

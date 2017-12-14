@@ -62,8 +62,6 @@ ParametrosComunicacionYAMA* setParametrosComunicacionYAMA(int puerto, char* ip) 
 void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,int tamanio) {
 	switch (codigo) {
 	Paquete* paquete;
-
-
 	case NOMBRE_ARCHIVO:
 		paquete = crearPaquete(NOMBRE_ARCHIVO, tamanio, mensaje);
 
@@ -81,6 +79,8 @@ void mensajesEnviadosAYama(int codigo, int FDsocketClienteYAMA, char* mensaje,in
 
 		if (enviarPaquete(FDsocketClienteYAMA, paquete) == -1) {
 			logInfo("Error en envio de respuesta de Transformacion.");
+		}else{
+			logInfo("Se envio respuesta de Transformacion a YAMA exitosamente.");
 		}
 
 		destruirPaquete(paquete);
@@ -222,6 +222,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 					pthread_join(hiloWorker, NULL);
 
 					nodoAux = nodoini;
+
 				}else{
 					i++;
 				}

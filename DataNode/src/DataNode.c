@@ -65,13 +65,17 @@ int main(int argc, char *argv[]) {
 mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 
 */
-    while(1){
+    int FSonline=1;
+    while(FSonline==1){
 
-	if(recv(FDsocketClienteFileSystem, buffer2,4,0)>=0){
-		int codigo2 = deserializarINT(buffer2);
-		logInfo("Recibi de FS el codigo : %i", codigo2);
-		//if(codigo2==)
-		mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
+		if(recv(FDsocketClienteFileSystem, buffer2,4,0)>=0){
+			int codigo2 = deserializarINT(buffer2);
+			logInfo("Recibi de FS el codigo : %i", codigo2);
+			if(codigo2!=10 || codigo2!=12){
+				FSonline=0;
+			}
+			mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
+
 	}
 }
 
@@ -145,7 +149,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		bloque->nrobloque = deserializarINT(bufferBloque);
 
 		//if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
-		if (set_bloque(bloque->contenidoBloque,0)==0){
+		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
 
 			logInfo("READY SET BLOQUE, AVISAR A FILESYSTEM");
 			mensajesEnviadosAFileSystem(RTA_SET_BLOQUE, FD_FileSystem, "GUARDE OK EL BLOQUE", 19);
@@ -211,6 +215,7 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 		if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
 			logInfo("Error en envio de respuesta del Set Bloque");
 		}
+
 
 		destruirPaquete(paqueteEnvio);
 		break;

@@ -749,6 +749,8 @@ t_list* replanificacionNueva(Replanificacion* repla, int master) {
 t_list* crearNuevaPlanificacionNueva(t_list* ubicacionDeLasPartes,
 		int nodoCaido) {
 
+	pthread_mutex_lock(&mutexPlanificacion);
+
 	int parte = 0;
 	t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
 	int cantidadDePartesDelArchivo = list_size(ubicacionDeLasPartes);
@@ -799,6 +801,8 @@ t_list* crearNuevaPlanificacionNueva(t_list* ubicacionDeLasPartes,
 	}
 
 	list_add_all(listaDeWorkerTotales, nodosFinalesAReplanificar);
+
+	pthread_mutex_lock(&mutexPlanificacion);
 
 	return respuestaReplanificacion;
 }

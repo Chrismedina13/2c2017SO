@@ -30,6 +30,7 @@
 #include <dirent.h>
 #include "commons/collections/list.h"
 #include <semaphore.h>
+#include <stdbool.h>
 
 
 
@@ -76,7 +77,7 @@ typedef struct tabla_archivos {
 	int directorio; //index del directorio
 	//UbicacionBloquesArchivo* bloques;
 	t_list* bloques;//char *
-	t_list* ubicaciones;//ubicacionBloquesArchivo
+	t_list* ubicaciones;//ubicacionBloquesArchivo2
 }tabla_archivos;
 
 //zona declaracion estructuras tabla de archivos
@@ -144,7 +145,7 @@ typedef struct bitMap{
 t_list* listabitmap_nodo(); //  en esta lista pongo nodos
 
 char* pathToType(char* path);
-
+int nodoToFD(int idNodo);
 char* pathToFile(char* path);
 
 t_list* nombreToUbicaciones(char* nombre);

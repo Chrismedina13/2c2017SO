@@ -9,6 +9,7 @@
 #include "logWorker.h"
 #include "commons/collections/list.h"
 #include "SO_lib/sockets.h"
+#include "SO_lib/bloques.h"
 #include "SO_lib/Protocolo.h"
 #include "SO_lib/estructuras.h"
 #include "SO_lib/serializacion.h"

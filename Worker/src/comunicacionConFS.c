@@ -10,15 +10,15 @@
 
 void comunicacionConFileSystem(ParametrosComunicacionConFileSystem* param) {
 	//socketClienteParaFileSystem
-	char buffer2[4];
-
-
 
 	int FDsocketClienteFileSystem;
 	FDsocketClienteFileSystem = lib_SocketCliente(param->ip,param->puerto);
-	logInfo("SocketCliente = %d \n", FDsocketClienteFileSystem);
+	logInfo("SocketCliente FS= %d \n", FDsocketClienteFileSystem);
 
 	FD_Filesystem=FDsocketClienteFileSystem;
+	mensajesEnviadosAFileSystem(SALUDO, FD_Filesystem, "hola soy un worker", 18);
+
+
 }
 
 ParametrosComunicacionConFileSystem* setParametrosComunicacionConFileSystem(int puerto,char* ip){
@@ -42,6 +42,15 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 				destruirPaquete(paqueteEnvio);
 				free(mensaje);
 				break;
+	case SALUDO:
+	      logInfo("se manda a file system el saludo");
+			paqueteEnvio = crearPaquete(SALUDO, tamanio,mensaje);
+					if (enviarPaquete(FD_FileSystem, paqueteEnvio) == -1) {
+						logInfo("ERROR EN EL ENVIO DE SALUDO");
+					}
+
+					destruirPaquete(paqueteEnvio);
+					break;
 
 	default:
 		break;

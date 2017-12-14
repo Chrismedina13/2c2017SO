@@ -49,30 +49,6 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	Job* jobAEjecutar;
 
 	switch (codigo) {
-	case PRUEBAS:
-		logInfo("RECIBIENDO Pruebas de serializacion");
-				recv(FDsocketClienteFileSystem,pesoMensaje,4,0);
-				tamanio = deserializarINT(pesoMensaje);
-				logInfo("tamanio de lo que recibo %i", tamanio);
-				mensaje = malloc(tamanio + 1);
-				mensaje[tamanio] = '\0';
-				if (recv(FDsocketClienteFileSystem, mensaje, tamanio, 0) == -1) {
-					logInfo("Error en la recepcion pruebas de serializacion.");
-				}
-				logInfo("Recibiendo respuesta de la prueba");
-
-				infoReduccionLocalParaWorker* info = deserializarinfoReduccionLocalParaWorker(mensaje);
-
-				logInfo("Archivo Reduccion local : %s \n",info->archivoTemporalReduccionLocal);
-				logInfo("nombre del script : %s\n",info->scriptReduccionLocal.nombre);
-				logInfo("contenido del script : %s\n",info->scriptReduccionLocal.contenido );
-
-				while(i < list_size(info->listaDeArchivosTemporales)){
-							char* archivo = list_get(info->listaDeArchivosTemporales,i);
-							logInfo("Archivo Temporal : %s\n",archivo);
-							i++;
-				}
-		break;
 	case UBICACION_BLOQUES:
 
 		/*logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
@@ -112,12 +88,12 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	logInfo("Creando Planificacion de prueba");
 
            	t_list* listaDeWorkersAPlanificar = list_create();
-           	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 1, 12, 2, 13);
-           	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 19);
-           	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 19);
-           	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 19);
+           	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 2, 12, 2, 1);
+           	UbicacionBloquesArchivo2* ubi1 = crearUbicacionBloquesArchivos2(1, 100, 2, 20, 3, 2);
+           	UbicacionBloquesArchivo2* ubi2 = crearUbicacionBloquesArchivos2(2, 100, 2, 20, 3, 3);
+           	UbicacionBloquesArchivo2* ubi3 = crearUbicacionBloquesArchivos2(3, 100, 1, 20, 2, 4);
+           	UbicacionBloquesArchivo2* ubi4 = crearUbicacionBloquesArchivos2(4, 100, 1, 20, 3, 5);
+           	UbicacionBloquesArchivo2* ubi5 = crearUbicacionBloquesArchivos2(5, 100, 2, 20, 3, 6);
            	UbicacionBloquesArchivo2* ubi6 = crearUbicacionBloquesArchivos2(6, 100, 1, 20, 2, 19);
 
 
@@ -175,6 +151,8 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 			logInfo("Se deserializo la lista de ips y puertos de los workers");
 
 			logInfo("Hay conectados %i", list_size(lista));
+
+			ipYPuertoWoerkers = lista;
 
 			while(a < list_size(lista)){
 				Info_Workers* info = list_get(lista,a);

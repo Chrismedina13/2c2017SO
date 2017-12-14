@@ -254,7 +254,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 							count=0;
 
-							bloques_nodo* nodoViejo = malloc(sizeof(int)*164);
+							bloques_nodo* nodoViejo = malloc(sizeof(int)*165);
 
 							while(count<list_size(tabla_de_nodos.listaNodos)){
 
@@ -293,12 +293,13 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 							//actualizo lista capadidad nodos
 
-							bloques_nodo* bloquesNodo = malloc(sizeof(int)*(capacidad+4));
+							bloques_nodo* bloquesNodo = malloc(sizeof(int)*(165));
 							bloquesNodo->idNodo=idNodo;
 							bloquesNodo->fileDescriptor=FD_DN;
+							bloquesNodo->estado=1;
 							bloquesNodo->bloquesTotales=capacidad;
 							bloquesNodo->bloquesLibres=capacidad;
-							bloquesNodo->estado=1;
+
 
 							int i=0;
 							while(i<capacidad){
@@ -329,7 +330,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							logInfo("Se conectaron todos los nodos");
 							semaphore_signal(SEMAFORODN);
 
-							free(infoworker);
+							//free(infoworker);
 						}
 
 

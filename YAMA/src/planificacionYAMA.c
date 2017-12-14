@@ -11,7 +11,7 @@ void agregarWorkerALista(nodoParaPlanificar* worker) {
 
 	pthread_mutex_lock(&mutexWorkerAPlanificar);
 	list_add(listaDeWorkerTotales, worker);
-	pthread_mutex_lock(&mutexWorkerAPlanificar);
+	pthread_mutex_unlock(&mutexWorkerAPlanificar);
 
 }
 
@@ -87,7 +87,7 @@ t_list* dev_nodos_a_planificar(void) {
 
 t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
 
-	//mutex2
+	pthread_mutex_lock(&mutexPlanificacion);
 
 	int parte = 0;
 	t_list* partesDelArchivo = list_create();
@@ -114,6 +114,9 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilida
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
+	logInfo("Armar estructura para mandar a Master");
+	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
+
 	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales y limpiar las listas internas");
 
 	int j = 0;
@@ -128,29 +131,15 @@ t_list* planificarConW_Clock(t_list* listaDeWorkersAPlanificar,int disponibilida
 
 	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
-	//mutex2
-
-	logInfo("Armar estructura para mandar a Master");
-	t_list* respuestaAMaster = list_create(); //r= armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
-	//falta recivir los nodos
-
-	RespuestaTransformacionYAMA* respuesta1 = setRespuestaTransformacionYAMA(1,5050,"124.0.0.1",12,3232,"Holaa");
-	RespuestaTransformacionYAMA* respuesta2 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"HolaaAAA");
-	RespuestaTransformacionYAMA* respuesta3 = setRespuestaTransformacionYAMA(1,21,"121212",12,3232,"HolaaAAA");
-
-	list_add(respuestaAMaster,respuesta1);
-	list_add(respuestaAMaster,respuesta2);
-	list_add(respuestaAMaster,respuesta3);
-
-	list_destroy(partesDelArchivo);
-	list_destroy(nodosFinalesAPLanificar);
+	pthread_mutex_unlock(&mutexPlanificacion);
 
 	return respuestaAMaster;
 }
 
 t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadBase){
 
-	//mutex
+	pthread_mutex_lock(&mutexJobsAPlanificar);
+
 	int parte = 0;
 	t_list* partesDelArchivo = list_create(); // me dice las partes que tiene el archivo
 	int cantidadDePartesDelArchivo = list_size(listaDeWorkersAPlanificar);
@@ -215,11 +204,8 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 	logInfo("Actualizar carga de trabajo de los nodos planificados");
 	actualizarCargaDeTrabajoDeWorkersPLanificados(nodosFinalesAPLanificar);
 
-
-
 	logInfo("Armar estructura para mandar a Master");
 	t_list* respuestaAMaster = armarRespuestaTransformacionYAMA(nodosFinalesAPLanificar,listaDeWorkersAPlanificar);
-
 
 	logInfo("devolver nodos planificados a la estructura de listaDeWorkersTotales y limpiar las listas internas");
 
@@ -234,21 +220,8 @@ t_list* planificarConClock(t_list* listaDeWorkersAPlanificar,int disponibilidadB
 
 	list_add_all(listaDeWorkerTotales,nodosFinalesAPLanificar);
 
-	//mutex
+	pthread_mutex_unlock(&mutexJobsAPlanificar);
 
-
-	/*	RespuestaTransformacionYAMA* respuestaTrans1 = setRespuestaTransformacionYAMA(1,5050,"127.0.0.1",12,1212,"/home/utnso/SO-Nombres-Dataset");
-	RespuestaTransformacionYAMA* respuestaTrans2 = setRespuestaTransformacionYAMA(2,21,"22.222",22,22122,"archivoTransformacion2");
-	RespuestaTransformacionYAMA* respuestaTrans3 = setRespuestaTransformacionYAMA(4,31,"44.4343",44,44144,"archivoTransformacion4");
-	RespuestaTransformacionYAMA* respuestaTrans4 = setRespuestaTransformacionYAMA(5,31,"55.55543",55,55155,"arch");
-	RespuestaTransformacionYAMA* respuestaTrans5 = setRespuestaTransformacionYAMA(6,31,"6.6665",66,66166,"arc");
-
-	list_add(respuestaAMaster,respuestaTrans1);
-	list_add(respuestaAMaster,respuestaTrans2);
-	list_add(respuestaAMaster,respuestaTrans3);
-	list_add(respuestaAMaster,respuestaTrans4);
-	list_add(respuestaAMaster,respuestaTrans5);
-*/
 	list_destroy(partesDelArchivo);
 	list_destroy(nodosFinalesAPLanificar);
 

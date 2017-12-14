@@ -90,7 +90,7 @@ RespuestaTransformacionYAMA *deserializarRespuestaTransformacionYAMA(
 	//logInfo("Entro a 4\nPuerto: %d",respuestaTransformacionYAMA->puertoWorker);
 
 	deserializarDato(&(respuestaTransformacionYAMA->bloque), rtaSerializada,sizeof(int), &desplazamiento);
-	logInfo("Entro a 5\nBloque: %d",respuestaTransformacionYAMA->bloque);
+	logInfo("Bloque: %d",respuestaTransformacionYAMA->bloque);
 
 	deserializarDato(&(respuestaTransformacionYAMA->bytesOcupados),
 			rtaSerializada, sizeof(int), &desplazamiento);

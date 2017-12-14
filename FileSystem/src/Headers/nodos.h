@@ -12,10 +12,12 @@
 
 //static bloques_nodo* inicializarEstructuras(int id);
 
-int elegirNodo();
+int elegirNodo(int indexNodoAnterior);
+bloques_nodo* elegirNodoSort(int idNodoAnterior);
 int bloquesLibres(bloques_nodo* nodo);
+bool bloquesLibresSort(bloques_nodo* nodo, bloques_nodo* nodo2);
 int ocuparBloqueBitMap(bloques_nodo* nodo);
-void* distribuirBloques(t_list* bloques, int indiceArchivo);
+void* distribuirBloques(int indiceArchivo);
 
 
 int crearRegistroArchivoNodos(tabla_nodos tablaNodos);

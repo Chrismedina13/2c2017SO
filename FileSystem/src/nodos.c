@@ -5,7 +5,7 @@
  *      Author: utnso
  */
 #include "Headers/nodos.h"
-
+#include <stdbool.h>
 
 int maxNodos= 20;
 /*
@@ -53,7 +53,7 @@ int crearRegistroArchivoNodos(tabla_nodos tablaNodos){
 
 }
 
-void * distribuirBloques(t_list* bloques, int indiceArchivo){
+void * distribuirBloques(int indiceArchivo){
 
 	/*Recibe una lista de char* con bloques de texto (bloques) y una lista de bitMap (nodos)
 	 * Devuelve una lista de ubicacionBloquesArchivo
@@ -61,25 +61,24 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
 
-	int cantBloques = list_size(bloques);
+	int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
 	int indiceBloque = 0;
 	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
 	char* bloque;
 	bloques_nodo* bitMapNodo1;
 	bloques_nodo* bitMapNodo2;
-	UbicacionBloquesArchivo2* ubicacionBloquesArchivo = malloc(sizeof(int)*6);
 	int index1, indexList1, index2, indexList2;
 	int desplazamiento1, desplazamiento2;
 
-
 	while(indiceBloque<cantBloques){
 
-		bloque = list_get(bloques,indiceBloque);
+		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
+		bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
 
 		//elije los 2 nodos mas vacios
 
-
-		indexList1 = elegirNodo();
+int asd;
+		indexList1 = elegirNodo(asd);
 		bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList1);
 		index1 = bitMapNodo1->idNodo;
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
@@ -92,7 +91,7 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
 
-		indexList2 = elegirNodo();
+		indexList2 = elegirNodo(asd);
 		bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList2);
 		index2 = bitMapNodo2->idNodo;
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
@@ -106,20 +105,24 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 
 		//cargo los datos de los bloques en tabla_de_archivos
 
-		ubicacionBloquesArchivo->parteDelArchivo = indiceBloque;
-		ubicacionBloquesArchivo->desplazamiento1 = desplazamiento1;
-		ubicacionBloquesArchivo->nodo1 = index1;
-		ubicacionBloquesArchivo->desplazamiento2 = desplazamiento2;
-		ubicacionBloquesArchivo->nodo2 = index2;
-		ubicacionBloquesArchivo->bytesOcupados = string_length(bloque);
+		bloquesPtr->parteDelArchivo = indiceBloque;
+		bloquesPtr->desplazamiento1 = desplazamiento1;
+		bloquesPtr->nodo1 = index1;
+		bloquesPtr->desplazamiento2 = desplazamiento2;
+		bloquesPtr->nodo2 = index2;
+		bloquesPtr->bytesOcupados = string_length(bloque);
 
-		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",ubicacionBloquesArchivo->bytesOcupados,
-				ubicacionBloquesArchivo->parteDelArchivo,ubicacionBloquesArchivo->nodo1,
-				ubicacionBloquesArchivo->desplazamiento1,ubicacionBloquesArchivo->nodo2, ubicacionBloquesArchivo->desplazamiento2);
+		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",
+				bloquesPtr->bytesOcupados,
+				bloquesPtr->parteDelArchivo,
+				bloquesPtr->nodo1,
+				bloquesPtr->desplazamiento1,
+				bloquesPtr->nodo2,
+				bloquesPtr->desplazamiento2);
 
-		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,ubicacionBloquesArchivo);
+		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,bloquesPtr);
 
-	//	free(ubicacionBloquesArchivo);
+	//	free(bloquesPtr);
 	//	free(bitMapNodo1);
 	//	free(bitMapNodo2);
 
@@ -128,6 +131,123 @@ void * distribuirBloques(t_list* bloques, int indiceArchivo){
 	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
 }
 
+void * distribuirYEnviarBloques(int indiceArchivo){
+
+	/*Recibe una lista de char con bloques de texto (bloques) y una lista de bitMap (nodos)
+	 * Devuelve una lista de ubicacionBloquesArchivo
+	 */
+
+
+	//para distribuir
+	int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
+	int indiceBloque = 0;
+	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
+	char* bloque;
+	bloques_nodo* bitMapNodo1;
+	bloques_nodo* bitMapNodo2;
+	int desplazamiento1;
+	int desplazamiento2;
+
+	//para enviar
+	int fileDescriptor1;
+	int fileDescriptor2;
+
+	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
+
+
+	while(indiceBloque<cantBloques){
+
+
+		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
+		bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
+
+		//elije los 2 nodos mas vacios
+
+		bitMapNodo1 = elegirNodoSort(-1);
+		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+
+		if(desplazamiento1==-1){
+			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+		}
+		//logInfo("Ubico la copia 1 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index1,desplazamiento1);
+		//bitMapNodo1 = list_remove(tabla_de_nodos.listaCapacidadNodos,indexList1);
+
+		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
+
+		bitMapNodo2 = elegirNodoSort(bitMapNodo1->idNodo);
+		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
+
+		if(desplazamiento2==-1){
+			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
+		}
+		//logInfo("Ubico la copia 2 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index2,desplazamiento2);
+
+		//list_add(tabla_de_nodos.listaCapacidadNodos,bitMapNodo1);
+
+		//cargo los datos de los bloques en tabla_de_archivos
+
+		bloquesPtr->parteDelArchivo = indiceBloque;
+		bloquesPtr->nodo1 = bitMapNodo1->idNodo;
+		bloquesPtr->desplazamiento1 = desplazamiento1;
+		bloquesPtr->nodo2 = bitMapNodo2->idNodo;
+		bloquesPtr->desplazamiento2 = desplazamiento2;
+		bloquesPtr->bytesOcupados = string_length(bloque);
+
+		logInfo("tam:%d parteNum:%d\nNodo:%d, Desplazamiento:%d\nNodo:%d, Desplazamiento:%d",bloquesPtr->bytesOcupados,
+				bloquesPtr->parteDelArchivo,bloquesPtr->nodo1,
+				bloquesPtr->desplazamiento1,bloquesPtr->nodo2, bloquesPtr->desplazamiento2);
+
+		//ahora los envio
+
+		int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
+
+		//copia 1
+
+		char* desplazamiento1Serializado = serializeInt(desplazamiento1);
+
+		fileDescriptor1 = nodoToFD(bitMapNodo1->idNodo);
+
+
+		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+				fileDescriptor1,
+				tamanioSetBloque);
+
+		mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor1, bloque , strlen(bloque));
+
+		send(fileDescriptor1, desplazamiento1Serializado, sizeof(int), 0);
+
+		logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
+				indiceBloque,
+				bitMapNodo1->idNodo,
+				desplazamiento1);
+
+		//copia 2
+
+		char* desplazamiento2Serializado = serializeInt(desplazamiento2);
+
+		fileDescriptor2 = nodoToFD(bitMapNodo2->idNodo);
+
+		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+				fileDescriptor2,
+				tamanioSetBloque);
+
+		mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor2, bloque,strlen(bloque));
+
+		send(fileDescriptor2, desplazamiento2Serializado, sizeof(int), 0);
+
+		logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
+				indiceBloque,
+				bitMapNodo2->idNodo,
+				desplazamiento2);
+
+
+
+		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,bloquesPtr);
+
+		indiceBloque++;
+	}
+	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
+}
 /*
 t_list* distribuirBloques2(t_list* bloques, t_list* mapa_de_bits_original, int indiceArchivo){
 
@@ -247,7 +367,7 @@ t_list* copyList(t_list* mapa_de_bits_original){
 }
 */
 
-int elegirNodo(){
+int elegirNodo(int indexNodoAnterior){
 
 	int count = 0;
 	int flag=0;
@@ -256,10 +376,11 @@ int elegirNodo(){
 	bloques_nodo* nodoMasVacio;
 	bloques_nodo* nodoAComparar;
 
+	if(count==indexNodoAnterior)count++;
 	while(flag==0){
 
 		nodoMasVacio= list_get(tabla_de_nodos.listaCapacidadNodos,count);
-		if(nodoMasVacio->estado==1){
+		if(nodoMasVacio->estado==1 && count!=indexNodoAnterior){
 			flag=1;
 			if(list_size(tabla_de_nodos.listaCapacidadNodos)==1){
 				return(count);
@@ -275,9 +396,15 @@ int elegirNodo(){
 
 	while(count<list_size(tabla_de_nodos.listaCapacidadNodos)){
 
+		if(count==indexNodoAnterior){
+			count++;
+		}
+		if(count>=list_size(tabla_de_nodos.listaCapacidadNodos)){
+			return (extraCount);
+		}
 		nodoAComparar = list_get(tabla_de_nodos.listaCapacidadNodos,count);
 
-		if((bloquesLibres(nodoAComparar)>bloquesLibres(nodoMasVacio)) && nodoAComparar->estado==1){
+		if((bloquesLibres(nodoAComparar)>=bloquesLibres(nodoMasVacio)) && nodoAComparar->estado==1){
 			nodoMasVacio = list_get(tabla_de_nodos.listaCapacidadNodos,count);
 			extraCount = count;
 		}
@@ -286,6 +413,17 @@ int elegirNodo(){
 	}
 
 	return extraCount;
+}
+
+bloques_nodo* elegirNodoSort(idNodoAnterior){
+
+	list_sort(tabla_de_nodos.listaCapacidadNodos,bloquesLibresSort);
+	bloques_nodo* nodoElegido = list_get(tabla_de_nodos.listaCapacidadNodos,0);
+	if(nodoElegido->idNodo==idNodoAnterior){
+		nodoElegido = list_get(tabla_de_nodos.listaCapacidadNodos,1);
+		return(nodoElegido);
+	}
+	return(nodoElegido);
 }
 
 int bloquesLibres(bloques_nodo* nodo){
@@ -302,6 +440,28 @@ int bloquesLibres(bloques_nodo* nodo){
 		count++;
 	}
 	return libres;
+}
+
+bool bloquesLibresSort(bloques_nodo* nodo, bloques_nodo* nodo2){
+
+	int count=0;
+	int libres=0;
+	while(count<(nodo->bloquesTotales)){
+		if(nodo->bitmap[count]==0)libres++;
+		count++;
+	}
+
+	int count2=0;
+	int libres2=0;
+	while(count2<(nodo2->bloquesTotales)){
+			if(nodo2->bitmap[count2]==0)libres2++;
+			count2++;
+		}
+
+	if(libres>libres2){
+		return true;
+	}
+	return false;
 }
 
 int ocuparBloqueBitMap(bloques_nodo* nodo){ // en desuso, reemplazada por buscarBloqueVacio
@@ -326,7 +486,7 @@ int buscarBloqueVacio(bloques_nodo* nodo){
 	while(count<(nodo->bloquesTotales)){
 		if(nodo->bitmap[count]==0){
 			nodo->bitmap[count]=1;
-			nodo->bloquesLibres = nodo->bloquesLibres-1;
+			nodo->bloquesLibres--;
 			return(count);
 		}
 	count++;
@@ -365,7 +525,7 @@ t_list* inicializarBitMapNodos(t_list* listaNodos){
 	int cantNodos = list_size(listaNodos);
 	int idNodo;
 	int desplazamiento;
-	bloques_nodo* mapa = malloc(sizeof(bloques_nodo));
+	bloques_nodo* mapa = malloc(sizeof(int)*165);
 	while(count<cantNodos){
 
 		idNodo = list_get(listaNodos,count);
@@ -488,7 +648,7 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 
 	int count = 0;
 	int cantPartes;
-	UbicacionBloquesArchivo* ubicaciones;
+	UbicacionBloquesArchivo2* ubicaciones;
 
 	cantPartes = list_size(tabla_de_archivos[indiceArchivo].bloques);
 
@@ -503,7 +663,7 @@ int ultimaCopia(int indiceArchivo,int parteArchivo){
 		count++;
 	}
 
-	if(ubicaciones->ubicacionCopia1.nodo == -1 || ubicaciones->ubicacionCopia2.nodo == -1){
+	if(ubicaciones->nodo1 == -1 || ubicaciones->nodo2 == -1){
 		return(-1);
 	}
 
@@ -526,8 +686,8 @@ void * distribuirBloque(char* bloque, int indiceArchivo, int cantBloques){
 	int index1, indexList1, index2, indexList2;
 	int desplazamiento1, desplazamiento2;
 
-
-	indexList1 = elegirNodo();
+int asd;
+	indexList1 = elegirNodo(asd);
 	bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList1);
 	index1 = bitMapNodo1->idNodo;
 	desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
@@ -540,7 +700,7 @@ void * distribuirBloque(char* bloque, int indiceArchivo, int cantBloques){
 
 	//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
 
-	indexList2 = elegirNodo();
+	indexList2 = elegirNodo(asd);
 	bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,indexList2);
 	index2 = bitMapNodo2->idNodo;
 	desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado

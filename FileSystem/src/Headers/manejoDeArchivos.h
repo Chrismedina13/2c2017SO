@@ -34,7 +34,7 @@ t_list* obtenerBloquesBinarios(const char * rutaDelArchivo);
  * RECIBE UNA RUTA DE UN ARCHIVO DE TEXTO A DIVIDIR,
  * RETORNA UNA LISTA DE CONTENIDOS DE LOS SUBARCHIVOS (CON CHAR*)
  */
-t_list* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo);
+void* obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo);
 int cantidadDeBloques(int tamanio);
 char* obtenerPuntero(const char* rutaArchivo);
 int tamanioArchivoCerrado(const char* rutaArchivo);

@@ -134,7 +134,7 @@ int recuperarTablaDeArchivos(){
     int count = 3; //arranca en 3 pues yamafs 0, metadata 1, archivos 2
     t_list* ubicaciones = list_create();
 
-	UbicacionBloquesArchivo* ubicacion;
+	UbicacionBloquesArchivo2* ubicacion;
 
     while(count<cantDir){
 
@@ -222,12 +222,12 @@ int recuperarTablaDeArchivos(){
 					int desplazamiento = obtenerDesplazamiento(linea);
 
 					if(copia == 0){
-						ubicacion->ubicacionCopia1.nodo= nodo;
-						ubicacion->ubicacionCopia1.desplazamiento= desplazamiento;
+						ubicacion->nodo1= nodo;
+						ubicacion->desplazamiento1= desplazamiento;
 					}
 					if(copia ==1){
-						ubicacion->ubicacionCopia2.nodo= nodo;
-						ubicacion->ubicacionCopia2.desplazamiento= desplazamiento;
+						ubicacion->nodo2= nodo;
+						ubicacion->desplazamiento2= desplazamiento;
 					}
 
 					linea=fgets(buffer, BUFSIZ, entry_file);

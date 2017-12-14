@@ -22,7 +22,7 @@ int generarNumeroAleatorioNoRepetido(){
 char* generarNombreArchivoTransformacion(int variableTransformacion){
 
 	char *unaPalabra = string_new();
-	string_append(&unaPalabra, "/tmp/Transf-");
+	string_append(&unaPalabra, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Transf-");
 	string_append(&unaPalabra, string_itoa(variableTransformacion));
 	return unaPalabra;
 }
@@ -133,15 +133,17 @@ void rearmar_script(script* script,int codigo){
 	char* nombreArchivo = string_new();
 	char* contenidoDelBloque = string_new();
 	string_append(&nombreArchivo,"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Scripts/");
-
+	logInfo("Rutaa del script transformacion: %s",nombreArchivo);
 	switch(codigo){
 	case SCRIPT_REDUCCION:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptReduccion = nombreArchivo; //variable global
+		darPermisosAlLosScriptsPy(nombreArchivo);
 		break;
 	case SCRIPT_TRANSFORMADOR:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptTransformador = nombreArchivo; //variable global
+		darPermisosAlLosScriptsPy(nombreArchivo);
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
@@ -166,6 +168,8 @@ int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char
 	string_append(&command, " | sort > ");
 	string_append(&command, rutaArchivoAGuardar);
 
+	logInfo("Comando a ejecutar del script transformador: %s",command);
+
     int estado = system(command);
 
     return estado;
@@ -186,8 +190,12 @@ int ejecutarScriptReductor(char* rutaScript,char* rutaArchivoAEjecutar,char* rut
     return estado;
 
 }
-void darPermisosAlLosScriptsPy(){
-	system("/bin/chmod 777 *.py");
+void darPermisosAlLosScriptsPy(char* ruta){
+	char* command = string_new();
+	string_append(&command,"/bin/chmod 777 ");
+	string_append(&command,ruta);
+	logInfo("comando a ejecutar: %s",command);
+	system(command);
 }
 
 void destruirArchivoOScript(char* rutaScript){

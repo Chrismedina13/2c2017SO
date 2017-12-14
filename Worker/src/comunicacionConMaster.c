@@ -64,20 +64,40 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 						FD_CLR(i, &master);
 
 					} else {
-						//logInfo("HOLA");1
+
 						int codigo = deserializarINT(buffer);
-						//logInfo(" Worker Recibe de Master: %d", codigo);
-						printf(" Worker Recibe de Master: %d", codigo);
+						logInfo(" Worker Recibe de Master: %d", codigo);
 
 						char pesoMensaje[4];
 						int tamanio;
 						char* mensaje;
 						int FDMaster = i;
-						//ENVIO MASTER
+
 						resultadoJob* resultado_job;
 						char* mensajeAEnviar;
 
 						switch (codigo) {
+						case SCRIPT_TRANSFORMADOR:
+							//RECIBO EL SCRIPT
+							recv(FDMaster, pesoMensaje, 4, 0);
+							tamanio = deserializarINT(pesoMensaje);
+							mensaje = malloc(tamanio);
+							mensaje[tamanio] = '\0';
+
+							if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+
+								logInfo(
+										"Error al recibir el script transformador.");
+							} else {
+
+								scriptTransformador = deserilizarScript(mensaje);
+								//logInfo("scriptTransformador %s",scriptTransformador->nombre);
+								//logInfo("scriptTransformador %s",scriptTransformador->contenido);
+
+								rearmar_script(scriptTransformador, SCRIPT_TRANSFORMADOR);
+								logInfo("Se recibio correctamente el script transformador.");
+							}
+							break;
 						case SOL_TRANSFORMACION:
 							recv(FDMaster, pesoMensaje, 4, 0);
 							tamanio = deserializarINT(pesoMensaje);
@@ -87,50 +107,34 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo(
 										"Error en la recepcion de Info de Master.");
 							} else {
-								infoTransformacionParaWorker * info = deserializarInfoParaWorker(mensaje);
+								infoTransformacionParaWorker * info =deserializarInfoParaWorker(mensaje);
 								int bloque = info->bloque;
-								int bytesOcupados = info->bytesOcupados;
 								char* archivoTemporal = info->archivoTemporal;
-								//RECIBO EL SCRIPT
-								recv(FDMaster, pesoMensaje, 4, 0);
-								tamanio = deserializarINT(pesoMensaje);
-								mensaje = malloc(tamanio);
-								mensaje[tamanio] = '\0';
-								if (recv(FDMaster, mensaje, tamanio, 0) == -1) {
+								logInfo("Archivo temporal: %s",archivoTemporal);
+								//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
+								logInfo("Bloque %i",bloque);
+								char* contenidoBloque = get_bloque(0);
+								char* contenido = string_substring(contenidoBloque,0,121.230);
+								logInfo("info->bytesOcupados %i",info->bytesOcupados);
+								logInfo("contenido %s",contenido);
+								char* nombreArchivoBloque ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque.txt";
+								crearArchivo(contenido, nombreArchivoBloque);
+								int estado = ejecutarScriptTransformador(rutaScriptTransformador, nombreArchivoBloque,archivoTemporal);
+								//Estado 0 significa que lo hizo bien
 
-									logInfo(
-											"Error en la recepcion de Info de Master.");
-								} else {
+								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
+								//destruirArchivoOScript(nombreArchivoBloque);
+								//destruirArchivoOScript(script->nombre);
 
-									script* script = deserilizarScript(mensaje);
-									rearmar_script(script, SCRIPT_TRANSFORMADOR);
+								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
+								resultado_job = malloc(sizeof(int) * 2);
+								resultado_job->nodo = id_nodo;
+								resultado_job->resultado = estado;
+								mensajeAEnviar = serializarResultado(resultado_job);
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,	sizeof(int) * 2);
 
-									printf("recibo script tranformador");
-
-									//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
-									char* contenido = get_bloque(bloque);
-									char* nombreArchivoBloque =
-											"/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque";
-									crearArchivo(contenido,
-											nombreArchivoBloque);
-									int estado = ejecutarScriptTransformador(script->nombre, nombreArchivoBloque,
-											archivoTemporal); //Estado 0 significa que lo hizo bien
-
-									//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
-									destruirArchivoOScript(nombreArchivoBloque);
-									destruirArchivoOScript(script->nombre);
-
-									//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
-									resultado_job = malloc(sizeof(int) * 2);
-									resultado_job->nodo = id_nodo;
-									resultado_job->resultado = estado;
-									mensajeAEnviar = serializarResultado(
-											resultado_job);
-									mensajesEnviadosAMaster(FIN_TRANSFORMACION,
-											FD_Cliente, mensajeAEnviar,
-											sizeof(int) * 2);
-								}
 							}
+
 							break;
 
 						case SOL_REDUCCION_LOCAL:
@@ -207,16 +211,24 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								int i = 0;
 								cantidadDeWorkersServidoresConectadosAlWorkerElegido =
 										list_size(lista);
-								while (i< cantidadDeWorkersServidoresConectadosAlWorkerElegido) {
+								while (i
+										< cantidadDeWorkersServidoresConectadosAlWorkerElegido) {
 									//SE CONECTA A CADA WORKER servidor Y LE SOLICITA EL ARCHIVO TEMPORAL
-									infoParaReduccionGlobal* infoReduccionGlobal = list_get(lista, i);
-									ParametrosComunicacionConWorkerServidor* parametrosWorker = setParametrosComunicacionConWorkerServidor(infoReduccionGlobal->puerto,infoReduccionGlobal->ipWorker);
+									infoParaReduccionGlobal* infoReduccionGlobal =
+											list_get(lista, i);
+									ParametrosComunicacionConWorkerServidor* parametrosWorker =
+											setParametrosComunicacionConWorkerServidor(
+													infoReduccionGlobal->puerto,
+													infoReduccionGlobal->ipWorker);
 
 									pthread_t hiloWorker;
-									pthread_create(&hiloWorker, NULL, (void*) comunicacionConWorkerServidor, parametrosWorker);
+									pthread_create(&hiloWorker, NULL,
+											(void*) comunicacionConWorkerServidor,
+											parametrosWorker);
 									pthread_join(hiloWorker, NULL);
 
-									comunicacionConWorkerServidor(infoReduccionGlobal);
+									comunicacionConWorkerServidor(
+											infoReduccionGlobal);
 									//adentro crea el archivo temporal en worker/tmp/
 									//y me carga la lista de archivosTemporalesLocales
 								}
@@ -242,11 +254,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								resultado_job->nodo = id_nodo;
 								resultado_job->resultado =
 										estadoScriptReductorGlobal;
-								mensajeAEnviar = serializarResultado(
-										resultado_job);
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,
-										FD_Cliente, mensajeAEnviar,
-										sizeof(int) * 2);
+								mensajeAEnviar = serializarResultado(resultado_job);
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,sizeof(int) * 2);
 
 								//ENVIO EL ARCHIVO TEMPORAL GLOBAL RESULTANTE A FILESYSTEM
 								//ARMO LA ESTRUCTURA A ENVIAR
@@ -256,8 +265,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 										obtenerSoloNombreDelArchivo(
 												info->archivoTemporalReduccionGlobal);
 
-								enviarAlmacenadoFinal(
-										nombreArchivoReduccionGlobal, contenido,
+								enviarAlmacenadoFinal(nombreArchivoReduccionGlobal, contenido,
 										FD_Filesystem);
 							}
 							break;
@@ -281,10 +289,8 @@ ParametrosComunicacionConMaster* setParametrosComunicacionConMaster(int puerto) 
 	return parametros;
 }
 
-void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje,
-		int tamanio) {
+void mensajesEnviadosAMaster(int codigo, int FDMaster, char* mensaje,int tamanio) {
 	//Worker recibe de master
-	char pesoMensaje[4];
 
 	switch (codigo) {
 	case FIN_TRANSFORMACION:
