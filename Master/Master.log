@@ -604,3 +604,58 @@ map(getRegistro, data)
 [INFO] 15:25:58:733 MASTER/(8317:8324): Se envio INFOPARAWORKERS exitosamente.
 [INFO] 15:26:11:314 MASTER/(8317:8324): Codigo que recibo 1179535707
 [INFO] 15:26:11:314 MASTER/(8317:8324): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 15:33:34:639 MASTER/(9097:9097): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:33:34:639 MASTER/(9097:9097): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:33:34:639 MASTER/(9097:9097): Creando el hilo para comunicarme con Yama
+[INFO] 15:33:34:648 MASTER/(9097:9108): Ingrese JOB a Ejecutar
+[INFO] 15:33:42:199 MASTER/(9097:9108): Se va a ejecutar hola
+[INFO] 15:33:42:199 MASTER/(9097:9108): 4
+[INFO] 15:33:42:199 MASTER/(9097:9108): Recibi de YAMA: 30
+[INFO] 15:34:15:717 MASTER/(9097:9108): Master recibe el numero De JOB.
+[INFO] 15:34:26:520 MASTER/(9097:9108): Tamanio de lo que recibo 4
+[INFO] 15:34:29:195 MASTER/(9097:9108): El job asignado es 0
+[INFO] 15:36:19:621 MASTER/(9097:9108): Recibi de YAMA: 2
+[INFO] 15:36:21:958 MASTER/(9097:9108): Master recibe de Yama solicitud de transformación.
+[INFO] 15:36:21:958 MASTER/(9097:9108): Tamanio de lo que recibo 735
+[INFO] 15:36:21:958 MASTER/(9097:9108): Recibo corecctamente la respuesta
+[INFO] 15:36:21:958 MASTER/(9097:9108): tamnio_lista 7
+[INFO] 15:36:21:958 MASTER/(9097:9108): Bloque: 12
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 20
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 20
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 2
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 5
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 20
+[INFO] 15:36:21:959 MASTER/(9097:9108): Bloque: 20
+[INFO] 15:36:21:959 MASTER/(9097:9108): Terminada la deserializacion
+[INFO] 15:36:21:959 MASTER/(9097:9108): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:36:21:959 MASTER/(9097:9140): FDServidorWORKER 5
+[INFO] 15:36:21:959 MASTER/(9097:9140): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 15:36:21:960 MASTER/(9097:9140): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:36:21:960 MASTER/(9097:9140): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 15:36:21:960 MASTER/(9097:9140): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:36:21:960 MASTER/(9097:9140): Despues de serializar info para worker
+[INFO] 15:36:21:960 MASTER/(9097:9140): Transformador Nombre transformador.py
+[INFO] 15:36:21:960 MASTER/(9097:9140): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 15:36:32:174 MASTER/(9097:9140): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 15:36:34:796 MASTER/(9097:9140): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 15:37:45:406 MASTER/(9097:9140): Codigo que recibo 1179535707
+[INFO] 15:38:01:968 MASTER/(9097:9140): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR

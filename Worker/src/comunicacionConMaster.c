@@ -133,7 +133,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								resultado_job->nodo = id_nodo;
 								resultado_job->resultado = estado;
 								mensajeAEnviar = serializarResultado(resultado_job);
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	sizeof(int) * 2);
+								int tamanio =sizeof(int) * 2;
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	tamanio);
 
 							}
 
@@ -181,7 +182,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								mensajeAEnviar = serializarResultado(
 										resultado_job);
 								mensajesEnviadosAMaster(FIN_REDUCCION_LOCAL,
-										FD_Cliente, mensajeAEnviar,
+										FDMaster, mensajeAEnviar,
 										sizeof(int) * 2);
 							}
 							break;
@@ -258,7 +259,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 										estadoScriptReductorGlobal;
 								mensajeAEnviar = serializarResultado(resultado_job);
 								int tamanioResultado = sizeof(int) * 2;
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,tamanioResultado);
+								mensajesEnviadosAMaster(FIN_REDUCCION_GLOBAL,	FDMaster, mensajeAEnviar,tamanioResultado);
 
 								//ENVIO EL ARCHIVO TEMPORAL GLOBAL RESULTANTE A FILESYSTEM
 								//ARMO LA ESTRUCTURA A ENVIAR
