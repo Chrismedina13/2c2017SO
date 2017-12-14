@@ -77,7 +77,7 @@ typedef struct tabla_archivos {
 	int directorio; //index del directorio
 	//UbicacionBloquesArchivo* bloques;
 	t_list* bloques;//char *
-	t_list* ubicaciones;//ubicacionBloquesArchivo
+	t_list* ubicaciones;//ubicacionBloquesArchivo2
 }tabla_archivos;
 
 //zona declaracion estructuras tabla de archivos

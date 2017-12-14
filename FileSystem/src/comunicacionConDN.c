@@ -293,7 +293,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 
 							//actualizo lista capadidad nodos
 
-							bloques_nodo* bloquesNodo = malloc(sizeof(int)*(capacidad+4));
+							bloques_nodo* bloquesNodo = malloc(sizeof(int)*(capacidad+5));
 							bloquesNodo->idNodo=idNodo;
 							bloquesNodo->fileDescriptor=FD_DN;
 							bloquesNodo->bloquesTotales=capacidad;

@@ -416,26 +416,27 @@ void consolaFileSystem(){
 
 						//le pasa los bloques a los nodos
 
-						distribuirBloques(indiceArchivo);
+						distribuirYEnviarBloques(indiceArchivo);
 
 						logInfo("Distribui administrativamente los bloques en los Nodos conectados.");
 
-						int count = 0;
+/*
+						int contador = 0;
 						UbicacionBloquesArchivo2* ubicacion;
 						char* bloque;
 
 						int fileDescriptor1;
 						int fileDescriptor2;
 
-						while (count < cantBloques) {
+						while (contador < cantBloques) {
 
-							bloque = list_get(tabla_de_archivos[indiceArchivo].bloques, count);
-							ubicacion =list_get(tabla_de_archivos[indiceArchivo].ubicaciones,count);
+							bloque = list_get(tabla_de_archivos[indiceArchivo].bloques, contador);
+							ubicacion =list_get(tabla_de_archivos[indiceArchivo].ubicaciones, contador);
 							int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
 
 							//copia 1
 
-							char* desplazamiento = serializeInt(ubicacion->desplazamiento1);
+							char* desplazamiento1Serializado = serializeInt(ubicacion->desplazamiento1);
 
 							fileDescriptor1 = nodoToFD(ubicacion->nodo1);
 
@@ -446,16 +447,16 @@ void consolaFileSystem(){
 
 							mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor1, bloque , strlen(bloque));
 
-							send(fileDescriptor1, desplazamiento, sizeof(int), 0);
+							send(fileDescriptor1, desplazamiento1Serializado, sizeof(int), 0);
 
 							logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
-									count,
+									contador,
 									ubicacion->nodo1,
 									ubicacion->desplazamiento1);
 
 							//copia 2
 
-							char* desplazamiento2 = serializeInt(ubicacion->desplazamiento1);
+							char* desplazamiento2Serializado = serializeInt(ubicacion->desplazamiento2);
 
 							fileDescriptor2 = nodoToFD(ubicacion->nodo2);
 
@@ -465,19 +466,19 @@ void consolaFileSystem(){
 
 							mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor2, bloque,strlen(bloque));
 
-							send(fileDescriptor2, desplazamiento2, sizeof(int), 0);
+							send(fileDescriptor2, desplazamiento2Serializado, sizeof(int), 0);
 
 							logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
-									count,
+									contador,
 									ubicacion->nodo2,
 									ubicacion->desplazamiento2);
 
-							count++;
+							contador++;
 
 							//free(mensaje);
 							//free(mensaje2);
 
-						}
+						}*/
 
 						logInfo("Envie los bloques a sus respectivos nodos y desplazamiento.");
 
