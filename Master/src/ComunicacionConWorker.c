@@ -69,7 +69,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR, FDServidorWORKER,
 			scriptSerializado, tamanioTransf);
 
-	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,tamanioRespuesta);
+	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,strlen(scriptSerializado));
 
 	char buffer[4];
 	recv(FDServidorWORKER, buffer, 4, 0);
