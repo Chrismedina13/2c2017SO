@@ -27,7 +27,7 @@
 #define ABORTO_JOB 34
 
 //MASTER - FS
-#define ALMACENADO_FINAL 9
+#define ALMACENADO_FINAL 40
 
 //FS - DATA NODE
 #define GET_BLOQUE 12
