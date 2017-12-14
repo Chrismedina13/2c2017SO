@@ -65,15 +65,12 @@ int main(int argc, char *argv[]) {
 mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, strlen(bloque)  );
 
 */
-    int FSonline=1;
-    while(FSonline==1){
+
+    while(1){
 
 		if(recv(FDsocketClienteFileSystem, buffer2,4,0)>=0){
 			int codigo2 = deserializarINT(buffer2);
 			logInfo("Recibi de FS el codigo : %i", codigo2);
-			if(codigo2!=10 || codigo2!=12){
-				FSonline=0;
-			}
 			mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
 
 	}

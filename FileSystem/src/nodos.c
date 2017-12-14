@@ -163,8 +163,12 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		//nodo 1
 
-		bloques_nodo* bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,0);
-		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
+		bloques_nodo* bitMapNodo1 = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
+		bloques_nodo* nodo1Memoria = malloc(sizeof(int)*165);
+
+		memcpy(nodo1Memoria, bitMapNodo1, sizeof(int)*165);
+
+		desplazamiento1 = buscarBloqueVacio(nodo1Memoria); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
 		if(desplazamiento1==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
@@ -173,24 +177,29 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 		//copia 1
 
 		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-				bitMapNodo1->fileDescriptor,
+				nodo1Memoria->fileDescriptor,
 				tamanioSetBloque);
 
-		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo1->fileDescriptor, bloque , strlen(bloque));
+		mensajesEnviadosADataNode(SET_BLOQUE,nodo1Memoria->fileDescriptor, bloque , strlen(bloque));
 
 		char* desplazamiento1Serializado = serializeInt(desplazamiento1);
 
-		send(bitMapNodo1->fileDescriptor, desplazamiento1Serializado, sizeof(int), 0);
+		int FD = nodo1Memoria->fileDescriptor;
+		send(FD, desplazamiento1Serializado, sizeof(int), 0);
 
 		logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
 				indiceBloque,
-				bitMapNodo1->idNodo,
+				nodo1Memoria->idNodo,
 				desplazamiento1);
 
 		//nodo 2
 
-		bloques_nodo* bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,1);
-		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
+		bloques_nodo* bitMapNodo2 = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
+		bloques_nodo* nodo2Memoria= malloc(sizeof(int)*165);
+
+		memcpy(nodo2Memoria, bitMapNodo2, sizeof(int)*165);
+
+		desplazamiento2 = buscarBloqueVacio(nodo2Memoria); //lo devuleve y lo pone en ocupado
 
 		if(desplazamiento2==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
@@ -199,27 +208,28 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 		//copia 2
 
 		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-				bitMapNodo2->fileDescriptor,
+				nodo2Memoria->fileDescriptor,
 				tamanioSetBloque);
 
-		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo2->fileDescriptor, bloque,strlen(bloque));
+		mensajesEnviadosADataNode(SET_BLOQUE,nodo2Memoria->fileDescriptor, bloque,strlen(bloque));
 
 		char* desplazamiento2Serializado = serializeInt(desplazamiento2);
 
-		send(bitMapNodo2->fileDescriptor, desplazamiento2Serializado, sizeof(int), 0);
+		FD = nodo2Memoria->fileDescriptor;
+		send(FD, desplazamiento2Serializado, sizeof(int), 0);
 
 		logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
 				indiceBloque,
-				bitMapNodo2->idNodo,
+				nodo2Memoria->idNodo,
 				desplazamiento2);
 
 
 		//cargo los datos de los bloques en tabla_de_archivos
 
 		bloquesPtr->parteDelArchivo = indiceBloque;
-		bloquesPtr->nodo1 = bitMapNodo1->idNodo;
+		bloquesPtr->nodo1 = nodo1Memoria->idNodo;
 		bloquesPtr->desplazamiento1 = desplazamiento1;
-		bloquesPtr->nodo2 = bitMapNodo2->idNodo;
+		bloquesPtr->nodo2 = nodo2Memoria->idNodo;
 		bloquesPtr->desplazamiento2 = desplazamiento2;
 		bloquesPtr->bytesOcupados = string_length(bloque);
 
@@ -230,6 +240,10 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,bloquesPtr);
 
 
+		list_add(tabla_de_nodos.listaCapacidadNodos, nodo1Memoria);
+		list_add(tabla_de_nodos.listaCapacidadNodos, nodo2Memoria);
+		free(bitMapNodo1);
+		free(bitMapNodo2);
 		indiceBloque++;
 
 	}

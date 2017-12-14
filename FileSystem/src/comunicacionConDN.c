@@ -446,14 +446,14 @@ int desconectarNodoEstado(idNodo){
 
 		nodo = list_get(tabla_de_nodos.listaCapacidadNodos, count);
 		if(nodo->idNodo==idNodo){
-			break;
+			nodo->estado=0;
+			return(1);
 		}
 
 		count++;
 	}
 
-	nodo->estado=0;
-	return(1);
+	return(-1);
 }
 
 
