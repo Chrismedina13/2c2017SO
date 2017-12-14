@@ -61,3 +61,8 @@
 [INFO] 19:12:22:591 WORKER/(10257:10257): Comunicacion con los FILESYSTEM
 [INFO] 19:12:26:801 WORKER/(10257:10280): SocketCliente = -1 
 
+[INFO] 14:48:34:273 WORKER/(3693:3693): Creando hilos para comunicacion con MASTER y FS
+[INFO] 14:57:30:705 WORKER/(4906:4906): Creando hilos para comunicacion con MASTER y FS
+[INFO] 15:18:49:361 WORKER/(6643:6643): Creando hilos para comunicacion con MASTER y FS
+[INFO] 15:22:12:244 WORKER/(7423:7423): Creando hilos para comunicacion con MASTER y FS
+[INFO] 15:25:35:732 WORKER/(8150:8150): Creando hilos para comunicacion con MASTER y FS

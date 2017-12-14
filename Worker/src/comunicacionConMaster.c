@@ -121,18 +121,19 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								char* nombreArchivoBloque ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque.txt";
 								crearArchivo(contenido, nombreArchivoBloque);
 								int estado = ejecutarScriptTransformador(rutaScriptTransformador, nombreArchivoBloque,archivoTemporal);
+								logInfo("estado %i",estado);
 								//Estado 0 significa que lo hizo bien
 
 								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
-								//destruirArchivoOScript(nombreArchivoBloque);
-								//destruirArchivoOScript(script->nombre);
+								destruirArchivoOScript(nombreArchivoBloque);
+								destruirArchivoOScript(rutaScriptTransformador);
 
 								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
 								resultado_job = malloc(sizeof(int) * 2);
 								resultado_job->nodo = id_nodo;
 								resultado_job->resultado = estado;
 								mensajeAEnviar = serializarResultado(resultado_job);
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,	sizeof(int) * 2);
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	sizeof(int) * 2);
 
 							}
 
@@ -256,7 +257,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								resultado_job->resultado =
 										estadoScriptReductorGlobal;
 								mensajeAEnviar = serializarResultado(resultado_job);
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,sizeof(int) * 2);
+								int tamanioResultado = sizeof(int) * 2;
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FD_Cliente, mensajeAEnviar,tamanioResultado);
 
 								//ENVIO EL ARCHIVO TEMPORAL GLOBAL RESULTANTE A FILESYSTEM
 								//ARMO LA ESTRUCTURA A ENVIAR

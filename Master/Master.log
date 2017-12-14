@@ -329,3 +329,278 @@ Bloque: 66
 [INFO] 11:33:27:871 MASTER/(8475:8476): Tamanio de lo que recibo 4
 [INFO] 11:33:27:871 MASTER/(8475:8476): El job asignado es 0
 [INFO] 11:35:31:421 MASTER/(8475:8476): Recibi de YAMA: -1219466432
+[INFO] 14:48:46:561 MASTER/(3857:3857): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 14:48:46:564 MASTER/(3857:3857): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 14:48:46:564 MASTER/(3857:3857): Creando el hilo para comunicarme con Yama
+[INFO] 14:48:46:571 MASTER/(3857:3862): Ingrese JOB a Ejecutar
+[INFO] 14:49:33:638 MASTER/(3857:3862): Se va a ejecutar master
+[INFO] 14:49:33:639 MASTER/(3857:3862): 6
+[INFO] 14:49:33:639 MASTER/(3857:3862): Recibi de YAMA: 30
+[INFO] 14:49:33:639 MASTER/(3857:3862): Master recibe el numero De JOB.
+[INFO] 14:49:33:639 MASTER/(3857:3862): Tamanio de lo que recibo 4
+[INFO] 14:49:33:639 MASTER/(3857:3862): El job asignado es 0
+[INFO] 14:49:33:643 MASTER/(3857:3862): Recibi de YAMA: 2
+[INFO] 14:49:33:643 MASTER/(3857:3862): Master recibe de Yama solicitud de transformación.
+[INFO] 14:49:33:643 MASTER/(3857:3862): Tamanio de lo que recibo 735
+[INFO] 14:49:33:643 MASTER/(3857:3862): Recibo corecctamente la respuesta
+[INFO] 14:49:33:643 MASTER/(3857:3862): tamnio_lista 7
+[INFO] 14:49:33:643 MASTER/(3857:3862): Bloque: 12
+[INFO] 14:49:33:643 MASTER/(3857:3862): Bloque: 20
+[INFO] 14:49:33:644 MASTER/(3857:3862): Bloque: 20
+[INFO] 14:49:33:644 MASTER/(3857:3862): Bloque: 2
+[INFO] 14:49:33:644 MASTER/(3857:3862): Bloque: 5
+[INFO] 14:49:33:644 MASTER/(3857:3862): Bloque: 20
+[INFO] 14:49:33:644 MASTER/(3857:3862): Bloque: 20
+[INFO] 14:49:33:644 MASTER/(3857:3862): Terminada la deserializacion
+[INFO] 14:49:33:644 MASTER/(3857:3862): Creando hilos para comunicacion con WORKERS.
+[INFO] 14:49:33:649 MASTER/(3857:3865): FDServidorWORKER 5
+[INFO] 14:49:33:651 MASTER/(3857:3865): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 14:49:33:651 MASTER/(3857:3865): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 14:49:33:651 MASTER/(3857:3865): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 14:49:33:651 MASTER/(3857:3865): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 14:49:33:651 MASTER/(3857:3865): Despues de serializar info para worker
+[INFO] 14:49:33:667 MASTER/(3857:3865): Transformador Nombre transformador.py
+[INFO] 14:49:33:668 MASTER/(3857:3865): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 14:49:33:668 MASTER/(3857:3865): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 14:49:33:668 MASTER/(3857:3865): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 14:49:33:669 MASTER/(3857:3865): Codigo que recibo 1179535707
+[INFO] 14:49:33:669 MASTER/(3857:3865): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 14:57:39:550 MASTER/(5065:5065): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 14:57:39:550 MASTER/(5065:5065): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 14:57:39:550 MASTER/(5065:5065): Creando el hilo para comunicarme con Yama
+[INFO] 14:57:39:552 MASTER/(5065:5068): Ingrese JOB a Ejecutar
+[INFO] 14:57:42:849 MASTER/(5065:5068): Se va a ejecutar hola
+[INFO] 14:57:42:849 MASTER/(5065:5068): 4
+[INFO] 14:57:42:850 MASTER/(5065:5068): Recibi de YAMA: 30
+[INFO] 14:57:42:850 MASTER/(5065:5068): Master recibe el numero De JOB.
+[INFO] 14:57:42:850 MASTER/(5065:5068): Tamanio de lo que recibo 4
+[INFO] 14:57:42:850 MASTER/(5065:5068): El job asignado es 0
+[INFO] 14:57:42:853 MASTER/(5065:5068): Recibi de YAMA: 2
+[INFO] 14:57:42:853 MASTER/(5065:5068): Master recibe de Yama solicitud de transformación.
+[INFO] 14:57:42:853 MASTER/(5065:5068): Tamanio de lo que recibo 735
+[INFO] 14:57:42:854 MASTER/(5065:5068): Recibo corecctamente la respuesta
+[INFO] 14:57:42:854 MASTER/(5065:5068): tamnio_lista 7
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 12
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 20
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 20
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 2
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 5
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 20
+[INFO] 14:57:42:854 MASTER/(5065:5068): Bloque: 20
+[INFO] 14:57:42:854 MASTER/(5065:5068): Terminada la deserializacion
+[INFO] 14:57:42:854 MASTER/(5065:5068): Creando hilos para comunicacion con WORKERS.
+[INFO] 14:57:42:863 MASTER/(5065:5071): FDServidorWORKER 5
+[INFO] 14:57:42:863 MASTER/(5065:5071): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 14:57:42:863 MASTER/(5065:5071): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 14:57:42:863 MASTER/(5065:5071): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 14:57:42:863 MASTER/(5065:5071): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 14:57:42:863 MASTER/(5065:5071): Despues de serializar info para worker
+[INFO] 14:57:42:886 MASTER/(5065:5071): Transformador Nombre transformador.py
+[INFO] 14:57:42:887 MASTER/(5065:5071): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 14:57:42:887 MASTER/(5065:5071): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 14:57:42:887 MASTER/(5065:5071): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 14:57:42:888 MASTER/(5065:5071): Codigo que recibo 1179535707
+[INFO] 14:57:42:888 MASTER/(5065:5071): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 15:18:57:907 MASTER/(6810:6810): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:18:57:907 MASTER/(6810:6810): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:18:57:907 MASTER/(6810:6810): Creando el hilo para comunicarme con Yama
+[INFO] 15:18:57:913 MASTER/(6810:6814): Ingrese JOB a Ejecutar
+[INFO] 15:19:04:156 MASTER/(6810:6814): Se va a ejecutar ghl
+[INFO] 15:19:04:157 MASTER/(6810:6814): 3
+[INFO] 15:19:04:157 MASTER/(6810:6814): Recibi de YAMA: 30
+[INFO] 15:19:04:157 MASTER/(6810:6814): Master recibe el numero De JOB.
+[INFO] 15:19:04:157 MASTER/(6810:6814): Tamanio de lo que recibo 4
+[INFO] 15:19:04:157 MASTER/(6810:6814): El job asignado es 0
+[INFO] 15:19:04:161 MASTER/(6810:6814): Recibi de YAMA: 2
+[INFO] 15:19:04:161 MASTER/(6810:6814): Master recibe de Yama solicitud de transformación.
+[INFO] 15:19:04:161 MASTER/(6810:6814): Tamanio de lo que recibo 735
+[INFO] 15:19:04:161 MASTER/(6810:6814): Recibo corecctamente la respuesta
+[INFO] 15:19:04:162 MASTER/(6810:6814): tamnio_lista 7
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 12
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 20
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 20
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 2
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 5
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 20
+[INFO] 15:19:04:162 MASTER/(6810:6814): Bloque: 20
+[INFO] 15:19:04:162 MASTER/(6810:6814): Terminada la deserializacion
+[INFO] 15:19:04:162 MASTER/(6810:6814): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:19:04:167 MASTER/(6810:6816): FDServidorWORKER 5
+[INFO] 15:19:04:168 MASTER/(6810:6816): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 15:19:04:168 MASTER/(6810:6816): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:19:04:169 MASTER/(6810:6816): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 15:19:04:169 MASTER/(6810:6816): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:19:04:169 MASTER/(6810:6816): Despues de serializar info para worker
+[INFO] 15:19:04:169 MASTER/(6810:6816): Transformador Nombre transformador.py
+[INFO] 15:19:04:169 MASTER/(6810:6816): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 15:19:04:170 MASTER/(6810:6816): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 15:19:04:170 MASTER/(6810:6816): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 15:19:04:171 MASTER/(6810:6816): Codigo que recibo 1179535707
+[INFO] 15:19:04:171 MASTER/(6810:6816): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 15:22:21:502 MASTER/(7581:7581): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:22:21:505 MASTER/(7581:7581): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:22:21:505 MASTER/(7581:7581): Creando el hilo para comunicarme con Yama
+[INFO] 15:22:21:506 MASTER/(7581:7583): Ingrese JOB a Ejecutar
+[INFO] 15:22:27:290 MASTER/(7581:7583): Se va a ejecutar hol
+[INFO] 15:22:27:290 MASTER/(7581:7583): 3
+[INFO] 15:22:27:290 MASTER/(7581:7583): Recibi de YAMA: 30
+[INFO] 15:22:27:290 MASTER/(7581:7583): Master recibe el numero De JOB.
+[INFO] 15:22:27:290 MASTER/(7581:7583): Tamanio de lo que recibo 4
+[INFO] 15:22:27:290 MASTER/(7581:7583): El job asignado es 0
+[INFO] 15:22:27:293 MASTER/(7581:7583): Recibi de YAMA: 2
+[INFO] 15:22:27:293 MASTER/(7581:7583): Master recibe de Yama solicitud de transformación.
+[INFO] 15:22:27:293 MASTER/(7581:7583): Tamanio de lo que recibo 735
+[INFO] 15:22:27:293 MASTER/(7581:7583): Recibo corecctamente la respuesta
+[INFO] 15:22:27:293 MASTER/(7581:7583): tamnio_lista 7
+[INFO] 15:22:27:293 MASTER/(7581:7583): Bloque: 12
+[INFO] 15:22:27:293 MASTER/(7581:7583): Bloque: 20
+[INFO] 15:22:27:294 MASTER/(7581:7583): Bloque: 20
+[INFO] 15:22:27:294 MASTER/(7581:7583): Bloque: 2
+[INFO] 15:22:27:294 MASTER/(7581:7583): Bloque: 5
+[INFO] 15:22:27:294 MASTER/(7581:7583): Bloque: 20
+[INFO] 15:22:27:294 MASTER/(7581:7583): Bloque: 20
+[INFO] 15:22:27:294 MASTER/(7581:7583): Terminada la deserializacion
+[INFO] 15:22:27:294 MASTER/(7581:7583): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:22:27:303 MASTER/(7581:7587): FDServidorWORKER 5
+[INFO] 15:22:27:303 MASTER/(7581:7587): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 15:22:27:303 MASTER/(7581:7587): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:22:27:303 MASTER/(7581:7587): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 15:22:27:303 MASTER/(7581:7587): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:22:27:303 MASTER/(7581:7587): Despues de serializar info para worker
+[INFO] 15:22:27:303 MASTER/(7581:7587): Transformador Nombre transformador.py
+[INFO] 15:22:27:303 MASTER/(7581:7587): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 15:22:27:304 MASTER/(7581:7587): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 15:22:27:304 MASTER/(7581:7587): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 15:22:27:304 MASTER/(7581:7587): Codigo que recibo 1179535707
+[INFO] 15:22:27:304 MASTER/(7581:7587): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR
+[INFO] 15:25:47:968 MASTER/(8317:8317): Archivo de configuracion IP YAMA : 127.0.0.1 
+
+[INFO] 15:25:47:972 MASTER/(8317:8317): Archivo de configuracion YAMA PUERTO : 5200 
+
+[INFO] 15:25:47:972 MASTER/(8317:8317): Creando el hilo para comunicarme con Yama
+[INFO] 15:25:47:977 MASTER/(8317:8322): Ingrese JOB a Ejecutar
+[INFO] 15:25:58:716 MASTER/(8317:8322): Se va a ejecutar hol
+[INFO] 15:25:58:716 MASTER/(8317:8322): 3
+[INFO] 15:25:58:717 MASTER/(8317:8322): Recibi de YAMA: 30
+[INFO] 15:25:58:717 MASTER/(8317:8322): Master recibe el numero De JOB.
+[INFO] 15:25:58:717 MASTER/(8317:8322): Tamanio de lo que recibo 4
+[INFO] 15:25:58:717 MASTER/(8317:8322): El job asignado es 0
+[INFO] 15:25:58:721 MASTER/(8317:8322): Recibi de YAMA: 2
+[INFO] 15:25:58:722 MASTER/(8317:8322): Master recibe de Yama solicitud de transformación.
+[INFO] 15:25:58:722 MASTER/(8317:8322): Tamanio de lo que recibo 735
+[INFO] 15:25:58:722 MASTER/(8317:8322): Recibo corecctamente la respuesta
+[INFO] 15:25:58:722 MASTER/(8317:8322): tamnio_lista 7
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 12
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 20
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 20
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 2
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 5
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 20
+[INFO] 15:25:58:722 MASTER/(8317:8322): Bloque: 20
+[INFO] 15:25:58:722 MASTER/(8317:8322): Terminada la deserializacion
+[INFO] 15:25:58:722 MASTER/(8317:8322): Creando hilos para comunicacion con WORKERS.
+[INFO] 15:25:58:730 MASTER/(8317:8324): FDServidorWORKER 5
+[INFO] 15:25:58:730 MASTER/(8317:8324): archivoTemporal QUE QUIERO VER: /home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-7
+[INFO] 15:25:58:730 MASTER/(8317:8324): Entró a la serializar una estructua INFOPARAWORKER
+
+[INFO] 15:25:58:730 MASTER/(8317:8324): Se obtuvo: tamanioArchivoTemp: 62
+
+[INFO] 15:25:58:731 MASTER/(8317:8324): Salgo de serializar una estructua INFOPARAWORKER
+
+[INFO] 15:25:58:731 MASTER/(8317:8324): Despues de serializar info para worker
+[INFO] 15:25:58:731 MASTER/(8317:8324): Transformador Nombre transformador.py
+[INFO] 15:25:58:731 MASTER/(8317:8324): Transformador Contenido #! /usr/bin/python2
+import sys
+
+def getRegistro(linea):
+	if len(linea) > 0:
+         if(len(linea.split(',')[0]) > 0 and len(linea.split(',')[1]) > 0):
+         	 try:
+         	     registro = linea.split(',')[0].strip().lstrip() + "," + linea.split(',')[1] + "\n"
+         	     sys.stdout.write(registro)
+         	 except Exception:
+         	     pass
+
+contenido = sys.stdin.read()
+data = contenido.split('\n')
+map(getRegistro, data)
+[INFO] 15:25:58:732 MASTER/(8317:8324): Se envio SCRIPT_TRANSFORMADOR exitosamente.
+[INFO] 15:25:58:733 MASTER/(8317:8324): Se envio INFOPARAWORKERS exitosamente.
+[INFO] 15:26:11:314 MASTER/(8317:8324): Codigo que recibo 1179535707
+[INFO] 15:26:11:314 MASTER/(8317:8324): MASTER RECIBE UNA SENIAL QUE NO SABE TRADUCIR

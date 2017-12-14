@@ -296,8 +296,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 		logInfo("Se recibe la finalizacion de la transformacion de un nodo");
 		recv(FDMaster, pesoARecibir, 4, 0);
 		tamanioDeLafinalizacionDeTransformacion = deserializarINT(pesoARecibir);
-		logInfo("tamanio de lo que recibo %i",
-				tamanioDeLafinalizacionDeTransformacion);
+		logInfo("tamanio de lo que recibo %i",	tamanioDeLafinalizacionDeTransformacion);
 		mensajeSerializadoFinTransformacion = malloc(
 				tamanioDeLafinalizacionDeTransformacion + 1);
 		mensajeSerializadoFinTransformacion[tamanioDeLafinalizacionDeTransformacion] =

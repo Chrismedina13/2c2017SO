@@ -190,8 +190,9 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 		recv(FDServidorWORKER, mensaje, tamanio, 0);
 		resultado_job = deserializarResultado(mensaje);
 		logInfo("Resultado %i,Nodo %i", resultado_job->resultado,resultado_job->nodo);
+
 		if (resultado_job->resultado == 0) {
-			logInfo("Recibi de Worker el fin de la transformacion");
+
 			logInfo("Envio a YAMA el fin transformacion");
 			finRG = malloc(sizeof(int) * 2);
 			finRG->nodo = resultado_job->nodo;

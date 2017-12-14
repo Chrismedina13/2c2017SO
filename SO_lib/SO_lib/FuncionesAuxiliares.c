@@ -172,6 +172,8 @@ int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char
 	logInfo("Comando a ejecutar del script transformador: %s",command);
 
     int estado = system(command);
+    //devuelve 0 si esta ok
+
 
     return estado;
 
