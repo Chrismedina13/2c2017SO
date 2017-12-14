@@ -147,10 +147,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 	bloques_nodo* bitMapNodo2;
 	int desplazamiento1;
 	int desplazamiento2;
-
-	//para enviar
-	int fileDescriptor1;
-	int fileDescriptor2;
+	char* desplazamiento1Serializado, desplazamiento2Serializado;
 
 	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
 
@@ -160,29 +157,64 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
 		bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
+		int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
 
-		//elije los 2 nodos mas vacios
+		sortListaNodos();
 
-		bitMapNodo1 = elegirNodoSort(-1);
+		//elije los 2 nodos mas vacios y los envia
+
+		//nodo 1
+
+		bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,0);
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
 		if(desplazamiento1==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		//logInfo("Ubico la copia 1 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index1,desplazamiento1);
-		//bitMapNodo1 = list_remove(tabla_de_nodos.listaCapacidadNodos,indexList1);
 
-		//printf("Nodo para guardar el bloque:%d Desplazamiento:%d \n", index1,desplazamiento1);
+		//copia 1
 
-		bitMapNodo2 = elegirNodoSort(bitMapNodo1->idNodo);
+		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+				bitMapNodo1->fileDescriptor,
+				tamanioSetBloque);
+
+		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo1->fileDescriptor, bloque , strlen(bloque));
+
+		desplazamiento1Serializado = serializeInt(desplazamiento1);
+
+		send(bitMapNodo1->fileDescriptor, desplazamiento1Serializado, sizeof(int), 0);
+
+		logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
+				indiceBloque,
+				bitMapNodo1->idNodo,
+				desplazamiento1);
+
+		//nodo 2
+
+		bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,1);
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
 
 		if(desplazamiento2==-1){
 			logInfo("Nodo lleno."); //Si distribuye bien y checkea bien no deberia entrar aca
 		}
-		//logInfo("Ubico la copia 2 del bloque %d, en el nodo %d, desplazamiento %d",indiceBloque, index2,desplazamiento2);
 
-		//list_add(tabla_de_nodos.listaCapacidadNodos,bitMapNodo1);
+		//copia 2
+
+		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
+				bitMapNodo2->fileDescriptor,
+				tamanioSetBloque);
+
+		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo2->fileDescriptor, bloque,strlen(bloque));
+
+		desplazamiento2Serializado = serializeInt(desplazamiento2);
+
+		send(bitMapNodo2->fileDescriptor, desplazamiento2Serializado, sizeof(int), 0);
+
+		logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
+				indiceBloque,
+				bitMapNodo2->idNodo,
+				desplazamiento2);
+
 
 		//cargo los datos de los bloques en tabla_de_archivos
 
@@ -197,54 +229,11 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 				bloquesPtr->parteDelArchivo,bloquesPtr->nodo1,
 				bloquesPtr->desplazamiento1,bloquesPtr->nodo2, bloquesPtr->desplazamiento2);
 
-		//ahora los envio
-
-		int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
-
-		//copia 1
-
-		char* desplazamiento1Serializado = serializeInt(desplazamiento1);
-
-		fileDescriptor1 = nodoToFD(bitMapNodo1->idNodo);
-
-
-		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-				fileDescriptor1,
-				tamanioSetBloque);
-
-		mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor1, bloque , strlen(bloque));
-
-		send(fileDescriptor1, desplazamiento1Serializado, sizeof(int), 0);
-
-		logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
-				indiceBloque,
-				bitMapNodo1->idNodo,
-				desplazamiento1);
-
-		//copia 2
-
-		char* desplazamiento2Serializado = serializeInt(desplazamiento2);
-
-		fileDescriptor2 = nodoToFD(bitMapNodo2->idNodo);
-
-		logInfo("voy a mandar a este FileDescriptor %d un mensaje de tamaño %d",
-				fileDescriptor2,
-				tamanioSetBloque);
-
-		mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor2, bloque,strlen(bloque));
-
-		send(fileDescriptor2, desplazamiento2Serializado, sizeof(int), 0);
-
-		logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
-				indiceBloque,
-				bitMapNodo2->idNodo,
-				desplazamiento2);
-
-
-
 		list_add(tabla_de_archivos[indiceArchivo].ubicaciones,bloquesPtr);
 
+
 		indiceBloque++;
+
 	}
 	//GUARDO LAS ESTRUCTURAS PARA MANDARSELA A YAMA AL TERMINAR EL PROCESO DE DIVISION DE ARCHIVOS.
 }
@@ -415,15 +404,9 @@ int elegirNodo(int indexNodoAnterior){
 	return extraCount;
 }
 
-bloques_nodo* elegirNodoSort(idNodoAnterior){
+void* sortListaNodos(){
 
 	list_sort(tabla_de_nodos.listaCapacidadNodos,bloquesLibresSort);
-	bloques_nodo* nodoElegido = list_get(tabla_de_nodos.listaCapacidadNodos,0);
-	if(nodoElegido->idNodo==idNodoAnterior){
-		nodoElegido = list_get(tabla_de_nodos.listaCapacidadNodos,1);
-		return(nodoElegido);
-	}
-	return(nodoElegido);
 }
 
 int bloquesLibres(bloques_nodo* nodo){

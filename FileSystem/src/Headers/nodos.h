@@ -13,7 +13,7 @@
 //static bloques_nodo* inicializarEstructuras(int id);
 
 int elegirNodo(int indexNodoAnterior);
-bloques_nodo* elegirNodoSort(int idNodoAnterior);
+void* sortListaNodos();
 int bloquesLibres(bloques_nodo* nodo);
 bool bloquesLibresSort(bloques_nodo* nodo, bloques_nodo* nodo2);
 int ocuparBloqueBitMap(bloques_nodo* nodo);
