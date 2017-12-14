@@ -133,8 +133,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								resultado_job->nodo = id_nodo;
 								resultado_job->resultado = estado;
 								mensajeAEnviar = serializarResultado(resultado_job);
-								int tamanio =sizeof(int) * 2;
-								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	tamanio);
+								int tamanio1 =sizeof(int) * 2;
+								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	tamanio1);
 
 							}
 

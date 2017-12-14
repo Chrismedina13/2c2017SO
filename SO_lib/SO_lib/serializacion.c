@@ -553,15 +553,33 @@ resultadoJob * deserializarResultado(char* FT) {
 	return fin;
 
 }
+char* serializarFinTransformacion(finTransformacion* fin) {
 
-////////////////////////////////////////////////////////////////////////////////////////
+	int desplazamiento = 0;
+	char* finTransformcaionSerializado = malloc(sizeof(int) * 2);
+	serializarDato(finTransformcaionSerializado, &(fin->nodo), sizeof(int),&desplazamiento);
+	serializarDato(finTransformcaionSerializado, &(fin->numeroDeJob),sizeof(int), &desplazamiento);
+	return (finTransformcaionSerializado);
+}
 
+finTransformacion * deserializarFinTransformacion(char* FT) {
+
+	int desplazamiento = 0;
+	finTransformacion* fin = malloc(sizeof(int) * 2);
+	deserializarDato(&(fin->nodo),FT,sizeof(int), &desplazamiento);
+	deserializarDato(&(fin->numeroDeJob),FT, sizeof(int), &desplazamiento);
+	return fin;
+
+}
 int deserializarINT(char* stream) {
 	size_t size = sizeof(int);
 	int value;
 	memcpy(&value, stream, size);
 	return value;
 }
+////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -614,27 +632,6 @@ char* deserilizarContenidoBloque(char* bloqueSerializado) {
 	contenidoBloque = string_substring(bloqueSerializado,desplazamiento,tamanioDelSetBloque);
 
 	return contenidoBloque;
-}
-
-char* serializarFinTransformacion(finTransformacion* fin) {
-
-	int desplazamiento = 0;
-	char* finTransformcaionSerializado = malloc(sizeof(int) * 2);
-	serializarDato(finTransformcaionSerializado, &(fin->nodo), sizeof(int),
-			&desplazamiento);
-	serializarDato(finTransformcaionSerializado, &(fin->numeroDeJob),
-			sizeof(int), &desplazamiento);
-	return (finTransformcaionSerializado);
-}
-
-finTransformacion * deserializarFinTransformacion(char* FT) {
-
-	int desplazamiento;
-	finTransformacion* fin = malloc(sizeof(int) * 2);
-	deserializarDato(&(FT), fin->nodo, sizeof(int), &desplazamiento);
-	deserializarDato(&(FT), fin->numeroDeJob, sizeof(int), &desplazamiento);
-	return fin;
-
 }
 
 char * serializar_saludo(int nombre_nodo, int capacidad_nodo, char* ipWorker) {
