@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
 
 	//Inicializo las variables globales
 	FD_Filesystem = 0;
-	id_nodo = 0;
 	FD_WorkerServidor = 0;
 	listaDeArchivosTemporalesLocales = list_create();
 
@@ -27,6 +26,8 @@ int main(int argc, char *argv[]) {
 
 	ParametrosComunicacionConFileSystem* parametrosFileSystem = setParametrosComunicacionConFileSystem(config->puertoFileSystemW, config->ipFileSystem);
 	ParametrosComunicacionConMaster* parametrosMaster = setParametrosComunicacionConMaster(config->puertoWorker);
+
+	id_nodo = config->nombreNodo;
 
 	logInfo("Creando hilos para comunicacion con MASTER y FS");
 	//pthread_t hiloFS;
