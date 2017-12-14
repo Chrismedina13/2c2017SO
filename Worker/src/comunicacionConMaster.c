@@ -264,8 +264,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 										obtenerSoloNombreDelArchivo(
 												info->archivoTemporalReduccionGlobal);
 
-								enviarAlmacenadoFinal(
-										nombreArchivoReduccionGlobal, contenido,
+								enviarAlmacenadoFinal(nombreArchivoReduccionGlobal, contenido,
 										FD_Filesystem);
 							}
 							break;

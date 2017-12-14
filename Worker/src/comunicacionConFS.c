@@ -57,7 +57,7 @@ void mensajesEnviadosAFileSystem(int codigo, int FD_FileSystem, char* mensaje, i
 	  }
 }
 
-/*
+
 void enviarAlmacenadoFinal(char * nombre_archivo , char* contenido, int FD_FS){
 	int tamanioMensaje = strlen(nombre_archivo)+ strlen(contenido);
 	archivo* arch_final= malloc(tamanioMensaje);
@@ -69,4 +69,4 @@ void enviarAlmacenadoFinal(char * nombre_archivo , char* contenido, int FD_FS){
 
 	free(arch_final_serializado);
 	free(arch_final);
-}*/
+}
