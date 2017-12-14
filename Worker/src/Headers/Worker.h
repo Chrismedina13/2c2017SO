@@ -23,6 +23,8 @@ int id_nodo;
 int FD_WorkerServidor;
 t_list* listaDeArchivosTemporalesLocales;
 int cantidadDeWorkersServidoresConectadosAlWorkerElegido;
+script* scriptTransformador;
+script* scriptReduccion;
 
 #define ARCHIVO_CONFIGURACION "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Nodo.conf"
 
