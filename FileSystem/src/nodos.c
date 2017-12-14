@@ -142,12 +142,10 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 	int cantBloques = list_size(tabla_de_archivos[indiceArchivo].bloques);
 	int indiceBloque = 0;
 	tabla_de_archivos[indiceArchivo].ubicaciones = list_create();
-	char* bloque;
-	bloques_nodo* bitMapNodo1;
-	bloques_nodo* bitMapNodo2;
+
 	int desplazamiento1;
 	int desplazamiento2;
-	char* desplazamiento1Serializado, desplazamiento2Serializado;
+
 
 	//RECORRO CADA ARCHIVO Y SE LO ASIGNO A DOS NODOS DISTINTOS
 
@@ -156,7 +154,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 
 		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
-		bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
+		char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
 		int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
 
 		sortListaNodos();
@@ -165,7 +163,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		//nodo 1
 
-		bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,0);
+		bloques_nodo* bitMapNodo1 = list_get(tabla_de_nodos.listaCapacidadNodos,0);
 		desplazamiento1 = buscarBloqueVacio(bitMapNodo1); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
 		if(desplazamiento1==-1){
@@ -180,7 +178,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo1->fileDescriptor, bloque , strlen(bloque));
 
-		desplazamiento1Serializado = serializeInt(desplazamiento1);
+		char* desplazamiento1Serializado = serializeInt(desplazamiento1);
 
 		send(bitMapNodo1->fileDescriptor, desplazamiento1Serializado, sizeof(int), 0);
 
@@ -191,7 +189,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		//nodo 2
 
-		bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,1);
+		bloques_nodo* bitMapNodo2 = list_get(tabla_de_nodos.listaCapacidadNodos,1);
 		desplazamiento2 = buscarBloqueVacio(bitMapNodo2); //lo devuleve y lo pone en ocupado
 
 		if(desplazamiento2==-1){
@@ -206,7 +204,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		mensajesEnviadosADataNode(SET_BLOQUE,bitMapNodo2->fileDescriptor, bloque,strlen(bloque));
 
-		desplazamiento2Serializado = serializeInt(desplazamiento2);
+		char* desplazamiento2Serializado = serializeInt(desplazamiento2);
 
 		send(bitMapNodo2->fileDescriptor, desplazamiento2Serializado, sizeof(int), 0);
 
