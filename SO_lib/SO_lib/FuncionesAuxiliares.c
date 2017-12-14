@@ -22,7 +22,7 @@ int generarNumeroAleatorioNoRepetido(){
 char* generarNombreArchivoTransformacion(int variableTransformacion){
 
 	char *unaPalabra = string_new();
-	string_append(&unaPalabra, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/Transf-");
+	string_append(&unaPalabra, "/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/Transf-");
 	string_append(&unaPalabra, string_itoa(variableTransformacion));
 	return unaPalabra;
 }
@@ -138,12 +138,12 @@ void rearmar_script(script* script,int codigo){
 	case SCRIPT_REDUCCION:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptReduccion = nombreArchivo; //variable global
-		darPermisosAlLosScriptsPy(nombreArchivo);
+
 		break;
 	case SCRIPT_TRANSFORMADOR:
 		string_append(&nombreArchivo,script->nombre);
 		rutaScriptTransformador = nombreArchivo; //variable global
-		darPermisosAlLosScriptsPy(nombreArchivo);
+
 		break;
 	default:
 		logInfo("Error codigo incorrecto");
@@ -156,6 +156,7 @@ void rearmar_script(script* script,int codigo){
 	contenidoDelBloque = script->contenido;
 	fputs(contenidoDelBloque,fd);
 	fclose(fd);
+	darPermisosAlLosScriptsPy(nombreArchivo);
 }
 
 int ejecutarScriptTransformador(char* rutaScript,char* rutaArchivoAEjecutar,char* rutaArchivoAGuardar){
@@ -458,4 +459,13 @@ char* obtenerSoloNombreDelArchivo(char* ruta){
 		char* nombreArchivoTemporal = aux[tamanioAux];
 
 		return nombreArchivoTemporal;
+}
+int tamanioArchivoCerrado(const char* rutaArchivo){
+	FILE* fd;
+	fd = fopen(rutaArchivo,"r");
+	fseek(fd, 0L, SEEK_END);
+	int tamanio = ftell(fd);
+	fclose(fd);
+
+	return tamanio;
 }

@@ -36,7 +36,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 	infoTransformacionParaWorker* mensaje;
 	int tamanio = strlen(parametros->archivoTemporal);
-	mensaje = malloc(sizeof(int) * 3 + tamanio * sizeof(char));
+	mensaje = malloc(sizeof(int) * 4 + tamanio * sizeof(char));
 
 	mensaje->nodo = parametros->nodo;
 	//logInfo("nodo: %i",mensaje->nodo);
@@ -45,7 +45,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensaje->bytesOcupados = parametros->bytesOcupados;
 	//logInfo("bytesOcupados: %i",mensaje->bytesOcupados);
 	mensaje->archivoTemporal = parametros->archivoTemporal;
-	logInfo("archivoTemporal: %s",mensaje->archivoTemporal);
+	logInfo("archivoTemporal QUE QUIERO VER: %s",mensaje->archivoTemporal);
 
 	//logInfo("Antes de serializar info para worker");
 	char* respuesta = serializarInfoParaWorker(mensaje->nodo, mensaje->bloque,

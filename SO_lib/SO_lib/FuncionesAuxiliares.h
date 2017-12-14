@@ -50,6 +50,7 @@ int nodosConElementosSinLeer(vectorConIndice vectorNodos[], int cantidadElemento
 char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2);
 void crearArchivo(char* contenido,char* rutaArchivoACrear);
 char* obtenerSoloNombreDelArchivo(char* ruta);
+int tamanioArchivoCerrado(const char* rutaArchivo);
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
 

@@ -191,7 +191,7 @@ char* serializarInfoParaWorker(int nodo, int bloque, int bytesOcupados,
 
 	logInfo("Se obtuvo: tamanioArchivoTemp: %i\n",tamanioArchivoTemporal);
 
-	char* rtaSerializada = malloc(sizeof(int) * 5 + tamanioArchivoTemporal);
+	char* rtaSerializada = malloc(sizeof(int) * 4 + tamanioArchivoTemporal);
 	int desplazamiento = 0;
 
 	serializarDato(rtaSerializada, &(tamanioArchivoTemporal), sizeof(int), &desplazamiento);
