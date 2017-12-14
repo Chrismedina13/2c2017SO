@@ -45,7 +45,7 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensaje->bytesOcupados = parametros->bytesOcupados;
 	//logInfo("bytesOcupados: %i",mensaje->bytesOcupados);
 	mensaje->archivoTemporal = parametros->archivoTemporal;
-	//logInfo("archivoTemporal: %s",mensaje->archivoTemporal);
+	logInfo("archivoTemporal: %s",mensaje->archivoTemporal);
 
 	//logInfo("Antes de serializar info para worker");
 	char* respuesta = serializarInfoParaWorker(mensaje->nodo, mensaje->bloque,

@@ -110,10 +110,11 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								infoTransformacionParaWorker * info =deserializarInfoParaWorker(mensaje);
 								int bloque = info->bloque;
 								char* archivoTemporal = info->archivoTemporal;
+								logInfo("Archivo temporal: %s",archivoTemporal);
 								//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
 								logInfo("Bloque %i",bloque);
-								char* contenidoBloque = get_bloque(1);
-								char* contenido = string_substring(contenidoBloque,0,info->bytesOcupados);
+								char* contenidoBloque = get_bloque(0);
+								char* contenido = string_substring(contenidoBloque,0,121.230);
 								logInfo("info->bytesOcupados %i",info->bytesOcupados);
 								logInfo("contenido %s",contenido);
 								char* nombreArchivoBloque ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque.txt";
