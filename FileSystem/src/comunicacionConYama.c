@@ -30,7 +30,7 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 		logInfo("Error en la comunicacion con YAMA ");
 
 	}
-
+/*
 	logInfo("Creando mensaje de ubicacion de nodos");
 
 	char* ipWorker1 = "127.0.0.1";
@@ -53,75 +53,24 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	t_list* LISTARRG = list_create();
 	list_add(LISTARRG,info1);
 	list_add(LISTARRG,info2);
-	list_add(LISTARRG,info3);
+	list_add(LISTARRG,info3);*/
 
-	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(LISTARRG) + ((sizeof(int)* list_size(LISTARRG))*2) + sizeof(int));
-	char* listaSerializada = serializarLista_info_workers(LISTARRG);
+	int tamanioInfoWorkerAEnviar = (tamanioEstructurasListaWorkers(list_info_workers) + ((sizeof(int)* list_size(list_info_workers))*2) + sizeof(int));
+	char* listaSerializada = serializarLista_info_workers(list_info_workers);
 	mensajesEnviadosAYama(INFO_WORKER,FDServidorYAMA,listaSerializada,tamanioInfoWorkerAEnviar);
 
 /*    logInfo("creando Respuesta Almacenado Final de prueba ");
 
     respuestaAlmacenadoFinal* RAF = crearRespuestaAlmacenadoFinal(5,200,"20.121.21.33","hola.txt");
-
-    int tamanioRAFaMandar = sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker);
+*/
+  /*  int tamanioRAFaMandar = sizeof(int)*5 + strlen(RAF->archivoDeReduccionGlobal) + strlen(RAF->ipWorker);
 
     char* rafSerializada = serializarRespuestaAlmacenadoFinal(RAF);
-
-    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
-
-    logInfo("Respuesta Almacenado Final de prueba listo para enviar ");
-
-	logInfo("Creando info reduccion local para worker");
-    t_list* listaArchivosTemporales = list_create();
-    char* archivo0 = "archivoTemporal0.txt";
-    char* archivo1 = "archivoTemporal1.txt";
-    char* archivo2 = "archivoTemporal2.txt";
-    char* archivo3 = "archivoTemporal3.txt";
-    list_add(listaArchivosTemporales,archivo0);
-    list_add(listaArchivosTemporales,archivo1);
-    list_add(listaArchivosTemporales,archivo2);
-    list_add(listaArchivosTemporales,archivo3);
-
-    char* contenido = "Soy un script creado para la prueba, ojala llegue bien a yama para probar que mando bien la estructura reduccion local para worker";
-    char* nombre = "HOLA soy un script";
-
-    script scriptAMandar;
-    scriptAMandar.nombre = nombre;
-    scriptAMandar.contenido = contenido;
+*/
 
 
-    infoReduccionLocalParaWorker* info = crearInfoReduccionLocalParaWorker(listaArchivosTemporales,"archivoDeReduccionLocal",scriptAMandar);
 
-	int tamanioAMandar = tamanioinfoReduccionLocalParaWorker(info) + (sizeof(int) * list_size(info->listaDeArchivosTemporales)) + (sizeof(int)*5);
-
-    char* infoSerializado = serializarinfoReduccionLocalParaWorker(info);
-
-    mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,infoSerializado,tamanioAMandar);
-
-    logInfo("Mandando lista serializada de prueba");
-
-    logInfo(" Armando lista ubicaciones");
-
-    t_list* lista_ubicaciones = list_create();
-	UbicacionBloquesArchivo2 * ubicaciones1 = crearUbicacionBloquesArchivos2(0,1,12,23,34,45);
-	list_add(lista_ubicaciones, ubicaciones1);
-	UbicacionBloquesArchivo2 * ubicaciones2 = crearUbicacionBloquesArchivos2(2,50,60,45,322,125454);
-	list_add(lista_ubicaciones, ubicaciones2);
-	UbicacionBloquesArchivo2 * ubicaciones3 = crearUbicacionBloquesArchivos2(3,4545,02323,3434,33434,5555555);
-	list_add(lista_ubicaciones, ubicaciones3);
-
-    logInfo("Lista ubicaciones armada");
-
-	char* lista_serializada=serializarListaUbicacionBloquesArchivos(lista_ubicaciones);
-	int tamanio_lista_serializada= (24*list_size(lista_ubicaciones)) + sizeof(int)+ (sizeof(int)*list_size(lista_ubicaciones)) ;
-
-    logInfo(" todo serializado listo para mandar");
-
-    mensajesEnviadosAYama(UBICACION_BLOQUES,FDServidorYAMA,lista_serializada,tamanio_lista_serializada);
-
-    logInfo("Se va a enviar a YAMA las ubicaciones ");
-
-
+//	mensajesEnviadosAYama(PRUEBAS,FDServidorYAMA,rafSerializada,tamanioRAFaMandar);
 
 
     //cm:recibe de yama el nombre del archivo
@@ -185,9 +134,9 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 
 	//    logInfo("Lista ubicaciones armada");
 
-		lista_serializada=malloc(sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones));
+		lista_serializada=malloc(sizeof(UbicacionBloquesArchivo2)*list_size(lista_ubicaciones));
 		lista_serializada=serializarListaUbicacionBloquesArchivo2(lista_ubicaciones);
-		tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo)*list_size(lista_ubicaciones);
+		tamanio_lista_serializada= sizeof(UbicacionBloquesArchivo2)*list_size(lista_ubicaciones);
 
 	    logInfo(" todo serializado listo para mandar");
 
@@ -195,9 +144,6 @@ void mensajesRecibidosDeYama(int codigo, int FDYama) {
 
 	    logInfo("Se va a enviar a YAMA las ubicaciones ");
 		break;
-
-
-
 	default:
 		break;
 	}
