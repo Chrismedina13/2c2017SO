@@ -251,7 +251,8 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 									vectorParam[a].nodo,
 									vectorParam[a].transformaciones);
 
-					pthread_create(&hiloWorker, NULL,(void*) comunicacionWorkers, parametrosWorker);
+					pthread_create(&hiloWorker, NULL,
+							(void*) comunicacionWorkers, parametrosWorker);
 
 					pthread_join(hiloWorker, NULL);
 

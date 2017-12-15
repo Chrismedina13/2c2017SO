@@ -17,12 +17,13 @@ typedef struct ParametrosComunicacionWorker{
 	int puertoWoker;
 	char* ipWoker;
 	int nodo;
-	tareaTransformacion tarea[];
+	t_list *tareas;
 }ParametrosComunicacionWoker;
 
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) ;
 
-ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados, int bloque);
+ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,
+		char* ip, int nodo, t_list* listaTareas);
 
 void mensajesEnviadosAWorker(int codigo, int FDServidorWORKER, char* mensaje,int tamanio);
 void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER);

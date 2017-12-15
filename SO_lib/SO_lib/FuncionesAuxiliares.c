@@ -515,3 +515,22 @@ int exiteEnLista(t_list* lista,int nodo){
 	}
 	return respuesta;
 }
+
+int tamanioDeListaDeTareas(t_list* listaTareas){
+	int tamanioLista = 0;
+	int tamanioEstructura;
+	int i =0;
+
+	while(i<list_size(listaTareas)){
+		tareaTransformacion* tarea = list_get(listaTareas,i);
+		tamanioEstructura = tamanioTarea(tarea);
+		tamanioLista = tamanioLista + tamanioEstructura;
+		i++;
+	}
+	return tamanioLista;
+}
+
+int tamanioTarea(tareaTransformacion* tarea){
+	int tamanio = sizeof(int)*2 + string_length(tarea->archivoTemporal);
+	return tamanio;
+}

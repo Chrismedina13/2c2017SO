@@ -6,54 +6,6 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 			parametros->puertoWoker);
 	logInfo("FDServidorWORKER %i", FDServidorWORKER);
 
-	/*script* scriptReductor = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/reductor.py");
-	 int tamanioScriptReductor = tamanioScript(scriptReductor);
-	 script* scriptTransformador = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
-	 int tamanioScriptTransformador = tamanioScript(scriptTransformador);
-	 script* scriptTransformadorIniciales = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
-	 int tamanioScriptTransformadorIniciales = tamanioScript(scriptTransformadorIniciales);
-	 script* scriptTransformadorAnuales = setScript("/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Master/transformador.py");
-	 int tamanioScriptTransformadorAnuales = tamanioScript(scriptTransformadorAnuales);
-
-	 char* respuestaScriptReductor = serializarScript(scriptReductor);
-	 char* respuestaScriptTransformador = serializarScript(scriptTransformador);
-	 char* respuestaScriptIniciales = serializarScript(scriptTransformadorIniciales);
-	 char* respuestaScriptAnuales = serializarScript(scriptTransformadorAnuales);
-
-
-	 mensajesEnviadosAWorker(SCRIPT_REDUCCION,FDServidorWORKER,respuestaScriptReductor,tamanioScriptReductor);
-	 logInfo("Se envia script reductor");
-
-	 mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR,FDServidorWORKER,respuestaScriptTransformador, tamanioScriptTransformador);
-	 logInfo("Se envia script transformador ");
-
-	 mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR_INICIAL,FDServidorWORKER,respuestaScriptIniciales, tamanioScriptTransformadorIniciales);
-	 logInfo("Se envia script scriptTransformadorIniciales");
-
-	 mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR_ANUAL,FDServidorWORKER,respuestaScriptAnuales, tamanioScriptTransformadorAnuales);
-	 logInfo("Se envia script scriptTransformadorAnuales");
-	 */
-
-	infoTransformacionParaWorker* mensaje;
-	int tamanio = strlen(parametros->archivoTemporal);
-	mensaje = malloc(sizeof(int) * 4 + tamanio * sizeof(char));
-
-	mensaje->nodo = parametros->nodo;
-	//logInfo("nodo: %i",mensaje->nodo);
-	mensaje->bloque = parametros->bloque;
-	//logInfo("bloque: %i",mensaje->bloque);
-	mensaje->bytesOcupados = parametros->bytesOcupados;
-	//logInfo("bytesOcupados: %i",mensaje->bytesOcupados);
-	mensaje->archivoTemporal = parametros->archivoTemporal;
-	logInfo("archivoTemporal QUE QUIERO VER: %s",mensaje->archivoTemporal);
-
-	//logInfo("Antes de serializar info para worker");
-	char* respuesta = serializarInfoParaWorker(mensaje->nodo, mensaje->bloque,
-			mensaje->bytesOcupados, mensaje->archivoTemporal);
-	logInfo("Despues de serializar info para worker");
-
-	int tamanioRespuesta = sizeof(int) * 3 + strlen(mensaje->archivoTemporal);
-
 	//busco el script transformador
 	char*contenido = obtenerPuntero(ruta_transformador);
 	char * ruta = obtenerSoloNombreDelArchivo(ruta_transformador);
@@ -61,50 +13,76 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 
 	transformador->contenido = contenido;
 	transformador->nombre = ruta;
-	logInfo("Transformador Nombre %s",transformador->nombre);
-	logInfo("Transformador Contenido %s",transformador->contenido);
+	//logInfo("Transformador Nombre %s", transformador->nombre);
+	//logInfo("Transformador Contenido %s", transformador->contenido);
 
 	char * scriptSerializado = serializarScript(transformador);
-	int tamanioTransf = (strlen(transformador->nombre)+strlen(transformador->contenido)+sizeof(int)*2);
+	int tamanioTransf = (strlen(transformador->nombre)
+			+ strlen(transformador->contenido) + sizeof(int) * 2);
 	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR, FDServidorWORKER,
 			scriptSerializado, tamanioTransf);
 
-	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,tamanioRespuesta);
+	int i = 0;
 
+	while (i < list_size(parametros->tareas)) {
 
-	while(1){
-	char buffer[4];
+		tareaTransformacion* tarea = list_get(parametros->tareas, i);
 
-	if(recv(FDServidorWORKER, buffer, 4, 0) < 0){
+		infoTransformacionParaWorker* mensaje;
+		int tamanio = strlen(tarea->archivoTemporal);
+		mensaje = malloc(sizeof(int) * 4 + tamanio * sizeof(char));
 
-		logInfo("Se desconecto el nodo");
+		mensaje->nodo = parametros->nodo;
+		mensaje->bloque = tarea->bloque;
+		mensaje->bytesOcupados = tarea->bytesOcupados;
+		mensaje->archivoTemporal = tarea->archivoTemporal;
+		logInfo("archivoTemporal QUE QUIERO VER: %s", tarea->archivoTemporal);
 
-	}else{
+		//logInfo("Antes de serializar info para worker");
+		char* respuesta = serializarInfoParaWorker(mensaje->nodo,
+				mensaje->bloque, mensaje->bytesOcupados,
+				mensaje->archivoTemporal);
+		logInfo("Despues de serializar info para worker");
 
-		recv(FDServidorWORKER, buffer, 4, 0);
-		int codigo = deserializarINT(buffer);
-		if(codigo > 0 &&  codigo < 50){
+		int tamanioRespuesta = sizeof(int) * 4
+				+ strlen(mensaje->archivoTemporal);
 
-			logInfo("Codigo que recibo  Master de Worker%i", codigo);
-			mensajesRecibidosDeWorker(codigo, FDServidorWORKER);
+		mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,
+				tamanioRespuesta);
+
+		while (1) {
+			char buffer[4];
+
+			// (recv(FDServidorWORKER, buffer, 4, 0) < 0) {
+
+			//	logInfo("Se desconecto el nodo");
+
+			//} else {
+
+			recv(FDServidorWORKER, buffer, 4, 0);
+			int codigo = deserializarINT(buffer);
+			if (codigo > 0 && codigo < 50) {
+
+				logInfo("Codigo que recibo  Master de Worker%i", codigo);
+				mensajesRecibidosDeWorker(codigo, FDServidorWORKER);
+				//}
+//
+
+			}
 		}
-	}
-
 	}
 }
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,
-		char* ip, int nodo, char* archivo, int bytesOcupados, int bloque) {
+		char* ip, int nodo, t_list* listaTareas) {
 
+	int tamanioLista = tamanioDeListaDeTareas(listaTareas);
 	ParametrosComunicacionWoker* parametros = malloc(
-			sizeof(int) * 4 + strlen(ip) * sizeof(char)
-					+ strlen(archivo) * sizeof(char));
+			sizeof(int) * 3 + tamanioLista);
 
 	parametros->ipWoker = ip;
 	parametros->puertoWoker = puerto;
 	parametros->nodo = nodo;
-	parametros->bytesOcupados = bytesOcupados;
-	parametros->archivoTemporal = archivo;
-	parametros->bloque = bloque;
+	parametros->tareas = listaTareas;
 
 	return parametros;
 }
@@ -203,7 +181,8 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 		mensaje[tamanio] = '\0';
 		recv(FDServidorWORKER, mensaje, tamanio, 0);
 		resultado_job = deserializarResultado(mensaje);
-		logInfo("Resultado %i,Nodo %i", resultado_job->resultado,resultado_job->nodo);
+		logInfo("Resultado %i,Nodo %i", resultado_job->resultado,
+				resultado_job->nodo);
 
 		if (resultado_job->resultado == 0) {
 
@@ -212,13 +191,17 @@ void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER) {
 			finRG->nodo = resultado_job->nodo;
 			finRG->numeroDeJob = nro_job;
 			mensajeNuevo = serializarFinTransformacion(finRG);
-			mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA, mensajeNuevo,sizeof(int) * 2);
+			mensajesEnviadosAYama(FIN_TRANSFORMACION, FD_YAMA, mensajeNuevo,
+					sizeof(int) * 2);
 		} else {
-			logInfo("Fin de la transformacion salio mal, Envio a YAMA la replanificacion");
+			logInfo(
+					"Fin de la transformacion salio mal, Envio a YAMA la replanificacion");
 
-			mensajeNuevo2 = serializarReplanificacion(nro_job,resultado_job->nodo);
+			mensajeNuevo2 = serializarReplanificacion(nro_job,
+					resultado_job->nodo);
 
-			mensajesEnviadosAYama(REPLANIFICACION, FD_YAMA, mensajeNuevo2,sizeof(int) * 2);
+			mensajesEnviadosAYama(REPLANIFICACION, FD_YAMA, mensajeNuevo2,
+					sizeof(int) * 2);
 		}
 		break;
 
