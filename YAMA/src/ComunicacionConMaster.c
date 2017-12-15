@@ -306,8 +306,9 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 				tamanioDeLafinalizacionDeTransformacion, 0);
 
 		finTrans = deserializarFinTransformacion(mensaje);
-		logInfo("en nodo %i termino la reduccion del job %i", finTrans->nodo,
-				finTrans->numeroDeJob);
+
+		logInfo("fin nodo : %i, fin numero de job: %i \n",finTrans->nodo,finTrans->numeroDeJob);
+
 
 		logInfo(
 				"Actualizo la tabla de estados con la transformacion correcta del job");
