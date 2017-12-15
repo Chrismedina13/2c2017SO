@@ -17,7 +17,18 @@
 //YAMA armara una lista con esta estructura , la serializara y mandara a Master que deserealizara
 
 //int DISTRIBUCION_NODOS=0;
+typedef struct ParametroParaWorker{
+ 	int nodo;
+ 	int puerto;
+ 	char* ip;
+ 	t_list* transformaciones; //lista de estructura tareaTransformacion;
+ }ParametroParaWorker;
 
+ typedef struct tareaTransformacion{
+ 	int bloque;
+ 	int bytesOcupados;
+ 	char* archivoTemporal;
+ }tareaTransformacion;
 
 typedef struct resultadoJob{
 

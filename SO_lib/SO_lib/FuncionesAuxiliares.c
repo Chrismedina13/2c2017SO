@@ -471,3 +471,66 @@ int tamanioArchivoCerrado(const char* rutaArchivo){
 
 	return tamanio;
 }
+
+int indiceDelVector(ParametroParaWorker vectorParam[], int cantidad ,RespuestaTransformacionYAMA* respuesta){
+	int indice = -1;
+	int i=0;
+	while(i<cantidad){
+		if(vectorParam[i].nodo == respuesta->nodo && vectorParam[i].puerto == respuesta->puertoWorker){
+			indice=i;
+			break;
+		}
+		i++;
+	}
+
+	return indice;
+}
+int cantidadDeNodos(t_list* listaDeRTYAMA){
+	int cantidad = 0;
+	int i = 0;
+	t_list* listaDeNodos = list_create();
+	while(i<list_size(listaDeRTYAMA)){
+		RespuestaTransformacionYAMA* aux = list_get(listaDeRTYAMA,i);
+		if(exiteEnLista(listaDeNodos,aux->nodo) == 0){
+			cantidad++;
+			list_add(listaDeNodos,aux->nodo);
+		}
+		i++;
+	}
+	list_destroy(listaDeNodos);
+	return cantidad;
+}
+
+int exiteEnLista(t_list* lista,int nodo){
+	//existe == 1
+	//no existe == 0
+	int i = 0;
+	int respuesta = 0;
+	while(i<list_size(lista)){
+		if(nodo == list_get(lista,i)){
+			respuesta = 1;
+			break;
+		}
+		i++;
+	}
+	return respuesta;
+}
+
+int tamanioDeListaDeTareas(t_list* listaTareas){
+	int tamanioLista = 0;
+	int tamanioEstructura;
+	int i =0;
+
+	while(i<list_size(listaTareas)){
+		tareaTransformacion* tarea = list_get(listaTareas,i);
+		tamanioEstructura = tamanioTarea(tarea);
+		tamanioLista = tamanioLista + tamanioEstructura;
+		i++;
+	}
+	return tamanioLista;
+}
+
+int tamanioTarea(tareaTransformacion* tarea){
+	int tamanio = sizeof(int)*2 + string_length(tarea->archivoTemporal);
+	return tamanio;
+}

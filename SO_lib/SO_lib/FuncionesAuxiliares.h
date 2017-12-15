@@ -51,6 +51,10 @@ char* palabraMasChicaEntre(char* palabraAux1,char* palabraAux2);
 void crearArchivo(char* contenido,char* rutaArchivoACrear);
 char* obtenerSoloNombreDelArchivo(char* ruta);
 int tamanioArchivoCerrado(const char* rutaArchivo);
+int indiceDelVector(ParametroParaWorker vectorParam[], int cantidad ,RespuestaTransformacionYAMA* respuesta);
+int cantidadDeNodos(t_list* listaDeRTYAMA);
+
+int exiteEnLista(t_list* lista,int nodo);
 
 #endif /* SO_LIB_FUNCIONESAUXILIARES_H_ */
 
