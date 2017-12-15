@@ -317,7 +317,7 @@ void mensajesRecibidosDeDN(int codigo, int FD_DN) {
 							infoworker->ipWorker=saludo->ip_worker;
 							infoworker->puerto=puerto_worker;
 
-							list_add_in_index(list_info_workers,(saludo->nombre_nodo)-1, infoworker);
+							list_add(list_info_workers, infoworker);
 							logInfo("Se cargo la informacion de los workers para enviar a yama");
 
 						}

@@ -70,6 +70,8 @@ void consolaFileSystem(){
 
 		semaphore_wait(SEMAFORODN);
 
+		logInfo("tamanio lista info workers: %d", list_size(list_info_workers));
+
 		bool compararComando;
 
 		while(true){
@@ -425,6 +427,8 @@ void consolaFileSystem(){
 						//crea registro del archivo en YAMAFS
 
 						status = crearRegistroArchivo(comandos[1], comandos[2],indiceArchivo);
+
+						tabla_de_archivos[indiceArchivo].nombre = pathToFile(comandos[2]);
 
 						if (status == 1) {
 							logInfo("Registro de archivo creado correctamente.");
