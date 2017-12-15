@@ -179,42 +179,85 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			logInfo("Recibo corecctamente la respuesta");
 
 			 listaDeWorkers = deserializarListaYAMA(mensaje);
-			 int i;
-			 for(i=0;i<list_size(listaDeWorkers);i++){
-				RespuestaTransformacionYAMA* respuesta = list_get(listaDeWorkers,i);
-				int nodo = respuesta->nodo;
-				int aux = -1;
-				t_list* nodos = list_create();
 
-				if( nodo == aux ){
-					ParametroParaWorker* a1;
-					a1->ip = respuesta->ipWorkwer;
-					a1->nodo = respuesta -> nodo;
-					a1-> puerto = respuesta->puertoWorker;
-					a1->transformaciones=list_create();
-					tareaTransformacion* tarea;
-					tarea->bloque = respuesta->bloque;
-					tarea->bytesOcupados = respuesta->bytesOcupados;
-					tarea->archivoTemporal = respuesta->archivoTemporal;
-					list_add(a1->transformaciones,tarea);
-					list_add(nodos,nodo);
-					aux= nodo;
+			    int indiceAGuardar = 0;
+			    int i;
+			    int indice;
+			    int cantidad =cantidadDeNodos(listaDeWorkers);
+			    ParametroParaWorker vectorParam[cantidad];
 
-				}else{
-					tareaTransformacion* tarea;
-					tarea->bloque = respuesta->bloque;
-					tarea->bytesOcupados = respuesta->bytesOcupados;
-					tarea->archivoTemporal = respuesta->archivoTemporal;
-					list_add(a1->transformaciones,tarea);
-				}
-				i++;
-			 }
+			    for (i = 0 ; i < list_size (listaDeWorkers); i ++) {
+			            RespuestaTransformacionYAMA* respuesta = list_get(listaDeWorkers,i);
+			            int indice = indiceDelVector(vectorParam,cantidad,respuesta);
+			            if(indice>=0){
+			                //CREO LA ESTRUCTURA QUE VA A CONTENER LA LISTA DE TRANSFORMACIOIONES
+			                tareaTransformacion* tarea = malloc(sizeof(int)*2 + strlen(respuesta->archivoTemporal));
+			                tarea->bloque = respuesta->bloque;
+			                tarea->bytesOcupados = respuesta->bytesOcupados;
+			                tarea->archivoTemporal = respuesta->archivoTemporal;
+
+			                //AGREGO LA ESTRUCTURA A LA LISTA DE TAREAS DEL NODO
+			                list_add(vectorParam[indice].transformaciones,tarea);
+
+			            }
+			            else{
+			                //CREO LA ESTRUCTURA PARA EL VECTOR
+
+			                vectorParam[indiceAGuardar].nodo = respuesta->nodo;
+			                vectorParam[indiceAGuardar].puerto = respuesta->puertoWorker;
+			                vectorParam[indiceAGuardar].ip = respuesta->ipWorkwer;
+			                vectorParam[indiceAGuardar].transformaciones = list_create();
+
+			                //CREO LA ESTRUCTURA QUE VA A CONTENER LA LISTA DE TRANSFORMACIOIONES
+			                tareaTransformacion* tarea = malloc(sizeof(int)*2 + strlen(respuesta->archivoTemporal));
+			                tarea->bloque = respuesta->bloque;
+			                tarea->bytesOcupados = respuesta->bytesOcupados;
+			                tarea->archivoTemporal = respuesta->archivoTemporal;
+
+			                //AGREGO LA ESTRUCTURA A LA LISTA DE TAREAS DEL NODO
+			                list_add(vectorParam[indiceAGuardar].transformaciones,tarea);
+
+			                indiceAGuardar++;
+
+			            }
+			    }
+
+			    ///mostrar lo que cargo en parametrosparaworker
+			    int j= 0;
+			    int k = 0;
+			    int elementos;
+			    while(j<cantidad){
+			        logInfo("IP: %s\nPuerto: %d\nNodo: %d\n",vectorParam[j].ip,vectorParam[j].puerto,vectorParam[j].nodo);
+			        t_list* lista = vectorParam[j].transformaciones;
+			        elementos = list_size(lista);
+			        k = 0;
+			        while(k<elementos)
+			        {
+			            tareaTransformacion* p = list_get(lista,k);
+			            printf("Bloque: %d | Bytes ocupados: %d | Archivo temporal: %s\n\n",p->bloque,p->bytesOcupados,p->archivoTemporal);
+			            k++;
+			        }
+			        j++;
+			    }
+			    //////////////////////////////////
+			    int a;
+			    for(a=0;a<cantidad;a++){
+			    	pthread_t hiloWorker;
+
+					ParametrosComunicacionWoker* parametrosWorker =
+							setParametrosComunicacionConWoker(
+									vectorParam[a].puerto,
+									vectorParam[a].ip,
+									vectorParam[a].nodo,
+									vectorParam[a].transformaciones);
+
+					pthread_create(&hiloWorker, NULL,(void*) comunicacionWorkers, parametrosWorker);
+
+					pthread_join(hiloWorker, NULL);
+
+			    }
 
 
-				}else{
-					i++;
-				}
-			}
 		}
 
 		break;
