@@ -155,7 +155,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
 		char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
-		int tamanioSetBloque = (strlen(bloque));
+		int tamanioSetBloque = strlen(bloque);
 
 		sortListaNodos();
 
@@ -240,7 +240,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		list_add(tabla_de_nodos.listaCapacidadNodos, nodo1Memoria);
 		list_add(tabla_de_nodos.listaCapacidadNodos, nodo2Memoria);
-		free(bitMapNodo);
+		//free(bitMapNodo);
 		indiceBloque++;
 
 	}

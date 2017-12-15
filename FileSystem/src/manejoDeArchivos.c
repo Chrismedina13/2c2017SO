@@ -72,10 +72,14 @@ void * obtenerBloquesTexto(const char * rutaDelArchivo, int indiceArchivo){
 		tabla_de_archivos[indiceArchivo].bloques = list_create();
 		char* bloque = malloc(MB);
 
+		int count=0;
+
 		while (desplazamiento < tamanio) {
 
 		bloque = dividirArchivoTextoMemoria(p,&desplazamiento,indiceArchivo);
 		list_add(tabla_de_archivos[indiceArchivo].bloques, bloque);
+		logInfo("Estoy partiendo el archivo. Voy por la parte:%d",count);
+		count++;
 
 		}
 
@@ -200,7 +204,7 @@ char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceA
 
 		//Pregunto si es el ultimo bloque
 		if ((tamRestante - tamBloqueAGuardar) != 0) {
-			string_append(&buffer, "\n\0");
+			string_append(&buffer, "\n");
 		}
 
 		tamRestante -= tamBloqueAGuardar;
