@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 
 	//char bufferBloque[4];
 	char buffer[4];
-	char buffer2[4];
+	char codigo[4];
 
 
 
@@ -68,8 +68,8 @@ mensajesEnviadosAFileSystem(RTA_GET_BLOQUE, FDsocketClienteFileSystem, bloque, s
 
     while(1){
 
-		if(recv(FDsocketClienteFileSystem, buffer2,4,0)>=0){
-			int codigo2 = deserializarINT(buffer2);
+		if(recv(FDsocketClienteFileSystem, codigo,4,0)>=0){
+			int codigo2 = deserializarINT(codigo);
 			logInfo("Recibi de FS el codigo : %i", codigo2);
 			mensajesRecibidosDeFileSystem(codigo2,FDsocketClienteFileSystem);
 
@@ -113,7 +113,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	char* mensaje;
 	char* buffer[4];
 	int intRecibido;
-	char* bufferBloque[4];
+	char* desplazamiento[4];
 
 
 	char * contenido_bloque;
@@ -138,13 +138,14 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		tamanio = deserializarINT(pesoMensaje);
 
 		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(1024*1024);
 
 		bloque->contenidoBloque = receive_basic(FD_FileSystem,tamanio);
 		logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
 
-		recv(FD_FileSystem,bufferBloque,4,0);
-		bloque->nrobloque = deserializarINT(bufferBloque);
+		recv(FD_FileSystem,desplazamiento,4,0);
+		bloque->nrobloque = deserializarINT(desplazamiento);
+
+		logInfo("Voy a setear el bloque %d con el contenido recibido.",bloque->nrobloque);
 
 		//if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
 		if (set_bloque(bloque->contenidoBloque,bloque->nrobloque)==0){
@@ -157,7 +158,6 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		}
 
 		free(bloque);
-		free(mensaje);
 
 
 		break;

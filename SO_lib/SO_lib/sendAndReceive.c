@@ -21,7 +21,7 @@ char* receive_basic(int fd_dn, int tamanio)
 {
     int size_recv , total_size= 0;
     char chunk[tamanio];
-    char* bloque;
+    char* bloque = malloc(tamanio * sizeof(char));
 
     if((size_recv =  recv(fd_dn , bloque , tamanio , MSG_WAITALL))>0){
     	return bloque;
