@@ -22,6 +22,21 @@ typedef struct ParametrosComunicacionWorker{
 	int nodo;
 }ParametrosComunicacionWoker;
 
+typedef struct ParametroParaWorker{
+	int nodo;
+	int puerto;
+	char* ip;
+	t_list* transformaciones; //lista de estructura tareaTransformacion;
+}ParametroParaWorker;
+
+typedef struct tareaTransformacion{
+	int bloque;
+	int bytesOcupados;
+	char* archivoTemporal;
+}tareaTransformacion;
+
+
+
 void comunicacionWorkers(ParametrosComunicacionWoker* parametros) ;
 
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto, char* ip, int nodo, char* archivo, int bytesOcupados, int bloque);
