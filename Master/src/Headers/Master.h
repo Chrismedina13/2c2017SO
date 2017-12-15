@@ -30,4 +30,6 @@ int nro_job;
 char* ruta_transformador;
 char* ruta_reduccion;
 
+pthread_t * hilosTransformacion;
+pthread_t * hilosReduccion;
 #endif /* HEADERS_MASTER_H_ */

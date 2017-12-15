@@ -242,7 +242,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			    //////////////////////////////////
 			    int a;
 			    for(a=0;a<cantidad;a++){
-			    	pthread_t hiloWorker;
+
 
 					ParametrosComunicacionWoker* parametrosWorker =
 							setParametrosComunicacionConWoker(
@@ -251,10 +251,14 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 									vectorParam[a].nodo,
 									vectorParam[a].transformaciones);
 
+					//pthread_create(&hilosTransformacion[cantidad - 1],
+						//			NULL, (void *) comunicacionWorkers,parametrosWorker);
+
+					pthread_t hiloWorker;
 					pthread_create(&hiloWorker, NULL,
 							(void*) comunicacionWorkers, parametrosWorker);
 
-					pthread_join(hiloWorker, NULL);
+					//pthread_join(hiloWorker, NULL);
 
 			    }
 
