@@ -67,3 +67,8 @@
 [INFO] 15:22:12:244 WORKER/(7423:7423): Creando hilos para comunicacion con MASTER y FS
 [INFO] 15:25:35:732 WORKER/(8150:8150): Creando hilos para comunicacion con MASTER y FS
 [INFO] 15:30:51:20 WORKER/(8960:8960): Creando hilos para comunicacion con MASTER y FS
+[INFO] 19:33:51:254 WORKER/(8600:8600): Creando hilos para comunicacion con MASTER y FS
+[INFO] 19:36:59:67 WORKER/(9341:9341): Creando hilos para comunicacion con MASTER y FS
+[INFO] 19:52:35:760 WORKER/(10626:10626): Creando hilos para comunicacion con MASTER y FS
+[INFO] 20:01:24:477 WORKER/(11115:11115): Creando hilos para comunicacion con MASTER y FS
+[INFO] 21:09:28:529 WORKER/(26940:26940): Creando hilos para comunicacion con MASTER y FS

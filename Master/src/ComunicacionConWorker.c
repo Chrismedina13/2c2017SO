@@ -69,15 +69,28 @@ void comunicacionWorkers(ParametrosComunicacionWoker* parametros) {
 	mensajesEnviadosAWorker(SCRIPT_TRANSFORMADOR, FDServidorWORKER,
 			scriptSerializado, tamanioTransf);
 
-	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,strlen(scriptSerializado));
+	mensajesEnviadosAWorker(SOL_TRANSFORMACION, FDServidorWORKER, respuesta,tamanioRespuesta);
 
+
+	while(1){
 	char buffer[4];
-	recv(FDServidorWORKER, buffer, 4, 0);
-	int codigo = deserializarINT(buffer);
-	logInfo("Codigo que recibo  Master de Worker%i", codigo);
 
-	mensajesRecibidosDeWorker(codigo, FDServidorWORKER);
+	if(recv(FDServidorWORKER, buffer, 4, 0) < 0){
 
+		logInfo("Se desconecto el nodo");
+
+	}else{
+
+		recv(FDServidorWORKER, buffer, 4, 0);
+		int codigo = deserializarINT(buffer);
+		if(codigo > 0 &&  codigo < 50){
+
+			logInfo("Codigo que recibo  Master de Worker%i", codigo);
+			mensajesRecibidosDeWorker(codigo, FDServidorWORKER);
+		}
+	}
+
+	}
 }
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,
 		char* ip, int nodo, char* archivo, int bytesOcupados, int bloque) {

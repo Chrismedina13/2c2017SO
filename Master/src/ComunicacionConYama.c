@@ -179,49 +179,37 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			logInfo("Recibo corecctamente la respuesta");
 
 			 listaDeWorkers = deserializarListaYAMA(mensaje);
+			 int i;
+			 for(i=0;i<list_size(listaDeWorkers);i++){
+				RespuestaTransformacionYAMA* respuesta = list_get(listaDeWorkers,i);
+				int nodo = respuesta->nodo;
+				int aux = -1;
+				t_list* nodos = list_create();
 
-			 logInfo("Terminada la deserializacion");
-			int i;
-			RespuestaTransformacionYAMA* respuesta;
+				if( nodo == aux ){
+					ParametroParaWorker* a1;
+					a1->ip = respuesta->ipWorkwer;
+					a1->nodo = respuesta -> nodo;
+					a1-> puerto = respuesta->puertoWorker;
+					a1->transformaciones=list_create();
+					tareaTransformacion* tarea;
+					tarea->bloque = respuesta->bloque;
+					tarea->bytesOcupados = respuesta->bytesOcupados;
+					tarea->archivoTemporal = respuesta->archivoTemporal;
+					list_add(a1->transformaciones,tarea);
+					list_add(nodos,nodo);
+					aux= nodo;
 
-			tamanioLista = list_size(listaDeWorkers);
+				}else{
+					tareaTransformacion* tarea;
+					tarea->bloque = respuesta->bloque;
+					tarea->bytesOcupados = respuesta->bytesOcupados;
+					tarea->archivoTemporal = respuesta->archivoTemporal;
+					list_add(a1->transformaciones,tarea);
+				}
+				i++;
+			 }
 
-			RespuestaTransformacionYAMA* ordenoPorNodo(RespuestaTransformacionYAMA *nodo1, RespuestaTransformacionYAMA *nodo2) {
-						if (nodo1->nodo > nodo2->nodo) {
-							return nodo2;
-						} else {
-							return nodo1;
-						}
-					}
-
-			//ordeno la lista de los workers por nodo para crear un hilo por cada worker a ejecutar
-			list_sort(listaDeWorkers,ordenoPorNodo);
-
-			for (i = 0; i<tamanioLista; i++) {
-
-				respuesta = list_get(listaDeWorkers, i);
-				int nodoini,nodoAux;
-				respuesta->nodo = nodoini;
-
-				if(nodoini != nodoAux){
-					logInfo("Creando hilos para comunicacion con WORKERS.");
-
-					pthread_t hiloWorker;
-
-					ParametrosComunicacionWoker* parametrosWorker =
-							setParametrosComunicacionConWoker(
-									respuesta->puertoWorker,
-									respuesta->ipWorkwer, respuesta->nodo,
-									respuesta->archivoTemporal,
-									respuesta->bytesOcupados,
-									respuesta->bloque);
-
-					pthread_create(&hiloWorker, NULL,
-							(void*) comunicacionWorkers, parametrosWorker);
-
-					pthread_join(hiloWorker, NULL);
-
-					nodoAux = nodoini;
 
 				}else{
 					i++;
