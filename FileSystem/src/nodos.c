@@ -155,7 +155,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		UbicacionBloquesArchivo2* bloquesPtr = malloc(sizeof(int)*6);
 		char* bloque = list_get(tabla_de_archivos[indiceArchivo].bloques,indiceBloque);
-		int tamanioSetBloque = (strlen(bloque)+ sizeof(int) * 3);
+		int tamanioSetBloque = (strlen(bloque));
 
 		sortListaNodos();
 
@@ -163,10 +163,10 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		//nodo 1
 
-		bloques_nodo* bitMapNodo1 = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
+		bloques_nodo* bitMapNodo = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
 		bloques_nodo* nodo1Memoria = malloc(sizeof(int)*165);
 
-		memcpy(nodo1Memoria, bitMapNodo1, sizeof(int)*165);
+		memcpy(nodo1Memoria, bitMapNodo, sizeof(int)*165);
 
 		desplazamiento1 = buscarBloqueVacio(nodo1Memoria); //busca el vacio, devuelve eso y a su vez ya lo actualiza
 
@@ -180,12 +180,11 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 				nodo1Memoria->fileDescriptor,
 				tamanioSetBloque);
 
-		mensajesEnviadosADataNode(SET_BLOQUE,nodo1Memoria->fileDescriptor, bloque , strlen(bloque));
+		mensajesEnviadosADataNode(SET_BLOQUE,nodo1Memoria->fileDescriptor, bloque , tamanioSetBloque);
 
 		char* desplazamiento1Serializado = serializeInt(desplazamiento1);
 
-		int FD = nodo1Memoria->fileDescriptor;
-		send(FD, desplazamiento1Serializado, sizeof(int), 0);
+		send(nodo1Memoria->fileDescriptor, desplazamiento1Serializado, sizeof(int), 0);
 
 		logInfo("Copia1 del bloque %d, esta en dataNode%d:desplazamiento%d",
 				indiceBloque,
@@ -194,10 +193,10 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		//nodo 2
 
-		bloques_nodo* bitMapNodo2 = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
+		bitMapNodo = list_remove(tabla_de_nodos.listaCapacidadNodos,0);
 		bloques_nodo* nodo2Memoria= malloc(sizeof(int)*165);
 
-		memcpy(nodo2Memoria, bitMapNodo2, sizeof(int)*165);
+		memcpy(nodo2Memoria, bitMapNodo, sizeof(int)*165);
 
 		desplazamiento2 = buscarBloqueVacio(nodo2Memoria); //lo devuleve y lo pone en ocupado
 
@@ -211,12 +210,11 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 				nodo2Memoria->fileDescriptor,
 				tamanioSetBloque);
 
-		mensajesEnviadosADataNode(SET_BLOQUE,nodo2Memoria->fileDescriptor, bloque,strlen(bloque));
+		mensajesEnviadosADataNode(SET_BLOQUE,nodo2Memoria->fileDescriptor, bloque,tamanioSetBloque);
 
 		char* desplazamiento2Serializado = serializeInt(desplazamiento2);
 
-		FD = nodo2Memoria->fileDescriptor;
-		send(FD, desplazamiento2Serializado, sizeof(int), 0);
+		send(nodo2Memoria->fileDescriptor, desplazamiento2Serializado, sizeof(int), 0);
 
 		logInfo("Copia2 del bloque %d, esta en dataNode%d:desplazamiento%d",
 				indiceBloque,
@@ -242,8 +240,7 @@ void * distribuirYEnviarBloques(int indiceArchivo){
 
 		list_add(tabla_de_nodos.listaCapacidadNodos, nodo1Memoria);
 		list_add(tabla_de_nodos.listaCapacidadNodos, nodo2Memoria);
-		free(bitMapNodo1);
-		free(bitMapNodo2);
+		free(bitMapNodo);
 		indiceBloque++;
 
 	}
@@ -367,6 +364,13 @@ t_list* copyList(t_list* mapa_de_bits_original){
 
 }
 */
+
+int tamChar (char *cadena)
+{
+    int j=0;
+    while (cadena[j] != '\0') {j++;}
+    return j;
+}
 
 int elegirNodo(int indexNodoAnterior){
 

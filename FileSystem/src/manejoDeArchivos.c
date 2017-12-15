@@ -200,7 +200,7 @@ char * dividirArchivoTextoMemoria(char* texto, int * desplazamiento, int indiceA
 
 		//Pregunto si es el ultimo bloque
 		if ((tamRestante - tamBloqueAGuardar) != 0) {
-			string_append(&buffer, "\n");
+			string_append(&buffer, "\n\0");
 		}
 
 		tamRestante -= tamBloqueAGuardar;

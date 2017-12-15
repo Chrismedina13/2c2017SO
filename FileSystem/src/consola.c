@@ -549,7 +549,7 @@ void consolaFileSystem(){
 								fileDescriptor,
 								tamanioSetBloque);
 
-						mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor, bloque , strlen(bloque));
+						mensajesEnviadosADataNode(SET_BLOQUE,fileDescriptor, bloque , tamanioSetBloque);
 
 						send(fileDescriptor, desplazamientoSerializado, sizeof(int), 0);
 

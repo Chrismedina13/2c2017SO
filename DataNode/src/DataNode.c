@@ -115,19 +115,20 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 	int intRecibido;
 	char* bufferBloque[4];
 
-	SetBloque* bloque=malloc(1024*1024+sizeof(int));
+
 	char * contenido_bloque;
 	int tamanio_contenido;
 	char * rta_set_bloque;
 	int tamanio_rta_set_bloque;
 	char* bloqueRecibido;
-
+	SetBloque* bloque;
 	char* bloque_obtenido;
 	int tamanio_bloque_obtenido;
 
 	switch (codigo) {
 	case SET_BLOQUE:
 
+		bloque=malloc(1024*1024+sizeof(int));
 		logInfo("DataNode Recibe la instruccion 'SetBloque' de FileSystem");
 
 					// ese mensaje tiene que ser un buffer no un char*
@@ -137,7 +138,7 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 		tamanio = deserializarINT(pesoMensaje);
 
 		logInfo("tamanio de lo que recibo %i", tamanio);
-		mensaje = malloc(tamanio);
+		mensaje = malloc(1024*1024);
 
 		bloque->contenidoBloque = receive_basic(FD_FileSystem,tamanio);
 		logInfo("Contenido del bloque : %s",bloque->contenidoBloque);
@@ -155,7 +156,8 @@ void mensajesRecibidosDeFileSystem(int codigo, int FD_FileSystem) {
 			logInfo("FALLO SET BLOQUE");
 		}
 
-      free(mensaje);
+		free(bloque);
+		free(mensaje);
 
 
 		break;
