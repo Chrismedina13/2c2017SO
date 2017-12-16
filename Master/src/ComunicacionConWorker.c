@@ -33,8 +33,7 @@ void comunicacionReduccionLocalWorker(RespuestaReduccionLocal* rrl){
 			infoReduccionLocalParaWorker* t;
 
 			//ENVIAMOS LA INFO PARA WORKER DE REDUCCION
-			mensajesEnviadosAWorker(SOL_REDUCCION_LOCAL, FDServidorWORKER,
-								respuesta, tamanioRespuesta);
+			//mensajesEnviadosAWorker(SOL_REDUCCION_LOCAL, FDServidorWORKER,respuesta, tamanioRespuesta);
 
 			logInfo("ENVIO LA SOLICITUD DE TRANSFORMACIOON A WORKER\n\n");
 

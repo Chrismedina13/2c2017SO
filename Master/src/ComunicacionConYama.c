@@ -243,7 +243,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			    //////////////////////////////////
 			    int a;
 			    for(a=0;a<cantidad;a++){
-			    	pthread_t hiloWorker;
+
 
 
 					ParametrosComunicacionWoker* parametrosWorker =
@@ -253,7 +253,9 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 									vectorParam[a].nodo,
 									vectorParam[a].transformaciones);
 
-					logInfo("Puerto: %d\nIP: %s\nNODO: %d",parametrosWorker->puertoWoker,parametrosWorker->ipWoker,parametrosWorker->nodo);
+
+
+					pthread_t hiloWorker;
 
 					pthread_create(&hiloWorker, NULL,
 							(void*) comunicacionTransformacionWorker, parametrosWorker);
@@ -288,8 +290,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			logInfo("Nodo: %d | Puerto: %d | IP: %s | ArchivoReduccion: %s",rrl->nodo,rrl->puertoWorker,rrl->ipWorker,rrl->archivoReduccionLocal);
 
 			pthread_t hiloRL;
-			pthread_create(&hiloRL, NULL,
-					(void*) comunicacionReduccionLocalWorker, rrl);
+			pthread_create(&hiloRL, NULL,(void*) comunicacionReduccionLocalWorker, rrl);
 
 			pthread_join(hiloRL,NULL);
 

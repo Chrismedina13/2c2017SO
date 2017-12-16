@@ -257,7 +257,7 @@ RespuestaReduccionGlobal* crearRespuestaReduccionGlobal(int nodo, int puertoWork
 		char* archivoReduccionLocal,char* archivoReduccionGlobal, bool encargado);
 respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char* ip,char* archivoReduccionGlobal);
 
-infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script scriptReduccionLocal);
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal);
 infoReduccionGlobalDeMasterParaWorker* crearInfoReduccionGlobalDeMasterParaWorker(t_list* listaArchivosReduccionLocal,char* archivoTemporalReduccionGlobal,script scritpReduccionGlobal);
 infoParaReduccionGlobal* crearInfoParaReduccionGlobal(char* ipWorker,int puerto,char* archivoTemporalReduccionLocal);
 infoReduccionGlobalDeWorkerParaWorker* crearInfoReduccionGlobalDeWorkerParaWorker(char* archivoTemporalLocalRequerido);

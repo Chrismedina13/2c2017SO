@@ -51,7 +51,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	switch (codigo) {
 	case UBICACION_BLOQUES:
 
-		/*logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
+		logInfo("RECIBIENDO LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
 					tamanio = deserializarINT(pesoMensaje);
 					logInfo("tamanio de lo que recibo %i", tamanio);
@@ -69,23 +69,23 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 	            	  for(i=0;list_size(lista_ubicaciones);i++){
 
-	      	  	  	  UbicacionBloquesArchivo*ubicacionb = list_get(lista_ubicaciones,i);
+	      	  	  	  UbicacionBloquesArchivo2*ubicacionb = list_get(lista_ubicaciones,i);
 	    	  	  	  logInfo("Se recibio la parte del archivo: %i", ubicacionb->parteDelArchivo);
-	    	  	  	  logInfo("Se recibio el ubi 1 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia1.nodo, ubicacionb->ubicacionCopia1.desplazamiento);
-	    	  	  	  logInfo("Se recibio el ubi 2 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia2.nodo, ubicacionb->ubicacionCopia2.desplazamiento);
+	    	  	  	  logInfo("Se recibio el ubi 1 en nodo %i desplazamiento %i", ubicacionb->nodo1, ubicacionb->desplazamiento1);
+	    	  	  	  logInfo("Se recibio el ubi 2 en nodo %i desplazamiento %i", ubicacionb->nodo2, ubicacionb->desplazamiento2);
 	    	  	  	  logInfo("Con la cantidad de bytes Ocupados: %i", ubicacionb->bytesOcupados);
 	      }
 
 
 			logInfo("Se recibió de forma correcta la lista de bloques de archivo enviada por FS.",tamanio);
                break;
-*/
+
             //mutex1
 
    			jobAEjecutar = retirarJobDeLista();
 
 
-           	logInfo("Creando Planificacion de prueba");
+/*           	logInfo("Creando Planificacion de prueba");
 
            	t_list* listaDeWorkersAPlanificar = list_create();
            	UbicacionBloquesArchivo2* ubi0 = crearUbicacionBloquesArchivos2(0, 500, 2, 12, 2, 1);
@@ -104,14 +104,14 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	list_add(listaDeWorkersAPlanificar, ubi4);
            	list_add(listaDeWorkersAPlanificar, ubi5);
            	list_add(listaDeWorkersAPlanificar, ubi6);
-
+*/
 
            	logInfo("Se creo la lista de Workers a planificar , empieza planificacion");
 
-           	t_list* planificacionDelJOb = planificar(listaDeWorkersAPlanificar,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
+           	t_list* planificacionDelJOb = planificar(lista_ubicaciones,parametrosFileSystem->algoritmo, parametrosFileSystem->disponibilidadBase, jobAEjecutar);
 
            	logInfo("Se crea JOB Completo");
-           	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,listaDeWorkersAPlanificar, planificacionDelJOb);
+           	JOBCompleto* jobCompleto = crearJobCompleto(jobAEjecutar,lista_ubicaciones, planificacionDelJOb);
 
            	logInfo("Actualizar Tabla Global");
            	ingresarDatosATablaGlobal(jobCompleto);
@@ -134,7 +134,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
            	list_add(listaDeJobs, jobCompleto);
 
            	mostrarTabla();
-
+					}
            	break;
 	case INFO_WORKER:
 			recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);

@@ -685,7 +685,7 @@ t_list* nombreToUbicaciones(char* nombre){
 
 	while(count<100){
 
-			if( strcmp(tabla_de_archivos[count].nombre,nombre)){
+			if( tabla_de_archivos[count].nombre=nombre){
 				return(tabla_de_archivos[count].ubicaciones);
 
 			}

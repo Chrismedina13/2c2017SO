@@ -219,11 +219,10 @@ respuestaAlmacenadoFinal* crearRespuestaAlmacenadoFinal(int nodo,int puerto,char
 	return RAF;
 }
 
-infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal, script scriptReduccionLocal){
-	infoReduccionLocalParaWorker* info = malloc(tamanioListaDeArchivos(listaArchivosTemporales) + strlen(archivoTemporal) + tamanioScript(scriptReduccionLocal));
+infoReduccionLocalParaWorker* crearInfoReduccionLocalParaWorker(t_list* listaArchivosTemporales, char* archivoTemporal){
+	infoReduccionLocalParaWorker* info = malloc(tamanioListaDeArchivos(listaArchivosTemporales) + strlen(archivoTemporal));
 	info->archivoTemporalReduccionLocal = archivoTemporal;
 	info->listaDeArchivosTemporales = listaArchivosTemporales;
-	info->scriptReduccionLocal = scriptReduccionLocal;
 
 	return info;
 }

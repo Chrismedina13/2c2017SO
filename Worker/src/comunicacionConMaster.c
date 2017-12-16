@@ -113,9 +113,9 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								logInfo("Archivo temporal: %s",archivoTemporal);
 								//EJECUTO EL SCRIPT EN EL BLOQUE INDICADO
 								logInfo("Bloque %i",bloque);
-								char* contenidoBloque = get_bloque(0);
-								int tamanio = tamanioArchivoCerrado("/home/utnso/Escritorio/archivo.txt"); //PARA PROBBAR EL TAMAÑO
-								char* contenido = string_substring(contenidoBloque,0,tamanio);
+								char* contenidoBloque = get_bloque(bloque);
+								//int tamanio = tamanioArchivoCerrado("/home/utnso/Escritorio/archivo.txt"); //PARA PROBBAR EL TAMAÑO
+								char* contenido = string_substring(contenidoBloque,0,info->bytesOcupados);
 
 								logInfo("Llego hasta acaaa");
 								char* nombreArchivoBloque ="/home/utnso/tp-2017-2c-s1st3m4s_0p3r4t1v0s/Worker/tmp/archivoBloque.txt";

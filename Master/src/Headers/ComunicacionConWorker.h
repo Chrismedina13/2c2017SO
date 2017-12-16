@@ -20,6 +20,7 @@ typedef struct ParametrosComunicacionWorker{
 	t_list *tareas;
 }ParametrosComunicacionWoker;
 
+void comunicacionReduccionLocalWorker(RespuestaReduccionLocal* rrl);
 void comunicacionTransformacionWorker(ParametrosComunicacionWoker* parametros) ;
 
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,
