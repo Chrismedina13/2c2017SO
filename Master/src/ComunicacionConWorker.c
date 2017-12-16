@@ -30,10 +30,17 @@ void comunicacionReduccionLocalWorker(RespuestaReduccionLocal* rrl){
 
 
 			//CREAMOS INFO PARA WORKER DE REDUCCION
-			infoReduccionLocalParaWorker* t;
+			int tamanioRespuesta = tamanioListaDeArchivos(rrl->archivosDeTransformacion) + strlen(rrl->archivoReduccionLocal);
+			infoReduccionLocalParaWorker* i = malloc(tamanioRespuesta);
+			i->archivoTemporalReduccionLocal = rrl->archivoReduccionLocal;
+			i->listaDeArchivosTemporales = rrl->archivosDeTransformacion;
+
+			//SERIALIZAMOS LA INFO
+			char* infoS = serializarinfoReduccionLocalParaWorker(i);
 
 			//ENVIAMOS LA INFO PARA WORKER DE REDUCCION
-			//mensajesEnviadosAWorker(SOL_REDUCCION_LOCAL, FDServidorWORKER,respuesta, tamanioRespuesta);
+			int tamanioInfoSerializada = tamanioinfoReduccionLocalParaWorker(i) + sizeof(int) * list_size(i->listaDeArchivosTemporales) + (sizeof(int)*3);
+			mensajesEnviadosAWorker(SOL_REDUCCION_LOCAL, FDServidorWORKER,infoS, tamanioRespuesta);
 
 			logInfo("ENVIO LA SOLICITUD DE TRANSFORMACIOON A WORKER\n\n");
 
@@ -162,6 +169,31 @@ void mensajesEnviadosAWorker(int codigo, int FDServidorWORKER, char* mensaje,
 
 		destruirPaquete(paqueteDeEnvio);
 		break;
+
+	case SOL_REDUCCION_LOCAL:
+			paqueteDeEnvio = crearPaquete(SOL_REDUCCION_LOCAL, tamanio, mensaje);
+
+			if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+				logInfo("Error en envio de  INFOPARAWORKERS");
+			} else {
+				logInfo("Se envio INFOPARAWORKERS exitosamente.");
+			}
+
+			destruirPaquete(paqueteDeEnvio);
+			break;
+
+	case SOL_REDUCCION_GLOBAL:
+				paqueteDeEnvio = crearPaquete(SOL_REDUCCION_GLOBAL, tamanio, mensaje);
+
+				if (enviarPaquete(FDServidorWORKER, paqueteDeEnvio) == -1) {
+					logInfo("Error en envio de  INFOPARAWORKERS");
+				} else {
+					logInfo("Se envio INFOPARAWORKERS exitosamente.");
+				}
+
+				destruirPaquete(paqueteDeEnvio);
+				break;
+
 	case SCRIPT_TRANSFORMADOR:
 		paqueteDeEnvioTransf = crearPaquete(SCRIPT_TRANSFORMADOR, tamanio,
 				mensaje);
