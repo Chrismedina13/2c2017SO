@@ -502,6 +502,30 @@ resultadoJob * deserializarResultado(char* FT) {
 	return fin;
 
 }
+
+char* serializarFinReduccionLocal(finReduccionLocal* fin) {
+
+	int desplazamiento = 0;
+	char* finRLSerializado = malloc(sizeof(int) * 3);
+	serializarDato(finRLSerializado, &(fin->nodo), sizeof(int),&desplazamiento);
+	serializarDato(finRLSerializado, &(fin->numeroDeJob),sizeof(int), &desplazamiento);
+	serializarDato(finRLSerializado, &(fin->resultado),sizeof(int), &desplazamiento);
+
+	return (finRLSerializado);
+}
+
+finReduccionLocal * deserializarFinReduccionLocal(char* FT) {
+
+	int desplazamiento = 0;
+	finReduccionLocal* fin = malloc(sizeof(int) * 3);
+	deserializarDato(&(fin->nodo),FT,sizeof(int), &desplazamiento);
+	deserializarDato(&(fin->numeroDeJob),FT, sizeof(int), &desplazamiento);
+	deserializarDato(&(fin->resultado),FT, sizeof(int), &desplazamiento);
+
+	return fin;
+
+}
+
 char* serializarFinTransformacion(finTransformacion* fin) {
 
 	int desplazamiento = 0;

@@ -164,16 +164,14 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 										info->listaDeArchivosTemporales,
 										archivoApareado);
 
-								//EJECUTO EL SCRIPT AL SCRIPT
+								//EJECUTO EL SCRIPT AL ARCHIVO APAREADO
 								int estado = ejecutarScriptReductor(
 										info->scriptReduccionLocal.nombre,
 										archivoApareado,
 										info->archivoTemporalReduccionLocal);
 
 								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
-								destruirArchivoOScript(archivoApareado);
-								destruirArchivoOScript(
-										info->scriptReduccionLocal.nombre);
+								//destruirArchivoOScript(archivoApareado);
 
 								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT REDUCCION LOCAL A MASTER
 								resultado_job = malloc(sizeof(int) * 2);

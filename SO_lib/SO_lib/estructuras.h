@@ -47,6 +47,12 @@ typedef struct finTransformacion{
 
 }finTransformacion; //Tambien la uso Para Fin reduccion Global me mandan el numero de job y el nodo encargado
 
+typedef struct finReduccionLocal{
+	int nodo;
+	int numeroDeJob;
+	int resultado;
+}finReduccionLocal;
+
 typedef struct job{
 
 	int master; //FD del master que me mando el job
