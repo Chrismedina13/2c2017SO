@@ -51,7 +51,7 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 	switch (codigo) {
 	case UBICACION_BLOQUES:
 
-		logInfo("RECIBIENOD LA LISTA DE UBICACION BLOQUES ARCHIVOS");
+		logInfo("RECIBIENDO LA LISTA DE UBICACION BLOQUES ARCHIVOS");
 		            recv(FDsocketClienteFileSystem, pesoMensaje, 4, 0);
 					tamanio = deserializarINT(pesoMensaje);
 					logInfo("tamanio de lo que recibo %i", tamanio);
@@ -69,10 +69,10 @@ void mensajesRecibidosDeFS(int codigo, int FDsocketClienteFileSystem) {
 
 	            	  for(i=0;list_size(lista_ubicaciones);i++){
 
-	      	  	  	  UbicacionBloquesArchivo*ubicacionb = list_get(lista_ubicaciones,i);
+	      	  	  	  UbicacionBloquesArchivo2*ubicacionb = list_get(lista_ubicaciones,i);
 	    	  	  	  logInfo("Se recibio la parte del archivo: %i", ubicacionb->parteDelArchivo);
-	    	  	  	  logInfo("Se recibio el ubi 1 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia1.nodo, ubicacionb->ubicacionCopia1.desplazamiento);
-	    	  	  	  logInfo("Se recibio el ubi 2 en nodo %i desplazamiento %i", ubicacionb->ubicacionCopia2.nodo, ubicacionb->ubicacionCopia2.desplazamiento);
+	    	  	  	  logInfo("Se recibio el ubi 1 en nodo %i desplazamiento %i", ubicacionb->nodo1, ubicacionb->desplazamiento1);
+	    	  	  	  logInfo("Se recibio el ubi 2 en nodo %i desplazamiento %i", ubicacionb->nodo2, ubicacionb->desplazamiento2);
 	    	  	  	  logInfo("Con la cantidad de bytes Ocupados: %i", ubicacionb->bytesOcupados);
 	      }
 
