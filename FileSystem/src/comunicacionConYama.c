@@ -36,11 +36,11 @@ void comunicacionYAMA(ParametrosComunicacion* parametros) {
 	char* ipWorker1 = "127.0.0.1";
 	int puerto1 = 5050;
 	Info_Workers* info1 = malloc(sizeof(ipWorker1)+ sizeof(int));
-	char* ipWorker2 = "192.168.43.173";
-	int puerto2 = 5050;
+	char* ipWorker2 = "123141";
+	int puerto2 = 4040;
 	Info_Workers* info2 = malloc(sizeof(ipWorker2)+ sizeof(int));
-	char* ipWorker3 = "192.168.43.173";
-	int puerto3 = 5050;
+	char* ipWorker3 = "1234123";
+	int puerto3 = 4050;
 	Info_Workers* info3 = malloc(sizeof(ipWorker3)+ sizeof(int));
 
 	info1->ipWorker = ipWorker1;

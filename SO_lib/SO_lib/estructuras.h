@@ -42,6 +42,8 @@ typedef struct finTransformacion{
 
 	int nodo;
 	int numeroDeJob;
+	int bloque;
+	int resultado;
 
 }finTransformacion; //Tambien la uso Para Fin reduccion Global me mandan el numero de job y el nodo encargado
 
@@ -185,7 +187,6 @@ typedef struct infoTransformacionParaWorker{
 typedef struct infoReduccionLocalParaWorker{
 	t_list* listaDeArchivosTemporales;
 	char* archivoTemporalReduccionLocal;
-	script scriptReduccionLocal;
 } infoReduccionLocalParaWorker;
 
 //INFO QUE LE MANDA MASTER A WORKER EN REDUCCION GLOBAL
@@ -194,6 +195,8 @@ typedef struct infoReduccionGlobalDeMasterParaWorker{
 	char* archivoTemporalReduccionGlobal;
 	script scriptReduccionGlobal;
 } infoReduccionGlobalDeMasterParaWorker;
+
+
 
 typedef struct infoParaReduccionGlobal{
 	char* ipWorker;
@@ -221,6 +224,7 @@ typedef struct archivo{
 	char* nombre;
 	char* contenido;
 }archivo;
+
 
 
 t_list * list_info_workers;

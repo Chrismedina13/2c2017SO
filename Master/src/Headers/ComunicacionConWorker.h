@@ -20,12 +20,12 @@ typedef struct ParametrosComunicacionWorker{
 	t_list *tareas;
 }ParametrosComunicacionWoker;
 
-void comunicacionWorkers(ParametrosComunicacionWoker* parametros) ;
+void comunicacionTransformacionWorker(ParametrosComunicacionWoker* parametros) ;
 
 ParametrosComunicacionWoker* setParametrosComunicacionConWoker(int puerto,
 		char* ip, int nodo, t_list* listaTareas);
 
 void mensajesEnviadosAWorker(int codigo, int FDServidorWORKER, char* mensaje,int tamanio);
-void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER);
+void mensajesRecibidosDeWorker(int codigo, int FDServidorWORKER,int cantidadDeBytes,int nodo,int bloque);
 
 #endif

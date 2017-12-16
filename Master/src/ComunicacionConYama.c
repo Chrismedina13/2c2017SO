@@ -234,7 +234,8 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			        while(k<elementos)
 			        {
 			            tareaTransformacion* p = list_get(lista,k);
-			            printf("Bloque: %d | Bytes ocupados: %d | Archivo temporal: %s\n\n",p->bloque,p->bytesOcupados,p->archivoTemporal);
+			            printf("Bloque: %d | Bytes ocupados: %d | Archivo temporal: %s\n\n------------------------------------------------------------"
+			            		"\n\n",p->bloque,p->bytesOcupados,p->archivoTemporal);
 			            k++;
 			        }
 			        j++;
@@ -244,6 +245,7 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 			    for(a=0;a<cantidad;a++){
 			    	pthread_t hiloWorker;
 
+
 					ParametrosComunicacionWoker* parametrosWorker =
 							setParametrosComunicacionConWoker(
 									vectorParam[a].puerto,
@@ -251,10 +253,13 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 									vectorParam[a].nodo,
 									vectorParam[a].transformaciones);
 
-					pthread_create(&hiloWorker, NULL,
-							(void*) comunicacionWorkers, parametrosWorker);
+					logInfo("Puerto: %d\nIP: %s\nNODO: %d",parametrosWorker->puertoWoker,parametrosWorker->ipWoker,parametrosWorker->nodo);
 
-					pthread_join(hiloWorker, NULL);
+					pthread_create(&hiloWorker, NULL,
+							(void*) comunicacionTransformacionWorker, parametrosWorker);
+
+					pthread_join(hiloWorker,NULL);
+
 
 			    }
 
@@ -264,6 +269,32 @@ void mensajesRecibidosDeYama(int codigo, int FDsocketClienteYAMA) {
 		break;
 	case SOL_REDUCCION_LOCAL:
 		logInfo("Master recibe de Yama solicitud de Reducción Local.");
+
+		recv(FDsocketClienteYAMA, pesoMsj, 4, 0);
+
+		tamanio = deserializarINT(pesoMsj);
+
+		mensaje = malloc(tamanio + 1);
+
+		logInfo("Tamanio de lo que recibo %i", tamanio);
+
+		if (recv(FDsocketClienteYAMA, mensaje, tamanio, 0) == -1) {
+
+		logInfo("Error en la recepcion de la Estructura Respuesta Transf.");
+
+		} else {
+
+			RespuestaReduccionLocal* rrl =  deserializarRespuestaReduccionLocal(mensaje);
+			logInfo("Nodo: %d | Puerto: %d | IP: %s | ArchivoReduccion: %s",rrl->nodo,rrl->puertoWorker,rrl->ipWorker,rrl->archivoReduccionLocal);
+
+			pthread_t hiloRL;
+			pthread_create(&hiloRL, NULL,
+					(void*) comunicacionReduccionLocalWorker, rrl);
+
+			pthread_join(hiloRL,NULL);
+
+		}
+
 
 		break;
 	case NUMERO_DE_JOB:

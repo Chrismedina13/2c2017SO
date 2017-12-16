@@ -307,7 +307,7 @@ void mensajesRecibidosDeMaster(int codigo, int FDMaster) {
 
 		finTrans = deserializarFinTransformacion(mensaje);
 
-		logInfo("fin nodo : %i, fin numero de job: %i \n",finTrans->nodo,finTrans->numeroDeJob);
+		logInfo("fin nodo : %i, fin numero de job: %i \n fin bloque %i \n fin estado %i",finTrans->nodo,finTrans->numeroDeJob,finTrans->bloque,finTrans->resultado);
 
 
 		logInfo(

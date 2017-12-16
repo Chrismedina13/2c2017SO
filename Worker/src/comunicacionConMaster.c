@@ -95,7 +95,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								//logInfo("scriptTransformador %s",scriptTransformador->contenido);
 
 								rearmar_script(scriptTransformador, SCRIPT_TRANSFORMADOR);
-								logInfo("Se recibio correctamente el script transformador.");
+								logInfo("Se recibio correctamente el script transformador.\n\n");
 							}
 							break;
 						case SOL_TRANSFORMACION:
@@ -125,8 +125,8 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								//Estado 0 significa que lo hizo bien
 
 								//BORRO EL ARCHIVO TEMPORAL archivoBloque Y EL SCRIPT
-								destruirArchivoOScript(nombreArchivoBloque);
-								destruirArchivoOScript(rutaScriptTransformador);
+								//destruirArchivoOScript(nombreArchivoBloque);
+								//destruirArchivoOScript(rutaScriptTransformador);
 
 								//ENVÍO EL ESTADO DE LA EJECUCION DEL SCRIPT TRANSFORMADOR A MASTER
 								resultado_job = malloc(sizeof(int) * 2);
@@ -135,7 +135,7 @@ void comunicacionConMaster(ParametrosComunicacionConMaster* parametrosMaster) {
 								mensajeAEnviar = serializarResultado(resultado_job);
 								int tamanio1 =sizeof(int) * 2;
 								mensajesEnviadosAMaster(FIN_TRANSFORMACION,	FDMaster, mensajeAEnviar,	tamanio1);
-
+								logInfo("Estado de transformacion enviada a master.\n\n");
 							}
 
 							break;
